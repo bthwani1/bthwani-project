@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <title>بثواني - تطبيق التوصيل</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="بثواني" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="msapplication-TileColor" content="#FF500D" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="theme-color" content="#FF500D" />
+
+    <!-- Security headers -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.expo.dev https://*.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.expo.dev https://*.googleapis.com wss://*.expo.dev ws://localhost:* https://api.bthwani.com; frame-src 'self' https:;"
+    />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta
+      http-equiv="Referrer-Policy"
+      content="strict-origin-when-cross-origin"
+    />
+    <meta
+      http-equiv="Permissions-Policy"
+      content="camera=(), microphone=(), geolocation=(self), payment=()"
+    />
+
+    <!-- Preconnect to external domains for better performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Cairo font for Arabic text -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Expo web app manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Fallback for iOS -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <style>
+      /* Prevent flash of unstyled content */
+      body {
+        font-family: "Cairo", "Helvetica Neue", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background-color: #ff500d;
+
+        /* High contrast mode support */
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+
+        /* Reduce motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+          * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+          }
+        }
+
+        /* Focus visible styles for better keyboard navigation */
+        *:focus-visible {
+          outline: 2px solid #ff500d;
+          outline-offset: 2px;
+        }
+
+        /* Skip link for screen readers */
+        .skip-link {
+          position: absolute;
+          top: -40px;
+          left: 6px;
+          background: #000;
+          color: #fff;
+          padding: 8px;
+          text-decoration: none;
+          z-index: 1000;
+        }
+
+        .skip-link:focus {
+          top: 6px;
+        }
+      }
+
+      /* Ensure proper RTL support */
+      * {
+        direction: rtl;
+      }
+
+      /* Hide body until app is loaded */
+      #root {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+      }
+
+      /* Loading spinner */
+      .loading-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #ff500d;
+        z-index: 9999;
+      }
+
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #ffffff;
+        border-top: 4px solid transparent;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Proper touch targets */
+      button,
+      [role="button"] {
+        min-height: 44px;
+        min-width: 44px;
+      }
+
+      /* Improve tap highlights */
+      * {
+        -webkit-tap-highlight-color: rgba(255, 80, 13, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <!-- Skip link for accessibility -->
+    <a href="#root" class="skip-link">تخطي إلى المحتوى الرئيسي</a>
+
+    <!-- Loading spinner -->
+    <div
+      class="loading-container"
+      id="loading-container"
+      role="status"
+      aria-live="polite"
+      aria-label="جارٍ التحميل"
+    >
+      <div class="loading-spinner" aria-hidden="true"></div>
+      <span
+        style="margin-top: 10px; color: white; font-family: 'Cairo', sans-serif"
+        >جارٍ التحميل...</span
+      >
+    </div>
+
+    <!-- React app root -->
+    <div id="root" role="main"></div>
+
+    <!-- Load React and Expo -->
+    <script src="/static/js/bundle.js"></script>
+
+    <script>
+      // Remove loading spinner once app is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(function () {
+          var loadingContainer = document.getElementById("loading-container");
+          var root = document.getElementById("root");
+
+          if (loadingContainer && root) {
+            loadingContainer.style.display = "none";
+            root.style.opacity = "1";
+          }
+        }, 100);
+      });
+
+      // Handle service worker registration
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker
+            .register("/expo-service-worker.js")
+            .then(function (registration) {
+              console.log("SW registered: ", registration);
+            })
+            .catch(function (registrationError) {
+              console.log("SW registration failed: ", registrationError);
+            });
+        });
+      }
+
+      // Prevent zoom on double tap for iOS
+      document.addEventListener(
+        "touchend",
+        function (event) {
+          var now = new Date().getTime();
+          if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+          }
+          lastTouchEnd = now;
+        },
+        false
+      );
+
+      var lastTouchEnd = 0;
+    </script>
+  </body>
+</html>

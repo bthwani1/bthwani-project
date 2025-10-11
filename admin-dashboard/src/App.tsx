@@ -1,0 +1,360 @@
+import React, { Suspense } from "react";
+import { Routes, Route, useParams } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+// ==================== CORE & AUTH ====================
+import AdminLayout from "./layouts/AdminLayout";
+import AdminLogin from "./pages/auth/AdminLogin";
+import RequireAdminAuth from "./components/RequireAdminAuth";
+import HomeDashboard from "./pages/admin/HomeDashboard";
+import ErrorPage from "./pages/errors/ErrorPage";
+
+// ==================== DASHBOARD & MAIN ====================
+import LandingPage from "./pages/LandingPage";
+import ForMerchantsPage from "./landing/pages/ForMerchantsPage";
+import BecomeCaptainPage from "./landing/pages/BecomeCaptainPage";
+import SupportPage from "./landing/pages/SupportPage";
+import AboutPage from "./landing/pages/AboutPage";
+import ContactPage from "./landing/pages/ContactPage";
+import PrivacyPage from "./landing/pages/PrivacyPage";
+import TermsPage from "./landing/pages/TermsPage";
+import MerchantTermsPage from "./landing/pages/MerchantTermsPage";
+import SafetyPage from "./landing/pages/SafetyPage";
+import DeleteAccountPage from "./landing/pages/delete-account";
+
+// ==================== DELIVERY SYSTEM ====================
+import DeliveryStoresPage from "./pages/delivery/DeliveryStoresPage";
+import DeliveryCategoriesPage from "./pages/delivery/DeliveryCategoriesPage";
+import DeliveryBannersPage from "./pages/delivery/DeliveryBannersPage";
+import DeliveryCartsPage from "./pages/delivery/DeliveryCartsPage";
+import DeliveryStoreDetailsPage from "./pages/delivery/DeliveryStoreDetailsPage";
+import DeliveryPromotionsPage from "./pages/delivery/DeliveryPromotionsPage";
+import AdminGasPricingPage from "./pages/delivery/AdminGasPricingPage";
+import AdminWaterPricingPage from "./pages/delivery/AdminWaterPricingPage";
+import AdminDeliveryOrdersPage from "./pages/delivery/orders";
+import OrderDetailsPage from "./pages/delivery/orders/OrderDetailsPage";
+import PricingSettingsPage from "./pages/delivery/PricingStrategiesPage";
+
+// ==================== USER MANAGEMENT ====================
+import UserManagement from "./pages/admin/UserManagement";
+import UsersListPage from "./pages/admin/UsersListPage";
+import UserDetailsPage from "./pages/admin/UserDetailsPage";
+import UserStats from "./pages/admin/UserStats";
+
+// ==================== ADMIN MANAGEMENT ====================
+import {
+  AdminsListPage,
+  AdminDetailsRoute,
+  AdminCreateRoute,
+} from "./pages/admin/admins";
+
+// ==================== DRIVER MANAGEMENT ====================
+import AdminDriversPage from "./pages/admin/AdminDriversPage";
+import AdminDriverDetailsPage from "./pages/admin/AdminDriverDetailsPage";
+import DriverAttendancePage from "./pages/admin/DriverAttendancePage";
+import DriverShiftsPage from "./pages/admin/DriverShiftsPage";
+import DriverAssetsPage from "./pages/admin/DriverAssetsPage";
+import DriverRatingsPage from "./pages/admin/DriverRatingsPage";
+import DriverLeaveRequestsPage from "./pages/admin/DriverLeaveRequestsPage";
+
+// ==================== OPERATIONS ====================
+import OpsDriversDashboard from "./pages/admin/ops/OpsDriversDashboard";
+import DriversDashboard from "./pages/drivers/Dashboard";
+import DriversList from "./pages/drivers/DriversList";
+import DriverDetails from "./pages/drivers/DriverDetails";
+
+// ==================== VENDOR MANAGEMENT ====================
+import AdminVendorCreatePage from "./pages/admin/AdminVendorCreatePage";
+import {
+  VendorProfilePage,
+  VendorsListPage,
+} from "./pages/admin/vendors/VendorsManagement";
+import VendorsModerationPage from "./pages/admin/vendors/VendorsModerationPage";
+import VendorPerformanceTrackingPage from "./pages/admin/VendorPerformanceTrackingPage";
+import StoresModerationPage from "./pages/admin/stores/StoresModerationPage";
+
+// ==================== MARKETING ====================
+import AdminWalletPage from "./pages/admin/marketing/AdminWalletPage";
+import AdminCouponsPage from "./pages/admin/marketing/AdminCouponsPage";
+import MarketersPage from "./pages/admin/marketers/MarketersPage";
+import CommissionPlansPage from "./pages/admin/commission/CommissionPlansPage";
+import MarketersOverviewPage from "./pages/admin/reports/MarketersOverviewPage";
+import MarketerReportPage from "./pages/admin/reports/MarketerReportPage";
+
+// ==================== ONBOARDING ====================
+import OnboardingQueuePage from "./pages/admin/onboarding/OnboardingQueuePage";
+import PendingActivationsPage from "./pages/admin/onboarding/PendingActivationsPage";
+
+// ==================== GROCERIES ====================
+import GroceriesCategoriesPage from "./pages/admin/groceries/CategoriesPage";
+import GroceriesAttributesPage from "./pages/admin/groceries/AttributesPage";
+import GroceriesCatalogPage from "./pages/admin/groceries/CatalogPage";
+import GroceriesMerchantProductsPage from "./pages/admin/groceries/MerchantProductsPage";
+
+// ==================== FINANCE SYSTEM ====================
+import ChartAccounts from "./pages/money/ChartAccounts";
+import GeneralLedger from "./pages/money/GeneralLedger";
+import ReportsPage from "./pages/money/ReportsPage";
+import JournalVoucherPage from "./pages/money/JournalVoucherPage";
+
+// ==================== HR SYSTEM ====================
+import EmployeesPage from "./pages/admin/er/EmployeesPage";
+import AttendancePage from "./pages/admin/er/AttendancePage";
+import PayrollPage from "./pages/admin/er/PayrollPage";
+import AssetsPage from "./pages/admin/er/AssetsPage";
+
+// ==================== SUPPORT SYSTEM ====================
+import Inbox from "./pages/support/Inbox";
+import TicketView from "./pages/support/TicketView";
+import Reports from "./pages/support/Reports";
+
+// ==================== WALLET SYSTEM ====================
+import WalletManagementPage from "./pages/admin/WalletManagementPage";
+import TransactionTrackingPage from "./pages/admin/TransactionTrackingPage";
+import SubscriptionsManagementPage from "./pages/admin/SubscriptionsManagementPage";
+import SettlementsManagementPage from "./pages/admin/SettlementsManagementPage";
+import CouponsManagementPage from "./pages/admin/CouponsManagementPage";
+
+// ==================== QUALITY & REVIEWS ====================
+import QualityReviewsPage from "./pages/admin/quality/QualityReviewsPage";
+
+// ==================== PARTNERS ====================
+import PartnersList from "./pages/parteners/PartnersList";
+import PartnerDetails from "./pages/parteners/PartnerDetails";
+
+// ==================== DOCUMENTS & ASSETS ====================
+import DocumentsManagementPage from "./pages/admin/DocumentsManagementPage";
+import ReportsDashboardPage from "./pages/admin/ReportsDashboardPage";
+import AdminReportsPage from "./pages/admin/AdminReportsPage";
+
+// ==================== NOTIFICATIONS ====================
+import { NotificationsListPage } from "./pages/admin/notifications/NotificationsCenter";
+import TestOtpPage from "./pages/admin/TestOtpPage";
+
+// ==================== CMS SYSTEM ====================
+const CmsOnboardingPage = React.lazy(() => import("./pages/cms/CmsOnboardingPage"));
+const CmsPagesPage = React.lazy(() => import("./pages/cms/CmsPagesPage"));
+const CmsStringsPage = React.lazy(() => import("./pages/cms/CmsStringsPage"));
+const HomeLayoutAdminPage = React.lazy(() => import("./pages/cms/CmsHomeLayoutPage"));
+
+// ==================== UTILITIES ====================
+import "leaflet/dist/leaflet.css";
+import OverviewPage from "./pages/admin/OverviewPage";
+
+// ==================== WRAPPER COMPONENTS ====================
+const VendorProfileWrapper: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  return <VendorProfilePage id={id || ""} />;
+};
+
+export default function App() {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 5 * 60 * 1000, // 5 minutes
+        retry: (failureCount, error) => {
+          // Don't retry on 4xx errors except 408 (timeout)
+          const status = (error as { status?: number })?.status;
+          if (status && status >= 400 && status < 500 && status !== 408) {
+            return false;
+          }
+          // Retry up to 3 times for other errors
+          return failureCount < 3;
+        },
+      },
+    },
+  });
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Routes>
+      {/* ==================== AUTHENTICATION ==================== */}
+      <Route path="/admin/login" element={<AdminLogin />} />
+
+      {/* ==================== PROTECTED ADMIN ROUTES ==================== */}
+      <Route
+        path="/admin"
+        element={
+          <RequireAdminAuth>
+            <AdminLayout />
+          </RequireAdminAuth>
+        }
+      >
+        {/* ==================== DASHBOARD ==================== */}
+        <Route index element={<HomeDashboard />} />
+        <Route path="dashboard" element={<HomeDashboard />} />
+
+        {/* ==================== DELIVERY SYSTEM ==================== */}
+        <Route path="stores" element={<DeliveryStoresPage />} />
+        <Route path="stores/moderation" element={<StoresModerationPage />} />
+        <Route path="categories" element={<DeliveryCategoriesPage />} />
+        <Route path="delivery/stores/:id" element={<DeliveryStoreDetailsPage />} />
+        <Route path="orders" element={<AdminDeliveryOrdersPage />} />
+        <Route path="orders/details/:id" element={<OrderDetailsPage />} />
+        <Route path="carts" element={<DeliveryCartsPage />} />
+        <Route path="offers" element={<DeliveryPromotionsPage />} />
+        <Route path="banners" element={<DeliveryBannersPage />} />
+        <Route path="utility/gas" element={<AdminGasPricingPage />} />
+        <Route path="utility/water" element={<AdminWaterPricingPage />} />
+
+        {/* ==================== USER MANAGEMENT ==================== */}
+        <Route path="users" element={<UserManagement />} />
+        <Route path="users/list" element={<UsersListPage />} />
+        <Route path="users/:id" element={<UserDetailsPage />} />
+        <Route path="users/stats" element={<UserStats />} />
+
+        {/* ==================== DRIVER MANAGEMENT ==================== */}
+        <Route path="drivers" element={<AdminDriversPage />} />
+        <Route path="drivers/:id" element={<AdminDriverDetailsPage />} />
+        <Route path="drivers/attendance" element={<DriverAttendancePage />} />
+        <Route path="drivers/shifts" element={<DriverShiftsPage />} />
+        <Route path="drivers/assets" element={<DriverAssetsPage />} />
+        <Route path="drivers/ratings" element={<DriverRatingsPage />} />
+        <Route path="drivers/leave-requests" element={<DriverLeaveRequestsPage />} />
+
+        {/* ==================== OPERATIONS ==================== */}
+        <Route path="ops/drivers" element={<OpsDriversDashboard />} />
+        <Route path="ops/drivers/ops" element={<DriversDashboard />} />
+        <Route path="ops/drivers/list" element={<DriversList />} />
+        <Route path="ops/drivers/:id" element={<DriverDetails />} />
+        <Route path="ops/activations" element={<PendingActivationsPage />} />
+
+        {/* ==================== ADMIN OVERVIEW ==================== */}
+        <Route path="overview" element={<OverviewPage />} />
+
+        {/* ==================== ADMIN MANAGEMENT ==================== */}
+        <Route path="admins" element={<AdminsListPage />} />
+        <Route path="admins/new" element={<AdminCreateRoute />} />
+        <Route path="admins/:id" element={<AdminDetailsRoute />} />
+
+
+        {/* ==================== VENDOR MANAGEMENT ==================== */}
+        <Route path="vendors/create" element={<AdminVendorCreatePage />} />
+        <Route path="vendors" element={<VendorsListPage />} />
+        <Route path="vendors/:id" element={<VendorProfileWrapper />} />
+        <Route path="vendors/moderation" element={<VendorsModerationPage />} />
+        <Route path="vendors/performance" element={<VendorPerformanceTrackingPage />} />
+        <Route path="stores/moderation" element={<StoresModerationPage />} />
+
+        {/* ==================== MARKETING ==================== */}
+        <Route path="marketing/marketers" element={<MarketersPage />} />
+        <Route path="marketing/coupons" element={<AdminCouponsPage />} />
+
+        {/* ==================== ONBOARDING ==================== */}
+        <Route path="field/onboarding" element={<OnboardingQueuePage />} />
+
+        {/* ==================== GROCERIES ==================== */}
+        <Route path="groceries/categories" element={<GroceriesCategoriesPage />} />
+        <Route path="groceries/attributes" element={<GroceriesAttributesPage />} />
+        <Route path="groceries/catalog" element={<GroceriesCatalogPage />} />
+        <Route path="groceries/merchant-products" element={<GroceriesMerchantProductsPage />} />
+
+        {/* ==================== DRIVER SUB-PAGES ==================== */}
+        <Route path="drivers/attendance" element={<DriverAttendancePage />} />
+        <Route path="drivers/shifts" element={<DriverShiftsPage />} />
+        <Route path="drivers/assets" element={<DriverAssetsPage />} />
+        <Route path="drivers/ratings" element={<DriverRatingsPage />} />
+        <Route path="drivers/leave-requests" element={<DriverLeaveRequestsPage />} />
+
+        {/* ==================== FINANCE SYSTEM ==================== */}
+        <Route path="finance/ledger" element={<ChartAccounts />} />
+        <Route path="finance/employees" element={<EmployeesPage />} />
+        <Route path="finance/attendance" element={<AttendancePage />} />
+        <Route path="finance/payroll" element={<PayrollPage />} />
+        <Route path="finance/assets" element={<AssetsPage />} />
+        <Route path="finance/vouchers" element={<JournalVoucherPage />} />
+        <Route path="finance/accounts" element={<GeneralLedger />} />
+        <Route path="finance/reports" element={<ReportsPage />} />
+
+        {/* ==================== HR SYSTEM ==================== */}
+        <Route path="hr/employees" element={<EmployeesPage />} />
+        <Route path="hr/attendance" element={<AttendancePage />} />
+        <Route path="hr/payroll" element={<PayrollPage />} />
+        <Route path="hr/assets" element={<AssetsPage />} />
+
+        {/* ==================== WALLET SYSTEM ==================== */}
+        <Route path="wallet" element={<AdminWalletPage />} />
+        <Route path="wallet/management" element={<WalletManagementPage />} />
+        <Route path="wallet/transactions" element={<TransactionTrackingPage />} />
+        <Route path="wallet/subscriptions" element={<SubscriptionsManagementPage />} />
+        <Route path="wallet/settlements" element={<SettlementsManagementPage />} />
+        <Route path="wallet/coupons" element={<CouponsManagementPage />} />
+
+        {/* ==================== QUALITY & REVIEWS ==================== */}
+        <Route path="quality/reviews" element={<QualityReviewsPage />} />
+
+        {/* ==================== PARTNERS ==================== */}
+        <Route path="partners" element={<PartnersList />} />
+        <Route path="partners/:store" element={<PartnerDetails />} />
+
+        {/* ==================== SUPPORT SYSTEM ==================== */}
+        <Route path="support/inbox" element={<Inbox />} />
+        <Route path="support/ticket/:id" element={<TicketView />} />
+        <Route path="support/reports" element={<Reports />} />
+
+        {/* ==================== MARKETING - Additional Routes ==================== */}
+        <Route path="commission/plans" element={<CommissionPlansPage />} />
+        <Route path="reports/marketers" element={<MarketersOverviewPage />} />
+        <Route path="reports/marketers/:uid" element={<MarketerReportPage />} />
+
+        {/* ==================== DOCUMENTS & ASSETS ==================== */}
+        <Route path="assets" element={<AssetsPage />} />
+        <Route path="documents" element={<DocumentsManagementPage />} />
+
+        {/* ==================== REPORTS ==================== */}
+        <Route path="reports" element={<AdminReportsPage />} />
+        <Route path="reports/dashboard" element={<ReportsDashboardPage />} />
+
+        {/* ==================== NOTIFICATIONS ==================== */}
+        <Route path="notifications/inbox" element={<NotificationsListPage />} />
+        <Route path="test-otp" element={<TestOtpPage />} />
+
+        {/* ==================== SETTINGS ==================== */}
+        <Route path="settings/pricing" element={<PricingSettingsPage />} />
+
+        {/* ==================== CMS SYSTEM ==================== */}
+        <Route path="cms/onboarding" element={
+          <Suspense fallback={<div>Loading...</div>}>
+            <CmsOnboardingPage />
+          </Suspense>
+        } />
+        <Route path="cms/pages" element={
+          <Suspense fallback={<div>Loading...</div>}>
+            <CmsPagesPage />
+          </Suspense>
+        } />
+        <Route path="cms/strings" element={
+          <Suspense fallback={<div>Loading...</div>}>
+            <CmsStringsPage />
+          </Suspense>
+        } />
+        <Route path="cms/home-layout" element={
+          <Suspense fallback={<div>Loading...</div>}>
+            <HomeLayoutAdminPage />
+          </Suspense>
+        } />
+      </Route>
+
+      {/* ==================== PUBLIC/LANDING PAGES ==================== */}
+      <Route path="/landing" element={<LandingPage />} />
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/for-merchants" element={<ForMerchantsPage />} />
+      <Route path="/become-captain" element={<BecomeCaptainPage />} />
+      <Route path="/support" element={<SupportPage />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/contact" element={<ContactPage />} />
+      <Route path="/privacy" element={<PrivacyPage />} />
+      <Route path="/terms" element={<TermsPage />} />
+      <Route path="/merchant-terms" element={<MerchantTermsPage />} />
+      <Route path="/safety" element={<SafetyPage />} />
+      <Route path="/delete-account" element={<DeleteAccountPage />} />
+
+      {/* ==================== ERROR PAGES ==================== */}
+      <Route path="/admin/error" element={<ErrorPage />} />
+
+      {/* ==================== CATCH ALL ==================== */}
+      <Route path="*" element={<LandingPage />} />
+    </Routes>
+    </QueryClientProvider>
+  );
+}
