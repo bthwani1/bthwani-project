@@ -333,7 +333,7 @@ ERROR_BUDGET=$(curl -s https://api.bthwani.com/api/metrics/error-budget)
 echo "ميزانية الخطأ المتبقية: $ERROR_BUDGET%"
 
 # إرسال التقرير للفريق
-curl -X POST https://hooks.slack.com/... \
+curl -X POST https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK \
   -H "Content-Type: application/json" \
   -d '{
     "text": "📊 تقرير SLO اليومي",
