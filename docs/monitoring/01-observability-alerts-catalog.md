@@ -271,7 +271,7 @@ runbook: "runbooks/suspicious-ip.md"
 #### 1. Slack (للتنبيهات غير الحرجة)
 ```yaml
 slack:
-  webhook_url: "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX"
+  webhook_url: "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK"
   channel: "#monitoring"
   username: "Bthwani Monitor"
   icon_emoji: ":warning:"
