@@ -1,0 +1,133 @@
+{
+  "name": "بثواني - توصيل سريع",
+  "short_name": "بثواني",
+  "description": "منصة توصيل رائدة في اليمن تقدم خدمات توصيل سريعة وموثوقة",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#1976d2",
+  "background_color": "#ffffff",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["business", "food", "shopping"],
+  "icons": [
+    {
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-96x96.png", 
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-128x128.png",
+      "sizes": "128x128", 
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "طلب سريع",
+      "short_name": "طلب",
+      "description": "ابدأ طلب جديد الآن",
+      "url": "/order",
+      "icons": [
+        {
+          "src": "/icons/shortcut-order.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "المطاعم",
+      "short_name": "مطاعم", 
+      "description": "تصفح المطاعم المتاحة",
+      "url": "/restaurants",
+      "icons": [
+        {
+          "src": "/icons/shortcut-restaurants.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "السوبرماركت",
+      "short_name": "سوبرماركت",
+      "description": "تسوق من السوبرماركت",
+      "url": "/grocery", 
+      "icons": [
+        {
+          "src": "/icons/shortcut-grocery.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.bithawani.delivery",
+      "id": "com.bithawani.delivery"
+    },
+    {
+      "platform": "itunes",
+      "url": "https://apps.apple.com/app/bithawani/id1234567890",
+      "id": "1234567890"
+    }
+  ],
+  "prefer_related_applications": true,
+  "screenshots": [
+    {
+      "src": "/images/screenshot1.jpg",
+      "sizes": "540x720",
+      "type": "image/jpeg",
+      "platform": "wide",
+      "label": "الشاشة الرئيسية لتطبيق بثواني"
+    },
+    {
+      "src": "/images/screenshot2.jpg", 
+      "sizes": "540x720",
+      "type": "image/jpeg",
+      "platform": "wide",
+      "label": "صفحة المطاعم والمتاجر"
+    }
+  ]
+}

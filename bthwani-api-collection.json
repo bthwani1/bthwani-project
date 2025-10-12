@@ -1,0 +1,1230 @@
+{
+  "info": {
+    "name": "bThwani API Collection",
+    "description": "Complete API collection for bThwani platform - E-commerce and delivery system for Saudi Arabia",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3001/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "stagingUrl",
+      "value": "https://staging-api.bthwani.com/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "productionUrl",
+      "value": "https://api.bthwani.com/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "refreshToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "firebaseToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "description": "Authentication and authorization endpoints",
+      "item": [
+        {
+          "name": "Firebase Authentication",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{firebaseToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/init",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "init"
+              ]
+            },
+            "description": "Initialize user with Firebase token"
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/users/init",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    "init"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"user\": {\n        \"_id\": \"60f1b2b3c4d5e6f7g8h9i0j1\",\n        \"fullName\": \"محمد أحمد\",\n        \"email\": \"user@example.com\",\n        \"phone\": \"+966501234567\",\n        \"role\": \"user\",\n        \"status\": \"active\",\n        \"emailVerified\": true,\n        \"phoneVerified\": false,\n        \"createdAt\": \"2024-01-15T10:30:00.000Z\"\n    },\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "JWT Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"refreshToken\": \"{{refreshToken}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/refresh",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "refresh"
+              ]
+            },
+            "description": "Refresh JWT access token using refresh token"
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/auth/refresh",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "refresh"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n    \"expiresIn\": \"15m\"\n}"
+            },
+            {
+              "name": "Invalid Token",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/auth/refresh",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "refresh"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"error\": {\n        \"code\": \"INVALID_REFRESH_TOKEN\",\n        \"message\": \"Invalid refresh token\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"refreshToken\": \"{{refreshToken}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/logout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "logout"
+              ]
+            },
+            "description": "Logout and blacklist tokens"
+          }
+        },
+        {
+          "name": "Send OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{firebaseToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"channel\": \"email\",\n    \"purpose\": \"verifyEmail\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/otp/send",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "otp",
+                "send"
+              ]
+            },
+            "description": "Send OTP via email, SMS, or WhatsApp"
+          }
+        },
+        {
+          "name": "Verify OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{firebaseToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"code\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/otp/verify",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "otp",
+                "verify"
+              ]
+            },
+            "description": "Verify OTP code"
+          }
+        }
+      ],
+      "description": "Authentication endpoints including Firebase auth, JWT tokens, and OTP verification"
+    },
+    {
+      "name": "User Management",
+      "description": "User profile, addresses, and settings management",
+      "item": [
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "me"
+              ]
+            },
+            "description": "Get current user profile information"
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"fullName\": \"أحمد محمد علي\",\n    \"phone\": \"+966501234567\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/profile",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "profile"
+              ]
+            },
+            "description": "Update user profile information"
+          }
+        },
+        {
+          "name": "Get User Addresses",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/address",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "address"
+              ]
+            },
+            "description": "Get user's saved addresses"
+          }
+        },
+        {
+          "name": "Add Address",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"type\": \"home\",\n    \"title\": \"المنزل الرئيسي\",\n    \"city\": \"الرياض\",\n    \"street\": \"شارع الملك فهد\",\n    \"building\": \"عمارة 123\",\n    \"apartment\": \"شقة 45\",\n    \"coordinates\": {\n        \"lat\": 24.7136,\n        \"lng\": 46.6753\n    },\n    \"isDefault\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/address",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "address"
+              ]
+            },
+            "description": "Add new address for user"
+          }
+        },
+        {
+          "name": "Get Wallet Balance",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/wallet",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "wallet"
+              ]
+            },
+            "description": "Get user's wallet balance and information"
+          }
+        },
+        {
+          "name": "Get Notifications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/notifications",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "notifications"
+              ]
+            },
+            "description": "Get user's notifications"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Delivery Marketplace",
+      "description": "Delivery marketplace core functionality",
+      "item": [
+        {
+          "name": "Get Delivery Categories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/delivery/categories",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "delivery",
+                "categories"
+              ]
+            },
+            "description": "Get all delivery categories"
+          }
+        },
+        {
+          "name": "Get Stores",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/delivery/stores",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "delivery",
+                "stores"
+              ]
+            },
+            "description": "Get delivery stores with filtering and pagination"
+          }
+        },
+        {
+          "name": "Get Store Products",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/delivery/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "delivery",
+                "products"
+              ]
+            },
+            "description": "Get products from delivery stores"
+          }
+        },
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"items\": [\n        {\n            \"productType\": \"deliveryProduct\",\n            \"product\": \"60f1b2b3c4d5e6f7g8h9i0j4\",\n            \"quantity\": 2,\n            \"customizations\": [\"حار جداً\", \"بدون بصل\"]\n        }\n    ],\n    \"address\": {\n        \"city\": \"الرياض\",\n        \"street\": \"شارع الملك فهد\",\n        \"building\": \"عمارة 123\",\n        \"apartment\": \"شقة 45\",\n        \"coordinates\": {\n            \"lat\": 24.7136,\n            \"lng\": 46.6753\n        }\n    },\n    \"paymentMethod\": \"cash\",\n    \"notes\": \"تعليمات خاصة للتوصيل\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/delivery/order",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "delivery",
+                "order"
+              ]
+            },
+            "description": "Create new delivery order"
+          }
+        },
+        {
+          "name": "Get User Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/delivery/order/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "delivery",
+                "order",
+                "me"
+              ]
+            },
+            "description": "Get current user's orders"
+          }
+        },
+        {
+          "name": "Cancel Order",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/delivery/order/{{orderId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "delivery",
+                "order",
+                "{{orderId}}"
+              ]
+            },
+            "description": "Cancel an order"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Panel",
+      "description": "Administrative endpoints for platform management",
+      "item": [
+        {
+          "name": "Get Admin Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/stats",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "stats"
+              ]
+            },
+            "description": "Get admin dashboard statistics"
+          }
+        },
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/users?page=1&per_page=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "20"
+                }
+              ]
+            },
+            "description": "Get all users with pagination"
+          }
+        },
+        {
+          "name": "Get Delivery KPIs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/delivery/kpis",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "delivery",
+                "kpis"
+              ]
+            },
+            "description": "Get delivery performance KPIs"
+          }
+        },
+        {
+          "name": "Get All Orders (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/delivery/order?page=1&per_page=20&status=delivered",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "delivery",
+                "order"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "20"
+                },
+                {
+                  "key": "status",
+                  "value": "delivered"
+                }
+              ]
+            },
+            "description": "Get all orders with admin privileges and filtering"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Driver Management",
+      "description": "Driver-related endpoints for mobile app",
+      "item": [
+        {
+          "name": "Driver Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{firebaseToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/driver",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "driver"
+              ]
+            },
+            "description": "Driver authentication endpoint"
+          }
+        },
+        {
+          "name": "Get Driver Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{driverToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/driver/orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "driver",
+                "orders"
+              ]
+            },
+            "description": "Get orders assigned to current driver"
+          }
+        },
+        {
+          "name": "Update Order Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{driverToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"status\": \"picked_up\",\n    \"location\": {\n        \"lat\": 24.7136,\n        \"lng\": 46.6753\n    }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/driver/orders/{{orderId}}/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "driver",
+                "orders",
+                "{{orderId}}",
+                "status"
+              ]
+            },
+            "description": "Update order status by driver"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Vendor Management",
+      "description": "Vendor and store management endpoints",
+      "item": [
+        {
+          "name": "Vendor Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{firebaseToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/vendor",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "vendor"
+              ]
+            },
+            "description": "Vendor authentication endpoint"
+          }
+        },
+        {
+          "name": "Get Vendor Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{vendorToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/vendor/orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "vendor",
+                "orders"
+              ]
+            },
+            "description": "Get orders for vendor's store"
+          }
+        },
+        {
+          "name": "Accept Order",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{vendorToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/vendor/orders/{{orderId}}/accept",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "vendor",
+                "orders",
+                "{{orderId}}",
+                "accept"
+              ]
+            },
+            "description": "Accept order by vendor"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Wallet & Finance",
+      "description": "Wallet, payments, and financial services",
+      "item": [
+        {
+          "name": "Top Up Wallet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"amount\": 100.00,\n    \"paymentMethod\": \"card\",\n    \"cardToken\": \"card_token_from_payment_gateway\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/topup",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "topup"
+              ]
+            },
+            "description": "Top up user wallet"
+          }
+        },
+        {
+          "name": "Transfer Funds",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"recipientId\": \"60f1b2b3c4d5e6f7g8h9i0j2\",\n    \"amount\": 50.00,\n    \"note\": \"تحويل اختباري\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/wallet/transfer",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "wallet",
+                "transfer"
+              ]
+            },
+            "description": "Transfer funds to another user"
+          }
+        },
+        {
+          "name": "Get Transaction History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/transactions?page=1&per_page=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "transactions"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "20"
+                }
+              ]
+            },
+            "description": "Get wallet transaction history"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Marketing & Field Operations",
+      "description": "Marketing campaigns and field operations",
+      "item": [
+        {
+          "name": "Marketer Authentication",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{firebaseToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth"
+              ]
+            },
+            "description": "Marketer authentication endpoint"
+          }
+        },
+        {
+          "name": "Get Marketer Overview",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{marketerToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/marketer/overview",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "marketer",
+                "overview"
+              ]
+            },
+            "description": "Get marketer dashboard overview"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Support & Communication",
+      "description": "Customer support and messaging system",
+      "item": [
+        {
+          "name": "Get Support Tickets",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/support",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "support"
+              ]
+            },
+            "description": "Get user support tickets"
+          }
+        },
+        {
+          "name": "Create Support Ticket",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"subject\": \"مشكلة في الطلب\",\n    \"description\": \"لم أستلم طلبي بعد ساعة من الطلب\",\n    \"priority\": \"high\",\n    \"category\": \"order_issue\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/support",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "support"
+              ]
+            },
+            "description": "Create new support ticket"
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Set current timestamp for requests",
+          "pm.globals.set('currentTimestamp', new Date().toISOString());",
+          "",
+          "// Set environment based on collection variable",
+          "if (pm.variables.get('baseUrl').includes('localhost')) {",
+          "    pm.test('Environment is set to Development', function() {",
+          "        pm.expect(pm.variables.get('baseUrl')).to.include('localhost');",
+          "    });",
+          "}",
+          "",
+          "// Log request details for debugging",
+          "console.log('Making request to:', pm.request.url.toString());",
+          "console.log('Method:', pm.request.method);"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Common test for all requests",
+          "pm.test('Response time is less than 5000ms', function() {",
+          "    pm.expect(pm.response.responseTime).to.be.below(5000);",
+          "});",
+          "",
+          "// Test for successful responses",
+          "if (pm.response.code === 200 || pm.response.code === 201) {",
+          "    pm.test('Response has success status', function() {",
+          "        pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+          "    });",
+          "",
+          "    // Check if response has expected structure",
+          "    if (pm.response.json()) {",
+          "        const responseData = pm.response.json();",
+          "        ",
+          "        // Check for error structure if present",
+          "        if (responseData.error) {",
+          "            pm.test('Error response has proper structure', function() {",
+          "                pm.expect(responseData.error).to.have.property('code');",
+          "                pm.expect(responseData.error).to.have.property('message');",
+          "            });",
+          "        }",
+          "    }",
+          "}",
+          "",
+          "// Test for authentication errors",
+          "if (pm.response.code === 401) {",
+          "    pm.test('Unauthorized response is properly formatted', function() {",
+          "        const response = pm.response.json();",
+          "        pm.expect(response).to.have.property('error');",
+          "        pm.expect(response.error.code).to.be.oneOf([",
+          "            'AUTHENTICATION_REQUIRED',",
+          "            'INVALID_TOKEN',",
+          "            'EXPIRED_TOKEN'",
+          "        ]);",
+          "    });",
+          "}",
+          "",
+          "// Test for validation errors",
+          "if (pm.response.code === 400) {",
+          "    pm.test('Bad request response is properly formatted', function() {",
+          "        const response = pm.response.json();",
+          "        pm.expect(response).to.have.property('error');",
+          "        pm.expect(response.error.code).to.eql('VALIDATION_FAILED');",
+          "    });",
+          "}"
+        ]
+      }
+    }
+  ]
+}
