@@ -1,0 +1,2895 @@
+{
+  "generatedAt": "2025-10-13T15:20:35.806Z",
+  "endpoints": [
+    {
+      "method": "get",
+      "path": "/api/v1/accounts",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/chartAccount.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/accounts",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/chartAccount.routes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/accounts/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/chartAccount.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/accounts/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/chartAccount.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/accounts/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/chartAccount.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/accounts/analysis",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/chartAccount.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/accounts/chart",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/chartAccount.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/accounts/chart",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/chartAccount.routes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/accounts/chart/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/chartAccount.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/accounts/chart/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/chartAccount.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/accounts/chart/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/chartAccount.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/accounts/chart/analysis",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/chartAccount.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/accounts/chart/list",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/chartAccount.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/accounts/chart/tree",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/chartAccount.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/accounts/list",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/chartAccount.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/accounts/tree",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/chartAccount.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/activation/store/:storeId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/activation.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/activation/vendor/:vendorId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/activation.routes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/admin/backups/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/backupRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/backups/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/backupRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/backups/:id/restore",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/backupRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/backups/:id/test-restore",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/backupRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/backups/create/full",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/backupRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/backups/create/incremental",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/backupRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/backups/list",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/backupRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/backups/stats/summary",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/backupRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/check-role",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/commission-plans",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/commissionPlansRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/commission-plans",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/commissionPlansRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/admin/commission-plans/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/commissionPlansRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/commission-plans/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/commissionPlansRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/commission-plans/:id/status",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/commissionPlansRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/dashboard/alerts",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/dashboardOverview.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/dashboard/ratings",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/dashboardOverview.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/dashboard/summary",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/dashboardOverview.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/dashboard/support-tickets",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/dashboardOverview.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/dashboard/support-tickets/:id/notes",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/dashboardOverview.routes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/admin/dashboard/support-tickets/:id/status",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/dashboardOverview.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/dashboard/timeseries",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/dashboardOverview.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/dashboard/top",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/dashboardOverview.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/data-deletion/request",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/dataDeletionRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/data-deletion/requests",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/dataDeletionRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/data-deletion/requests/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/dataDeletionRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/admin/data-deletion/requests/:id/cancel",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/dataDeletionRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/data-deletion/requests/:id/process",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/dataDeletionRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/data-deletion/requests/stats/summary",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/dataDeletionRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/debug/redis",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/redias.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/delivery/kpis",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/delivery/stores/:storeId/stats",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/drivers",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.driver.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/:id/block",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.driver.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/:id/reset-password",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.driver.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/:id/verify",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.driver.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/:id/wallet",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.driver.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/drivers/active/count",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.driver.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/drivers/assets",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.assets.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/drivers/assets",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.assets.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/drivers/assets/:assetId/assign",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.assets.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/drivers/assets/:assetId/return",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.assets.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/drivers/attendance",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.attendance.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/attendance/sessions/:sessionId/force-close",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.attendance.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/drivers/create",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.driver.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/drivers/docs",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.docs.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/docs/:docId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.docs.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/drivers/docs/expiring",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.docs.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/drivers/docs/expiring",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.docs.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/drivers/:id/joker-window",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.driver.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/drivers/finance",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.finance.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/drivers/finance/:id/adjustments",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.finance.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/drivers/finance/:id/adjustments",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.finance.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/finance/:payoutId/approve",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.finance.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/finance/:payoutId/pay",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.finance.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/drivers/finance/run",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.finance.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/admin/drivers/joker",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.driver.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/drivers/leave-requests",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.leave.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/drivers/leave-requests",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.leave.routes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/admin/drivers/leave-requests/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.leave.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/drivers/leave-requests/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.leave.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/leave-requests/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.leave.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/leave-requests/:id/approve",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.leave.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/leave-requests/:id/reject",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.leave.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/drivers/leave-requests/stats",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.leave.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/drivers/search",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.driver.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/drivers/shifts",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.shifts.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/drivers/shifts",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.shifts.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/shifts/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.shifts.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/drivers/shifts/:id/assign",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.shifts.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/shifts/:id/mark",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/drivers.shifts.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/drivers/vacations",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.driver.vacations.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/vacations/:id/approve",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.driver.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/drivers/vacations/stats",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.driver.vacations.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/drivers/wallet/confirm-transfer",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.driver.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/drivers/wallet/initiate-transfer",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.driver.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/field/onboarding/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/onboardingRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/field/onboarding/:id/approve",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/onboardingRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/field/onboarding/:id/needs-fix",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/onboardingRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/field/onboarding/:id/reject",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/onboardingRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/field/onboarding/queue",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/onboardingRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/marketer-stores",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/storeModerationRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/admin/marketer-stores/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/storeModerationRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/marketer-stores/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/storeModerationRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/marketer-stores/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/storeModerationRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/marketer-stores/:id/activate",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/storeModerationRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/marketer-stores/:id/deactivate",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/storeModerationRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/marketer-stores/:id/force-close",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/storeModerationRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/marketer-stores/:id/force-open",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/storeModerationRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/marketers",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/marketersRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/admin/marketers/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/marketersRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/marketers/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/marketersRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/marketers/:id/reset-password",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/marketersRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/marketers/:id/status",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/marketersRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/marketers/invite",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/marketersRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/notifications/campaigns",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.notifications.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/notifications/campaigns",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.notifications.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/notifications/campaigns/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.notifications.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/notifications/campaigns/:id/audience-preview",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.notifications.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/notifications/campaigns/:id/cancel",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.notifications.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/notifications/campaigns/:id/send",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.notifications.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/notifications/templates",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.notifications.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/notifications/templates",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.notifications.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/notifications/v2",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/notification.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/onboarding-slides",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.cms.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/onboarding-slides",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.cms.routes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/admin/onboarding-slides/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.cms.routes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/admin/onboarding-slides/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.cms.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/quality/reviews",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/quality.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/quality/reviews/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/quality.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/quality/reviews/:id/hide",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/quality.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/quality/reviews/:id/publish",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/quality.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/quality/stats",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/quality.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/settings",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/settings.routes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/admin/settings",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/settings.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/settings/appearance",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/settings.routes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/admin/settings/appearance",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/settings.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/stats",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/storestats/:storeId/stats/:period",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/storeStatsRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/support/stats",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/support.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/support/tickets",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/support.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/support/tickets",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/support.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/support/tickets/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/support.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/support/tickets/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/support.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/support/tickets/:id/assign",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/support.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/support/tickets/:id/messages",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/support.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/users",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/users",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminUsersRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/admin/users/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminManagementRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/admin/users/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminUsersRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/users/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminManagementRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/users/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminUsersRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/users/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminRoutes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/admin/users/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminManagementRoutes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/admin/users/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminUsersRoutes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/admin/users/:id/permissions",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminManagementRoutes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/admin/users/:id/permissions",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminUsersRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/users/:id/role",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/users/:id/status",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminManagementRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/users/:id/status",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminUsersRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/users/cleanup/accounts",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminManagementRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/users/create",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminManagementRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/users/list",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminManagementRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/users/list",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/users/login",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminManagementRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/users/login",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminUsersRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/users/me",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminManagementRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/users/modules",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminManagementRoutes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/admin/users/password-security/:id/password",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/passwordSecurityRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/users/password-security/2fa-status",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/passwordSecurityRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/users/password-security/cleanup-default-accounts",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/passwordSecurityRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/users/password-security/disable-2fa",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/passwordSecurityRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/users/password-security/enable-2fa",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/passwordSecurityRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/users/password-security/generate-secure-password",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/passwordSecurityRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/users/password-security/regenerate-backup-codes",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/passwordSecurityRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/users/password-security/setup-2fa",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/passwordSecurityRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/users/password-security/validate-password",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/passwordSecurityRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/users/password-security/verify-2fa",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/passwordSecurityRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/users/register",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminUsersRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/users/security/brute-force-status",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminManagementRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/users/stats/summary",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/adminManagementRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/vendors",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/vendorModerationRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/admin/vendors/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/vendorModerationRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/vendors/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/vendorModerationRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/vendors/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/vendorModerationRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/vendors/:id/activate",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/vendorModerationRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/vendors/:id/deactivate",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/vendorModerationRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/vendors/:id/reset-password",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/vendorModerationRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/vendors/stores/:storeId/vendors",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/vendorModerationRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/wallet/coupons",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.wallet.coupons.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/wallet/coupons",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.wallet.coupons.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/wallet/credit",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.wallet.coupons.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/admin/wallet/debit",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.wallet.coupons.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/wallet/users/search",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.wallet.coupons.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/admin/withdrawals",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.withdrawal.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/withdrawals/:id/approve",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.withdrawal.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/admin/withdrawals/:id/reject",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/admin.withdrawal.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/app/subscriptions",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/app.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/app/tutorials",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/app.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/attendance",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/attendance.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/attendance",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/attendance.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/attendance/deductions",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/attendance.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/attendance/today",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/attendance.routes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/auth/delete-account",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marketerV1/auth.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/auth/delete-account/request",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marketerV1/auth.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/auth/jwt/logout",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/auth.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/auth/jwt/refresh",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/auth.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/auth/marketer-login",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marketerV1/auth.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/auth/me",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marketerV1/auth.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/auth/password/forgot",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/passwordReset.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/auth/password/reset",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/passwordReset.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/auth/password/verify",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/passwordReset.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/auth/push-token",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marketerV1/auth.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/cms/bootstrap",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/cms.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/cms/onboarding",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/cms.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/cms/pages/:slug",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/cms.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/banners",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryBannerRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/delivery/banners",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryBannerRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/delivery/banners/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryBannerRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/banners/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryBannerRoutes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/delivery/banners/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryBannerRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/banners/admin",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryBannerRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/cart",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCartRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/delivery/cart/:cartId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCartRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/cart/:cartId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCartRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/delivery/cart/:cartId/items/:productId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCartRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/cart/abandoned",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCartRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/delivery/cart/add",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCartRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/cart/fee",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCartRoutes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/delivery/cart/items/:productId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCartRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/delivery/cart/merge",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCartRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/delivery/cart/user/:userId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCartRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/cart/user/:userId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCartRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/delivery/cart/user/:userId/items/:productId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCartRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/categories",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCategoryRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/delivery/categories",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCategoryRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/delivery/categories/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCategoryRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/categories/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCategoryRoutes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/delivery/categories/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCategoryRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/delivery/categories/:id/move-down",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCategoryRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/delivery/categories/:id/move-up",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCategoryRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/delivery/categories/bulk-reorder",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCategoryRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/categories/children/:parentId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCategoryRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/categories/main",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryCategoryRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/offer",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOfferRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/delivery/offer",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOfferRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/delivery/offer/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOfferRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/offer/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOfferRoutes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/delivery/offer/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOfferRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/order",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/delivery/order",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/order/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/delivery/order/:id/admin-status",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/delivery/order/:id/assign-driver",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/delivery/order/:id/driver-deliver",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/delivery/order/:id/driver-pickup",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/order/:id/notes",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/delivery/order/:id/notes",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/delivery/order/:id/pod",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/delivery/order/:id/rate",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/delivery/order/:id/repeat",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/delivery/order/:id/status",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/delivery/order/:id/vendor-accept",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/delivery/order/:id/vendor-cancel",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/delivery/order/:orderId/sub-orders/:subId/assign-driver",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/delivery/order/:orderId/sub-orders/:subId/pod",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/delivery/order/:orderId/sub-orders/:subId/status",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/delivery/order/errand",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/order/export/orders/excel",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/order/fee",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/order/me",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/delivery/order/orders/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/order/user/:userId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/order/vendor/orders",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryOrderRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/products",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryProductRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/delivery/products",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryProductRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/delivery/products/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryProductRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/products/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryProductRoutes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/delivery/products/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryProductRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/products/daily-offers",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryProductRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/products/nearby/new",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryProductRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/products/search",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryProductRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/promotions",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/promotion.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/delivery/promotions",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/promotion.routes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/delivery/promotions/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/promotion.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/promotions/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/promotion.routes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/delivery/promotions/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/promotion.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/promotions/admin",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/promotion.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/promotions/by-products",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/promotion.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/promotions/by-stores",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/promotion.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/sections",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/storeSection.routes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/delivery/shein-cart/cart",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/sheinCart.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/shein-cart/cart",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/sheinCart.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/delivery/shein-cart/cart/add",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/sheinCart.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/delivery/shein-cart/cart/item/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/sheinCart.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/delivery/shein-cart/cart/item/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/sheinCart.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/stores",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryStoreRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/stores",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryStoreRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/delivery/stores",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryStoreRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/delivery/stores",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryStoreRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/delivery/stores/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryStoreRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/delivery/stores/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryStoreRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/stores/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryStoreRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/stores/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryStoreRoutes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/delivery/stores/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryStoreRoutes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/delivery/stores/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryStoreRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/stores/search",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryStoreRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/stores/search",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryStoreRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/subcategories",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryProductSubCategoryRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/delivery/subcategories",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryProductSubCategoryRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/delivery/subcategories/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryProductSubCategoryRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/subcategories/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryProductSubCategoryRoutes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/delivery/subcategories/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryProductSubCategoryRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/delivery/subcategories/store/:storeId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/DeliveryProductSubCategoryRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/driver/attendance/:id/check-in",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/attendance.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/driver/attendance/:id/check-out",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/attendance.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/driver/attendance/:id/daily",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/attendance.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/driver/attendance/:id/docs",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/attendance.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/driver/availability",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/driver/change-password",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/driver/complete/:orderId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/driver/location",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/driver/locations",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.routes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/driver/locations/:index",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/driver/login",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/driver/me",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/driver/me",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/driver/my-orders",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/driver/orders",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/driver/reports",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/driver/review",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/driver/vacations",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/driver/vacations",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.vacation.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/driver/vacations",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/driver/vacations",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.vacation.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/driver/vacations/:id/approve",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.vacation.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/driver/vacations/:id/reject",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.vacation.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/driver/wallet/summary",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/driver/withdrawals",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.withdrawal.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/driver/withdrawals",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/driver_app/driver.withdrawal.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/employees",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/employee.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/employees",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/employee.routes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/employees/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/employee.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/employees/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/employee.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/entries",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/journalEntry.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/entries",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/journalEntry.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/entries/:voucherNo",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/journalEntry.routes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/entries/:voucherNo",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/journalEntry.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/entries/:voucherNo/post",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/journalEntry.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/entries/next-no",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/journalEntry.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/accounts-payable",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/accountPayable.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/er/accounts-payable",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/accountPayable.routes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/er/accounts-payable/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/accountPayable.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/accounts-payable/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/accountPayable.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/er/accounts-payable/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/accountPayable.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/accounts-receivable",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/accountReceivable.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/er/accounts-receivable",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/accountReceivable.routes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/er/accounts-receivable/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/accountReceivable.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/accounts-receivable/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/accountReceivable.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/er/accounts-receivable/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/accountReceivable.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/assets",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/asset.routes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/er/assets/:id([0-9a-fA-F]{24})",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/asset.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/assets/:id([0-9a-fA-F]{24})",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/asset.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/er/assets/:id([0-9a-fA-F]{24})",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/asset.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/assets/stats",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/asset.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/budgets",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/budget.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/er/budgets",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/budget.routes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/er/budgets/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/budget.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/er/budgets/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/budget.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/budgets/:year",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/budget.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/dashboard/financial",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/dashboard.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/dashboard/performance",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/dashboard.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/dashboard/report",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/dashboard.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/dashboard/tasks",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/dashboard.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/documents",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/document.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/er/documents",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/document.routes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/er/documents/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/document.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/documents/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/document.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/er/documents/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/document.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/kpi-assignments",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/kpiAssignment.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/er/kpi-assignments",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/kpiAssignment.routes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/er/kpi-assignments/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/kpiAssignment.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/er/kpi-assignments/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/kpiAssignment.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/ledger-entries",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/ledgerEntry.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/er/ledger-entries",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/ledgerEntry.routes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/er/ledger-entries/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/ledgerEntry.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/ledger-entries/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/ledgerEntry.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/er/ledger-entries/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/ledgerEntry.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/payroll",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/payroll.routes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/er/payroll/:id([0-9a-fA-F]{24})",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/payroll.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/payroll/:id([0-9a-fA-F]{24})",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/payroll.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/er/payroll/:id([0-9a-fA-F]{24})",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/payroll.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/er/payroll/process",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/payroll.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/payroll/stats",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/payroll.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/performance-reviews",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/performanceReview.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/er/performance-reviews",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/performanceReview.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/tasks",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/task.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/er/tasks",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/task.routes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/er/tasks/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/task.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/er/tasks/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/task.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/er/tasks/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/task.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/favorites",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/favorites.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/favorites",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/favorites.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/favorites/:itemType/:itemId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/favorites.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/favorites/counts",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/favorites.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/favorites/exists/:itemType/:itemId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/favorites.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/field/onboarding",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/field/onboarding.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/field/onboarding/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/field/onboarding.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/field/onboarding/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/field/onboarding.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/field/onboarding/:id/submit",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/field/onboarding.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/field/onboarding/my",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/field/onboarding.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/field/quick-onboard",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/field/quickOnboard.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/files/sign",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marketerV1/mediaMarketerRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/goals",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/performanceGoal.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/goals",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/performanceGoal.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/goals/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/performanceGoal.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/groceries/attributes",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/groceries/attributes",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/groceries/attributes/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/groceries/attributes/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/groceries/attributes/category/:categoryId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/groceries/catalog",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/groceries/catalog",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/groceries/catalog/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/groceries/catalog/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/groceries/catalog/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/groceries/catalog/category/:categoryId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/groceries/categories",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/groceries/categories",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/groceries/categories/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/groceries/categories/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/groceries/categories/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/groceries/merchant-products",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/groceries/merchant-products",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/groceries/merchant-products/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/groceries/merchant-products/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/groceries/merchant-products/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/groceries/merchant-products/merchant/:merchantId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/groceries/merchant-products/merchant/:merchantId/category/:categoryId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marchent/api.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/journals",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/journals.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/leaves",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/leaveRequest.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/leaves",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/leaveRequest.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/leaves/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/er/leaveRequest.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/marketer/overview/marketer/overview",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marketerV1/marketerOverviewRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/marketer/stores",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marketerV1/marketerStoreVendorRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/marketer/stores",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marketerV1/marketerStoreVendorRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/marketer/vendors",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/marketerV1/marketerStoreVendorRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/media/sign-upload",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/mediaRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/messages/schedule",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/messages.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/messages/send",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/messages.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/meta/cities",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/meta.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/meta/enums",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/meta.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/partners",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/partners.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/partners/:store/performance",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/partners.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/partners/contracts/expiring",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/partners.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/partners/contracts/export/csv",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/partners.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/partners/upsert",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/partners.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/pricing-strategies",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/pricingStrategy.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/pricing-strategies",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/pricingStrategy.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/pricing-strategies",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/pricingStrategy.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/pricing-strategies/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/pricingStrategy.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/referrals/link",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/field/referral.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/referrals/stats",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/field/referral.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/referrals/track",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/field/referral.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/reports/marketers/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/reportsRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/reports/marketers/overview",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/reportsRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/segments/preview",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/segments.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/segments/sync",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/segments.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/support/customers/:id/overview",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/support/customers.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/support/messaging-prefs/me",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/support/messaging-prefs.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/support/messaging-prefs/me",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/support/messaging-prefs.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/support/stats",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/support.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/support/tickets",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/support.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/support/tickets",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/support.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/support/tickets/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/support.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/support/tickets/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/support.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/support/tickets/:id/assign",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/support.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/support/tickets/:id/messages",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/admin/support.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/support/v2/canned",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/support.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/support/v2/canned",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/support.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/support/v2/canned/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/support.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/support/v2/canned/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/support.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/support/v2/macros",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/support.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/support/v2/macros",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/support.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/support/v2/reports/summary",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/support.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/support/v2/sla-policies",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/support.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/support/v2/sla-policies",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/support.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/support/v2/sla-policies/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/support.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/support/v2/sla-policies/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/support.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/support/v2/tickets",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/support.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/support/v2/tickets",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/support.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/support/v2/tickets/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/support.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/support/v2/tickets/:id/apply-macro/:macroId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/support.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/support/v2/tickets/:id/csat",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/support.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/support/v2/tickets/:id/messages",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/support.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/support/v2/tickets/:id/messages",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/support.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/test/otp/email",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/testOtp.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/test/otp/sms",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/testOtp.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/test/otp/whatsapp",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/testOtp.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/topup",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/topupRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/topup/logs",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/topupRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/topup/my-logs",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/topupRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/topup/pay-bill",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/topupRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/users/address",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/users/address",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/users/address/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/users/address/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/users/avatar",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/users/avatar",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userAvatarRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/users/default-address",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/users/init",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/users/me",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/users/me",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/users/me/deactivate",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/users/me/delete-eligibility",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/users/me/stats",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/users/notifications",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/users/notifications/mark-read",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/users/otp/send",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/users/otp/verify",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/users/profile",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/users/search",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/users/security",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/users/security/set-pin",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/users/security/verify-pin",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/users/transactions",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/users/wallet",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/users/wallet/transfer",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/users/wallet/transfer-history",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/userRoutes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/utility/daily",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/utility.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/utility/daily",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/utility.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/utility/daily",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/utility.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/utility/daily/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/utility.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/utility/options",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/utility.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/utility/options/gas",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/utility.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/utility/options/water",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/utility.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/utility/order",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/utility.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/utility/order/:orderId/sub/:subId/origin",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/delivery_marketplace_v1/utility.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/vendor",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/vendor.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/vendor",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/vendor.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/vendor/account/delete-request",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/vendor.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/vendor/account/statement",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/vendor.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/vendor/auth/vendor-login",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/vendor.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/vendor/dashboard/overview",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/vendor.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/vendor/me/profile",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/vendor.routes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/vendor/me/profile",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/vendor.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/vendor/merchant/reports",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/vendor.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/vendor/push-token",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/vendor.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/vendor/sales",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/vendor.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/vendor/settings/notifications",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/vendor.routes.ts"
+    },
+    {
+      "method": "put",
+      "path": "/api/v1/vendor/settings/notifications",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/vendor.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/vendor/settlements",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/vendor.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/vendor/settlements",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/settlement.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/vendor/settlements",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/vendor.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/vendor/settlements",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/settlement.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/vendor/settlements/:id",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/settlement.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/vendor/settlements/:id/cancel",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/settlement.routes.ts"
+    },
+    {
+      "method": "patch",
+      "path": "/api/v1/vendor/settlements/admin/:id/status",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/settlement.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/vendor/settlements/admin/all",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/settlement.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/vendor/settlements/balance/me",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/settlement.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/vendor/stores",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/vendor.routes.ts"
+    },
+    {
+      "method": "delete",
+      "path": "/api/v1/vendor/stores/:storeId",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/vendor_app/vendor.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/wallet",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/wallet.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/wallet/admin/withdrawals",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/wallet.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/wallet/admin/withdrawals/:id/process",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/wallet.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/wallet/analytics",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/wallet.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/wallet/analytics/monthly",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/wallet.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/wallet/charge/kuraimi",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/wallet.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/wallet/coupons",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/coupon.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/wallet/coupons/redeem",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/coupon.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/wallet/coupons/use",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/coupon.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/wallet/coupons/user",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/coupon.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/wallet/coupons/validate",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/coupon.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/wallet/order/capture",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/walletOrderRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/wallet/order/hold",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/walletOrderRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/wallet/order/release",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/walletOrderRoutes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/wallet/reverse/:refNo",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/wallet.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/wallet/subscriptions",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/subscription.routes.ts"
+    },
+    {
+      "method": "get",
+      "path": "/api/v1/wallet/subscriptions/my",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/subscription.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/wallet/verify-customer",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/wallet.routes.ts"
+    },
+    {
+      "method": "post",
+      "path": "/api/v1/wallet/withdraw-request",
+      "filePath": "/workspace/bthwani-project/backend/src/routes/Wallet_V8/wallet.routes.ts"
+    }
+  ]
+}

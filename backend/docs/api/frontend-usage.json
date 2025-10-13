@@ -1,0 +1,4506 @@
+{
+  "generatedAt": "2025-10-13T15:20:22.448Z",
+  "usage": [
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/notifications/campaigns",
+      "rawPath": "/admin/notifications/campaigns",
+      "filePath": "admin-dashboard/src/api/adminNotifications.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/notifications/campaigns",
+      "rawPath": "/admin/notifications/campaigns",
+      "filePath": "admin-dashboard/src/api/adminNotifications.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/notifications/campaigns/:id",
+      "rawPath": "/admin/notifications/campaigns/:id",
+      "filePath": "admin-dashboard/src/api/adminNotifications.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/notifications/campaigns/:id/send",
+      "rawPath": "/admin/notifications/campaigns/:id/send",
+      "filePath": "admin-dashboard/src/api/adminNotifications.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/notifications/campaigns/:id/cancel",
+      "rawPath": "/admin/notifications/campaigns/:id/cancel",
+      "filePath": "admin-dashboard/src/api/adminNotifications.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/notifications/campaigns/:id/audience-preview",
+      "rawPath": "/admin/notifications/campaigns/:id/audience-preview",
+      "filePath": "admin-dashboard/src/api/adminNotifications.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/notifications/templates",
+      "rawPath": "/admin/notifications/templates",
+      "filePath": "admin-dashboard/src/api/adminNotifications.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/notifications/templates",
+      "rawPath": "/admin/notifications/templates",
+      "filePath": "admin-dashboard/src/api/adminNotifications.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/dashboard/summary",
+      "rawPath": "/admin/dashboard/summary",
+      "filePath": "admin-dashboard/src/api/adminOverview.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/dashboard/timeseries",
+      "rawPath": "/admin/dashboard/timeseries",
+      "filePath": "admin-dashboard/src/api/adminOverview.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/dashboard/top",
+      "rawPath": "/admin/dashboard/top",
+      "filePath": "admin-dashboard/src/api/adminOverview.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/dashboard/alerts",
+      "rawPath": "/admin/dashboard/alerts",
+      "filePath": "admin-dashboard/src/api/adminOverview.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/users",
+      "rawPath": "/admin/users",
+      "filePath": "admin-dashboard/src/api/adminUsers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/users",
+      "rawPath": "/admin/users",
+      "filePath": "admin-dashboard/src/api/adminUsers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/users/:id",
+      "rawPath": "/admin/users/:id",
+      "filePath": "admin-dashboard/src/api/adminUsers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/users/:id",
+      "rawPath": "/admin/users/:id",
+      "filePath": "admin-dashboard/src/api/adminUsers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/users/:id/status",
+      "rawPath": "/admin/users/:id/status",
+      "filePath": "admin-dashboard/src/api/adminUsers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/users/:id/permissions",
+      "rawPath": "/admin/users/:id/permissions",
+      "filePath": "admin-dashboard/src/api/adminUsers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/admin/users/:id",
+      "rawPath": "/admin/users/:id",
+      "filePath": "admin-dashboard/src/api/adminUsers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/modules",
+      "rawPath": "/admin/modules",
+      "filePath": "admin-dashboard/src/api/adminUsers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/er/assets",
+      "rawPath": "/er/assets",
+      "filePath": "admin-dashboard/src/api/assets.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/er/assets/:id",
+      "rawPath": "/er/assets/:id",
+      "filePath": "admin-dashboard/src/api/assets.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/er/assets",
+      "rawPath": "/er/assets",
+      "filePath": "admin-dashboard/src/api/assets.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/er/assets/:id",
+      "rawPath": "/er/assets/:id",
+      "filePath": "admin-dashboard/src/api/assets.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/er/assets/:id",
+      "rawPath": "/er/assets/:id",
+      "filePath": "admin-dashboard/src/api/assets.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/er/assets/stats",
+      "rawPath": "/er/assets/stats",
+      "filePath": "admin-dashboard/src/api/assets.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/er/assets/:assetId/assign",
+      "rawPath": "/er/assets/:assetId/assign",
+      "filePath": "admin-dashboard/src/api/assets.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/er/assets/:assetId/unassign",
+      "rawPath": "/er/assets/:assetId/unassign",
+      "filePath": "admin-dashboard/src/api/assets.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/attendance",
+      "rawPath": "/attendance",
+      "filePath": "admin-dashboard/src/api/attendance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/attendance",
+      "rawPath": "/attendance",
+      "filePath": "admin-dashboard/src/api/attendance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/attendance/stats",
+      "rawPath": "/attendance/stats",
+      "filePath": "admin-dashboard/src/api/attendance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/attendance/today",
+      "rawPath": "/attendance/today",
+      "filePath": "admin-dashboard/src/api/attendance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/er/accounts/chart",
+      "rawPath": "/er/accounts/chart",
+      "filePath": "admin-dashboard/src/api/chartAccounts.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/er/accounts/chart/tree",
+      "rawPath": "/er/accounts/chart/tree",
+      "filePath": "admin-dashboard/src/api/chartAccounts.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/er/accounts/chart/analysis",
+      "rawPath": "/er/accounts/chart/analysis",
+      "filePath": "admin-dashboard/src/api/chartAccounts.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/er/accounts/chart/:id",
+      "rawPath": "/er/accounts/chart/:id",
+      "filePath": "admin-dashboard/src/api/chartAccounts.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/er/accounts/chart",
+      "rawPath": "/er/accounts/chart",
+      "filePath": "admin-dashboard/src/api/chartAccounts.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/er/accounts/chart/:id",
+      "rawPath": "/er/accounts/chart/:id",
+      "filePath": "admin-dashboard/src/api/chartAccounts.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/er/accounts/chart/:id",
+      "rawPath": "/er/accounts/chart/:id",
+      "filePath": "admin-dashboard/src/api/chartAccounts.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/onboarding-slides",
+      "rawPath": "/admin/onboarding-slides",
+      "filePath": "admin-dashboard/src/api/cmsApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/admin/onboarding-slides/:_id",
+      "rawPath": "/admin/onboarding-slides/:_id",
+      "filePath": "admin-dashboard/src/api/cmsApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/onboarding-slides",
+      "rawPath": "/admin/onboarding-slides",
+      "filePath": "admin-dashboard/src/api/cmsApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/admin/onboarding-slides/:id",
+      "rawPath": "/admin/onboarding-slides/:id",
+      "filePath": "admin-dashboard/src/api/cmsApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/pages",
+      "rawPath": "/admin/pages",
+      "filePath": "admin-dashboard/src/api/cmsApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/admin/pages/:_id",
+      "rawPath": "/admin/pages/:_id",
+      "filePath": "admin-dashboard/src/api/cmsApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/pages",
+      "rawPath": "/admin/pages",
+      "filePath": "admin-dashboard/src/api/cmsApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/admin/pages/:id",
+      "rawPath": "/admin/pages/:id",
+      "filePath": "admin-dashboard/src/api/cmsApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/strings:param",
+      "rawPath": "/admin/strings:param",
+      "filePath": "admin-dashboard/src/api/cmsApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/admin/strings/:_id",
+      "rawPath": "/admin/strings/:_id",
+      "filePath": "admin-dashboard/src/api/cmsApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/strings",
+      "rawPath": "/admin/strings",
+      "filePath": "admin-dashboard/src/api/cmsApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/admin/strings/:id",
+      "rawPath": "/admin/strings/:id",
+      "filePath": "admin-dashboard/src/api/cmsApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/home-layouts",
+      "rawPath": "/admin/home-layouts",
+      "filePath": "admin-dashboard/src/api/cmsApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/admin/home-layouts/:_id",
+      "rawPath": "/admin/home-layouts/:_id",
+      "filePath": "admin-dashboard/src/api/cmsApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/home-layouts",
+      "rawPath": "/admin/home-layouts",
+      "filePath": "admin-dashboard/src/api/cmsApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/admin/home-layouts/:id",
+      "rawPath": "/admin/home-layouts/:id",
+      "filePath": "admin-dashboard/src/api/cmsApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/wallet/coupons",
+      "rawPath": "/admin/wallet/coupons",
+      "filePath": "admin-dashboard/src/api/coupons.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/wallet/coupons/:id",
+      "rawPath": "/admin/wallet/coupons/:id",
+      "filePath": "admin-dashboard/src/api/coupons.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/wallet/coupons",
+      "rawPath": "/admin/wallet/coupons",
+      "filePath": "admin-dashboard/src/api/coupons.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/wallet/coupons/:id",
+      "rawPath": "/admin/wallet/coupons/:id",
+      "filePath": "admin-dashboard/src/api/coupons.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/admin/wallet/coupons/:id",
+      "rawPath": "/admin/wallet/coupons/:id",
+      "filePath": "admin-dashboard/src/api/coupons.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/wallet/coupons/validate",
+      "rawPath": "/admin/wallet/coupons/validate",
+      "filePath": "admin-dashboard/src/api/coupons.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/wallet/coupons/stats",
+      "rawPath": "/admin/wallet/coupons/stats",
+      "filePath": "admin-dashboard/src/api/coupons.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/wallet/coupons/generate",
+      "rawPath": "/admin/wallet/coupons/generate",
+      "filePath": "admin-dashboard/src/api/coupons.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/er/documents",
+      "rawPath": "/er/documents",
+      "filePath": "admin-dashboard/src/api/documents.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/er/documents/:id",
+      "rawPath": "/er/documents/:id",
+      "filePath": "admin-dashboard/src/api/documents.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/er/documents",
+      "rawPath": "/er/documents",
+      "filePath": "admin-dashboard/src/api/documents.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/er/documents/:id",
+      "rawPath": "/er/documents/:id",
+      "filePath": "admin-dashboard/src/api/documents.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/er/documents/:id",
+      "rawPath": "/er/documents/:id",
+      "filePath": "admin-dashboard/src/api/documents.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/er/documents/stats",
+      "rawPath": "/er/documents/stats",
+      "filePath": "admin-dashboard/src/api/documents.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/er/documents/upload",
+      "rawPath": "/er/documents/upload",
+      "filePath": "admin-dashboard/src/api/documents.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/er/documents/:id/download",
+      "rawPath": "/er/documents/:id/download",
+      "filePath": "admin-dashboard/src/api/documents.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/er/documents/expiring-soon",
+      "rawPath": "/er/documents/expiring-soon",
+      "filePath": "admin-dashboard/src/api/documents.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/er/documents/expired",
+      "rawPath": "/er/documents/expired",
+      "filePath": "admin-dashboard/src/api/documents.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/er/documents/bulk",
+      "rawPath": "/er/documents/bulk",
+      "filePath": "admin-dashboard/src/api/documents.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/er/documents/bulk",
+      "rawPath": "/er/documents/bulk",
+      "filePath": "admin-dashboard/src/api/documents.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/er/documents/export",
+      "rawPath": "/er/documents/export",
+      "filePath": "admin-dashboard/src/api/documents.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/finance/:driverId/adjustments",
+      "rawPath": "/admin/drivers/finance/:driverId/adjustments",
+      "filePath": "admin-dashboard/src/api/driverFinance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/drivers/finance/:driverId/adjustments",
+      "rawPath": "/admin/drivers/finance/:driverId/adjustments",
+      "filePath": "admin-dashboard/src/api/driverFinance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/finance",
+      "rawPath": "/admin/drivers/finance",
+      "filePath": "admin-dashboard/src/api/driverFinance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/drivers/finance/run",
+      "rawPath": "/admin/drivers/finance/run",
+      "filePath": "admin-dashboard/src/api/driverFinance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/finance/:payoutId/approve",
+      "rawPath": "/admin/drivers/finance/:payoutId/approve",
+      "filePath": "admin-dashboard/src/api/driverFinance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/finance/:payoutId/pay",
+      "rawPath": "/admin/drivers/finance/:payoutId/pay",
+      "filePath": "admin-dashboard/src/api/driverFinance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/finance/:driverId/summary",
+      "rawPath": "/admin/drivers/finance/:driverId/summary",
+      "filePath": "admin-dashboard/src/api/driverFinance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/leave-requests",
+      "rawPath": "/admin/drivers/leave-requests",
+      "filePath": "admin-dashboard/src/api/driverLeaveRequests.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/leave-requests/:id",
+      "rawPath": "/admin/drivers/leave-requests/:id",
+      "filePath": "admin-dashboard/src/api/driverLeaveRequests.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/drivers/leave-requests",
+      "rawPath": "/admin/drivers/leave-requests",
+      "filePath": "admin-dashboard/src/api/driverLeaveRequests.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/leave-requests/:id",
+      "rawPath": "/admin/drivers/leave-requests/:id",
+      "filePath": "admin-dashboard/src/api/driverLeaveRequests.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/leave-requests/:id/approve",
+      "rawPath": "/admin/drivers/leave-requests/:id/approve",
+      "filePath": "admin-dashboard/src/api/driverLeaveRequests.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/leave-requests/:id/reject",
+      "rawPath": "/admin/drivers/leave-requests/:id/reject",
+      "filePath": "admin-dashboard/src/api/driverLeaveRequests.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/admin/drivers/leave-requests/:id",
+      "rawPath": "/admin/drivers/leave-requests/:id",
+      "filePath": "admin-dashboard/src/api/driverLeaveRequests.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/leave-requests/stats",
+      "rawPath": "/admin/drivers/leave-requests/stats",
+      "filePath": "admin-dashboard/src/api/driverLeaveRequests.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/ratings",
+      "rawPath": "/admin/drivers/ratings",
+      "filePath": "admin-dashboard/src/api/driverRatings.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/:driverId/ratings/stats",
+      "rawPath": "/admin/drivers/:driverId/ratings/stats",
+      "filePath": "admin-dashboard/src/api/driverRatings.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/ratings/recent",
+      "rawPath": "/admin/drivers/ratings/recent",
+      "filePath": "admin-dashboard/src/api/driverRatings.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers",
+      "rawPath": "/admin/drivers",
+      "filePath": "admin-dashboard/src/api/drivers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/:id",
+      "rawPath": "/admin/drivers/:id",
+      "filePath": "admin-dashboard/src/api/drivers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/drivers",
+      "rawPath": "/admin/drivers",
+      "filePath": "admin-dashboard/src/api/drivers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/:id",
+      "rawPath": "/admin/drivers/:id",
+      "filePath": "admin-dashboard/src/api/drivers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/admin/drivers/:id",
+      "rawPath": "/admin/drivers/:id",
+      "filePath": "admin-dashboard/src/api/drivers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/attendance",
+      "rawPath": "/admin/drivers/attendance",
+      "filePath": "admin-dashboard/src/api/drivers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/attendance/sessions",
+      "rawPath": "/admin/drivers/attendance/sessions",
+      "filePath": "admin-dashboard/src/api/drivers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/shifts",
+      "rawPath": "/admin/drivers/shifts",
+      "filePath": "admin-dashboard/src/api/drivers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/drivers/shifts",
+      "rawPath": "/admin/drivers/shifts",
+      "filePath": "admin-dashboard/src/api/drivers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/shifts/:id",
+      "rawPath": "/admin/drivers/shifts/:id",
+      "filePath": "admin-dashboard/src/api/drivers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/admin/drivers/shifts/:id",
+      "rawPath": "/admin/drivers/shifts/:id",
+      "filePath": "admin-dashboard/src/api/drivers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/assets",
+      "rawPath": "/admin/drivers/assets",
+      "filePath": "admin-dashboard/src/api/drivers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/drivers/assets",
+      "rawPath": "/admin/drivers/assets",
+      "filePath": "admin-dashboard/src/api/drivers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/assets/:id",
+      "rawPath": "/admin/drivers/assets/:id",
+      "filePath": "admin-dashboard/src/api/drivers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/admin/drivers/assets/:id",
+      "rawPath": "/admin/drivers/assets/:id",
+      "filePath": "admin-dashboard/src/api/drivers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/employees",
+      "rawPath": "/employees",
+      "filePath": "admin-dashboard/src/api/employees.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/employees",
+      "rawPath": "/employees",
+      "filePath": "admin-dashboard/src/api/employees.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/employees/:id",
+      "rawPath": "/employees/:id",
+      "filePath": "admin-dashboard/src/api/employees.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/employees/:id",
+      "rawPath": "/employees/:id",
+      "filePath": "admin-dashboard/src/api/employees.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/employees/:id",
+      "rawPath": "/employees/:id",
+      "filePath": "admin-dashboard/src/api/employees.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/accounts/chart",
+      "rawPath": "/accounts/chart",
+      "filePath": "admin-dashboard/src/api/er.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/accounts/chart",
+      "rawPath": "/accounts/chart",
+      "filePath": "admin-dashboard/src/api/er.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/accounts/chart/:id",
+      "rawPath": "/accounts/chart/:id",
+      "filePath": "admin-dashboard/src/api/er.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/accounts/chart/:id",
+      "rawPath": "/accounts/chart/:id",
+      "filePath": "admin-dashboard/src/api/er.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/entries",
+      "rawPath": "/entries",
+      "filePath": "admin-dashboard/src/api/er.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/entries/next-no",
+      "rawPath": "/entries/next-no",
+      "filePath": "admin-dashboard/src/api/er.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/entries/:voucherNo",
+      "rawPath": "/entries/:voucherNo",
+      "filePath": "admin-dashboard/src/api/er.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/entries",
+      "rawPath": "/entries",
+      "filePath": "admin-dashboard/src/api/er.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/entries/:voucherNo",
+      "rawPath": "/entries/:voucherNo",
+      "filePath": "admin-dashboard/src/api/er.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/entries/:voucherNo/post",
+      "rawPath": "/entries/:voucherNo/post",
+      "filePath": "admin-dashboard/src/api/er.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/journals",
+      "rawPath": "/journals",
+      "filePath": "admin-dashboard/src/api/er.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/settlements",
+      "rawPath": "/finance/settlements",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/settlements/:settlementId",
+      "rawPath": "/finance/settlements/:settlementId",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/finance/settlements/generate",
+      "rawPath": "/finance/settlements/generate",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/finance/settlements/:settlementId/mark-paid",
+      "rawPath": "/finance/settlements/:settlementId/mark-paid",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/settlements/:settlementId/export.csv",
+      "rawPath": "/finance/settlements/:settlementId/export.csv",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/wallet/balance",
+      "rawPath": "/finance/wallet/balance",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/wallet/balances/:type",
+      "rawPath": "/finance/wallet/balances/:type",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/wallet/settlement-balance/:type",
+      "rawPath": "/finance/wallet/settlement-balance/:type",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/wallet/ledger/entries",
+      "rawPath": "/finance/wallet/ledger/entries",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/reconciliation/report",
+      "rawPath": "/finance/reconciliation/report",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/reconciliation/validate-balance",
+      "rawPath": "/finance/reconciliation/validate-balance",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/reconciliation/daily-report/:date",
+      "rawPath": "/finance/reconciliation/daily-report/:date",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/finance/commissions/rules",
+      "rawPath": "/finance/commissions/rules",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/commissions/rules",
+      "rawPath": "/finance/commissions/rules",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/finance/commissions/calculate",
+      "rawPath": "/finance/commissions/calculate",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/commissions/report",
+      "rawPath": "/finance/commissions/report",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/finance/payouts/generate",
+      "rawPath": "/finance/payouts/generate",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/payouts",
+      "rawPath": "/finance/payouts",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/payouts/:batchId",
+      "rawPath": "/finance/payouts/:batchId",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/finance/payouts/:batchId/process",
+      "rawPath": "/finance/payouts/:batchId/process",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/payouts/:batchId/export.csv",
+      "rawPath": "/finance/payouts/:batchId/export.csv",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/payouts/wallet-statement/:accountId",
+      "rawPath": "/finance/payouts/wallet-statement/:accountId",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/payouts/wallet-statement/:accountId/export.csv",
+      "rawPath": "/finance/payouts/wallet-statement/:accountId/export.csv",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/reports/sales/export",
+      "rawPath": "/finance/reports/sales/export",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/reports/payouts/export",
+      "rawPath": "/finance/reports/payouts/export",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/reports/orders/export",
+      "rawPath": "/finance/reports/orders/export",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/reports/fees-taxes/export",
+      "rawPath": "/finance/reports/fees-taxes/export",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/reports/refunds/export",
+      "rawPath": "/finance/reports/refunds/export",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/reports/data-summary",
+      "rawPath": "/finance/reports/data-summary",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/finance/reports/validate-consistency",
+      "rawPath": "/finance/reports/validate-consistency",
+      "filePath": "admin-dashboard/src/api/finance.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/er/journals",
+      "rawPath": "/er/journals",
+      "filePath": "admin-dashboard/src/api/journalBook.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/er/entries/next-no",
+      "rawPath": "/er/entries/next-no",
+      "filePath": "admin-dashboard/src/api/journalEntries.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/er/entries",
+      "rawPath": "/er/entries",
+      "filePath": "admin-dashboard/src/api/journalEntries.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/er/entries/:voucherNo",
+      "rawPath": "/er/entries/:voucherNo",
+      "filePath": "admin-dashboard/src/api/journalEntries.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/er/entries",
+      "rawPath": "/er/entries",
+      "filePath": "admin-dashboard/src/api/journalEntries.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/er/entries/:voucherNo",
+      "rawPath": "/er/entries/:voucherNo",
+      "filePath": "admin-dashboard/src/api/journalEntries.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/er/entries/:voucherNo/post",
+      "rawPath": "/er/entries/:voucherNo/post",
+      "filePath": "admin-dashboard/src/api/journalEntries.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/er/payroll",
+      "rawPath": "/er/payroll",
+      "filePath": "admin-dashboard/src/api/payroll.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/er/payroll/:id",
+      "rawPath": "/er/payroll/:id",
+      "filePath": "admin-dashboard/src/api/payroll.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/er/payroll",
+      "rawPath": "/er/payroll",
+      "filePath": "admin-dashboard/src/api/payroll.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/er/payroll/:id",
+      "rawPath": "/er/payroll/:id",
+      "filePath": "admin-dashboard/src/api/payroll.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/er/payroll/:id",
+      "rawPath": "/er/payroll/:id",
+      "filePath": "admin-dashboard/src/api/payroll.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/er/payroll/process",
+      "rawPath": "/er/payroll/process",
+      "filePath": "admin-dashboard/src/api/payroll.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/er/payroll/stats",
+      "rawPath": "/er/payroll/stats",
+      "filePath": "admin-dashboard/src/api/payroll.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/reports/overview",
+      "rawPath": "/admin/reports/overview",
+      "filePath": "admin-dashboard/src/api/reports.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/reports/financial",
+      "rawPath": "/admin/reports/financial",
+      "filePath": "admin-dashboard/src/api/reports.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/reports/orders",
+      "rawPath": "/admin/reports/orders",
+      "filePath": "admin-dashboard/src/api/reports.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/reports/users",
+      "rawPath": "/admin/reports/users",
+      "filePath": "admin-dashboard/src/api/reports.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/reports/vendors",
+      "rawPath": "/admin/reports/vendors",
+      "filePath": "admin-dashboard/src/api/reports.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/reports/drivers",
+      "rawPath": "/admin/reports/drivers",
+      "filePath": "admin-dashboard/src/api/reports.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/reports/generate",
+      "rawPath": "/admin/reports/generate",
+      "filePath": "admin-dashboard/src/api/reports.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/reports/export/:type/:format",
+      "rawPath": "/admin/reports/export/:type/:format",
+      "filePath": "admin-dashboard/src/api/reports.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/reports/realtime",
+      "rawPath": "/admin/reports/realtime",
+      "filePath": "admin-dashboard/src/api/reports.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/wallet/settlements",
+      "rawPath": "/admin/wallet/settlements",
+      "filePath": "admin-dashboard/src/api/settlements.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/wallet/settlements/:id",
+      "rawPath": "/admin/wallet/settlements/:id",
+      "filePath": "admin-dashboard/src/api/settlements.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/wallet/settlements/:id/status",
+      "rawPath": "/admin/wallet/settlements/:id/status",
+      "filePath": "admin-dashboard/src/api/settlements.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/wallet/settlements/stats",
+      "rawPath": "/admin/wallet/settlements/stats",
+      "filePath": "admin-dashboard/src/api/settlements.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/wallet/settlements/export",
+      "rawPath": "/admin/wallet/settlements/export",
+      "filePath": "admin-dashboard/src/api/settlements.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/wallet/subscriptions",
+      "rawPath": "/admin/wallet/subscriptions",
+      "filePath": "admin-dashboard/src/api/subscriptions.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/wallet/subscriptions/:id",
+      "rawPath": "/admin/wallet/subscriptions/:id",
+      "filePath": "admin-dashboard/src/api/subscriptions.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/wallet/subscriptions",
+      "rawPath": "/admin/wallet/subscriptions",
+      "filePath": "admin-dashboard/src/api/subscriptions.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/wallet/subscriptions/:id",
+      "rawPath": "/admin/wallet/subscriptions/:id",
+      "filePath": "admin-dashboard/src/api/subscriptions.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/wallet/subscriptions/:id/cancel",
+      "rawPath": "/admin/wallet/subscriptions/:id/cancel",
+      "filePath": "admin-dashboard/src/api/subscriptions.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/wallet/subscriptions/:id/renew",
+      "rawPath": "/admin/wallet/subscriptions/:id/renew",
+      "filePath": "admin-dashboard/src/api/subscriptions.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/admin/wallet/subscriptions/:id",
+      "rawPath": "/admin/wallet/subscriptions/:id",
+      "filePath": "admin-dashboard/src/api/subscriptions.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/wallet/subscriptions/stats",
+      "rawPath": "/admin/wallet/subscriptions/stats",
+      "filePath": "admin-dashboard/src/api/subscriptions.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/wallet/subscriptions/plans",
+      "rawPath": "/admin/wallet/subscriptions/plans",
+      "filePath": "admin-dashboard/src/api/subscriptions.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/vendors/:id",
+      "rawPath": "/admin/vendors/:id",
+      "filePath": "admin-dashboard/src/api/vendors.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/vendors",
+      "rawPath": "/admin/vendors",
+      "filePath": "admin-dashboard/src/api/vendors.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/vendors",
+      "rawPath": "/admin/vendors",
+      "filePath": "admin-dashboard/src/api/vendors.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/vendors/stats",
+      "rawPath": "/admin/vendors/stats",
+      "filePath": "admin-dashboard/src/api/vendors.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/vendors/:vendorId/stats",
+      "rawPath": "/admin/vendors/:vendorId/stats",
+      "filePath": "admin-dashboard/src/api/vendors.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/vendors/:vendorId/performance",
+      "rawPath": "/admin/vendors/:vendorId/performance",
+      "filePath": "admin-dashboard/src/api/vendors.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/vendors/:vendorId/sales-data",
+      "rawPath": "/admin/vendors/:vendorId/sales-data",
+      "filePath": "admin-dashboard/src/api/vendors.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/vendors/:vendorId/status",
+      "rawPath": "/admin/vendors/:vendorId/status",
+      "filePath": "admin-dashboard/src/api/vendors.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/vendors/:vendorId",
+      "rawPath": "/admin/vendors/:vendorId",
+      "filePath": "admin-dashboard/src/api/vendors.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/vendors/:vendorId/reset-password",
+      "rawPath": "/admin/vendors/:vendorId/reset-password",
+      "filePath": "admin-dashboard/src/api/vendors.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/admin/vendors/:vendorId",
+      "rawPath": "/admin/vendors/:vendorId",
+      "filePath": "admin-dashboard/src/api/vendors.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/vendors/export",
+      "rawPath": "/admin/vendors/export",
+      "filePath": "admin-dashboard/src/api/vendors.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/wallet/transactions",
+      "rawPath": "/admin/wallet/transactions",
+      "filePath": "admin-dashboard/src/api/wallet.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/wallet/:userId",
+      "rawPath": "/admin/wallet/:userId",
+      "filePath": "admin-dashboard/src/api/wallet.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/wallet/users/search",
+      "rawPath": "/admin/wallet/users/search",
+      "filePath": "admin-dashboard/src/api/wallet.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/wallet/:userId/balance",
+      "rawPath": "/admin/wallet/:userId/balance",
+      "filePath": "admin-dashboard/src/api/wallet.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/wallet/stats",
+      "rawPath": "/admin/wallet/stats",
+      "filePath": "admin-dashboard/src/api/wallet.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/me",
+      "rawPath": "/admin/me",
+      "filePath": "admin-dashboard/src/hook/useAdminUser.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/features",
+      "rawPath": "/features",
+      "filePath": "admin-dashboard/src/hook/useFeatures.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/notifications/campaigns/:_id/audience-preview",
+      "rawPath": "/admin/notifications/campaigns/:_id/audience-preview",
+      "filePath": "admin-dashboard/src/pages/admin/AdminCampaignsPanel.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/notifications/campaigns/:_id/send",
+      "rawPath": "/admin/notifications/campaigns/:_id/send",
+      "filePath": "admin-dashboard/src/pages/admin/AdminCampaignsPanel.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/:id/orders",
+      "rawPath": "/admin/drivers/:id/orders",
+      "filePath": "admin-dashboard/src/pages/admin/AdminDriverDetailsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/:id/reviews",
+      "rawPath": "/admin/drivers/:id/reviews",
+      "filePath": "admin-dashboard/src/pages/admin/AdminDriverDetailsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/:id/block",
+      "rawPath": "/admin/drivers/:id/block",
+      "filePath": "admin-dashboard/src/pages/admin/AdminDriversPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/:editingId",
+      "rawPath": "/admin/drivers/:editingId",
+      "filePath": "admin-dashboard/src/pages/admin/AdminDriversPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/:driverId/joker-window",
+      "rawPath": "/admin/drivers/:driverId/joker-window",
+      "filePath": "admin-dashboard/src/pages/admin/AdminDriversPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/delivery/stores",
+      "rawPath": "/delivery/stores",
+      "filePath": "admin-dashboard/src/pages/admin/AdminVendorCreatePage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/vendor",
+      "rawPath": "/vendor",
+      "filePath": "admin-dashboard/src/pages/admin/AdminVendorCreatePage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/settings/appearance",
+      "rawPath": "/admin/settings/appearance",
+      "filePath": "admin-dashboard/src/pages/admin/AppearanceSettingsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/admin/settings/appearance",
+      "rawPath": "/admin/settings/appearance",
+      "filePath": "admin-dashboard/src/pages/admin/AppearanceSettingsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/stats",
+      "rawPath": "/admin/stats",
+      "filePath": "admin-dashboard/src/pages/admin/HomeDashboard.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "fetch",
+      "path": "/api/v1/api/v1/test/otp/:channel",
+      "rawPath": "/api/v1/test/otp/:channel",
+      "filePath": "admin-dashboard/src/pages/admin/TestOtpPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/users/list",
+      "rawPath": "/admin/users/list",
+      "filePath": "admin-dashboard/src/pages/admin/UserManagement.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/users/:id/role",
+      "rawPath": "/admin/users/:id/role",
+      "filePath": "admin-dashboard/src/pages/admin/UserManagement.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/list",
+      "rawPath": "/admin/list",
+      "filePath": "admin-dashboard/src/pages/admin/admins/api.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/create",
+      "rawPath": "/admin/create",
+      "filePath": "admin-dashboard/src/pages/admin/admins/api.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/:id",
+      "rawPath": "/admin/:id",
+      "filePath": "admin-dashboard/src/pages/admin/admins/api.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/admin/:id",
+      "rawPath": "/admin/:id",
+      "filePath": "admin-dashboard/src/pages/admin/admins/api.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/:id/status",
+      "rawPath": "/admin/:id/status",
+      "filePath": "admin-dashboard/src/pages/admin/admins/api.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/commission-plans",
+      "rawPath": "/admin/commission-plans",
+      "filePath": "admin-dashboard/src/pages/admin/commission/useCommissionPlans.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/commission-plans",
+      "rawPath": "/admin/commission-plans",
+      "filePath": "admin-dashboard/src/pages/admin/commission/useCommissionPlans.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/commission-plans/:id",
+      "rawPath": "/admin/commission-plans/:id",
+      "filePath": "admin-dashboard/src/pages/admin/commission/useCommissionPlans.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/commission-plans/:id/status",
+      "rawPath": "/admin/commission-plans/:id/status",
+      "filePath": "admin-dashboard/src/pages/admin/commission/useCommissionPlans.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/admin/commission-plans/:id",
+      "rawPath": "/admin/commission-plans/:id",
+      "filePath": "admin-dashboard/src/pages/admin/commission/useCommissionPlans.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/commissions/settings",
+      "rawPath": "/finance/commissions/settings",
+      "filePath": "admin-dashboard/src/pages/admin/finance/CommissionSettingsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/finance/commissions/audit-log",
+      "rawPath": "/finance/commissions/audit-log",
+      "filePath": "admin-dashboard/src/pages/admin/finance/CommissionSettingsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/finance/commissions/settings",
+      "rawPath": "/finance/commissions/settings",
+      "filePath": "admin-dashboard/src/pages/admin/finance/CommissionSettingsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/groceries/categories",
+      "rawPath": "groceries/categories",
+      "filePath": "admin-dashboard/src/pages/admin/groceries/AttributesPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/groceries/attributes",
+      "rawPath": "groceries/attributes",
+      "filePath": "admin-dashboard/src/pages/admin/groceries/AttributesPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/groceries/attributes/:editId",
+      "rawPath": "groceries/attributes/:editId",
+      "filePath": "admin-dashboard/src/pages/admin/groceries/AttributesPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/groceries/attributes",
+      "rawPath": "groceries/attributes",
+      "filePath": "admin-dashboard/src/pages/admin/groceries/AttributesPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/groceries/attributes/:id",
+      "rawPath": "groceries/attributes/:id",
+      "filePath": "admin-dashboard/src/pages/admin/groceries/AttributesPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/groceries/attributes/category/:catId",
+      "rawPath": "groceries/attributes/category/:catId",
+      "filePath": "admin-dashboard/src/pages/admin/groceries/CatalogPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/groceries/catalog?usageType=grocery",
+      "rawPath": "groceries/catalog?usageType=grocery",
+      "filePath": "admin-dashboard/src/pages/admin/groceries/CatalogPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/groceries/catalog/:editId",
+      "rawPath": "groceries/catalog/:editId",
+      "filePath": "admin-dashboard/src/pages/admin/groceries/CatalogPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/groceries/catalog",
+      "rawPath": "groceries/catalog",
+      "filePath": "admin-dashboard/src/pages/admin/groceries/CatalogPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/groceries/catalog/:id",
+      "rawPath": "groceries/catalog/:id",
+      "filePath": "admin-dashboard/src/pages/admin/groceries/CatalogPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/groceries/categories/:editId",
+      "rawPath": "groceries/categories/:editId",
+      "filePath": "admin-dashboard/src/pages/admin/groceries/CategoriesPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/groceries/categories",
+      "rawPath": "groceries/categories",
+      "filePath": "admin-dashboard/src/pages/admin/groceries/CategoriesPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/groceries/categories/:id",
+      "rawPath": "groceries/categories/:id",
+      "filePath": "admin-dashboard/src/pages/admin/groceries/CategoriesPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/groceries/merchant-products",
+      "rawPath": "/groceries/merchant-products",
+      "filePath": "admin-dashboard/src/pages/admin/groceries/MerchantProductsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/groceries/categories",
+      "rawPath": "/groceries/categories",
+      "filePath": "admin-dashboard/src/pages/admin/groceries/MerchantProductsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/groceries/catalog?usageType=grocery",
+      "rawPath": "/groceries/catalog?usageType=grocery",
+      "filePath": "admin-dashboard/src/pages/admin/groceries/MerchantProductsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/vendor",
+      "rawPath": "/vendor",
+      "filePath": "admin-dashboard/src/pages/admin/groceries/MerchantProductsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/attributes/category/:categoryId",
+      "rawPath": "/attributes/category/:categoryId",
+      "filePath": "admin-dashboard/src/pages/admin/groceries/MerchantProductsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/groceries/merchant-products/:editId",
+      "rawPath": "groceries/merchant-products/:editId",
+      "filePath": "admin-dashboard/src/pages/admin/groceries/MerchantProductsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/groceries/merchant-products",
+      "rawPath": "groceries/merchant-products",
+      "filePath": "admin-dashboard/src/pages/admin/groceries/MerchantProductsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/groceries/merchant-products/:id",
+      "rawPath": "groceries/merchant-products/:id",
+      "filePath": "admin-dashboard/src/pages/admin/groceries/MerchantProductsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/marketers",
+      "rawPath": "/admin/marketers",
+      "filePath": "admin-dashboard/src/pages/admin/marketers/useMarketers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/marketers/invite",
+      "rawPath": "/admin/marketers/invite",
+      "filePath": "admin-dashboard/src/pages/admin/marketers/useMarketers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/marketers/:id",
+      "rawPath": "/admin/marketers/:id",
+      "filePath": "admin-dashboard/src/pages/admin/marketers/useMarketers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/marketers/:id/status",
+      "rawPath": "/admin/marketers/:id/status",
+      "filePath": "admin-dashboard/src/pages/admin/marketers/useMarketers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/marketers/:id/reset-password",
+      "rawPath": "/admin/marketers/:id/reset-password",
+      "filePath": "admin-dashboard/src/pages/admin/marketers/useMarketers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/admin/marketers/:id",
+      "rawPath": "/admin/marketers/:id",
+      "filePath": "admin-dashboard/src/pages/admin/marketers/useMarketers.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/wallet/coupons",
+      "rawPath": "admin/wallet/coupons",
+      "filePath": "admin-dashboard/src/pages/admin/marketing/AdminCouponsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/wallet/coupons",
+      "rawPath": "/wallet/coupons",
+      "filePath": "admin-dashboard/src/pages/admin/marketing/AdminCouponsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/users/search",
+      "rawPath": "/admin/users/search",
+      "filePath": "admin-dashboard/src/pages/admin/marketing/AdminWalletPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/field/onboarding/queue",
+      "rawPath": "/field/onboarding/queue",
+      "filePath": "admin-dashboard/src/pages/admin/onboarding/useOnboarding.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/field/onboarding/:id/approve",
+      "rawPath": "/field/onboarding/:id/approve",
+      "filePath": "admin-dashboard/src/pages/admin/onboarding/useOnboarding.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/field/onboarding/:id/reject",
+      "rawPath": "/field/onboarding/:id/reject",
+      "filePath": "admin-dashboard/src/pages/admin/onboarding/useOnboarding.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/field/onboarding/:id/needs-fix",
+      "rawPath": "/field/onboarding/:id/needs-fix",
+      "filePath": "admin-dashboard/src/pages/admin/onboarding/useOnboarding.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/activation/store/:storeId",
+      "rawPath": "/admin/activation/store/:storeId",
+      "filePath": "admin-dashboard/src/pages/admin/onboarding/usePendingActivations.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/activation/vendor/:vendorId",
+      "rawPath": "/admin/activation/vendor/:vendorId",
+      "filePath": "admin-dashboard/src/pages/admin/onboarding/usePendingActivations.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/ops/drivers/realtime",
+      "rawPath": "/admin/ops/drivers/realtime",
+      "filePath": "admin-dashboard/src/pages/admin/ops/OpsDriversDashboard.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/ops/heatmap",
+      "rawPath": "/admin/ops/heatmap",
+      "filePath": "admin-dashboard/src/pages/admin/ops/OpsDriversDashboard.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/ops/drivers/:id/actions",
+      "rawPath": "/admin/ops/drivers/:id/actions",
+      "filePath": "admin-dashboard/src/pages/admin/ops/OpsDriversDashboard.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/pricing-strategies",
+      "rawPath": "/pricing-strategies",
+      "filePath": "admin-dashboard/src/pages/admin/pricing/PricingStrategiesPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/pricing-strategies",
+      "rawPath": "/pricing-strategies",
+      "filePath": "admin-dashboard/src/pages/admin/pricing/PricingStrategiesPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/pricing-strategies",
+      "rawPath": "/pricing-strategies",
+      "filePath": "admin-dashboard/src/pages/admin/pricing/PricingStrategiesPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/pricing-strategies/:id",
+      "rawPath": "/pricing-strategies/:id",
+      "filePath": "admin-dashboard/src/pages/admin/pricing/PricingStrategiesPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/quality/reviews?:queryParams",
+      "rawPath": "/admin/quality/reviews?:queryParams",
+      "filePath": "admin-dashboard/src/pages/admin/quality/QualityReviewsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/quality/reviews/:_id/hide",
+      "rawPath": "/admin/quality/reviews/:_id/hide",
+      "filePath": "admin-dashboard/src/pages/admin/quality/QualityReviewsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/quality/reviews/:_id/publish",
+      "rawPath": "/admin/quality/reviews/:_id/publish",
+      "filePath": "admin-dashboard/src/pages/admin/quality/QualityReviewsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/merchant/reports",
+      "rawPath": "/merchant/reports",
+      "filePath": "admin-dashboard/src/pages/admin/reports/MerchantReportsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/reports/marketers/overview",
+      "rawPath": "/reports/marketers/overview",
+      "filePath": "admin-dashboard/src/pages/admin/reports/useMarketerReports.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/reports/marketers/:uid",
+      "rawPath": "/reports/marketers/:uid",
+      "filePath": "admin-dashboard/src/pages/admin/reports/useMarketerReports.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/stores",
+      "rawPath": "/admin/stores",
+      "filePath": "admin-dashboard/src/pages/admin/stores/useStoresModeration.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/stores/:id/activate",
+      "rawPath": "/admin/stores/:id/activate",
+      "filePath": "admin-dashboard/src/pages/admin/stores/useStoresModeration.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/stores/:id/deactivate",
+      "rawPath": "/admin/stores/:id/deactivate",
+      "filePath": "admin-dashboard/src/pages/admin/stores/useStoresModeration.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/stores/:id/force-close",
+      "rawPath": "/admin/stores/:id/force-close",
+      "filePath": "admin-dashboard/src/pages/admin/stores/useStoresModeration.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/stores/:id/force-open",
+      "rawPath": "/admin/stores/:id/force-open",
+      "filePath": "admin-dashboard/src/pages/admin/stores/useStoresModeration.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/stores/:id",
+      "rawPath": "/admin/stores/:id",
+      "filePath": "admin-dashboard/src/pages/admin/stores/useStoresModeration.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/admin/stores/:id",
+      "rawPath": "/admin/stores/:id",
+      "filePath": "admin-dashboard/src/pages/admin/stores/useStoresModeration.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/support/tickets?:params",
+      "rawPath": "/admin/support/tickets?:params",
+      "filePath": "admin-dashboard/src/pages/admin/support/SupportTicketsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/support/stats",
+      "rawPath": "/admin/support/stats",
+      "filePath": "admin-dashboard/src/pages/admin/support/SupportTicketsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/support/tickets",
+      "rawPath": "/admin/support/tickets",
+      "filePath": "admin-dashboard/src/pages/admin/support/SupportTicketsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/support/tickets/:id",
+      "rawPath": "/admin/support/tickets/:id",
+      "filePath": "admin-dashboard/src/pages/admin/support/SupportTicketsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/audit-logs?:params",
+      "rawPath": "/admin/audit-logs?:params",
+      "filePath": "admin-dashboard/src/pages/admin/system/AuditLogPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/audit-logs/stats",
+      "rawPath": "/admin/audit-logs/stats",
+      "filePath": "admin-dashboard/src/pages/admin/system/AuditLogPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/audit-logs/my-actions?limit=3",
+      "rawPath": "/admin/audit-logs/my-actions?limit=3",
+      "filePath": "admin-dashboard/src/pages/admin/system/AuditLogPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/vendors/:id",
+      "rawPath": "/admin/vendors/:id",
+      "filePath": "admin-dashboard/src/pages/admin/vendors/VendorsManagement.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/vendors/:id/status",
+      "rawPath": "/admin/vendors/:id/status",
+      "filePath": "admin-dashboard/src/pages/admin/vendors/VendorsManagement.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/vendors/:id/branches",
+      "rawPath": "/admin/vendors/:id/branches",
+      "filePath": "admin-dashboard/src/pages/admin/vendors/VendorsManagement.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/vendors/:id/branches/:branchId",
+      "rawPath": "/admin/vendors/:id/branches/:branchId",
+      "filePath": "admin-dashboard/src/pages/admin/vendors/VendorsManagement.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/vendors/:id/activate",
+      "rawPath": "/admin/vendors/:id/activate",
+      "filePath": "admin-dashboard/src/pages/admin/vendors/useVendorsModeration.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/vendors/:id/deactivate",
+      "rawPath": "/admin/vendors/:id/deactivate",
+      "filePath": "admin-dashboard/src/pages/admin/vendors/useVendorsModeration.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/vendors/:id/reset-password",
+      "rawPath": "/admin/vendors/:id/reset-password",
+      "filePath": "admin-dashboard/src/pages/admin/vendors/useVendorsModeration.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/admin/vendors/:id",
+      "rawPath": "/admin/vendors/:id",
+      "filePath": "admin-dashboard/src/pages/admin/vendors/useVendorsModeration.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/delivery/banners/admin",
+      "rawPath": "/delivery/banners/admin",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryBannersPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/delivery/categories",
+      "rawPath": "/delivery/categories",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryBannersPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/delivery/banners/:_id",
+      "rawPath": "/delivery/banners/:_id",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryBannersPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/delivery/banners",
+      "rawPath": "/delivery/banners",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryBannersPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/delivery/banners/:id",
+      "rawPath": "/delivery/banners/:id",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryBannersPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/delivery/cart/:cartId",
+      "rawPath": "/delivery/cart/:cartId",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryCartsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/delivery/cart/:cartId/items/:productId",
+      "rawPath": "/delivery/cart/:cartId/items/:productId",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryCartsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/delivery/cart/export?abandoned=:showAbandonedOnly",
+      "rawPath": "/delivery/cart/export?abandoned=:showAbandonedOnly",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryCartsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/delivery/cart/:_id/retarget/push",
+      "rawPath": "/delivery/cart/:_id/retarget/push",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryCartsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/delivery/categories/main",
+      "rawPath": "/delivery/categories/main",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryCategoriesPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/delivery/categories/children/:parentId",
+      "rawPath": "/delivery/categories/children/:parentId",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryCategoriesPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/delivery/categories/:_id",
+      "rawPath": "/delivery/categories/:_id",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryCategoriesPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/delivery/categories",
+      "rawPath": "/delivery/categories",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryCategoriesPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/delivery/categories/:id",
+      "rawPath": "/delivery/categories/:id",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryCategoriesPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/delivery/categories/:id",
+      "rawPath": "/delivery/categories/:id",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryCategoriesPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/delivery/categories/export",
+      "rawPath": "/delivery/categories/export",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryCategoriesPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/delivery/categories/bulk-reorder",
+      "rawPath": "/delivery/categories/bulk-reorder",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryCategoriesPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/delivery/offer",
+      "rawPath": "/delivery/offer",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryOffersPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/delivery/products",
+      "rawPath": "/delivery/products",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryOffersPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/delivery/offer/:_id",
+      "rawPath": "/delivery/offer/:_id",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryOffersPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/delivery/offer",
+      "rawPath": "/delivery/offer",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryOffersPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/delivery/offer/:id",
+      "rawPath": "/delivery/offer/:id",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryOffersPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/delivery/promotions/admin?status=all",
+      "rawPath": "/delivery/promotions/admin?status=all",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryPromotionsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/delivery/promotions/:_id",
+      "rawPath": "/delivery/promotions/:_id",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryPromotionsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/delivery/promotions",
+      "rawPath": "/delivery/promotions",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryPromotionsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/delivery/promotions/:id",
+      "rawPath": "/delivery/promotions/:id",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryPromotionsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/delivery/stores/:id",
+      "rawPath": "/delivery/stores/:id",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryStoreDetailsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/:MCK_PREFIX/merchant-products",
+      "rawPath": ":MCK_PREFIX/merchant-products",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryStoreDetailsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/delivery/subcategories",
+      "rawPath": "/delivery/subcategories",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryStoreDetailsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/delivery/subcategories/:_id",
+      "rawPath": "/delivery/subcategories/:_id",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryStoreDetailsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/delivery/subcategories",
+      "rawPath": "/delivery/subcategories",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryStoreDetailsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/delivery/subcategories/:subId",
+      "rawPath": "/delivery/subcategories/:subId",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryStoreDetailsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/:MCK_PREFIX/merchant-products/:_id",
+      "rawPath": ":MCK_PREFIX/merchant-products/:_id",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryStoreDetailsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/delivery/products/:_id",
+      "rawPath": "/delivery/products/:_id",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryStoreDetailsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/delivery/products",
+      "rawPath": "/delivery/products",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryStoreDetailsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/:MCK_PREFIX/merchant-products/:prodId",
+      "rawPath": ":MCK_PREFIX/merchant-products/:prodId",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryStoreDetailsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/delivery/products/:prodId",
+      "rawPath": "/delivery/products/:prodId",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryStoreDetailsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/delivery/stores/:_id",
+      "rawPath": "/delivery/stores/:_id",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryStoresPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/delivery/stores",
+      "rawPath": "/delivery/stores",
+      "filePath": "admin-dashboard/src/pages/delivery/DeliveryStoresPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/pricing-strategies/:_id",
+      "rawPath": "/pricing-strategies/:_id",
+      "filePath": "admin-dashboard/src/pages/delivery/PricingStrategiesPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/delivery/stores/:storeId/stats/:period",
+      "rawPath": "/delivery/stores/:storeId/stats/:period",
+      "filePath": "admin-dashboard/src/pages/delivery/hooks/useStoreStats.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/delivery/stores/:id",
+      "rawPath": "/delivery/stores/:id",
+      "filePath": "admin-dashboard/src/pages/delivery/hooks/useStores.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/search",
+      "rawPath": "admin/drivers/search",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/driversApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/:id",
+      "rawPath": "admin/drivers/:id",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/driversApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/delivery/order",
+      "rawPath": "/delivery/order",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/ordersApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/delivery/order/:id",
+      "rawPath": "/delivery/order/:id",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/ordersApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/delivery/order/:id/admin-status",
+      "rawPath": "/delivery/order/:id/admin-status",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/ordersApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/delivery/order/:id/assign-driver",
+      "rawPath": "/delivery/order/:id/assign-driver",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/ordersApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/delivery/order/:orderId/suborders/:subId/assign-driver",
+      "rawPath": "/delivery/order/:orderId/suborders/:subId/assign-driver",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/ordersApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/delivery/order/:orderId/suborders/:subId/status",
+      "rawPath": "/delivery/order/:orderId/suborders/:subId/status",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/ordersApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/delivery/order/:id/pod",
+      "rawPath": "/delivery/order/:id/pod",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/ordersApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/delivery/order/:orderId/suborders/:subId/pod",
+      "rawPath": "/delivery/order/:orderId/suborders/:subId/pod",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/ordersApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/delivery/order/:id/procurement",
+      "rawPath": "/delivery/order/:id/procurement",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/ordersApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/utility/order/:orderId/sub/:subId/origin",
+      "rawPath": "/utility/order/:orderId/sub/:subId/origin",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/ordersApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/delivery/order/:orderId/notes",
+      "rawPath": "/delivery/order/:orderId/notes",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/ordersApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/delivery/order/:orderId/notes",
+      "rawPath": "/delivery/order/:orderId/notes",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/ordersApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/delivery/order/export/orders/excel",
+      "rawPath": "/delivery/order/export/orders/excel",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/ordersApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/delivery/stores/search",
+      "rawPath": "/delivery/stores/search",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/storesApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/users/search",
+      "rawPath": "/users/search",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/usersApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/users/:id",
+      "rawPath": "/users/:id",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/usersApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/utility/options",
+      "rawPath": "/utility/options",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/utilityApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/utility/options/gas",
+      "rawPath": "/utility/options/gas",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/utilityApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/utility/options/water",
+      "rawPath": "/utility/options/water",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/utilityApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/meta/cities",
+      "rawPath": "/meta/cities",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/utilityApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/utility/daily",
+      "rawPath": "/utility/daily",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/utilityApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/utility/daily",
+      "rawPath": "/utility/daily",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/utilityApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/utility/daily/:id",
+      "rawPath": "/utility/daily/:id",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/utilityApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/utility/daily",
+      "rawPath": "/utility/daily",
+      "filePath": "admin-dashboard/src/pages/delivery/orders/services/utilityApi.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/drivers/health",
+      "rawPath": "/drivers/health",
+      "filePath": "admin-dashboard/src/pages/drivers/Dashboard.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/docs/expiring",
+      "rawPath": "/admin/drivers/docs/expiring",
+      "filePath": "admin-dashboard/src/pages/drivers/Dashboard.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/driver-assets",
+      "rawPath": "/admin/driver-assets",
+      "filePath": "admin-dashboard/src/pages/drivers/tabs/Assets.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/driver-assets/:assetId/assign",
+      "rawPath": "/admin/driver-assets/:assetId/assign",
+      "filePath": "admin-dashboard/src/pages/drivers/tabs/Assets.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/driver-assets/:aid/return",
+      "rawPath": "/admin/driver-assets/:aid/return",
+      "filePath": "admin-dashboard/src/pages/drivers/tabs/Assets.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/drivers/:id/attendance/daily",
+      "rawPath": "/drivers/:id/attendance/daily",
+      "filePath": "admin-dashboard/src/pages/drivers/tabs/Attendance.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/docs",
+      "rawPath": "/admin/drivers/docs",
+      "filePath": "admin-dashboard/src/pages/drivers/tabs/Documents.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/drivers/docs/:docId",
+      "rawPath": "/admin/drivers/docs/:docId",
+      "filePath": "admin-dashboard/src/pages/drivers/tabs/Documents.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/:id/adjustments",
+      "rawPath": "/admin/drivers/:id/adjustments",
+      "filePath": "admin-dashboard/src/pages/drivers/tabs/Finance.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/driver-payouts",
+      "rawPath": "/admin/driver-payouts",
+      "filePath": "admin-dashboard/src/pages/drivers/tabs/Finance.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/drivers/:id/adjustments",
+      "rawPath": "/admin/drivers/:id/adjustments",
+      "filePath": "admin-dashboard/src/pages/drivers/tabs/Finance.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/driver-payouts/:payoutId/approve",
+      "rawPath": "/admin/driver-payouts/:payoutId/approve",
+      "filePath": "admin-dashboard/src/pages/drivers/tabs/Finance.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/driver-payouts/:payId/pay",
+      "rawPath": "/admin/driver-payouts/:payId/pay",
+      "filePath": "admin-dashboard/src/pages/drivers/tabs/Finance.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/driver-shifts",
+      "rawPath": "/admin/driver-shifts",
+      "filePath": "admin-dashboard/src/pages/drivers/tabs/Shifts.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "patch",
+      "path": "/api/v1/admin/driver-shifts/:shiftId/mark",
+      "rawPath": "/admin/driver-shifts/:shiftId/mark",
+      "filePath": "admin-dashboard/src/pages/drivers/tabs/Shifts.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/vacations?:param",
+      "rawPath": "/admin/drivers/vacations?:param",
+      "filePath": "admin-dashboard/src/pages/drivers/tabs/Vacations.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/drivers/vacations/stats",
+      "rawPath": "/admin/drivers/vacations/stats",
+      "filePath": "admin-dashboard/src/pages/drivers/tabs/Vacations.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/driver/vacations/:id/approve",
+      "rawPath": "/driver/vacations/:id/approve",
+      "filePath": "admin-dashboard/src/pages/drivers/tabs/Vacations.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/driver/vacations/:id/reject",
+      "rawPath": "/driver/vacations/:id/reject",
+      "filePath": "admin-dashboard/src/pages/drivers/tabs/Vacations.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/marketing/adspend/upload",
+      "rawPath": "/marketing/adspend/upload",
+      "filePath": "admin-dashboard/src/pages/marketing/AdSpendUpload.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/marketing/roas",
+      "rawPath": "/marketing/roas",
+      "filePath": "admin-dashboard/src/pages/marketing/Dashboard.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/segments/preview",
+      "rawPath": "/segments/preview",
+      "filePath": "admin-dashboard/src/pages/marketing/Segments.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/segments/sync",
+      "rawPath": "/segments/sync",
+      "filePath": "admin-dashboard/src/pages/marketing/Segments.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/accounts",
+      "rawPath": "/accounts",
+      "filePath": "admin-dashboard/src/pages/money/GeneralLedger.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/opening-balance",
+      "rawPath": "/opening-balance",
+      "filePath": "admin-dashboard/src/pages/money/GeneralLedger.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/journal-entries",
+      "rawPath": "/journal-entries",
+      "filePath": "admin-dashboard/src/pages/money/JournalEntries.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/accounts/chart?onlyLeaf=1",
+      "rawPath": "/accounts/chart?onlyLeaf=1",
+      "filePath": "admin-dashboard/src/pages/money/JournalEntries.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/journal-entries",
+      "rawPath": "/journal-entries",
+      "filePath": "admin-dashboard/src/pages/money/JournalEntries.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/opening-balance",
+      "rawPath": "/opening-balance",
+      "filePath": "admin-dashboard/src/pages/money/OpeningBalanceModal.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/reports/trial-balance",
+      "rawPath": "/reports/trial-balance",
+      "filePath": "admin-dashboard/src/pages/money/ReportsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/reports/summary",
+      "rawPath": "/reports/summary",
+      "filePath": "admin-dashboard/src/pages/money/ReportsPage.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/partners/contracts/expiring",
+      "rawPath": "/partners/contracts/expiring",
+      "filePath": "admin-dashboard/src/pages/parteners/ContractsWidget.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/partners",
+      "rawPath": "/partners",
+      "filePath": "admin-dashboard/src/pages/parteners/PartnerDetails.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/partners/:store/performance",
+      "rawPath": "/partners/:store/performance",
+      "filePath": "admin-dashboard/src/pages/parteners/PartnerDetails.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/partners/upsert",
+      "rawPath": "/partners/upsert",
+      "filePath": "admin-dashboard/src/pages/parteners/PartnerDetails.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/customers/:userId/overview",
+      "rawPath": "/customers/:userId/overview",
+      "filePath": "admin-dashboard/src/pages/support/CustomerPanel.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/admin/dashboard/support-tickets",
+      "rawPath": "/admin/dashboard/support-tickets",
+      "filePath": "admin-dashboard/src/pages/support/Inbox.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/support/tickets/:ticketId/messages",
+      "rawPath": "/support/tickets/:ticketId/messages",
+      "filePath": "admin-dashboard/src/pages/support/MessageThread.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/support/tickets/:ticketId/messages",
+      "rawPath": "/support/tickets/:ticketId/messages",
+      "filePath": "admin-dashboard/src/pages/support/MessageThread.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/admin/dashboard/support-tickets/:ticketId/notes",
+      "rawPath": "/admin/dashboard/support-tickets/:ticketId/notes",
+      "filePath": "admin-dashboard/src/pages/support/MessageThread.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/support/reports/summary",
+      "rawPath": "/support/reports/summary",
+      "filePath": "admin-dashboard/src/pages/support/Reports.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "put",
+      "path": "/api/v1/admin/dashboard/support-tickets/:id/status",
+      "rawPath": "/admin/dashboard/support-tickets/:id/status",
+      "filePath": "admin-dashboard/src/pages/support/TicketView.tsx"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "get",
+      "path": "/api/v1/accounts/chart/tree",
+      "rawPath": "/accounts/chart/tree",
+      "filePath": "admin-dashboard/src/services/chartAccount.api.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "post",
+      "path": "/api/v1/media/sign-upload",
+      "rawPath": "/media/sign-upload",
+      "filePath": "admin-dashboard/src/services/uploadService.ts"
+    },
+    {
+      "project": "admin-dashboard",
+      "method": "delete",
+      "path": "/api/v1/media/delete/:fileName",
+      "rawPath": "/media/delete/:fileName",
+      "filePath": "admin-dashboard/src/services/uploadService.ts"
+    },
+    {
+      "project": "vendor-app",
+      "method": "get",
+      "path": "/api/v1/groceries/merchant-products/:productId",
+      "rawPath": "/groceries/merchant-products/:productId",
+      "filePath": "vendor-app/src/screens/AddProductScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "put",
+      "path": "/api/v1/groceries/merchant-products/:productId",
+      "rawPath": "/groceries/merchant-products/:productId",
+      "filePath": "vendor-app/src/screens/AddProductScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "post",
+      "path": "/api/v1/groceries/merchant-products",
+      "rawPath": "/groceries/merchant-products",
+      "filePath": "vendor-app/src/screens/AddProductScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "get",
+      "path": "/api/v1/groceries/catalog",
+      "rawPath": "/groceries/catalog",
+      "filePath": "vendor-app/src/screens/CatalogProductPickerScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "post",
+      "path": "/api/v1/vendor/auth/vendor-login",
+      "rawPath": "/vendor/auth/vendor-login",
+      "filePath": "vendor-app/src/screens/LoginScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "post",
+      "path": "/api/v1/vendor/push-token",
+      "rawPath": "/vendor/push-token",
+      "filePath": "vendor-app/src/screens/LoginScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "get",
+      "path": "/api/v1/delivery/order/vendor/orders",
+      "rawPath": "/delivery/order/vendor/orders",
+      "filePath": "vendor-app/src/screens/OrdersScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "put",
+      "path": "/api/v1/delivery/order/:id/vendor-accept",
+      "rawPath": "/delivery/order/:id/vendor-accept",
+      "filePath": "vendor-app/src/screens/OrdersScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "put",
+      "path": "/api/v1/delivery/order/:id/vendor-cancel",
+      "rawPath": "/delivery/order/:id/vendor-cancel",
+      "filePath": "vendor-app/src/screens/OrdersScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "get",
+      "path": "/api/v1/groceries/merchant-products",
+      "rawPath": "/groceries/merchant-products",
+      "filePath": "vendor-app/src/screens/ProductsScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "put",
+      "path": "/api/v1/groceries/merchant-products/:id",
+      "rawPath": "/groceries/merchant-products/:id",
+      "filePath": "vendor-app/src/screens/ProductsScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "delete",
+      "path": "/api/v1/groceries/merchant-products/:id",
+      "rawPath": "/groceries/merchant-products/:id",
+      "filePath": "vendor-app/src/screens/ProductsScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "get",
+      "path": "/api/v1/vendor/me/profile",
+      "rawPath": "/vendor/me/profile",
+      "filePath": "vendor-app/src/screens/SettingsScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "get",
+      "path": "/api/v1/vendor/settings/notifications",
+      "rawPath": "/vendor/settings/notifications",
+      "filePath": "vendor-app/src/screens/SettingsScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "put",
+      "path": "/api/v1/vendor/settings/notifications",
+      "rawPath": "/vendor/settings/notifications",
+      "filePath": "vendor-app/src/screens/SettingsScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "post",
+      "path": "/api/v1/vendor/account/delete-request",
+      "rawPath": "/vendor/account/delete-request",
+      "filePath": "vendor-app/src/screens/SettingsScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "get",
+      "path": "/api/v1/vendor/dashboard/overview",
+      "rawPath": "/vendor/dashboard/overview",
+      "filePath": "vendor-app/src/screens/StatisticsScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "get",
+      "path": "/api/v1/delivery/stores/:storeId",
+      "rawPath": "/delivery/stores/:storeId",
+      "filePath": "vendor-app/src/screens/StoreInfoScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "put",
+      "path": "/api/v1/delivery/stores/:storeId",
+      "rawPath": "/delivery/stores/:storeId",
+      "filePath": "vendor-app/src/screens/StoreInfoScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "get",
+      "path": "/api/v1/vendor/account/statement",
+      "rawPath": "/vendor/account/statement",
+      "filePath": "vendor-app/src/screens/VendorAccountStatementScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "get",
+      "path": "/api/v1/vendor/settlements",
+      "rawPath": "/vendor/settlements",
+      "filePath": "vendor-app/src/screens/VendorAccountStatementScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "get",
+      "path": "/api/v1/vendor/sales?limit=100",
+      "rawPath": "/vendor/sales?limit=100",
+      "filePath": "vendor-app/src/screens/VendorAccountStatementScreen.tsx"
+    },
+    {
+      "project": "vendor-app",
+      "method": "post",
+      "path": "/api/v1/vendor/settlements",
+      "rawPath": "/vendor/settlements",
+      "filePath": "vendor-app/src/screens/VendorAccountStatementScreen.tsx"
+    },
+    {
+      "project": "rider-app",
+      "method": "post",
+      "path": "/api/v1/driver/login",
+      "rawPath": "/driver/login",
+      "filePath": "rider-app/src/api/auth.ts"
+    },
+    {
+      "project": "rider-app",
+      "method": "get",
+      "path": "/api/v1/driver/orders",
+      "rawPath": "/driver/orders",
+      "filePath": "rider-app/src/api/driver.ts"
+    },
+    {
+      "project": "rider-app",
+      "method": "post",
+      "path": "/api/v1/driver/complete/:orderId",
+      "rawPath": "/driver/complete/:orderId",
+      "filePath": "rider-app/src/api/driver.ts"
+    },
+    {
+      "project": "rider-app",
+      "method": "post",
+      "path": "/api/v1/driver/availability",
+      "rawPath": "/driver/availability",
+      "filePath": "rider-app/src/api/driver.ts"
+    },
+    {
+      "project": "rider-app",
+      "method": "get",
+      "path": "/api/v1/driver/wallet/summary",
+      "rawPath": "/driver/wallet/summary",
+      "filePath": "rider-app/src/api/driver.ts"
+    },
+    {
+      "project": "rider-app",
+      "method": "get",
+      "path": "/api/v1/driver/withdrawals",
+      "rawPath": "/driver/withdrawals",
+      "filePath": "rider-app/src/api/driver.ts"
+    },
+    {
+      "project": "rider-app",
+      "method": "post",
+      "path": "/api/v1/driver/withdrawals",
+      "rawPath": "/driver/withdrawals",
+      "filePath": "rider-app/src/api/driver.ts"
+    },
+    {
+      "project": "rider-app",
+      "method": "get",
+      "path": "/api/v1/driver/offers",
+      "rawPath": "/driver/offers",
+      "filePath": "rider-app/src/api/driver.ts"
+    },
+    {
+      "project": "rider-app",
+      "method": "post",
+      "path": "/api/v1/driver/offers/:offerId/accept",
+      "rawPath": "/driver/offers/:offerId/accept",
+      "filePath": "rider-app/src/api/driver.ts"
+    },
+    {
+      "project": "rider-app",
+      "method": "get",
+      "path": "/api/v1/driver/me",
+      "rawPath": "/driver/me",
+      "filePath": "rider-app/src/api/profile.ts"
+    },
+    {
+      "project": "rider-app",
+      "method": "patch",
+      "path": "/api/v1/driver/me",
+      "rawPath": "/driver/me",
+      "filePath": "rider-app/src/api/profile.ts"
+    },
+    {
+      "project": "rider-app",
+      "method": "post",
+      "path": "/api/v1/driver/change-password",
+      "rawPath": "/driver/change-password",
+      "filePath": "rider-app/src/api/profile.ts"
+    },
+    {
+      "project": "rider-app",
+      "method": "post",
+      "path": "/api/v1/rides/sos",
+      "rawPath": "/rides/sos",
+      "filePath": "rider-app/src/componant/triggerSOS.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "post",
+      "path": "/api/v1/:BASE_URL/accounts:signInWithPassword?key=:API_KEY",
+      "rawPath": ":BASE_URL/accounts:signInWithPassword?key=:API_KEY",
+      "filePath": "app-user/src/api/authService.ts"
+    },
+    {
+      "project": "app-user",
+      "method": "get",
+      "path": "/api/v1/favorites",
+      "rawPath": "/favorites",
+      "filePath": "app-user/src/api/favorites.ts"
+    },
+    {
+      "project": "app-user",
+      "method": "post",
+      "path": "/api/v1/favorites",
+      "rawPath": "/favorites",
+      "filePath": "app-user/src/api/favorites.ts"
+    },
+    {
+      "project": "app-user",
+      "method": "delete",
+      "path": "/api/v1/:API_URL/:itemType/:itemId",
+      "rawPath": ":API_URL/:itemType/:itemId",
+      "filePath": "app-user/src/api/favorites.ts"
+    },
+    {
+      "project": "app-user",
+      "method": "get",
+      "path": "/api/v1/:API_URL/exists/:itemType/:itemId",
+      "rawPath": ":API_URL/exists/:itemType/:itemId",
+      "filePath": "app-user/src/api/favorites.ts"
+    },
+    {
+      "project": "app-user",
+      "method": "get",
+      "path": "/api/v1/:API_URL/counts",
+      "rawPath": ":API_URL/counts",
+      "filePath": "app-user/src/api/favorites.ts"
+    },
+    {
+      "project": "app-user",
+      "method": "post",
+      "path": "/api/v1/auth/password/verify",
+      "rawPath": "auth/password/verify",
+      "filePath": "app-user/src/api/passwordResetApi.ts"
+    },
+    {
+      "project": "app-user",
+      "method": "post",
+      "path": "/api/v1/auth/password/reset",
+      "rawPath": "auth/password/reset",
+      "filePath": "app-user/src/api/passwordResetApi.ts"
+    },
+    {
+      "project": "app-user",
+      "method": "get",
+      "path": "/api/v1/users/me",
+      "rawPath": "/users/me",
+      "filePath": "app-user/src/api/userApi.ts"
+    },
+    {
+      "project": "app-user",
+      "method": "patch",
+      "path": "/api/v1/users/profile",
+      "rawPath": "/users/profile",
+      "filePath": "app-user/src/api/userApi.ts"
+    },
+    {
+      "project": "app-user",
+      "method": "post",
+      "path": "/api/v1/users/address",
+      "rawPath": "/users/address",
+      "filePath": "app-user/src/api/userApi.ts"
+    },
+    {
+      "project": "app-user",
+      "method": "patch",
+      "path": "/api/v1/users/address/:_id",
+      "rawPath": "/users/address/:_id",
+      "filePath": "app-user/src/api/userApi.ts"
+    },
+    {
+      "project": "app-user",
+      "method": "delete",
+      "path": "/api/v1/users/address/:addressId",
+      "rawPath": "/users/address/:addressId",
+      "filePath": "app-user/src/api/userApi.ts"
+    },
+    {
+      "project": "app-user",
+      "method": "patch",
+      "path": "/api/v1/users/default-address",
+      "rawPath": "/users/default-address",
+      "filePath": "app-user/src/api/userApi.ts"
+    },
+    {
+      "project": "app-user",
+      "method": "get",
+      "path": "/api/v1/delivery/order/user/:userId",
+      "rawPath": "/delivery/order/user/:userId",
+      "filePath": "app-user/src/api/userApi.ts"
+    },
+    {
+      "project": "app-user",
+      "method": "patch",
+      "path": "/api/v1/users/avatar",
+      "rawPath": "/users/avatar",
+      "filePath": "app-user/src/api/userApi.ts"
+    },
+    {
+      "project": "app-user",
+      "method": "get",
+      "path": "/api/v1/delivery/categories",
+      "rawPath": "/delivery/categories",
+      "filePath": "app-user/src/components/CategoriesChips.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "fetch",
+      "path": "/api/v1/:API_URL/delivery/promotions",
+      "rawPath": ":API_URL/delivery/promotions",
+      "filePath": "app-user/src/components/delivery/DeliveryBannerSlider.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "fetch",
+      "path": "/api/v1/:API_URL/delivery/categories?:qs",
+      "rawPath": ":API_URL/delivery/categories?:qs",
+      "filePath": "app-user/src/components/delivery/DeliveryCategories.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "fetch",
+      "path": "/api/v1/:API_URL/delivery/categories/children/:parentId?withNumbers=1",
+      "rawPath": ":API_URL/delivery/categories/children/:parentId?withNumbers=1",
+      "filePath": "app-user/src/components/delivery/DeliveryCategories.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "fetch",
+      "path": "/api/v1/:API_URL/delivery/stores:params",
+      "rawPath": ":API_URL/delivery/stores:params",
+      "filePath": "app-user/src/components/delivery/DeliveryDeals.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "fetch",
+      "path": "/api/v1/:API_URL/delivery/promotions/by-stores?ids=:param&channel=app",
+      "rawPath": ":API_URL/delivery/promotions/by-stores?ids=:param&channel=app",
+      "filePath": "app-user/src/components/delivery/DeliveryDeals.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "fetch",
+      "path": "/api/v1/:API_URL/delivery/stores",
+      "rawPath": ":API_URL/delivery/stores",
+      "filePath": "app-user/src/components/delivery/DeliveryTrending.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "get",
+      "path": "/api/v1/delivery/cart/user/:userId",
+      "rawPath": "/delivery/cart/user/:userId",
+      "filePath": "app-user/src/context/CartContext.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "get",
+      "path": "/api/v1/delivery/cart/:cartId",
+      "rawPath": "/delivery/cart/:cartId",
+      "filePath": "app-user/src/context/CartContext.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "post",
+      "path": "/api/v1/delivery/cart/add",
+      "rawPath": "/delivery/cart/add",
+      "filePath": "app-user/src/context/CartContext.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "put",
+      "path": "/api/v1/delivery/cart/items/:id",
+      "rawPath": "/delivery/cart/items/:id",
+      "filePath": "app-user/src/context/CartContext.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "post",
+      "path": "/api/v1/delivery/cart/merge",
+      "rawPath": "/delivery/cart/merge",
+      "filePath": "app-user/src/context/CartContext.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "get",
+      "path": "/api/v1/cms/bootstrap",
+      "rawPath": "/cms/bootstrap",
+      "filePath": "app-user/src/hooks/useBootstrapConfig.ts"
+    },
+    {
+      "project": "app-user",
+      "method": "get",
+      "path": "/api/v1/users/notifications",
+      "rawPath": "/users/notifications",
+      "filePath": "app-user/src/hooks/useNotifications.ts"
+    },
+    {
+      "project": "app-user",
+      "method": "post",
+      "path": "/api/v1/users/notifications/mark-all-read",
+      "rawPath": "/users/notifications/mark-all-read",
+      "filePath": "app-user/src/hooks/useNotifications.ts"
+    },
+    {
+      "project": "app-user",
+      "method": "post",
+      "path": "/api/v1/users/notifications/:notificationId/read",
+      "rawPath": "/users/notifications/:notificationId/read",
+      "filePath": "app-user/src/hooks/useNotifications.ts"
+    },
+    {
+      "project": "app-user",
+      "method": "get",
+      "path": "/api/v1/cms/onboarding",
+      "rawPath": "/cms/onboarding",
+      "filePath": "app-user/src/hooks/useOnboarding.ts"
+    },
+    {
+      "project": "app-user",
+      "method": "post",
+      "path": "/api/v1/:API_URL/users/init",
+      "rawPath": ":API_URL/users/init",
+      "filePath": "app-user/src/screens/Auth/LoginScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "get",
+      "path": "/api/v1/:API_URL/users/me",
+      "rawPath": ":API_URL/users/me",
+      "filePath": "app-user/src/screens/Auth/LoginScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "post",
+      "path": "/api/v1/:API_URL/users/otp/send",
+      "rawPath": ":API_URL/users/otp/send",
+      "filePath": "app-user/src/screens/Auth/LoginScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "post",
+      "path": "/api/v1/:API_URL/users/otp/verify",
+      "rawPath": ":API_URL/users/otp/verify",
+      "filePath": "app-user/src/screens/Auth/OTPVerificationScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "post",
+      "path": "/api/v1/delivery/order/errand/fee",
+      "rawPath": "/delivery/order/errand/fee",
+      "filePath": "app-user/src/screens/delivery/AkhdimniScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "post",
+      "path": "/api/v1/delivery/order/errand",
+      "rawPath": "/delivery/order/errand",
+      "filePath": "app-user/src/screens/delivery/AkhdimniScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "fetch",
+      "path": "/api/v1/:API_URL/delivery/promotions/by-products?ids=:idsParam&channel=app",
+      "rawPath": ":API_URL/delivery/promotions/by-products?ids=:idsParam&channel=app",
+      "filePath": "app-user/src/screens/delivery/BusinessDetailsScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "fetch",
+      "path": "/api/v1/:API_URL/delivery/stores?categoryId=:categoryId",
+      "rawPath": ":API_URL/delivery/stores?categoryId=:categoryId",
+      "filePath": "app-user/src/screens/delivery/CategoryDetailsScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "fetch",
+      "path": "/api/v1/:API_URL/delivery/promotions/by-stores?ids=:idsParam&channel=app",
+      "rawPath": ":API_URL/delivery/promotions/by-stores?ids=:idsParam&channel=app",
+      "filePath": "app-user/src/screens/delivery/CategoryDetailsScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "get",
+      "path": "/api/v1/delivery/stores/search",
+      "rawPath": "/delivery/stores/search",
+      "filePath": "app-user/src/screens/delivery/DeliverySearch.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "get",
+      "path": "/api/v1/delivery/categories/children/:parentCategoryId",
+      "rawPath": "/delivery/categories/children/:parentCategoryId",
+      "filePath": "app-user/src/screens/delivery/GroceryScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "get",
+      "path": "/api/v1/delivery/promotions/by-stores",
+      "rawPath": "/delivery/promotions/by-stores",
+      "filePath": "app-user/src/screens/delivery/GroceryScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "get",
+      "path": "/api/v1/delivery/cart/fee",
+      "rawPath": "/delivery/cart/fee",
+      "filePath": "app-user/src/screens/delivery/InvoiceScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "get",
+      "path": "/api/v1/users/address",
+      "rawPath": "/users/address",
+      "filePath": "app-user/src/screens/delivery/InvoiceScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "post",
+      "path": "/api/v1/coupons/validate",
+      "rawPath": "/coupons/validate",
+      "filePath": "app-user/src/screens/delivery/InvoiceScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "post",
+      "path": "/api/v1/delivery/order",
+      "rawPath": "/delivery/order",
+      "filePath": "app-user/src/screens/delivery/InvoiceScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "fetch",
+      "path": "/api/v1/:API_URL/delivery/promotions/by-products?ids=:param&channel=app",
+      "rawPath": ":API_URL/delivery/promotions/by-products?ids=:param&channel=app",
+      "filePath": "app-user/src/screens/delivery/ProductDetailsScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "fetch",
+      "path": "/api/v1/:API_URL/utility/options?city=:param",
+      "rawPath": ":API_URL/utility/options?city=:param",
+      "filePath": "app-user/src/screens/delivery/UtilityGasScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "post",
+      "path": "/api/v1/utility/order",
+      "rawPath": "/utility/order",
+      "filePath": "app-user/src/screens/delivery/UtilityGasScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "get",
+      "path": "/api/v1/utility/options",
+      "rawPath": "/utility/options",
+      "filePath": "app-user/src/screens/delivery/UtilityWaterScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "get",
+      "path": "/api/v1/wallet",
+      "rawPath": "/wallet",
+      "filePath": "app-user/src/screens/delivery/WalletScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "get",
+      "path": "/api/v1/coupons/user",
+      "rawPath": "/coupons/user",
+      "filePath": "app-user/src/screens/delivery/WalletScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "fetch",
+      "path": "/v1/places:autocomplete",
+      "rawPath": "https://places.googleapis.com/v1/places:autocomplete",
+      "filePath": "app-user/src/screens/map/SelectLocationScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "fetch",
+      "path": "/v1/places/:pid",
+      "rawPath": "https://places.googleapis.com/v1/places/:pid?languageCode=ar",
+      "filePath": "app-user/src/screens/map/SelectLocationScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "fetch",
+      "path": "/v1/geocode:reverse",
+      "rawPath": "https://places.googleapis.com/v1/geocode:reverse",
+      "filePath": "app-user/src/screens/map/SelectLocationScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "get",
+      "path": "/api/v1/users/me/delete-eligibility",
+      "rawPath": "/users/me/delete-eligibility",
+      "filePath": "app-user/src/screens/profile/UserProfileScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "delete",
+      "path": "/api/v1/users/me",
+      "rawPath": "/users/me",
+      "filePath": "app-user/src/screens/profile/UserProfileScreen.tsx"
+    },
+    {
+      "project": "app-user",
+      "method": "post",
+      "path": "/api/v1/events",
+      "rawPath": "/events",
+      "filePath": "app-user/src/utils/lib/track.ts"
+    },
+    {
+      "project": "field-marketers",
+      "method": "get",
+      "path": "/api/v1/auth/me",
+      "rawPath": "/auth/me",
+      "filePath": "field-marketers/src/context/AuthContext.tsx"
+    },
+    {
+      "project": "field-marketers",
+      "method": "post",
+      "path": "/api/v1/auth/marketer-login",
+      "rawPath": "/auth/marketer-login",
+      "filePath": "field-marketers/src/context/AuthContext.tsx"
+    },
+    {
+      "project": "field-marketers",
+      "method": "post",
+      "path": "/api/v1/auth/push-token",
+      "rawPath": "/auth/push-token",
+      "filePath": "field-marketers/src/context/AuthContext.tsx"
+    },
+    {
+      "project": "field-marketers",
+      "method": "get",
+      "path": "/api/v1/field/onboarding/:id",
+      "rawPath": "/field/onboarding/:id",
+      "filePath": "field-marketers/src/hooks/useOnboarding.ts"
+    },
+    {
+      "project": "field-marketers",
+      "method": "get",
+      "path": "/api/v1/field/onboarding/my",
+      "rawPath": "/field/onboarding/my",
+      "filePath": "field-marketers/src/hooks/useOnboarding.ts"
+    },
+    {
+      "project": "field-marketers",
+      "method": "post",
+      "path": "/api/v1/field/onboarding",
+      "rawPath": "/field/onboarding",
+      "filePath": "field-marketers/src/hooks/useOnboarding.ts"
+    },
+    {
+      "project": "field-marketers",
+      "method": "patch",
+      "path": "/api/v1/field/onboarding/:id",
+      "rawPath": "/field/onboarding/:id",
+      "filePath": "field-marketers/src/hooks/useOnboarding.ts"
+    },
+    {
+      "project": "field-marketers",
+      "method": "post",
+      "path": "/api/v1/field/onboarding/:id/submit",
+      "rawPath": "/field/onboarding/:id/submit",
+      "filePath": "field-marketers/src/hooks/useOnboarding.ts"
+    },
+    {
+      "project": "field-marketers",
+      "method": "post",
+      "path": "/api/v1/auth/delete-account/request",
+      "rawPath": "/auth/delete-account/request",
+      "filePath": "field-marketers/src/screens/account/ProfileScreen.tsx"
+    },
+    {
+      "project": "field-marketers",
+      "method": "get",
+      "path": "/api/v1/referrals/link",
+      "rawPath": "/referrals/link",
+      "filePath": "field-marketers/src/screens/account/ReferralScreen.tsx"
+    },
+    {
+      "project": "field-marketers",
+      "method": "get",
+      "path": "/api/v1/referrals/stats",
+      "rawPath": "/referrals/stats",
+      "filePath": "field-marketers/src/screens/account/ReferralScreen.tsx"
+    },
+    {
+      "project": "field-marketers",
+      "method": "get",
+      "path": "/api/v1/reports/marketers/:uid",
+      "rawPath": "/reports/marketers/:uid",
+      "filePath": "field-marketers/src/screens/home/DashboardScreen.tsx"
+    },
+    {
+      "project": "field-marketers",
+      "method": "get",
+      "path": "/api/v1/delivery/categories",
+      "rawPath": "/delivery/categories",
+      "filePath": "field-marketers/src/screens/onboarding/OnboardingWizardScreen.tsx"
+    },
+    {
+      "project": "field-marketers",
+      "method": "post",
+      "path": "/api/v1/field/quick-onboard",
+      "rawPath": "/field/quick-onboard",
+      "filePath": "field-marketers/src/screens/onboarding/OnboardingWizardScreen.tsx"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/:BASE_URL/accounts:signInWithPassword?key=:API_KEY",
+      "rawPath": ":BASE_URL/accounts:signInWithPassword?key=:API_KEY",
+      "filePath": "bthwani-web/src/api/auth.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/auth/forgot",
+      "rawPath": "/auth/forgot",
+      "filePath": "bthwani-web/src/api/auth.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/auth/reset/verify",
+      "rawPath": "/auth/reset/verify",
+      "filePath": "bthwani-web/src/api/auth.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/auth/reset",
+      "rawPath": "/auth/reset",
+      "filePath": "bthwani-web/src/api/auth.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/auth/verify-otp",
+      "rawPath": "/auth/verify-otp",
+      "filePath": "bthwani-web/src/api/auth.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/cart/user/:userId",
+      "rawPath": "/delivery/cart/user/:userId",
+      "filePath": "bthwani-web/src/api/cart.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/cart/:cartId",
+      "rawPath": "/delivery/cart/:cartId",
+      "filePath": "bthwani-web/src/api/cart.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/delivery/cart/add",
+      "rawPath": "/delivery/cart/add",
+      "filePath": "bthwani-web/src/api/cart.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/cart/fee",
+      "rawPath": "/delivery/cart/fee",
+      "filePath": "bthwani-web/src/api/cart.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/delivery/cart/merge",
+      "rawPath": "/delivery/cart/merge",
+      "filePath": "bthwani-web/src/api/cart.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "delete",
+      "path": "/api/v1/delivery/cart/:productId",
+      "rawPath": "/delivery/cart/:productId",
+      "filePath": "bthwani-web/src/api/cart.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "patch",
+      "path": "/api/v1/delivery/cart/:productId",
+      "rawPath": "/delivery/cart/:productId",
+      "filePath": "bthwani-web/src/api/cart.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "delete",
+      "path": "/api/v1/delivery/cart",
+      "rawPath": "/delivery/cart",
+      "filePath": "bthwani-web/src/api/cart.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/coupons/validate",
+      "rawPath": "/coupons/validate",
+      "filePath": "bthwani-web/src/api/cart.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/cms/onboarding",
+      "rawPath": "/cms/onboarding",
+      "filePath": "bthwani-web/src/api/cms.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "patch",
+      "path": "/api/v1/cms/onboarding/step",
+      "rawPath": "/cms/onboarding/step",
+      "filePath": "bthwani-web/src/api/cms.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/cms/bootstrap",
+      "rawPath": "/cms/bootstrap",
+      "filePath": "bthwani-web/src/api/cms.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "patch",
+      "path": "/api/v1/cms/preferences",
+      "rawPath": "/cms/preferences",
+      "filePath": "bthwani-web/src/api/cms.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/cms/pages",
+      "rawPath": "/cms/pages",
+      "filePath": "bthwani-web/src/api/cms.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/cms/pages/:slug",
+      "rawPath": "/cms/pages/:slug",
+      "filePath": "bthwani-web/src/api/cms.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/categories",
+      "rawPath": "/delivery/categories",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/banners",
+      "rawPath": "/delivery/banners",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/stores",
+      "rawPath": "/delivery/stores",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/stores/:storeId",
+      "rawPath": "/delivery/stores/:storeId",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/stores/search",
+      "rawPath": "/delivery/stores/search",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/products",
+      "rawPath": "/delivery/products",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/products/:productId",
+      "rawPath": "/delivery/products/:productId",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/products/search",
+      "rawPath": "/delivery/products/search",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/merchant/merchant-products/:productId",
+      "rawPath": "/merchant/merchant-products/:productId",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/products/daily-offers",
+      "rawPath": "/delivery/products/daily-offers",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/products/nearby/new",
+      "rawPath": "/delivery/products/nearby/new",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/promotions",
+      "rawPath": "/delivery/promotions",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/delivery/order",
+      "rawPath": "/delivery/order",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/order/user/:userId",
+      "rawPath": "/delivery/order/user/:userId",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/order/:orderId",
+      "rawPath": "/delivery/order/:orderId",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "patch",
+      "path": "/api/v1/delivery/order/:orderId/status",
+      "rawPath": "/delivery/order/:orderId/status",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/delivery/order/:orderId/rate",
+      "rawPath": "/delivery/order/:orderId/rate",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/errands/order",
+      "rawPath": "/errands/order",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/errands/user/:userId",
+      "rawPath": "/errands/user/:userId",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/errands/:errandId",
+      "rawPath": "/errands/:errandId",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "patch",
+      "path": "/api/v1/errands/:errandId/status",
+      "rawPath": "/errands/:errandId/status",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/errands/:errandId/rate",
+      "rawPath": "/errands/:errandId/rate",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/errands/categories",
+      "rawPath": "/errands/categories",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/errands/drivers/available",
+      "rawPath": "/errands/drivers/available",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/grocery/stores",
+      "rawPath": "/grocery/stores",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/grocery/stores/:storeId",
+      "rawPath": "/grocery/stores/:storeId",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/grocery/products/search",
+      "rawPath": "/grocery/products/search",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/grocery/stores/:storeId/products",
+      "rawPath": "/grocery/stores/:storeId/products",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/grocery/categories",
+      "rawPath": "/grocery/categories",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/grocery/order",
+      "rawPath": "/grocery/order",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/grocery/order/user/:userId",
+      "rawPath": "/grocery/order/user/:userId",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/grocery/order/:orderId",
+      "rawPath": "/grocery/order/:orderId",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/grocery/order/:orderId/rate",
+      "rawPath": "/grocery/order/:orderId/rate",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/gas/providers",
+      "rawPath": "/gas/providers",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/gas/cylinders",
+      "rawPath": "/gas/cylinders",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/gas/order",
+      "rawPath": "/gas/order",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/gas/order/user/:userId",
+      "rawPath": "/gas/order/user/:userId",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/gas/order/:orderId",
+      "rawPath": "/gas/order/:orderId",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "patch",
+      "path": "/api/v1/gas/order/:orderId/status",
+      "rawPath": "/gas/order/:orderId/status",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/gas/order/:orderId/rate",
+      "rawPath": "/gas/order/:orderId/rate",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/water/providers",
+      "rawPath": "/water/providers",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/water/bottles",
+      "rawPath": "/water/bottles",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/water/order",
+      "rawPath": "/water/order",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/water/order/user/:userId",
+      "rawPath": "/water/order/user/:userId",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/water/order/:orderId",
+      "rawPath": "/water/order/:orderId",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "patch",
+      "path": "/api/v1/water/order/:orderId/status",
+      "rawPath": "/water/order/:orderId/status",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/water/order/:orderId/rate",
+      "rawPath": "/water/order/:orderId/rate",
+      "filePath": "bthwani-web/src/api/delivery.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/favorites",
+      "rawPath": "/favorites",
+      "filePath": "bthwani-web/src/api/favorites.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/favorites",
+      "rawPath": "/favorites",
+      "filePath": "bthwani-web/src/api/favorites.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "delete",
+      "path": "/api/v1/:API_URL/:itemType/:itemId",
+      "rawPath": ":API_URL/:itemType/:itemId",
+      "filePath": "bthwani-web/src/api/favorites.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/:API_URL/exists/:itemType/:itemId",
+      "rawPath": ":API_URL/exists/:itemType/:itemId",
+      "filePath": "bthwani-web/src/api/favorites.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/:API_URL/counts",
+      "rawPath": ":API_URL/counts",
+      "filePath": "bthwani-web/src/api/favorites.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/notifications",
+      "rawPath": "/notifications",
+      "filePath": "bthwani-web/src/api/notifications.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/notifications/register",
+      "rawPath": "/notifications/register",
+      "filePath": "bthwani-web/src/api/notifications.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/notifications/unread/count",
+      "rawPath": "/notifications/unread/count",
+      "filePath": "bthwani-web/src/api/notifications.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "patch",
+      "path": "/api/v1/notifications/:notificationId/read",
+      "rawPath": "/notifications/:notificationId/read",
+      "filePath": "bthwani-web/src/api/notifications.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "patch",
+      "path": "/api/v1/notifications/read-all",
+      "rawPath": "/notifications/read-all",
+      "filePath": "bthwani-web/src/api/notifications.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "delete",
+      "path": "/api/v1/notifications/:notificationId",
+      "rawPath": "/notifications/:notificationId",
+      "filePath": "bthwani-web/src/api/notifications.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/notifications/settings",
+      "rawPath": "/notifications/settings",
+      "filePath": "bthwani-web/src/api/notifications.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "patch",
+      "path": "/api/v1/notifications/settings",
+      "rawPath": "/notifications/settings",
+      "filePath": "bthwani-web/src/api/notifications.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/notifications/test",
+      "rawPath": "/notifications/test",
+      "filePath": "bthwani-web/src/api/notifications.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/payments/create-session",
+      "rawPath": "/payments/create-session",
+      "filePath": "bthwani-web/src/api/payments.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/payments/confirm",
+      "rawPath": "/payments/confirm",
+      "filePath": "bthwani-web/src/api/payments.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/users/me",
+      "rawPath": "/users/me",
+      "filePath": "bthwani-web/src/api/user.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "patch",
+      "path": "/api/v1/users/profile",
+      "rawPath": "/users/profile",
+      "filePath": "bthwani-web/src/api/user.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "patch",
+      "path": "/api/v1/users/avatar",
+      "rawPath": "/users/avatar",
+      "filePath": "bthwani-web/src/api/user.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/users/address",
+      "rawPath": "/users/address",
+      "filePath": "bthwani-web/src/api/user.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "patch",
+      "path": "/api/v1/users/address/:_id",
+      "rawPath": "/users/address/:_id",
+      "filePath": "bthwani-web/src/api/user.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "delete",
+      "path": "/api/v1/users/address/:addressId",
+      "rawPath": "/users/address/:addressId",
+      "filePath": "bthwani-web/src/api/user.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "patch",
+      "path": "/api/v1/users/default-address",
+      "rawPath": "/users/default-address",
+      "filePath": "bthwani-web/src/api/user.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/utility/order",
+      "rawPath": "/utility/order",
+      "filePath": "bthwani-web/src/api/utility.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/utility/orders/user/:userId",
+      "rawPath": "/utility/orders/user/:userId",
+      "filePath": "bthwani-web/src/api/utility.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/utility/order/:orderId",
+      "rawPath": "/utility/order/:orderId",
+      "filePath": "bthwani-web/src/api/utility.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "patch",
+      "path": "/api/v1/utility/order/:orderId/status",
+      "rawPath": "/utility/order/:orderId/status",
+      "filePath": "bthwani-web/src/api/utility.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "patch",
+      "path": "/api/v1/utility/order/:orderId/cancel",
+      "rawPath": "/utility/order/:orderId/cancel",
+      "filePath": "bthwani-web/src/api/utility.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/utility/order/:orderId/rate",
+      "rawPath": "/utility/order/:orderId/rate",
+      "filePath": "bthwani-web/src/api/utility.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/categories/children/:parentId",
+      "rawPath": "/delivery/categories/children/:parentId",
+      "filePath": "bthwani-web/src/components/delivery/CategoryList.tsx"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/delivery/order/errand/fee",
+      "rawPath": "/delivery/order/errand/fee",
+      "filePath": "bthwani-web/src/features/errands/api.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "post",
+      "path": "/api/v1/delivery/order/errand",
+      "rawPath": "/delivery/order/errand",
+      "filePath": "bthwani-web/src/features/errands/api.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/user/profile",
+      "rawPath": "/user/profile",
+      "filePath": "bthwani-web/src/features/utilityGas/api.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/utility/options",
+      "rawPath": "/utility/options",
+      "filePath": "bthwani-web/src/features/utilityGas/api.ts"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "fetch",
+      "path": "/api/v1/:API_URL/delivery/stores?categoryId=:categoryId",
+      "rawPath": ":API_URL/delivery/stores?categoryId=:categoryId",
+      "filePath": "bthwani-web/src/pages/delivery/CategoryDetailsScreen.tsx"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/categories/children/:currentParentId",
+      "rawPath": "/delivery/categories/children/:currentParentId",
+      "filePath": "bthwani-web/src/pages/delivery/GroceryScreen.tsx"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/promotions/by-stores",
+      "rawPath": "/delivery/promotions/by-stores",
+      "filePath": "bthwani-web/src/pages/delivery/GroceryScreen.tsx"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/deals",
+      "rawPath": "/delivery/deals",
+      "filePath": "bthwani-web/src/pages/delivery/Home.tsx"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/sections",
+      "rawPath": "/delivery/sections",
+      "filePath": "bthwani-web/src/pages/delivery/StoreDetails.tsx"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/groceries/merchant-products",
+      "rawPath": "/groceries/merchant-products",
+      "filePath": "bthwani-web/src/pages/delivery/StoreDetails.tsx"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/promotions/by-products",
+      "rawPath": "/delivery/promotions/by-products",
+      "filePath": "bthwani-web/src/pages/delivery/StoreDetails.tsx"
+    },
+    {
+      "project": "bthwani-web",
+      "method": "get",
+      "path": "/api/v1/delivery/subcategories/store/:_id",
+      "rawPath": "/delivery/subcategories/store/:_id",
+      "filePath": "bthwani-web/src/pages/delivery/StoreDetails.tsx"
+    }
+  ]
+}
