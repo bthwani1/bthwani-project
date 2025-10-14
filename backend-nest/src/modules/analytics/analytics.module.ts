@@ -5,7 +5,10 @@ import { AnalyticsController } from './analytics.controller';
 import { AnalyticsService } from './analytics.service';
 import { RoasDaily, RoasDailySchema } from './entities/roas-daily.entity';
 import { AdSpend, AdSpendSchema } from './entities/adspend.entity';
-import { MarketingEvent, MarketingEventSchema } from './entities/marketing-event.entity';
+import {
+  MarketingEvent,
+  MarketingEventSchema,
+} from './entities/marketing-event.entity';
 import { Order, OrderSchema } from '../order/entities/order.entity';
 
 @Module({
@@ -23,4 +26,3 @@ import { Order, OrderSchema } from '../order/entities/order.entity';
   exports: [AnalyticsService],
 })
 export class AnalyticsModule {}
-

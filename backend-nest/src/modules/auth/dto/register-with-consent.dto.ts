@@ -1,4 +1,12 @@
-import { IsString, IsEmail, IsBoolean, IsOptional, IsNotEmpty, ValidateNested, IsArray } from 'class-validator';
+import {
+  IsString,
+  IsEmail,
+  IsBoolean,
+  IsOptional,
+  IsNotEmpty,
+  ValidateNested,
+  IsArray,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { ConsentDto } from './consent.dto';
@@ -13,7 +21,10 @@ export class RegisterWithConsentDto {
   @IsNotEmpty({ message: 'الاسم مطلوب' })
   fullName: string;
 
-  @ApiPropertyOptional({ description: 'البريد الإلكتروني', example: 'user@example.com' })
+  @ApiPropertyOptional({
+    description: 'البريد الإلكتروني',
+    example: 'user@example.com',
+  })
   @IsEmail({}, { message: 'البريد الإلكتروني غير صالح' })
   @IsOptional()
   email?: string;
@@ -28,9 +39,9 @@ export class RegisterWithConsentDto {
   @IsOptional()
   profileImage?: string;
 
-  @ApiProperty({ 
+  @ApiProperty({
     description: 'Firebase ID Token',
-    example: 'eyJhbGciOiJSUzI1NiIsImtpZCI6...'
+    example: 'eyJhbGciOiJSUzI1NiIsImtpZCI6...',
   })
   @IsString({ message: 'Firebase token مطلوب' })
   @IsNotEmpty({ message: 'Firebase token مطلوب' })
@@ -38,38 +49,38 @@ export class RegisterWithConsentDto {
 
   // ==================== Consents ====================
 
-  @ApiProperty({ 
+  @ApiProperty({
     description: 'الموافقات المطلوبة',
     type: [ConsentDto],
     example: [
       {
         consentType: 'privacy_policy',
         granted: true,
-        version: '1.0.0'
+        version: '1.0.0',
       },
       {
         consentType: 'terms_of_service',
         granted: true,
-        version: '1.0.0'
-      }
-    ]
+        version: '1.0.0',
+      },
+    ],
   })
   @IsArray({ message: 'الموافقات يجب أن تكون مصفوفة' })
   @ValidateNested({ each: true })
   @Type(() => ConsentDto)
   consents: ConsentDto[];
 
-  @ApiPropertyOptional({ 
+  @ApiPropertyOptional({
     description: 'تأكيد قراءة سياسة الخصوصية',
-    example: true
+    example: true,
   })
   @IsBoolean()
   @IsOptional()
   acceptedPrivacyPolicy?: boolean;
 
-  @ApiPropertyOptional({ 
+  @ApiPropertyOptional({
     description: 'تأكيد قراءة شروط الخدمة',
-    example: true
+    example: true,
   })
   @IsBoolean()
   @IsOptional()
@@ -100,12 +111,11 @@ export class QuickRegisterDto {
   @IsNotEmpty()
   firebaseToken: string;
 
-  @ApiProperty({ 
+  @ApiProperty({
     description: 'الموافقة على الشروط والسياسات (مطلوب)',
-    example: true
+    example: true,
   })
   @IsBoolean()
   @IsNotEmpty()
   acceptAllTerms: boolean;
 }
-

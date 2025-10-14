@@ -33,4 +33,3 @@ export class RoasDaily extends Document {
 
 export const RoasDailySchema = SchemaFactory.createForClass(RoasDaily);
 RoasDailySchema.index({ date: -1, platform: 1 });
-

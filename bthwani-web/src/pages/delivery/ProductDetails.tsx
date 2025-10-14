@@ -213,10 +213,10 @@ const ProductDetails: React.FC = () => {
       {/* SEO Meta Tags */}
       {product && (
         <Helmet>
-          <title>{product.name} | منتج من {product.storeInfo?.name || 'متجر موثوق'} | بثواني</title>
+          <title>{product.name} | منتج من {product.store?.name || 'متجر موثوق'} | بثواني</title>
           <meta name="description" content={`${product.name} - ${product.description || 'منتج عالي الجودة'}. سعر ${product.price} ريال يمني. اطلب الآن من بثواني!`} />
           <link rel="canonical" href={`https://bthwaniapp.com/delivery/product/${product._id}`} />
-          <meta property="og:title" content={`${product.name} | منتج من ${product.storeInfo?.name || 'متجر موثوق'}`} />
+          <meta property="og:title" content={`${product.name} | منتج من ${product.store?.name || 'متجر موثوق'}`} />
           <meta property="og:description" content={`اطلب ${product.name} من بثواني - خدمة التوصيل السريع في اليمن`} />
           <meta property="og:image" content={product.image || product.images?.[0] || '/icons/icon-512.png'} />
           <meta property="og:url" content={`https://bthwaniapp.com/delivery/product/${product._id}`} />
@@ -224,7 +224,7 @@ const ProductDetails: React.FC = () => {
           <meta property="product:price:amount" content={product.price.toString()} />
           <meta property="product:price:currency" content="YER" />
           <meta property="twitter:card" content="summary_large_image" />
-          <meta property="twitter:title" content={`${product.name} | منتج من ${product.storeInfo?.name || 'متجر موثوق'}`} />
+          <meta property="twitter:title" content={`${product.name} | منتج من ${product.store?.name || 'متجر موثوق'}`} />
           <meta property="twitter:description" content={`اطلب ${product.name} من بثواني`} />
           <meta property="twitter:image" content={product.image || product.images?.[0] || '/icons/icon-512.png'} />
         </Helmet>

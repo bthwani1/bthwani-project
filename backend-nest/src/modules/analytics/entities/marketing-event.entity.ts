@@ -25,6 +25,7 @@ export class MarketingEvent extends Document {
   metadata?: Record<string, any>;
 }
 
-export const MarketingEventSchema = SchemaFactory.createForClass(MarketingEvent);
+export const MarketingEventSchema =
+  SchemaFactory.createForClass(MarketingEvent);
 MarketingEventSchema.index({ eventType: 1, createdAt: -1 });
 MarketingEventSchema.index({ userId: 1, eventType: 1 });

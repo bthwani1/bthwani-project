@@ -52,6 +52,22 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         }}>
           <h1>حدث خطأ غير متوقع</h1>
           <p>نعتذر عن هذا الخطأ. يرجى المحاولة مرة أخرى.</p>
+          {import.meta.env.DEV && error && (
+            <details style={{ marginTop: '20px', textAlign: 'left', maxWidth: '600px' }}>
+              <summary style={{ cursor: 'pointer', fontWeight: 'bold' }}>تفاصيل الخطأ (للمطورين)</summary>
+              <pre style={{
+                backgroundColor: '#f0f0f0',
+                padding: '10px',
+                borderRadius: '4px',
+                overflow: 'auto',
+                fontSize: '12px',
+                marginTop: '10px'
+              }}>
+                {error instanceof Error ? error.message : String(error)}
+                {error instanceof Error && error.stack && `\n\n${error.stack}`}
+              </pre>
+            </details>
+          )}
           <button
             onClick={resetError}
             style={{

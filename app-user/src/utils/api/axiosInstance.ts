@@ -5,10 +5,12 @@ import { getAuthBanner } from "@/guards/bannerGateway";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { API_URL } from "./config";
+import type { ApiResponse } from "@/types/api";
 
 const axiosInstance = axios.create({
   baseURL: API_URL,
   timeout: 10000,
+  headers: { "Content-Type": "application/json" },
 });
 
 // ===================== Request Interceptor =====================
@@ -74,11 +76,25 @@ const processQueue = (error: any, token: string | null = null) => {
 };
 
 axiosInstance.interceptors.response.use(
-  (r) => r,
+  (r) => {
+    // التحقق من البنية الجديدة
+    return r;
+  },
   async (error) => {
     const status = error?.response?.status;
-    const code = error?.response?.data?.code;
+    const apiError = error?.response?.data as ApiResponse;
+    const code = apiError?.error?.code || error?.response?.data?.code;
     const cfg = error?.config ?? {};
+
+    // طباعة تفاصيل الخطأ للتطوير
+    if (__DEV__ && apiError?.error) {
+      console.error(`[API Error ${apiError.error.code}]`, {
+        message: apiError.error.message,
+        userMessage: apiError.error.userMessage,
+        suggestedAction: apiError.error.suggestedAction,
+        details: apiError.error.details,
+      });
+    }
 
     // ✅ كتم عالمي / لكل طلب
     const globallySilenced = shouldSilenceAuthPrompts();

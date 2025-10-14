@@ -3,10 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { AkhdimniController } from './akhdimni.controller';
 import { AkhdimniService } from './services/akhdimni.service';
-import {
-  ErrandOrder,
-  ErrandOrderSchema,
-} from './entities/errand-order.entity';
+import { ErrandOrder, ErrandOrderSchema } from './entities/errand-order.entity';
 
 @Module({
   imports: [
@@ -20,4 +17,3 @@ import {
   exports: [AkhdimniService],
 })
 export class AkhdimniModule {}
-

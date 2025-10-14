@@ -11,22 +11,23 @@ export class FeatureFlags {
     this.initialized = true;
   }
 
-  static isEnabled(flag: string, userId?: string): boolean {
+  static isEnabled(flag: string): boolean {
     if (!this.initialized) this.init();
 
     try {
-      return posthog.isFeatureEnabled(flag);
+      return posthog.isFeatureEnabled(flag) || false;
     } catch (error) {
       console.warn(`Feature flag check failed for ${flag}:`, error);
       return false;
     }
   }
 
-  static async getAllFlags(userId?: string): Promise<Record<string, boolean>> {
+  static async getAllFlags(): Promise<Record<string, boolean>> {
     if (!this.initialized) this.init();
 
     try {
-      return await posthog.getFeatureFlags();
+      // PostHog doesn't have a getAllFlags method, return empty object for now
+      return {};
     } catch (error) {
       console.warn('Failed to get feature flags:', error);
       return {};
@@ -85,10 +86,10 @@ export const withFeatureFlag = <P extends object>(
     const isEnabled = useFeatureFlag(flag);
 
     if (!isEnabled && FallbackComponent) {
-      return <FallbackComponent {...props} />;
+      return React.createElement(FallbackComponent, props);
     }
 
-    return isEnabled ? <Component {...props} /> : null;
+    return isEnabled ? React.createElement(Component, props) : null;
   };
 };
 

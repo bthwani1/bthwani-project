@@ -1,4 +1,9 @@
-import { Injectable, Logger, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { UserConsent } from '../entities/user-consent.entity';
@@ -23,7 +28,9 @@ export class ConsentService {
     userAgent?: string,
   ): Promise<UserConsent> {
     try {
-      this.logger.log(`Recording consent for user ${userId}, type: ${consentData.consentType}`);
+      this.logger.log(
+        `Recording consent for user ${userId}, type: ${consentData.consentType}`,
+      );
 
       const consent = new this.consentModel({
         userId: new Types.ObjectId(userId),
@@ -37,11 +44,14 @@ export class ConsentService {
       });
 
       const savedConsent = await consent.save();
-      
+
       this.logger.log(`Consent recorded successfully: ${savedConsent._id}`);
       return savedConsent;
     } catch (error) {
-      this.logger.error(`Failed to record consent: ${error.message}`, error.stack);
+      this.logger.error(
+        `Failed to record consent: ${error.message}`,
+        error.stack,
+      );
       throw new BadRequestException('فشل في حفظ الموافقة');
     }
   }
@@ -56,9 +66,11 @@ export class ConsentService {
     userAgent?: string,
   ): Promise<UserConsent[]> {
     try {
-      this.logger.log(`Recording ${consents.length} consents for user ${userId}`);
+      this.logger.log(
+        `Recording ${consents.length} consents for user ${userId}`,
+      );
 
-      const consentDocuments = consents.map(consent => ({
+      const consentDocuments = consents.map((consent) => ({
         userId: new Types.ObjectId(userId),
         consentType: consent.consentType,
         granted: consent.granted,
@@ -69,12 +81,16 @@ export class ConsentService {
         notes: consent.notes,
       }));
 
-      const savedConsents = await this.consentModel.insertMany(consentDocuments);
-      
+      const savedConsents =
+        await this.consentModel.insertMany(consentDocuments);
+
       this.logger.log(`${savedConsents.length} consents recorded successfully`);
       return savedConsents;
     } catch (error) {
-      this.logger.error(`Failed to record bulk consents: ${error.message}`, error.stack);
+      this.logger.error(
+        `Failed to record bulk consents: ${error.message}`,
+        error.stack,
+      );
       throw new BadRequestException('فشل في حفظ الموافقات');
     }
   }
@@ -96,7 +112,10 @@ export class ConsentService {
 
       return !!consent;
     } catch (error) {
-      this.logger.error(`Failed to check consent: ${error.message}`, error.stack);
+      this.logger.error(
+        `Failed to check consent: ${error.message}`,
+        error.stack,
+      );
       return false;
     }
   }
@@ -117,7 +136,10 @@ export class ConsentService {
 
       return results as Record<ConsentType, boolean>;
     } catch (error) {
-      this.logger.error(`Failed to check multiple consents: ${error.message}`, error.stack);
+      this.logger.error(
+        `Failed to check multiple consents: ${error.message}`,
+        error.stack,
+      );
       throw error;
     }
   }
@@ -156,12 +178,15 @@ export class ConsentService {
       }
 
       const updatedConsent = await consent.save();
-      
+
       this.logger.log(`Consent withdrawn successfully: ${updatedConsent._id}`);
       return updatedConsent;
     } catch (error) {
       if (error instanceof NotFoundException) throw error;
-      this.logger.error(`Failed to withdraw consent: ${error.message}`, error.stack);
+      this.logger.error(
+        `Failed to withdraw consent: ${error.message}`,
+        error.stack,
+      );
       throw new BadRequestException('فشل في سحب الموافقة');
     }
   }
@@ -175,7 +200,7 @@ export class ConsentService {
   ): Promise<UserConsent[]> {
     try {
       const query: any = { userId: new Types.ObjectId(userId) };
-      
+
       if (consentType) {
         query.consentType = consentType;
       }
@@ -187,7 +212,10 @@ export class ConsentService {
 
       return consents;
     } catch (error) {
-      this.logger.error(`Failed to get consent history: ${error.message}`, error.stack);
+      this.logger.error(
+        `Failed to get consent history: ${error.message}`,
+        error.stack,
+      );
       throw new BadRequestException('فشل في جلب سجل الموافقات');
     }
   }
@@ -210,7 +238,10 @@ export class ConsentService {
 
       return consent;
     } catch (error) {
-      this.logger.error(`Failed to get latest consent: ${error.message}`, error.stack);
+      this.logger.error(
+        `Failed to get latest consent: ${error.message}`,
+        error.stack,
+      );
       return null;
     }
   }
@@ -229,18 +260,23 @@ export class ConsentService {
 
         summary[type] = {
           hasActiveConsent: hasConsent,
-          latestConsent: latestConsent ? {
-            granted: latestConsent.granted,
-            version: latestConsent.version,
-            date: latestConsent.consentDate,
-            withdrawnAt: latestConsent.withdrawnAt,
-          } : null,
+          latestConsent: latestConsent
+            ? {
+                granted: latestConsent.granted,
+                version: latestConsent.version,
+                date: latestConsent.consentDate,
+                withdrawnAt: latestConsent.withdrawnAt,
+              }
+            : null,
         };
       }
 
       return summary;
     } catch (error) {
-      this.logger.error(`Failed to get consent summary: ${error.message}`, error.stack);
+      this.logger.error(
+        `Failed to get consent summary: ${error.message}`,
+        error.stack,
+      );
       throw new BadRequestException('فشل في جلب ملخص الموافقات');
     }
   }
@@ -258,7 +294,10 @@ export class ConsentService {
 
       this.logger.log(`All consents deleted for user ${userId}`);
     } catch (error) {
-      this.logger.error(`Failed to delete user consents: ${error.message}`, error.stack);
+      this.logger.error(
+        `Failed to delete user consents: ${error.message}`,
+        error.stack,
+      );
       throw new BadRequestException('فشل في حذف موافقات المستخدم');
     }
   }
@@ -274,16 +313,22 @@ export class ConsentService {
     try {
       const latestConsent = await this.getLatestConsent(userId, type);
 
-      if (!latestConsent || !latestConsent.granted || latestConsent.withdrawnAt) {
+      if (
+        !latestConsent ||
+        !latestConsent.granted ||
+        latestConsent.withdrawnAt
+      ) {
         return true; // لا توجد موافقة نشطة
       }
 
       // التحقق من النسخة
       return latestConsent.version !== currentVersion;
     } catch (error) {
-      this.logger.error(`Failed to check consent update need: ${error.message}`, error.stack);
+      this.logger.error(
+        `Failed to check consent update need: ${error.message}`,
+        error.stack,
+      );
       return true; // في حالة الخطأ، نطلب الموافقة للأمان
     }
   }
 }
-

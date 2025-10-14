@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { AnalyticsService } from './analytics.service';
 import { UnifiedAuthGuard } from '../../common/guards/unified-auth.guard';
@@ -222,9 +215,7 @@ export class AnalyticsController {
   @ApiBearerAuth()
   @Get('users/growth')
   @ApiOperation({ summary: 'نمو المستخدمين' })
-  async getUserGrowth(
-    @Query('period') period: 'daily' | 'weekly' | 'monthly',
-  ) {
+  async getUserGrowth(@Query('period') period: 'daily' | 'weekly' | 'monthly') {
     return this.analyticsService.getUserGrowth(period);
   }
 
@@ -370,4 +361,3 @@ export class AnalyticsController {
     return this.analyticsService.getDriverPerformance(startDate, endDate);
   }
 }
-

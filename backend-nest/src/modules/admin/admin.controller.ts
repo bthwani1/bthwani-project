@@ -12,7 +12,11 @@ import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { AdminService } from './admin.service';
 import { UnifiedAuthGuard } from '../../common/guards/unified-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
-import { Auth, Roles, CurrentUser } from '../../common/decorators/auth.decorator';
+import {
+  Auth,
+  Roles,
+  CurrentUser,
+} from '../../common/decorators/auth.decorator';
 import { AuthType } from '../../common/guards/unified-auth.guard';
 
 @ApiTags('Admin')
@@ -50,7 +54,7 @@ export class AdminController {
     @Query('startDate') startDate?: string,
     @Query('endDate') endDate?: string,
   ) {
-    return this.adminService.getOrdersByStatus(startDate, endDate);
+    return this.adminService.getOrdersByStatus({ startDate, endDate });
   }
 
   @Get('dashboard/revenue')
@@ -60,7 +64,11 @@ export class AdminController {
     @Query('startDate') startDate?: string,
     @Query('endDate') endDate?: string,
   ) {
-    return this.adminService.getRevenueAnalytics(period, startDate, endDate);
+    return this.adminService.getRevenueAnalytics({
+      period,
+      startDate,
+      endDate,
+    });
   }
 
   @Get('dashboard/live-metrics')
@@ -79,7 +87,12 @@ export class AdminController {
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 20,
   ) {
-    return this.adminService.getAllDrivers(status, isAvailable, page, limit);
+    return this.adminService.getAllDrivers({
+      status,
+      isAvailable,
+      page,
+      limit,
+    });
   }
 
   @Get('drivers/:id')
@@ -94,8 +107,11 @@ export class AdminController {
     @Param('id') driverId: string,
     @Query('startDate') startDate?: string,
     @Query('endDate') endDate?: string,
-  ) {
-    return this.adminService.getDriverPerformance(driverId, startDate, endDate);
+  ): Promise<any> {
+    return this.adminService.getDriverPerformance(driverId, {
+      startDate,
+      endDate,
+    });
   }
 
   @Get('drivers/:id/financials')
@@ -111,7 +127,11 @@ export class AdminController {
     @Body() body: { reason: string },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.banDriver(driverId, body.reason, adminId);
+    return this.adminService.banDriver({
+      driverId,
+      reason: body.reason,
+      adminId,
+    });
   }
 
   @Post('drivers/:id/unban')
@@ -130,31 +150,36 @@ export class AdminController {
     @Body() body: { amount: number; reason: string; type: 'credit' | 'debit' },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.adjustDriverBalance(
+    return this.adminService.adjustDriverBalance({
       driverId,
-      body.amount,
-      body.type,
-      body.reason,
+      amount: body.amount,
+      type: body.type,
+      reason: body.reason,
       adminId,
-    );
+    });
   }
 
   // ==================== Withdrawals Management ====================
 
   @Get('withdrawals')
   @ApiOperation({ summary: 'جلب طلبات السحب' })
-  async getWithdrawals(
+  getWithdrawals(
     @Query('status') status?: string,
     @Query('userModel') userModel?: string,
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 20,
   ) {
-    return this.adminService.getWithdrawals(status, userModel, page, limit);
+    return this.adminService.getWithdrawals({
+      status,
+      userModel,
+      page,
+      limit,
+    });
   }
 
   @Get('withdrawals/pending')
   @ApiOperation({ summary: 'طلبات السحب المعلقة' })
-  async getPendingWithdrawals() {
+  getPendingWithdrawals() {
     return this.adminService.getPendingWithdrawals();
   }
 
@@ -165,12 +190,12 @@ export class AdminController {
     @Body() body: { transactionRef?: string; notes?: string },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.approveWithdrawal(
+    return this.adminService.approveWithdrawal({
       withdrawalId,
       adminId,
-      body.transactionRef,
-      body.notes,
-    );
+      transactionRef: body.transactionRef,
+      notes: body.notes,
+    });
   }
 
   @Patch('withdrawals/:id/reject')
@@ -180,11 +205,11 @@ export class AdminController {
     @Body() body: { reason: string },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.rejectWithdrawal(
+    return this.adminService.rejectWithdrawal({
       withdrawalId,
-      body.reason,
+      reason: body.reason,
       adminId,
-    );
+    });
   }
 
   // ==================== Store Moderation ====================
@@ -271,7 +296,12 @@ export class AdminController {
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 20,
   ) {
-    return this.adminService.getUsers(search, isActive, page, limit);
+    return this.adminService.getUsers({
+      search,
+      isActive,
+      page,
+      limit,
+    });
   }
 
   @Get('users/:id')
@@ -287,7 +317,11 @@ export class AdminController {
     @Body() body: { reason: string },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.banUser(userId, body.reason, adminId);
+    return this.adminService.banUser({
+      userId,
+      reason: body.reason,
+      adminId,
+    });
   }
 
   @Post('users/:id/unban')
@@ -304,7 +338,7 @@ export class AdminController {
   @Get('reports/daily')
   @ApiOperation({ summary: 'تقرير يومي' })
   async getDailyReport(@Query('date') date?: string) {
-    return this.adminService.getDailyReport(date);
+    return this.adminService.getDailyReport({ date });
   }
 
   @Get('reports/weekly')
@@ -313,7 +347,7 @@ export class AdminController {
     @Query('startDate') startDate?: string,
     @Query('endDate') endDate?: string,
   ) {
-    return this.adminService.getWeeklyReport(startDate, endDate);
+    return this.adminService.getWeeklyReport({ startDate, endDate });
   }
 
   @Get('reports/monthly')
@@ -322,7 +356,7 @@ export class AdminController {
     @Query('month') month?: number,
     @Query('year') year?: number,
   ) {
-    return this.adminService.getMonthlyReport(month, year);
+    return this.adminService.getMonthlyReport({ month, year });
   }
 
   @Get('reports/export')
@@ -332,7 +366,7 @@ export class AdminController {
     @Query('startDate') startDate?: string,
     @Query('endDate') endDate?: string,
   ) {
-    return this.adminService.exportReport(type, startDate, endDate);
+    return this.adminService.exportReport({ type, startDate, endDate });
   }
 
   // ==================== Notifications ====================
@@ -349,13 +383,13 @@ export class AdminController {
     },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.sendBulkNotification(
-      body.title,
-      body.body,
-      body.userType,
-      body.userIds,
+    return this.adminService.sendBulkNotification({
+      title: body.title,
+      body: body.body,
+      userType: body.userType,
+      userIds: body.userIds,
       adminId,
-    );
+    });
   }
 
   // ==================== Driver Assets ====================
@@ -388,7 +422,11 @@ export class AdminController {
     @Param('assetId') assetId: string,
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.assignAssetToDriver(driverId, assetId, adminId);
+    return this.adminService.assignAssetToDriver({
+      driverId,
+      assetId,
+      adminId,
+    });
   }
 
   @Post('drivers/:driverId/assets/:assetId/return')
@@ -399,13 +437,13 @@ export class AdminController {
     @Body() body: { condition?: string; notes?: string },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.returnAssetFromDriver(
+    return this.adminService.returnAssetFromDriver({
       driverId,
       assetId,
-      body.condition,
-      body.notes,
+      condition: body.condition,
+      notes: body.notes,
       adminId,
-    );
+    });
   }
 
   // ==================== Driver Documents ====================
@@ -424,13 +462,13 @@ export class AdminController {
     @Body() body: { verified: boolean; notes?: string },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.verifyDocument(
+    return this.adminService.verifyDocument({
       driverId,
       docId,
-      body.verified,
-      body.notes,
+      verified: body.verified,
+      notes: body.notes,
       adminId,
-    );
+    });
   }
 
   @Patch('drivers/:id/documents/:docId')
@@ -441,7 +479,12 @@ export class AdminController {
     @Body() body: { status: string; expiryDate?: string },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.updateDocument(driverId, docId, body, adminId);
+    return this.adminService.updateDocument({
+      driverId,
+      docId,
+      updates: body,
+      adminId,
+    });
   }
 
   // ==================== Driver Attendance ====================
@@ -453,14 +496,12 @@ export class AdminController {
     @Query('month') month?: number,
     @Query('year') year?: number,
   ) {
-    return this.adminService.getDriverAttendance(driverId, month, year);
+    return this.adminService.getDriverAttendance(driverId, { month, year });
   }
 
   @Get('drivers/attendance/summary')
   @ApiOperation({ summary: 'ملخص الحضور لكل السائقين' })
-  async getAttendanceSummary(
-    @Query('date') date?: string,
-  ) {
+  async getAttendanceSummary(@Query('date') date?: string) {
     return this.adminService.getAttendanceSummary(date);
   }
 
@@ -477,7 +518,11 @@ export class AdminController {
     },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.adjustAttendance(driverId, body, adminId);
+    return this.adminService.adjustAttendance({
+      driverId,
+      data: body,
+      adminId,
+    });
   }
 
   // ==================== Driver Shifts ====================
@@ -564,7 +609,11 @@ export class AdminController {
     @Body() body: { reason: string },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.rejectLeaveRequest(requestId, body.reason, adminId);
+    return this.adminService.rejectLeaveRequest(
+      requestId,
+      body.reason,
+      adminId,
+    );
   }
 
   @Get('drivers/:id/leave-balance')
@@ -673,10 +722,7 @@ export class AdminController {
 
   @Patch('settings')
   @ApiOperation({ summary: 'تحديث الإعدادات' })
-  async updateSettings(
-    @Body() body: any,
-    @CurrentUser('id') adminId: string,
-  ) {
+  async updateSettings(@Body() body: any, @CurrentUser('id') adminId: string) {
     return this.adminService.updateSettings(body, adminId);
   }
 
@@ -704,7 +750,11 @@ export class AdminController {
     @Body() body: { collections?: string[]; description?: string },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.createBackup(body.collections, body.description, adminId);
+    return this.adminService.createBackup(
+      body.collections,
+      body.description,
+      adminId,
+    );
   }
 
   @Get('backup/list')
@@ -735,9 +785,7 @@ export class AdminController {
 
   @Get('data-deletion/requests')
   @ApiOperation({ summary: 'طلبات حذف البيانات' })
-  async getDataDeletionRequests(
-    @Query('status') status?: string,
-  ) {
+  async getDataDeletionRequests(@Query('status') status?: string) {
     return this.adminService.getDataDeletionRequests(status);
   }
 
@@ -757,16 +805,18 @@ export class AdminController {
     @Body() body: { reason: string },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.rejectDataDeletion(requestId, body.reason, adminId);
+    return this.adminService.rejectDataDeletion(
+      requestId,
+      body.reason,
+      adminId,
+    );
   }
 
   // ==================== Password Security ====================
 
   @Get('security/password-attempts')
   @ApiOperation({ summary: 'محاولات كلمات المرور الفاشلة' })
-  async getFailedPasswordAttempts(
-    @Query('threshold') threshold: number = 5,
-  ) {
+  async getFailedPasswordAttempts(@Query('threshold') threshold: number = 5) {
     return this.adminService.getFailedPasswordAttempts(threshold);
   }
 
@@ -777,7 +827,11 @@ export class AdminController {
     @Body() body: { tempPassword?: string },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.resetUserPassword(userId, body.tempPassword, adminId);
+    return this.adminService.resetUserPassword({
+      userId,
+      tempPassword: body.tempPassword,
+      adminId,
+    });
   }
 
   @Post('security/unlock-account/:userId')
@@ -786,7 +840,7 @@ export class AdminController {
     @Param('userId') userId: string,
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.unlockAccount(userId, adminId);
+    return this.adminService.unlockAccount({ userId, adminId });
   }
 
   // ==================== Activation Codes ====================
@@ -797,20 +851,18 @@ export class AdminController {
     @Body() body: { count: number; expiryDays?: number; userType?: string },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.generateActivationCodes(
-      body.count,
-      body.expiryDays,
-      body.userType,
+    return this.adminService.generateActivationCodes({
+      count: body.count,
+      expiryDays: body.expiryDays,
+      userType: body.userType,
       adminId,
-    );
+    });
   }
 
   @Get('activation/codes')
   @ApiOperation({ summary: 'أكواد التفعيل' })
-  async getActivationCodes(
-    @Query('status') status?: string,
-  ) {
-    return this.adminService.getActivationCodes(status);
+  async getActivationCodes(@Query('status') status?: string) {
+    return this.adminService.getActivationCodes({ status });
   }
 
   // ==================== Marketer Management ====================
@@ -822,7 +874,7 @@ export class AdminController {
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 20,
   ) {
-    return this.adminService.getAllMarketers(status, page, limit);
+    return this.adminService.getAllMarketers({ status, page, limit });
   }
 
   @Get('marketers/:id')
@@ -843,7 +895,14 @@ export class AdminController {
     },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.createMarketer(body, adminId);
+    return this.adminService.createMarketer(
+      {
+        name: body.fullName,
+        email: body.email || '',
+        phone: body.phone,
+      },
+      adminId,
+    );
   }
 
   @Patch('marketers/:id')
@@ -853,7 +912,11 @@ export class AdminController {
     @Body() body: any,
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.updateMarketer(marketerId, body, adminId);
+    return this.adminService.updateMarketer({
+      marketerId,
+      updates: body as unknown,
+      adminId,
+    });
   }
 
   @Get('marketers/:id/performance')
@@ -863,11 +926,10 @@ export class AdminController {
     @Query('startDate') startDate?: string,
     @Query('endDate') endDate?: string,
   ) {
-    return this.adminService.getMarketerPerformance(
-      marketerId,
+    return this.adminService.getMarketerPerformance(marketerId, {
       startDate,
       endDate,
-    );
+    });
   }
 
   @Get('marketers/:id/stores')
@@ -891,7 +953,7 @@ export class AdminController {
     @Param('id') marketerId: string,
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.activateMarketer(marketerId, adminId);
+    return this.adminService.activateMarketer({ marketerId, adminId });
   }
 
   @Post('marketers/:id/deactivate')
@@ -901,11 +963,11 @@ export class AdminController {
     @Body() body: { reason: string },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.deactivateMarketer(
+    return this.adminService.deactivateMarketer({
       marketerId,
-      body.reason,
+      reason: body.reason,
       adminId,
-    );
+    });
   }
 
   @Patch('marketers/:id/adjust-commission')
@@ -915,12 +977,12 @@ export class AdminController {
     @Body() body: { rate: number; reason: string },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.adjustMarketerCommission(
+    return this.adminService.adjustMarketerCommission({
       marketerId,
-      body.rate,
-      body.reason,
+      rate: body.rate,
+      reason: body.reason,
       adminId,
-    );
+    });
   }
 
   @Get('marketers/statistics')
@@ -929,7 +991,7 @@ export class AdminController {
     @Query('startDate') startDate?: string,
     @Query('endDate') endDate?: string,
   ) {
-    return this.adminService.getMarketersStatistics(startDate, endDate);
+    return this.adminService.getMarketersStatistics({ startDate, endDate });
   }
 
   @Get('marketers/export')
@@ -948,12 +1010,12 @@ export class AdminController {
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 20,
   ) {
-    return this.adminService.getOnboardingApplications(
+    return this.adminService.getOnboardingApplications({
       status,
       type,
       page,
       limit,
-    );
+    });
   }
 
   @Get('onboarding/:id/details')
@@ -968,7 +1030,7 @@ export class AdminController {
     @Param('id') applicationId: string,
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.approveOnboarding(applicationId, adminId);
+    return this.adminService.approveOnboarding({ applicationId, adminId });
   }
 
   @Patch('onboarding/:id/reject')
@@ -978,11 +1040,11 @@ export class AdminController {
     @Body() body: { reason: string },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.rejectOnboarding(
+    return this.adminService.rejectOnboarding({
       applicationId,
-      body.reason,
+      reason: body.reason,
       adminId,
-    );
+    });
   }
 
   @Get('onboarding/statistics')
@@ -1036,7 +1098,8 @@ export class AdminController {
   @Post('admin-users')
   @ApiOperation({ summary: 'إضافة مسؤول' })
   async createAdminUser(
-    @Body() body: { fullName: string; email: string; role: string; password: string },
+    @Body()
+    body: { fullName: string; email: string; role: string; password: string },
     @CurrentUser('id') adminId: string,
   ) {
     return this.adminService.createAdminUser(body, adminId);
@@ -1090,7 +1153,7 @@ export class AdminController {
   @Get('system/errors')
   @ApiOperation({ summary: 'سجل الأخطاء' })
   async getSystemErrors(@Query('severity') severity?: string) {
-    return this.adminService.getSystemErrors(severity);
+    return this.adminService.getSystemErrors({ severity });
   }
 
   // ==================== Database Management ====================
@@ -1133,7 +1196,12 @@ export class AdminController {
     @Body() body: { reason: string; amount?: number },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.refundPayment(paymentId, body.reason, body.amount, adminId);
+    return this.adminService.refundPayment(
+      paymentId,
+      body.reason,
+      body.amount,
+      adminId,
+    );
   }
 
   // ==================== Promotions Management ====================
@@ -1217,7 +1285,12 @@ export class AdminController {
     @Body() body: { resolution: string; refundAmount?: number },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.resolveDispute(orderId, body.resolution, body.refundAmount, adminId);
+    return this.adminService.resolveDispute(
+      orderId,
+      body.resolution,
+      body.refundAmount,
+      adminId,
+    );
   }
 
   // ==================== Drivers Advanced ====================
@@ -1241,7 +1314,11 @@ export class AdminController {
     @Query('startDate') startDate: string,
     @Query('endDate') endDate: string,
   ) {
-    return this.adminService.calculateDriverPayout(driverId, startDate, endDate);
+    return this.adminService.calculateDriverPayout(
+      driverId,
+      startDate,
+      endDate,
+    );
   }
 
   // ==================== Stores Advanced ====================
@@ -1297,7 +1374,13 @@ export class AdminController {
     @Body() body: { amount: number; type: 'credit' | 'debit'; reason: string },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.adjustUserWallet(userId, body.amount, body.type, body.reason, adminId);
+    return this.adminService.adjustUserWallet(
+      userId,
+      body.amount,
+      body.type,
+      body.reason,
+      adminId,
+    );
   }
 
   // ==================== Reports Advanced ====================
@@ -1348,7 +1431,10 @@ export class AdminController {
 
   @Get('analytics/trends')
   @ApiOperation({ summary: 'الاتجاهات' })
-  async getTrends(@Query('metric') metric: string, @Query('days') days: number = 30) {
+  async getTrends(
+    @Query('metric') metric: string,
+    @Query('days') days: number = 30,
+  ) {
     return this.adminService.getTrends(metric, days);
   }
 
@@ -1360,7 +1446,12 @@ export class AdminController {
     @Query('period2Start') period2Start: string,
     @Query('period2End') period2End: string,
   ) {
-    return this.adminService.getComparisons(period1Start, period1End, period2Start, period2End);
+    return this.adminService.getComparisons(
+      period1Start,
+      period1End,
+      period2Start,
+      period2End,
+    );
   }
 
   // ==================== Content Management ====================
@@ -1450,6 +1541,3 @@ export class AdminController {
     return this.adminService.updateRole(roleId, body);
   }
 }
-
-
-

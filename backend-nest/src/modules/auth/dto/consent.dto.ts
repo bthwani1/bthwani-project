@@ -1,4 +1,10 @@
-import { IsEnum, IsString, IsBoolean, IsOptional, IsNotEmpty } from 'class-validator';
+import {
+  IsEnum,
+  IsString,
+  IsBoolean,
+  IsOptional,
+  IsNotEmpty,
+} from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export enum ConsentType {
@@ -9,33 +15,33 @@ export enum ConsentType {
 }
 
 export class ConsentDto {
-  @ApiProperty({ 
+  @ApiProperty({
     description: 'نوع الموافقة',
     enum: ConsentType,
-    example: ConsentType.PRIVACY_POLICY
+    example: ConsentType.PRIVACY_POLICY,
   })
   @IsEnum(ConsentType, { message: 'نوع الموافقة غير صالح' })
   @IsNotEmpty({ message: 'نوع الموافقة مطلوب' })
   consentType: ConsentType;
 
-  @ApiProperty({ 
+  @ApiProperty({
     description: 'حالة الموافقة (موافق/غير موافق)',
-    example: true
+    example: true,
   })
   @IsBoolean({ message: 'يجب أن تكون الموافقة true أو false' })
   granted: boolean;
 
-  @ApiProperty({ 
+  @ApiProperty({
     description: 'نسخة السياسة أو الشروط',
-    example: '1.0.0'
+    example: '1.0.0',
   })
   @IsString({ message: 'النسخة يجب أن تكون نصاً' })
   @IsNotEmpty({ message: 'نسخة السياسة مطلوبة' })
   version: string;
 
-  @ApiPropertyOptional({ 
+  @ApiPropertyOptional({
     description: 'ملاحظات إضافية',
-    example: 'موافقة تلقائية عند التسجيل'
+    example: 'موافقة تلقائية عند التسجيل',
   })
   @IsString()
   @IsOptional()
@@ -43,9 +49,9 @@ export class ConsentDto {
 }
 
 export class BulkConsentDto {
-  @ApiProperty({ 
+  @ApiProperty({
     description: 'قائمة الموافقات المتعددة',
-    type: [ConsentDto]
+    type: [ConsentDto],
   })
   consents: ConsentDto[];
 }
@@ -84,4 +90,3 @@ export class ConsentResponseDto {
   @ApiProperty({ description: 'تاريخ التحديث' })
   updatedAt: Date;
 }
-

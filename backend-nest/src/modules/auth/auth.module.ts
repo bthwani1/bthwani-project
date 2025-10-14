@@ -13,10 +13,10 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { FirebaseStrategy } from './strategies/firebase.strategy';
 import { UnifiedAuthGuard } from '../../common/guards/unified-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
-import { 
-  ConsentGuard, 
-  PrivacyPolicyConsentGuard, 
-  TermsOfServiceConsentGuard 
+import {
+  ConsentGuard,
+  PrivacyPolicyConsentGuard,
+  TermsOfServiceConsentGuard,
 } from '../../common/guards/consent.guard';
 
 @Module({

@@ -11,7 +11,8 @@ export class AnalyticsService {
   constructor(
     @InjectModel(RoasDaily.name) private roasDailyModel: Model<RoasDaily>,
     @InjectModel(AdSpend.name) private adSpendModel: Model<AdSpend>,
-    @InjectModel(MarketingEvent.name) private marketingEventModel: Model<MarketingEvent>,
+    @InjectModel(MarketingEvent.name)
+    private marketingEventModel: Model<MarketingEvent>,
     @InjectModel(Order.name) private orderModel: Model<Order>,
   ) {}
 
@@ -26,7 +27,10 @@ export class AnalyticsService {
     }
     if (platform) query.platform = platform;
 
-    const data = await this.roasDailyModel.find(query).sort({ date: -1 }).limit(30);
+    const data = await this.roasDailyModel
+      .find(query)
+      .sort({ date: -1 })
+      .limit(30);
     return { data };
   }
 
@@ -51,8 +55,16 @@ export class AnalyticsService {
       },
     ]);
 
-    const summary = result[0] || { totalAdSpend: 0, totalRevenue: 0, totalOrders: 0, totalConversions: 0 };
-    const roas = summary.totalAdSpend > 0 ? summary.totalRevenue / summary.totalAdSpend : 0;
+    const summary = result[0] || {
+      totalAdSpend: 0,
+      totalRevenue: 0,
+      totalOrders: 0,
+      totalConversions: 0,
+    };
+    const roas =
+      summary.totalAdSpend > 0
+        ? summary.totalRevenue / summary.totalAdSpend
+        : 0;
 
     return { ...summary, roas };
   }
@@ -81,7 +93,13 @@ export class AnalyticsService {
           adSpend: 1,
           revenue: 1,
           orders: 1,
-          roas: { $cond: [{ $gt: ['$adSpend', 0] }, { $divide: ['$revenue', '$adSpend'] }, 0] },
+          roas: {
+            $cond: [
+              { $gt: ['$adSpend', 0] },
+              { $divide: ['$revenue', '$adSpend'] },
+              0,
+            ],
+          },
         },
       },
       { $sort: { roas: -1 } },
@@ -136,7 +154,14 @@ export class AnalyticsService {
       },
     ]);
 
-    return result[0] || { totalSpend: 0, totalImpressions: 0, totalClicks: 0, totalConversions: 0 };
+    return (
+      result[0] || {
+        totalSpend: 0,
+        totalImpressions: 0,
+        totalClicks: 0,
+        totalConversions: 0,
+      }
+    );
   }
 
   // ==================== KPIs ====================
@@ -156,8 +181,12 @@ export class AnalyticsService {
           $group: {
             _id: null,
             totalOrders: { $sum: 1 },
-            completedOrders: { $sum: { $cond: [{ $eq: ['$status', 'delivered'] }, 1, 0] } },
-            cancelledOrders: { $sum: { $cond: [{ $eq: ['$status', 'cancelled'] }, 1, 0] } },
+            completedOrders: {
+              $sum: { $cond: [{ $eq: ['$status', 'delivered'] }, 1, 0] },
+            },
+            cancelledOrders: {
+              $sum: { $cond: [{ $eq: ['$status', 'cancelled'] }, 1, 0] },
+            },
           },
         },
       ]),
@@ -173,14 +202,24 @@ export class AnalyticsService {
       ]),
     ]);
 
-    const orders = ordersData[0] || { totalOrders: 0, completedOrders: 0, cancelledOrders: 0 };
+    const orders = ordersData[0] || {
+      totalOrders: 0,
+      completedOrders: 0,
+      cancelledOrders: 0,
+    };
     const revenue = revenueData[0] || { totalRevenue: 0, avgOrderValue: 0 };
 
     return {
       orders,
       revenue,
-      conversionRate: orders.totalOrders > 0 ? (orders.completedOrders / orders.totalOrders) * 100 : 0,
-      cancellationRate: orders.totalOrders > 0 ? (orders.cancelledOrders / orders.totalOrders) * 100 : 0,
+      conversionRate:
+        orders.totalOrders > 0
+          ? (orders.completedOrders / orders.totalOrders) * 100
+          : 0,
+      cancellationRate:
+        orders.totalOrders > 0
+          ? (orders.cancelledOrders / orders.totalOrders) * 100
+          : 0,
     };
   }
 
@@ -191,7 +230,9 @@ export class AnalyticsService {
     const [recentOrders, activeOrders] = await Promise.all([
       this.orderModel.countDocuments({ createdAt: { $gte: oneHourAgo } }),
       this.orderModel.countDocuments({
-        status: { $in: ['confirmed', 'preparing', 'ready', 'picked_up', 'on_the_way'] },
+        status: {
+          $in: ['confirmed', 'preparing', 'ready', 'picked_up', 'on_the_way'],
+        },
       }),
     ]);
 
@@ -219,7 +260,10 @@ export class AnalyticsService {
       if (endDate) query.createdAt.$lte = new Date(endDate);
     }
 
-    const events = await this.marketingEventModel.find(query).sort({ createdAt: -1 }).limit(100);
+    const events = await this.marketingEventModel
+      .find(query)
+      .sort({ createdAt: -1 })
+      .limit(100);
     return { data: events, total: events.length };
   }
 
@@ -304,7 +348,14 @@ export class AnalyticsService {
       },
     ]);
 
-    return result[0] || { productsRevenue: 0, deliveryFees: 0, platformShare: 0, totalRevenue: 0 };
+    return (
+      result[0] || {
+        productsRevenue: 0,
+        deliveryFees: 0,
+        platformShare: 0,
+        totalRevenue: 0,
+      }
+    );
   }
 
   // ==================== Advanced Analytics ====================
@@ -405,4 +456,3 @@ export class AnalyticsService {
     };
   }
 }
-

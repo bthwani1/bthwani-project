@@ -8,15 +8,25 @@ export class UserConsent extends Document {
   @Prop({ type: Types.ObjectId, ref: 'User', required: true, index: true })
   userId: Types.ObjectId;
 
-  @ApiProperty({ 
+  @ApiProperty({
     description: 'نوع الموافقة',
-    enum: ['privacy_policy', 'terms_of_service', 'marketing', 'data_processing']
+    enum: [
+      'privacy_policy',
+      'terms_of_service',
+      'marketing',
+      'data_processing',
+    ],
   })
-  @Prop({ 
-    type: String, 
-    enum: ['privacy_policy', 'terms_of_service', 'marketing', 'data_processing'],
+  @Prop({
+    type: String,
+    enum: [
+      'privacy_policy',
+      'terms_of_service',
+      'marketing',
+      'data_processing',
+    ],
     required: true,
-    index: true
+    index: true,
   })
   consentType: string;
 
@@ -63,8 +73,12 @@ UserConsentSchema.index({ userId: 1, consentType: 1 });
 UserConsentSchema.index({ userId: 1, consentDate: -1 });
 
 // للبحث عن الموافقات النشطة (غير المسحوبة)
-UserConsentSchema.index({ userId: 1, consentType: 1, granted: 1, withdrawnAt: 1 });
+UserConsentSchema.index({
+  userId: 1,
+  consentType: 1,
+  granted: 1,
+  withdrawnAt: 1,
+});
 
 // للتدقيق: البحث حسب التاريخ
 UserConsentSchema.index({ createdAt: -1 });
-

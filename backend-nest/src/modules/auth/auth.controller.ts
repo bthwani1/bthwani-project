@@ -1,5 +1,22 @@
-import { Controller, Post, Body, UseGuards, Get, Patch, Delete, Param, Query, Req } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth, ApiParam, ApiQuery } from '@nestjs/swagger';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  Get,
+  Patch,
+  Delete,
+  Param,
+  Query,
+  Req,
+} from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBearerAuth,
+  ApiParam,
+  ApiQuery,
+} from '@nestjs/swagger';
 import { Throttle, SkipThrottle } from '@nestjs/throttler';
 import type { Request } from 'express';
 import { AuthService } from './auth.service';
@@ -24,7 +41,7 @@ export class AuthController {
   ) {}
 
   @Public()
-  @Throttle({ auth: { ttl: 60000, limit: 5 } })  // ✅ 5 محاولات تسجيل دخول في الدقيقة
+  @Throttle({ auth: { ttl: 60000, limit: 5 } }) // ✅ 5 محاولات تسجيل دخول في الدقيقة
   @Post('firebase/login')
   @ApiOperation({ summary: 'تسجيل الدخول عبر Firebase' })
   async loginWithFirebase(@Body() firebaseAuthDto: FirebaseAuthDto) {
@@ -34,7 +51,7 @@ export class AuthController {
   @ApiBearerAuth()
   @UseGuards(UnifiedAuthGuard)
   @Auth(AuthType.FIREBASE)
-  @SkipThrottle()  // ✅ لا rate limiting على القراءة
+  @SkipThrottle() // ✅ لا rate limiting على القراءة
   @Get('me')
   @ApiOperation({ summary: 'جلب بيانات المستخدم الحالي' })
   async getProfile(@CurrentUser('id') userId: string) {
@@ -58,7 +75,7 @@ export class AuthController {
   @ApiBearerAuth()
   @UseGuards(UnifiedAuthGuard)
   @Auth(AuthType.FIREBASE)
-  @Throttle({ strict: { ttl: 60000, limit: 10 } })  // ✅ 10 موافقات في الدقيقة
+  @Throttle({ strict: { ttl: 60000, limit: 10 } }) // ✅ 10 موافقات في الدقيقة
   @Post('consent')
   @ApiOperation({ summary: 'تسجيل موافقة المستخدم' })
   async grantConsent(
@@ -66,7 +83,7 @@ export class AuthController {
     @Body() consentDto: ConsentDto,
     @Req() req: Request,
   ) {
-    const ipAddress = req.ip || req.headers['x-forwarded-for'] as string;
+    const ipAddress = req.ip || (req.headers['x-forwarded-for'] as string);
     const userAgent = req.headers['user-agent'];
 
     const consent = await this.consentService.recordConsent(
@@ -93,7 +110,7 @@ export class AuthController {
     @Body() bulkConsentDto: BulkConsentDto,
     @Req() req: Request,
   ) {
-    const ipAddress = req.ip || req.headers['x-forwarded-for'] as string;
+    const ipAddress = req.ip || (req.headers['x-forwarded-for'] as string);
     const userAgent = req.headers['user-agent'];
 
     const consents = await this.consentService.recordBulkConsents(
@@ -121,7 +138,11 @@ export class AuthController {
     @Param('type') type: ConsentType,
     @Body('reason') reason?: string,
   ) {
-    const consent = await this.consentService.withdrawConsent(userId, type, reason);
+    const consent = await this.consentService.withdrawConsent(
+      userId,
+      type,
+      reason,
+    );
 
     return {
       success: true,
