@@ -28,7 +28,7 @@ export class UploadService {
    */
   static async uploadFile(file: File, signature: UploadResult): Promise<string> {
     try {
-      const response = await axios.put(signature.uploadUrl, file, {
+      await axios.put(signature.uploadUrl, file, {
         headers: {
           'Content-Type': file.type,
         },

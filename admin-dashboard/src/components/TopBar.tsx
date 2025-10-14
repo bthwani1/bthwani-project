@@ -72,13 +72,19 @@ export default function TopBar({ onToggleDrawer }: TopBarProps) {
             <IconButton
               size="large"
               edge="end"
-              aria-label="account"
+              aria-label="حساب المستخدم"
               aria-controls="topbar-menu"
               aria-haspopup="true"
               onClick={handleMenuOpen}
               color="inherit"
+              sx={{
+                "&:focus": {
+                  outline: `2px solid ${theme.palette.primary.main}`,
+                  outlineOffset: "2px",
+                },
+              }}
             >
-              <Avatar sx={{ width: 32, height: 32 }}>A</Avatar>
+              <Avatar sx={{ width: 32, height: 32 }} alt="صورة المستخدم">A</Avatar>
             </IconButton>
             <IconButton
               size="large"

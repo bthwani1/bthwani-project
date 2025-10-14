@@ -37,7 +37,7 @@ import {
   Send,
   Assessment,
   ContentCopy,
-  TestTube as TestIcon,
+  Science as TestIcon,
 } from "@mui/icons-material";
 
 // ===== استبدل هذه المسارات حسب مشروعك =====
@@ -52,8 +52,7 @@ import {
 } from "../../../api/adminNotifications";
 import NotificationBadge from "../../../components/ui/NotificationBadge";
 import NotificationLog from "../../../components/ui/NotificationLog";
-  type UpdateCampaignRequest,
-} from "../../../api/adminNotifications"; // ← عدّل المسار
+import { type UpdateCampaignRequest } from "../../../api/adminNotifications"; // ← عدّل المسار
 
 // ============= Types (UI-facing) =============
 export type Channel = "push" | "sms" | "email" | "inapp";

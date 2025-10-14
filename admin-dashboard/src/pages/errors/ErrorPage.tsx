@@ -79,7 +79,6 @@ const ErrorPage: React.FC<ErrorPageProps> = ({
   message,
   code,
   showHomeButton = true,
-  showBackButton = true,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();

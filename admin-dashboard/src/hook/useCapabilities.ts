@@ -113,15 +113,7 @@ export const useCanEditAdmins = (user?: User | null) =>
 export const useCanDeleteAdmins = (user?: User | null) =>
   useHasPermission("admin.users:delete", user);
 
-// Admin Users Management
-export const useCanReadAdmins = (user?: User | null) =>
-  useHasPermission("admin.users:read", user);
-export const useCanWriteAdmins = (user?: User | null) =>
-  useHasPermission("admin.users:write", user);
-export const useCanEditAdmins = (user?: User | null) =>
-  useHasPermission("admin.users:edit", user);
-export const useCanDeleteAdmins = (user?: User | null) =>
-  useHasPermission("admin.users:delete", user);
+
 
 // Drivers Management
 export const useCanReadDrivers = (user?: User | null) =>

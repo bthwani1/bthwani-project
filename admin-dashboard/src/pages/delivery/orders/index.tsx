@@ -1,10 +1,8 @@
 import { useEffect, useCallback, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
-  Alert,
   Box,
   Button,
-  CircularProgress,
   Stack,
   Typography,
 } from "@mui/material";
@@ -19,7 +17,6 @@ import { useOrders } from "./hooks/useOrders";
 import { useAdminSocket } from "./hooks/useAdminSocket";
 import { downloadOrdersExcel } from "./utils/excel";
 import { useListQueryState } from "../../../hook/useQueryState";
-import type { OrdersFilters } from "./services/ordersApi";
 import StateBoundary from "../../../components/ui/StateBoundary";
 import SocketStatusIndicator from "../../../components/ui/SocketStatusIndicator";
 
@@ -33,15 +30,13 @@ export default function AdminDeliveryOrdersPage() {
     setPage,
     perPage,
     setPerPage,
-    search,
-    setSearch,
     sort,
     setSort,
     filters,
     setFilters,
   } = useListQueryState();
 
-  const [drawerId, setDrawerId] = useState<string | undefined>(undefined);
+  const [drawerId] = useState<string | undefined>(undefined);
   const [selected, setSelected] = useState<string[]>([]);
   const { rows, setRows, loading, error, fetchOrders } = useOrders();
   const { ensure, isConnected } = useAdminSocket();
@@ -126,7 +121,7 @@ export default function AdminDeliveryOrdersPage() {
         emptyDescription="لا توجد طلبات تطابق الفلاتر المحددة"
         emptyActionLabel="إعادة ضبط الفلاتر"
         emptyOnAction={() => setFilters({})}
-        errorMessage={error}
+        errorMessage={error || undefined}
         loadingMessage="جارٍ تحميل الطلبات..."
       >
         <OrdersTable

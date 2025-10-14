@@ -27,23 +27,17 @@ import {
   MenuItem,
   Tooltip,
   Divider,
-  List,
-  ListItem,
-  ListItemText,
 } from '@mui/material';
 import {
   Search as SearchIcon,
   Payment as PaymentIcon,
   CheckCircle as CheckIcon,
-  Cancel as CancelIcon,
   Pending as PendingIcon,
-  AttachMoney as MoneyIcon,
   Clear as ClearIcon,
   Refresh as RefreshIcon,
   Download as DownloadIcon,
-  Visibility as ViewIcon,
-  Person as PersonIcon,
   Schedule as ScheduleIcon,
+  Visibility,
 } from '@mui/icons-material';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -146,7 +140,7 @@ const PayoutBatchDetailsDialog: React.FC<{
         <Box sx={{ pt: 2 }}>
           {/* Batch Summary */}
           <Grid container spacing={3} sx={{ mb: 3 }}>
-            <Grid item xs={12} md={6}>
+            <Grid  size={{xs: 12, md: 6}}>
               <Card>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
@@ -179,7 +173,7 @@ const PayoutBatchDetailsDialog: React.FC<{
               </Card>
             </Grid>
 
-            <Grid item xs={12} md={6}>
+            <Grid  size={{xs: 12, md: 6}}>
               <Card>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
@@ -234,7 +228,7 @@ const PayoutBatchDetailsDialog: React.FC<{
                       <TableRow key={item._id} hover>
                         <TableCell>
                           <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
-                            {(item.account_id as any)?.owner_id || 'غير محدد'}
+                            {(item.account_id as unknown as { owner_id: string })?.owner_id || 'غير محدد'}
                           </Typography>
                         </TableCell>
                         <TableCell>
@@ -669,7 +663,7 @@ export default function PayoutsManagementPage() {
                           size="small"
                           onClick={() => handleViewDetails(batch)}
                         >
-                          <ViewIcon fontSize="small" />
+                          <Visibility fontSize="small" />
                         </IconButton>
                       </Tooltip>
                     </TableCell>

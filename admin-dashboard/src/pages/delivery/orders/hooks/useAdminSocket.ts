@@ -27,7 +27,7 @@ export function useAdminSocket() {
     });
 
     // الاستماع لأحداث الطلبات وتحديث الـ cache
-    s.on("order.created", (data) => {
+    s.on("order.created", () => {
       queryClient.invalidateQueries(['orders']);
     });
 

@@ -19,11 +19,7 @@ export const CharacterCounter: React.FC<CharacterCounterProps> = ({
   const isWarning = showWarning && percentage >= warningThreshold;
   const isError = current > max;
 
-  const getColor = () => {
-    if (isError) return "error.main";
-    if (isWarning) return "warning.main";
-    return "text.secondary";
-  };
+
 
   const getTextColor = () => {
     if (isError) return "error";

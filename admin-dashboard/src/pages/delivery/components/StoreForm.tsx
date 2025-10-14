@@ -138,7 +138,7 @@ export default function StoreForm({
         <Box sx={{ width: "50%" }}>
           <FileUploader
             label="صورة الغلاف للمتجر"
-            value={form.image}
+            value={form.image || undefined}
             onChange={(url) => onChange({ image: url })}
             accept="image/*"
             maxSize={5 * 1024 * 1024} // 5MB
@@ -148,7 +148,7 @@ export default function StoreForm({
         <Box sx={{ width: "50%" }}>
           <FileUploader
             label="شعار المتجر"
-            value={form.logo}
+            value={form.logo || undefined}
             onChange={(url) => onChange({ logo: url })}
             accept="image/*"
             maxSize={5 * 1024 * 1024} // 5MB

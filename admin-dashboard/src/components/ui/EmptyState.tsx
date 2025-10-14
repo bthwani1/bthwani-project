@@ -1,14 +1,14 @@
 import React from 'react';
-import { Box, Typography, Button, SvgIconTypeMap } from '@mui/material';
-import { OverridableComponent } from '@mui/material/OverridableComponent';
+import { Box, Typography, Button, type SvgIconTypeMap, type SvgIconProps } from '@mui/material';
+import  type{ OverridableComponent } from '@mui/material/OverridableComponent';
 
 interface EmptyStateProps {
   title: string;
   description?: string;
   actionLabel?: string;
   onAction?: () => void;
-  icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
-  Icon?: React.ComponentType<any>;
+  icon?: OverridableComponent<SvgIconTypeMap<object, "svg">>;
+  Icon?: React.ComponentType<SvgIconProps>; // Updated this line
 }
 
 export const EmptyState: React.FC<EmptyStateProps> = ({

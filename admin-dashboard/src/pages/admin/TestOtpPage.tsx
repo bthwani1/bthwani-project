@@ -67,7 +67,7 @@ export default function TestOtpPage() {
         otp: data.otp,
         channel
       });
-    } catch (error) {
+      } catch {
       setResult({
         success: false,
         message: 'فشل في إرسال OTP',
@@ -101,13 +101,13 @@ export default function TestOtpPage() {
         <CardContent>
           <form onSubmit={handleSubmit}>
             <Grid container spacing={3}>
-              <Grid item xs={12}>
+              <Grid size={{xs: 12}}>
                 <FormControl fullWidth>
                   <InputLabel>قناة الإرسال</InputLabel>
                   <Select
                     value={channel}
                     label="قناة الإرسال"
-                    onChange={(e) => setChannel(e.target.value as any)}
+                    onChange={(e) => setChannel(e.target.value as 'email' | 'sms' | 'whatsapp')}
                   >
                     <MenuItem value="email">البريد الإلكتروني</MenuItem>
                     <MenuItem value="sms">الرسائل النصية (SMS)</MenuItem>
@@ -117,7 +117,7 @@ export default function TestOtpPage() {
               </Grid>
 
               {channel === 'email' ? (
-                <Grid item xs={12}>
+                <Grid size={{xs: 12}}>
                   <TextField
                     fullWidth
                     label="البريد الإلكتروني"
@@ -129,7 +129,7 @@ export default function TestOtpPage() {
                   />
                 </Grid>
               ) : (
-                <Grid item xs={12}>
+                <Grid size={{xs: 12}}>
                   <TextField
                     fullWidth
                     label="رقم الهاتف"
@@ -142,7 +142,7 @@ export default function TestOtpPage() {
                 </Grid>
               )}
 
-              <Grid item xs={12}>
+              <Grid size={{xs: 12}}>
                 <Button
                   type="submit"
                   variant="contained"

@@ -218,10 +218,10 @@ const RequireAdminPermission: React.FC<RequireAdminPermissionProps> = ({
     return (
       <Tooltip title={disabledTooltip || tooltip || "ليس لديك صلاحية للوصول إلى هذا العنصر"}>
         <span>
-          {React.cloneElement(children as React.ReactElement, {
+          {React.cloneElement(children as React.ReactElement<React.HTMLAttributes<HTMLElement>>, {
             disabled: true,
             style: { opacity: 0.5, cursor: 'not-allowed' }
-          })}
+          } as React.HTMLAttributes<HTMLElement> & { disabled?: boolean })}
         </span>
       </Tooltip>
     );

@@ -28,15 +28,12 @@ import {
   Select,
   MenuItem,
   Avatar,
-  Tooltip,
   Badge,
-  Divider,
 } from '@mui/material';
 import {
   Add as AddIcon,
   Search as SearchIcon,
-  FilterList as FilterIcon,
-  Refresh as RefreshIcon,
+ 
   Visibility as VisibilityIcon,
   Message as MessageIcon,
   Person as PersonIcon,
@@ -44,7 +41,6 @@ import {
   CheckCircle as CheckCircleIcon,
   Error as ErrorIcon,
   AccessTime as AccessTimeIcon,
-  Assignment as AssignmentIcon,
 } from '@mui/icons-material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from '../../../utils/axios';
@@ -89,6 +85,20 @@ interface SupportTicket {
   messageCount?: number;
 }
 
+interface SupportTicketFormData {
+  subject: string;
+  description: string;
+  priority: SupportTicket['priority'];
+  assignee: string;
+  group: string;
+  tags: string[];
+  links: {
+    orderId: string;
+    store: string;
+    driver: string;
+  };
+}
+
 interface SupportStats {
   totalTickets: number;
   newTickets: number;
@@ -122,7 +132,7 @@ const SupportTicketFormDialog: React.FC<{
   open: boolean;
   onClose: () => void;
   ticket?: SupportTicket | null;
-  onSubmit: (data: any) => void;
+  onSubmit: (data: SupportTicketFormData) => void;
   loading: boolean;
 }> = ({ open, onClose, ticket, onSubmit, loading }) => {
   const [formData, setFormData] = useState({
@@ -291,7 +301,7 @@ export default function SupportTicketsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [priorityFilter, setPriorityFilter] = useState<string>('all');
-  const [assigneeFilter, setAssigneeFilter] = useState<string>('all');
+  const [assigneeFilter] = useState<string>('all');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingTicket, setEditingTicket] = useState<SupportTicket | null>(null);
 
@@ -324,7 +334,7 @@ export default function SupportTicketsPage() {
 
   // Mutations
   const createMutation = useMutation({
-    mutationFn: async (ticketData: any) => {
+    mutationFn: async (ticketData: SupportTicketFormData) => {
       const { data } = await axios.post('/admin/support/tickets', ticketData);
       return data;
     },
@@ -337,7 +347,7 @@ export default function SupportTicketsPage() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: async ({ id, updates }: { id: string; updates: any }) => {
+    mutationFn: async ({ id, updates }: { id: string; updates: SupportTicketFormData }) => {
       const { data } = await axios.patch(`/admin/support/tickets/${id}`, updates);
       return data;
     },
@@ -349,7 +359,7 @@ export default function SupportTicketsPage() {
     },
   });
 
-  const handleFormSubmit = (formData: any) => {
+  const handleFormSubmit = (formData: SupportTicketFormData) => {
     if (editingTicket) {
       updateMutation.mutate({ id: editingTicket._id, updates: formData });
     } else {
@@ -573,7 +583,7 @@ export default function SupportTicketsPage() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {tickets.map((ticket) => (
+                {tickets.map((ticket: SupportTicket) => (
                   <TableRow key={ticket._id} hover>
                     <TableCell>
                       <Typography variant="body2" fontWeight={600}>

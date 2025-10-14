@@ -56,6 +56,7 @@ interface Review {
     phone?: string;
   };
   rating: Rating;
+  status?: 'published' | 'hidden';
   createdAt: string;
 }
 
@@ -149,7 +150,7 @@ export default function QualityReviewsPage() {
       setLoading(true);
       setError(null);
       const res = await fetchReviews({
-        type: entityType || undefined,
+        entityType: entityType || undefined,
         page,
         limit: pageSize,
         sortBy,
@@ -483,6 +484,8 @@ export default function QualityReviewsPage() {
         open={openDrawer}
         onClose={handleClose}
         review={selected}
+        onHideReview={handleHideReview}
+        onPublishReview={handlePublishReview}
       />
 
       {error && (
@@ -497,10 +500,14 @@ function ReviewDetailsDrawer({
   open,
   onClose,
   review,
+  onHideReview,
+  onPublishReview,
 }: {
   open: boolean;
   onClose: () => void;
   review: Review | null;
+  onHideReview: (review: Review) => void;
+  onPublishReview: (review: Review) => void;
 }) {
   return (
     <Drawer anchor="right" open={open} onClose={onClose} PaperProps={{ sx: { width: { xs: "100%", sm: 520 } } }}>
@@ -631,7 +638,7 @@ function ReviewDetailsDrawer({
                   variant="outlined"
                   color="warning"
                   size="small"
-                  onClick={() => handleHideReview(review)}
+                  onClick={() => onHideReview(review)}
                   sx={{ mb: 2 }}
                 >
                   إخفاء التقييم
@@ -643,7 +650,7 @@ function ReviewDetailsDrawer({
                   variant="outlined"
                   color="success"
                   size="small"
-                  onClick={() => handlePublishReview(review)}
+                  onClick={() => onPublishReview(review)}
                   sx={{ mb: 2 }}
                 >
                   نشر التقييم

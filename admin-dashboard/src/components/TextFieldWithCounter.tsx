@@ -1,6 +1,6 @@
 // src/components/TextFieldWithCounter.tsx
 import React from "react";
-import { TextField, TextFieldProps } from "@mui/material";
+import { TextField, type  TextFieldProps } from "@mui/material";
 import { CharacterCounter } from "./CharacterCounter";
 
 interface TextFieldWithCounterProps extends Omit<TextFieldProps, "error" | "helperText"> {

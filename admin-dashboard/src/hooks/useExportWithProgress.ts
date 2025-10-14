@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 
 export interface ExportProgress {
@@ -25,7 +25,6 @@ export function useExportWithProgress(options: UseExportOptions = {}) {
     message: 'جاري التحضير...'
   });
 
-  const queryClient = useQueryClient();
 
   const exportMutation = useMutation({
     mutationFn: async (params: {

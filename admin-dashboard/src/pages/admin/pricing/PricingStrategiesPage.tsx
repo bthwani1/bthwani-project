@@ -29,7 +29,7 @@ import {
   Edit as EditIcon,
   Delete as DeleteIcon,
   AttachMoney as MoneyIcon,
-  TrendingUp as TrendingUpIcon,
+  
 } from '@mui/icons-material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from '../../../utils/axios';
@@ -306,7 +306,7 @@ export default function PricingStrategiesPage() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: async ({ id, strategy }: { id: string; strategy: Partial<PricingStrategy> }) => {
+    mutationFn: async ({ strategy }: { strategy: Partial<PricingStrategy> }) => {
       const { data } = await axios.put(`/pricing-strategies`, strategy);
       return data;
     },
@@ -338,7 +338,7 @@ export default function PricingStrategiesPage() {
 
   const handleFormSubmit = (formData: Omit<PricingStrategy, '_id' | 'createdAt' | 'updatedAt'>) => {
     if (editingStrategy) {
-      updateMutation.mutate({ id: editingStrategy._id!, strategy: formData });
+      updateMutation.mutate({ strategy: formData });
     } else {
       createMutation.mutate(formData);
     }
@@ -393,7 +393,7 @@ export default function PricingStrategiesPage() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {strategies.map((strategy) => (
+                {strategies.map((strategy: PricingStrategy) => (
                   <TableRow key={strategy._id} hover>
                     <TableCell>
                       <Typography variant="body1" fontWeight={500}>

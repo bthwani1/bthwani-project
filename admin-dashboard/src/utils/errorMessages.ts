@@ -93,16 +93,16 @@ export const ERROR_MESSAGES = {
 };
 
 // دالة للحصول على رسالة خطأ بناءً على نوع الخطأ
-export const getErrorMessage = (field: string, errorType: string, params?: Record<string, any>): string => {
+export const getErrorMessage = (field: string, errorType: string, params?: Record<string, number | undefined>): string => {
   // البحث في رسائل الأخطاء الخاصة بالكيانات أولاً
   const entityKeys = ['DRIVER', 'ADMIN', 'STORE', 'ORDER', 'COUPON'];
 
   for (const entityKey of entityKeys) {
     const entityMessages = ERROR_MESSAGES[entityKey as keyof typeof ERROR_MESSAGES];
-    if (entityMessages && field in entityMessages) {
-      const message = (entityMessages as any)[field];
+    if (entityMessages && typeof entityMessages === 'object' && !Array.isArray(entityMessages) && field in entityMessages) {
+      const message = (entityMessages as Record<string, string | ((param: number) => string)>)[field];
       if (typeof message === 'function') {
-        return message(params?.value || params?.min || params?.max);
+        return message(params?.value || params?.min || params?.max || 0);
       }
       return message;
     }

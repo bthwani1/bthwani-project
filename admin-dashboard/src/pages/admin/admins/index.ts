@@ -33,3 +33,8 @@ export {
   statusFromIsActive,
   isActiveFromStatus,
 } from "./utils";
+
+// React components
+export { AdminsListPage } from "./AdminsListPage";
+export { AdminDetailsRoute } from "./AdminDetailsRoute";
+export { AdminCreateRoute } from "./AdminCreateRoute";

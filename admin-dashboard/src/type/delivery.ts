@@ -6,9 +6,9 @@ export type StoreForm_type = {
   lat: string;
   lng: string;
   isActive: boolean;
-  image: File | null;
-  logo: File | null;
-  documents: File | null; // وثائق المتجر (PDF, DOC, etc.)
+  image: string | null;
+  logo: string | null;
+  documents: string | null; // وثائق المتجر (PDF, DOC, etc.)
   schedule: ScheduleSlot[];
   commissionRate: string;           // لاحظ: كـ string لسهولة الربط مع الـ TextField
   isTrending: boolean;

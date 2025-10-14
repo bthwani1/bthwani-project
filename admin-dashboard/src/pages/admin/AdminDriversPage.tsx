@@ -21,7 +21,6 @@ import {
   DialogContent,
   TextField,
   DialogActions,
-  CircularProgress,
   Snackbar,
   Switch,
   MenuItem,
@@ -39,9 +38,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../config/firebaseConfig";
-import { createDriverSchema, updateDriverSchema, CreateDriverData, UpdateDriverData } from "../drivers/schema";
+import { createDriverSchema, updateDriverSchema, type CreateDriverData, type UpdateDriverData } from "../drivers/schema";
 import { TextFieldWithCounter } from "../../components/TextFieldWithCounter";
-import { getErrorMessage } from "../../utils/validation";
 import StateBoundary from "../../components/ui/StateBoundary";
 
 interface Driver {
@@ -201,8 +199,8 @@ export default function AdminDriversPage() {
       setSnackbar({ open: true, message: "تم إنشاء الموصل بنجاح" });
       closeCreate();
       fetchDrivers();
-    } catch (error: any) {
-      const message = error?.response?.data?.message || "فشل في إنشاء الموصل";
+    } catch (error: unknown) {
+      const message = (error as { response?: { data?: { message?: string } } }).response?.data?.message || "فشل في إنشاء الموصل";
       setSnackbar({ open: true, message });
     }
   };
@@ -236,8 +234,8 @@ export default function AdminDriversPage() {
       setSnackbar({ open: true, message: "تم تحديث بيانات الموصل" });
       closeEditDialog();
       fetchDrivers();
-    } catch (error: any) {
-      const message = error?.response?.data?.message || "فشل في تحديث الموصل";
+    } catch (error: unknown) {
+      const message = (error as { response?: { data?: { message?: string } } }).response?.data?.message || "فشل في تحديث الموصل";
       setSnackbar({ open: true, message });
     }
   };
@@ -287,7 +285,7 @@ export default function AdminDriversPage() {
           emptyDescription="لا توجد موصلين مسجلين في النظام حالياً"
           emptyActionLabel="إنشاء موصل جديد"
           emptyOnAction={openCreate}
-          errorMessage={error}
+          errorMessage={error || undefined}
           loadingMessage="جارٍ تحميل قائمة الموصلين..."
         >
           <Paper>

@@ -12,7 +12,7 @@ export const createDriverSchema = z.object({
 
   email: validationUtils.email(ERROR_MESSAGES.DRIVER.EMAIL_INVALID),
 
-  password: validationUtils.strongPassword(ERROR_MESSAGES.DRIVER.PASSWORD_TOO_WEAK),
+  password: validationUtils.strongPassword(),
 
   role: validationUtils.enum(
     ["rider_driver", "light_driver", "women_driver"] as const,
@@ -133,8 +133,8 @@ export const updateDriverStatusSchema = z.object({
 
 // Schema لتحديث كلمة المرور
 export const updateDriverPasswordSchema = z.object({
-  currentPassword: validationUtils.strongPassword("كلمة المرور الحالية مطلوبة"),
-  newPassword: validationUtils.strongPassword(ERROR_MESSAGES.DRIVER.PASSWORD_TOO_WEAK),
+  currentPassword: validationUtils.strongPassword(),
+  newPassword: validationUtils.strongPassword(),
   confirmPassword: z.string(),
 }).refine((data) => data.newPassword === data.confirmPassword, {
   message: "كلمات المرور غير متطابقة",
@@ -167,8 +167,8 @@ export const updateDriverResidenceSchema = z.object({
 // Schema لإنشاء طلب إجازة للسائق
 export const createDriverLeaveRequestSchema = z.object({
   driverId: z.string().min(1, "معرف السائق مطلوب"),
-  startDate: z.date({ errorMap: () => ({ message: "تاريخ البداية مطلوب" }) }),
-  endDate: z.date({ errorMap: () => ({ message: "تاريخ النهاية مطلوب" }) }),
+  startDate: z.date({ message: "تاريخ البداية مطلوب" }),
+  endDate: z.date({ message: "تاريخ النهاية مطلوب" }),
   reason: validationUtils.required("سبب الإجازة مطلوب"),
 }).refine((data) => data.endDate > data.startDate, {
   message: "تاريخ النهاية يجب أن يكون بعد تاريخ البداية",

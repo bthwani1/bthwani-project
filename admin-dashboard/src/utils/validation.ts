@@ -12,7 +12,7 @@ export const validationUtils = {
   },
 
   // تحقق من كلمة المرور القوية
-  strongPassword: (message = "كلمة المرور يجب أن تكون 8 أحرف على الأقل وتحتوي على حرف كبير وصغير ورقم") => {
+  strongPassword: () => {
     return z
       .string()
       .min(8, "كلمة المرور يجب أن تكون 8 أحرف على الأقل")
@@ -57,12 +57,12 @@ export const validationUtils = {
     values: T,
     message = `يجب أن تكون إحدى القيم التالية: ${values.join(", ")}`
   ) => {
-    return z.enum(values, { errorMap: () => ({ message }) });
+    return z.enum(values, { message });
   },
 
   // تحقق من التاريخ
   date: (message = "التاريخ غير صالح") => {
-    return z.date({ errorMap: () => ({ message }) });
+    return z.date({ message });
   },
 
   // تحقق من الإحداثيات الجغرافية
@@ -70,7 +70,7 @@ export const validationUtils = {
     return z.object({
       lat: z.number().min(-90).max(90, "خط العرض يجب أن يكون بين -90 و 90"),
       lng: z.number().min(-180).max(180, "خط الطول يجب أن يكون بين -180 و 180"),
-    }, { errorMap: () => ({ message }) });
+    }, { message });
   },
 
   // تحقق من عنوان الموقع
@@ -87,7 +87,7 @@ export const validationUtils = {
 
 // دالة للحصول على رسالة خطأ مفهومة من Zod error
 export const getErrorMessage = (error: z.ZodError): string => {
-  return error.errors[0]?.message || "خطأ في التحقق من البيانات";
+  return error.issues[0]?.message || "خطأ في التحقق من البيانات";
 };
 
 // دالة للتحقق من البيانات وإرجاع رسالة خطأ واحدة

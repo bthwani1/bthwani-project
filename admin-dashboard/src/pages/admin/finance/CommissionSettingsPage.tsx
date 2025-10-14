@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import {
   Box,
   Card,
@@ -17,8 +17,6 @@ import {
   CircularProgress,
   Chip,
   Stack,
-  IconButton,
-  Tooltip,
   FormControl,
   InputLabel,
   Select,
@@ -28,11 +26,11 @@ import {
   Save as SaveIcon,
   History as HistoryIcon,
   Refresh as RefreshIcon,
-  Info as InfoIcon,
   TrendingUp as TrendingUpIcon,
 } from '@mui/icons-material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from '../../../utils/axios';
+import { AxiosError } from 'axios';
 
 interface CommissionRates {
   platformItemsCommission: number; // نسبة المنصة من العناصر
@@ -46,13 +44,6 @@ interface CommissionRates {
   taxBase: 'subtotal' | 'delivery' | 'total'; // أساس حساب الضريبة
 }
 
-interface CommissionSettings extends CommissionRates {
-  _id?: string;
-  effectiveFrom: Date;
-  createdBy?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
 
 interface AuditLog {
   _id: string;
@@ -93,7 +84,7 @@ export default function CommissionSettingsPage() {
       try {
         const { data } = await axios.get('/finance/commissions/settings');
         return data.settings;
-      } catch (error) {
+      } catch {
         // Return default settings if none exist
         return { ...defaultCommissionRates, effectiveFrom: new Date() };
       }
@@ -128,10 +119,13 @@ export default function CommissionSettingsPage() {
         severity: 'success',
       });
     },
-    onError: (error: any) => {
+    onError: (error: Error | AxiosError) => {
+      const errorMessage = error instanceof AxiosError
+        ? error.response?.data?.message || error.message
+        : error.message;
       setSnackbar({
         open: true,
-        message: error.response?.data?.message || 'خطأ في حفظ إعدادات العمولات',
+        message: errorMessage || 'خطأ في حفظ إعدادات العمولات',
         severity: 'error',
       });
     },
@@ -143,7 +137,7 @@ export default function CommissionSettingsPage() {
     }
   }, [currentSettings]);
 
-  const handleSettingChange = (field: keyof CommissionRates, value: any) => {
+  const handleSettingChange = (field: keyof CommissionRates, value: CommissionRates[keyof CommissionRates]) => {
     setSettings(prev => ({ ...prev, [field]: value }));
     setHasChanges(true);
   };
@@ -257,7 +251,7 @@ export default function CommissionSettingsPage() {
 
       <Grid container spacing={3}>
         {/* Platform Commission Settings */}
-        <Grid item xs={12} md={6}>
+        <Grid  size={{xs: 12, md: 6}}>
           <Card>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
@@ -311,7 +305,7 @@ export default function CommissionSettingsPage() {
         </Grid>
 
         {/* Tips and Tax Settings */}
-        <Grid item xs={12} md={6}>
+        <Grid  size={{xs: 12, md: 6}}>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
@@ -384,7 +378,7 @@ export default function CommissionSettingsPage() {
         </Grid>
 
         {/* Preview Card */}
-        <Grid item xs={12}>
+          <Grid  size={{xs: 12}}>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
@@ -395,7 +389,7 @@ export default function CommissionSettingsPage() {
               </Typography>
 
               <Grid container spacing={2} sx={{ mt: 2 }}>
-                <Grid item xs={12} md={4}>
+                <Grid  size={{xs: 12, md: 4}}>
                   <Card variant="outlined">
                     <CardContent>
                       <Typography variant="subtitle2" color="primary" gutterBottom>
@@ -411,7 +405,7 @@ export default function CommissionSettingsPage() {
                   </Card>
                 </Grid>
 
-                <Grid item xs={12} md={4}>
+                <Grid  size={{xs: 12, md: 4}}>
                   <Card variant="outlined">
                     <CardContent>
                       <Typography variant="subtitle2" color="success.main" gutterBottom>
@@ -427,7 +421,7 @@ export default function CommissionSettingsPage() {
                   </Card>
                 </Grid>
 
-                <Grid item xs={12} md={4}>
+                <Grid  size={{xs: 12, md: 4}}>
                   <Card variant="outlined">
                     <CardContent>
                       <Typography variant="subtitle2" color="warning.main" gutterBottom>
@@ -498,7 +492,7 @@ export default function CommissionSettingsPage() {
                             const newValue = log.newValues?.[key as keyof CommissionRates];
                             if (oldValue !== newValue) {
                               return (
-                                <Grid item xs={6} key={key}>
+                                <Grid  size={{xs: 6}} key={key}>
                                   <Typography variant="caption" display="block">
                                     {key}: {oldValue} → {newValue}
                                   </Typography>

@@ -3,16 +3,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type {
   AdminStatus,
-  AdminRole,
   AdminUser,
   ModuleDefinition,
   CreateAdminPayload,
 } from "./types";
 import { useCapabilities } from "./CapabilitiesHooks";
-import {
-  toFlatCaps,
-  fromFlatCaps,
-} from "./utils";
+import { toFlatCaps, fromFlatCaps } from "./utils";
 import {
   Alert,
   Box,
@@ -36,7 +32,12 @@ import {
   apiPatchAdmin,
   apiGetModules,
 } from "./api";
-import { createAdminSchema, updateAdminSchema, CreateAdminData, UpdateAdminData } from "./schema";
+import {
+  createAdminSchema,
+  updateAdminSchema,
+  type CreateAdminData,
+  type UpdateAdminData,
+} from "./schema";
 import { TextFieldWithCounter } from "../../../components/TextFieldWithCounter";
 
 /**
@@ -70,10 +71,6 @@ export function AdminUpsertDrawer({
   const [error, setError] = useState<string | null>(null);
 
   // بيانات النموذج
-  const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [role, setRole] = useState<AdminRole>("admin");
   const [status, setStatus] = useState<AdminStatus>("active");
   const [flatCaps, setFlatCaps] = useState<string[]>([]);
 
@@ -129,19 +126,21 @@ export function AdminUpsertDrawer({
   });
 
   // دالة الحفظ المحدثة
-  const onSave = async (data: CreateAdminData | UpdateAdminData): Promise<void> => {
+  const onSave = async (
+    data: CreateAdminData | UpdateAdminData
+  ): Promise<void> => {
     try {
       setSaving(true);
       setError(null);
 
       if (creating) {
+        const createData = data as CreateAdminData;
         const payload: CreateAdminPayload = {
-          name: data.name,
-          email: data.email,
-          password: data.password,
-          role: data.role,
-          capabilities: fromFlatCaps(flatCaps),
-          enabled: status === "active",
+          name: createData.name,
+          email: createData.email,
+          password: createData.password as string,
+          role: createData.role,
+          capabilities: flatCaps,
         };
 
         await apiCreateAdmin(payload);
@@ -149,12 +148,13 @@ export function AdminUpsertDrawer({
         onClose();
       } else if (id) {
         // تحديث المشرف الموجود
+        const updateData = data as UpdateAdminData;
         const patch = await apiPatchAdmin(id, {
-          name: data.name,
-          email: data.email,
-          role: data.role,
-          status: data.status,
-          capabilities: fromFlatCaps(flatCaps),
+          name: updateData.name,
+          email: updateData.email,
+          role: updateData.role,
+          status: updateData.status as "active" | "disabled",
+          capabilities: fromFlatCaps(flatCaps) as unknown as string[],
         });
 
         const updated = patch.data;
@@ -162,7 +162,7 @@ export function AdminUpsertDrawer({
 
         // تحديث صلاحيات المشرف الحالي إذا كان يعدل نفسه
         if (currentUserId && updated._id === currentUserId) {
-          setCapabilities(toFlatCaps(updated.capabilities));
+          setCapabilities(toFlatCaps(updated.capabilities) as string[]);
         }
 
         onClose();
@@ -237,8 +237,21 @@ export function AdminUpsertDrawer({
                   label="كلمة المرور"
                   fullWidth
                   {...adminForm.register("password")}
-                  error={!!adminForm.formState.errors.password}
-                  helperText={adminForm.formState.errors.password?.message || "حد أدنى 8 أحرف + حروف كبيرة وصغيرة ورقم"}
+                  error={
+                    !!(
+                      adminForm.formState.errors as unknown as {
+                        password?: { message?: string };
+                      }
+                    ).password
+                  }
+                  helperText={
+                    (
+                      adminForm.formState.errors as unknown as {
+                        password?: { message?: string };
+                      }
+                    ).password?.message ||
+                    "حد أدنى 8 أحرف + حروف كبيرة وصغيرة ورقم"
+                  }
                 />
               )}
 
@@ -271,20 +284,20 @@ export function AdminUpsertDrawer({
                 />
               </Stack>
 
-            {/* فاصل */}
-            <Divider />
+              {/* فاصل */}
+              <Divider />
 
-            {/* عنوان قسم الصلاحيات */}
-            <Typography variant="subtitle1" fontWeight="bold">
-              الصلاحيات والوحدات
-            </Typography>
+              {/* عنوان قسم الصلاحيات */}
+              <Typography variant="subtitle1" fontWeight="bold">
+                الصلاحيات والوحدات
+              </Typography>
 
-            {/* مصفوفة الصلاحيات */}
-            <RoleMatrix
-              modules={modules}
-              value={flatCaps}
-              onChange={setFlatCaps}
-            />
+              {/* مصفوفة الصلاحيات */}
+              <RoleMatrix
+                modules={modules}
+                value={flatCaps}
+                onChange={setFlatCaps}
+              />
 
               {/* رسائل خطأ عامة */}
               {adminForm.formState.errors.root && (
@@ -304,7 +317,9 @@ export function AdminUpsertDrawer({
                   startIcon={<Save />}
                   disabled={saving || adminForm.formState.isSubmitting}
                 >
-                  {saving || adminForm.formState.isSubmitting ? "جاري الحفظ..." : "حفظ"}
+                  {saving || adminForm.formState.isSubmitting
+                    ? "جاري الحفظ..."
+                    : "حفظ"}
                 </Button>
               </Stack>
             </Stack>

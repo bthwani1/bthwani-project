@@ -5,17 +5,17 @@ import {
   Typography,
   Button,
   IconButton,
-  Chip,
-  LinearProgress,
+
   Alert,
   useTheme,
+  Stack,
+  CircularProgress,
 } from '@mui/material';
 import {
   CloudUpload,
   Delete,
   Download,
   InsertDriveFile,
-  Image,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { uploadFileToBunny } from '../services/uploadFileToCloudinary';
@@ -37,7 +37,6 @@ export default function FileUploader({
   onChange,
   accept = "image/*,application/pdf,.doc,.docx,.txt",
   maxSize = 10 * 1024 * 1024, // 10MB default
-  uploadEndpoint = "/media/sign-upload",
   disabled = false,
   error,
 }: FileUploaderProps) {
@@ -69,9 +68,9 @@ export default function FileUploader({
 
       // احفظ URL الملف
       onChange(publicUrl);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Upload error:', error);
-      alert(error.message || 'فشل في رفع الملف');
+      alert((error as Error).message || 'فشل في رفع الملف');
     } finally {
       setUploading(false);
       setProgress(0);
@@ -151,7 +150,7 @@ export default function FileUploader({
               <Box sx={{ position: 'relative', display: 'inline-block', mb: 2 }}>
                 <img
                   src={value}
-                  alt="Preview"
+                  alt="صورة تم رفعها للمعاينة"
                   style={{
                     maxWidth: 200,
                     maxHeight: 200,

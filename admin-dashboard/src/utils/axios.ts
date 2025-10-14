@@ -36,7 +36,6 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (res) => res,
   async (error) => {
-    const status = error?.response?.status;
     const code = error?.response?.data?.error?.code;
 
     if (code && ERROR_MAP[code]) {

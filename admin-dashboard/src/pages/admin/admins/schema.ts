@@ -11,7 +11,7 @@ export const createAdminSchema = z.object({
 
   email: validationUtils.email(ERROR_MESSAGES.ADMIN.EMAIL_INVALID),
 
-  password: validationUtils.strongPassword(ERROR_MESSAGES.ADMIN.PASSWORD_TOO_WEAK),
+  password: validationUtils.strongPassword(),
 
   role: validationUtils.enum(
     ["superadmin", "admin", "manager", "support"] as const,
@@ -52,9 +52,9 @@ export const adminLoginSchema = z.object({
 // Schema لتغيير كلمة المرور
 export const changeAdminPasswordSchema = z.object({
   currentPassword: validationUtils.required("كلمة المرور الحالية مطلوبة"),
-  newPassword: validationUtils.strongPassword(ERROR_MESSAGES.ADMIN.PASSWORD_TOO_WEAK),
+  newPassword: validationUtils.strongPassword(),
   confirmPassword: z.string(),
-}).refine((data: any) => data.newPassword === data.confirmPassword, {
+}).refine((data: { newPassword: string; confirmPassword: string }) => data.newPassword === data.confirmPassword, {
   message: "كلمات المرور غير متطابقة",
   path: ["confirmPassword"],
 });
@@ -83,9 +83,9 @@ export const updateAdminStatusSchema = z.object({
 
 // Schema لتحديث كلمة مرور المشرف بواسطة مشرف آخر
 export const resetAdminPasswordSchema = z.object({
-  newPassword: validationUtils.strongPassword(ERROR_MESSAGES.ADMIN.PASSWORD_TOO_WEAK),
+  newPassword: validationUtils.strongPassword(),
   confirmPassword: z.string(),
-}).refine((data: any) => data.newPassword === data.confirmPassword, {
+}).refine((data: { newPassword: string; confirmPassword: string }) => data.newPassword === data.confirmPassword, {
   message: "كلمات المرور غير متطابقة",
   path: ["confirmPassword"],
 });
@@ -144,7 +144,7 @@ export const validateAdminEmail = (email: string): Promise<{
   if (!result.success) {
     return Promise.resolve({
       isValid: false,
-      message: result.error.errors[0]?.message,
+      message: result.error.issues[0]?.message,
     });
   }
 

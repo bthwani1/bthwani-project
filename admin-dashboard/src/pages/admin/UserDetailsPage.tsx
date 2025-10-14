@@ -53,8 +53,8 @@ export default function UserDetailsPage() {
         setLoading(true);
         const response = await axios.get(`/admin/users/${id}`);
         setUser(response.data);
-      } catch (err: any) {
-        setError(err?.response?.data?.message || "فشل في جلب تفاصيل المستخدم");
+      } catch (err: unknown) {
+        setError((err as { response?: { data?: { message?: string } } })?.response?.data?.message || "فشل في جلب تفاصيل المستخدم");
       } finally {
         setLoading(false);
       }
@@ -140,7 +140,7 @@ export default function UserDetailsPage() {
         </Box>
 
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
+          <Grid  size={{xs: 12, md: 6}}>
             <Card variant="outlined">
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -169,7 +169,7 @@ export default function UserDetailsPage() {
                     </Typography>
                     <Chip
                       label={getEnumLabel("user_role", user.role)}
-                      color={getEnumBadge("user_role", user.role) as any}
+                      color={getEnumBadge("user_role", user.role).replace('danger', 'error') as 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'}
                       size="small"
                       icon={<UserIcon fontSize="small" />}
                     />
@@ -179,7 +179,7 @@ export default function UserDetailsPage() {
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid  size={{xs: 12, md: 6}}>
             <Card variant="outlined">
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -221,7 +221,7 @@ export default function UserDetailsPage() {
             </Card>
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid  size={{xs: 12}}>
             <Card variant="outlined">
               <CardContent>
                 <Typography variant="h6" gutterBottom>

@@ -5,8 +5,7 @@ import {
   Card,
   CardContent,
   Button,
-  TextField,
-  IconButton,
+
   Chip,
   Dialog,
   DialogTitle,
@@ -25,7 +24,6 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Tooltip,
   Divider,
 } from '@mui/material';
 import {
@@ -33,11 +31,8 @@ import {
   Download as DownloadIcon,
   DateRange as DateIcon,
   TrendingUp as TrendingUpIcon,
-  TrendingDown as TrendingDownIcon,
   AttachMoney as MoneyIcon,
-  Clear as ClearIcon,
   Refresh as RefreshIcon,
-  Visibility as ViewIcon,
   ArrowUpward as InflowIcon,
   ArrowDownward as OutflowIcon,
 } from '@mui/icons-material';
@@ -51,7 +46,6 @@ import {
   getWalletBalance,
   getWalletStatement,
   exportWalletStatementToCSV,
-  type WalletStatementLine
 } from '../../api/finance';
 
 const WalletStatementDialog: React.FC<{
@@ -62,7 +56,6 @@ const WalletStatementDialog: React.FC<{
   dateTo: dayjs.Dayjs | null;
   balanceState: string;
 }> = ({ open, onClose, accountId, dateFrom, dateTo, balanceState }) => {
-  const queryClient = useQueryClient();
 
   // Fetch wallet statement
   const { data: statementData, isLoading, error } = useQuery({
@@ -129,7 +122,7 @@ const WalletStatementDialog: React.FC<{
         <Box sx={{ pt: 2 }}>
           {/* Summary Cards */}
           <Grid container spacing={2} sx={{ mb: 3 }}>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid  size={{xs: 12, sm: 6, md: 3}}>
               <Card>
                 <CardContent>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -151,7 +144,7 @@ const WalletStatementDialog: React.FC<{
               </Card>
             </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid  size={{xs: 12, sm: 6, md: 3}}>
               <Card>
                 <CardContent>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -173,7 +166,7 @@ const WalletStatementDialog: React.FC<{
               </Card>
             </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid  size={{xs: 12, sm: 6, md: 3}}>
               <Card>
                 <CardContent>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -195,7 +188,7 @@ const WalletStatementDialog: React.FC<{
               </Card>
             </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid  size={{xs: 12, sm: 6, md: 3}}>
               <Card>
                 <CardContent>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -414,7 +407,7 @@ export default function WalletStatement() {
         <>
           {/* Wallet Summary */}
           <Grid container spacing={3} sx={{ mb: 3 }}>
-            <Grid item xs={12} md={6}>
+            <Grid  size={{xs: 12, md: 6}}>
               <Card>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
@@ -444,7 +437,7 @@ export default function WalletStatement() {
               </Card>
             </Grid>
 
-            <Grid item xs={12} md={6}>
+            <Grid  size={{xs: 12, md: 6}}>
               <Card>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>

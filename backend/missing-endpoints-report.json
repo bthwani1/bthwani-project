@@ -1,0 +1,535 @@
+{
+  "summary": {
+    "totalBackendEndpoints": 422,
+    "totalFrontendCalls": 58,
+    "existingEndpoints": 3,
+    "missingEndpoints": 55,
+    "coveragePercentage": "5.17"
+  },
+  "missing": [
+    {
+      "method": "GET",
+      "path": "/er/assets",
+      "fullUrl": "/er/assets",
+      "file": "..\\admin-dashboard\\src\\api\\assets.ts",
+      "line": 37,
+      "content": "const { data } = await axiosInstance.get<Asset[]>(\"/er/assets\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/er/assets",
+      "fullUrl": "/er/assets",
+      "file": "..\\admin-dashboard\\src\\api\\assets.ts",
+      "line": 53,
+      "content": "const { data } = await axiosInstance.post<Asset>(\"/er/assets\", asset);",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/er/assets/stats",
+      "fullUrl": "/er/assets/stats",
+      "file": "..\\admin-dashboard\\src\\api\\assets.ts",
+      "line": 70,
+      "content": "const { data } = await axiosInstance.get<AssetStats>(\"/er/assets/stats\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/attendance",
+      "fullUrl": "/attendance",
+      "file": "..\\admin-dashboard\\src\\api\\attendance.ts",
+      "line": 57,
+      "content": "const { data } = await axiosInstance.post<Attendance>(\"/attendance\", attendance);",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/attendance",
+      "fullUrl": "/attendance",
+      "file": "..\\admin-dashboard\\src\\api\\attendance.ts",
+      "line": 63,
+      "content": "const { data } = await axiosInstance.get<Attendance[]>(\"/attendance\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/attendance/stats",
+      "fullUrl": "/attendance/stats",
+      "file": "..\\admin-dashboard\\src\\api\\attendance.ts",
+      "line": 72,
+      "content": "const { data } = await axiosInstance.get<AttendanceStats>(\"/attendance/stats\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/er/accounts/chart",
+      "fullUrl": "/er/accounts/chart",
+      "file": "..\\admin-dashboard\\src\\api\\chartAccounts.ts",
+      "line": 19,
+      "content": "const { data } = await axiosInstance.get<ChartAccount[]>(\"/er/accounts/chart\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/er/accounts/chart/tree",
+      "fullUrl": "/er/accounts/chart/tree",
+      "file": "..\\admin-dashboard\\src\\api\\chartAccounts.ts",
+      "line": 28,
+      "content": "const { data } = await axiosInstance.get<ChartAccount[]>(\"/er/accounts/chart/tree\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/er/accounts/chart/analysis",
+      "fullUrl": "/er/accounts/chart/analysis",
+      "file": "..\\admin-dashboard\\src\\api\\chartAccounts.ts",
+      "line": 36,
+      "content": "const { data } = await axiosInstance.get<ChartAccount[]>(\"/er/accounts/chart/analysis\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/er/accounts/chart",
+      "fullUrl": "/er/accounts/chart",
+      "file": "..\\admin-dashboard\\src\\api\\chartAccounts.ts",
+      "line": 53,
+      "content": "const { data } = await axiosInstance.post<ChartAccount>(\"/er/accounts/chart\", account);",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/wallet/coupons",
+      "fullUrl": "/admin/wallet/coupons",
+      "file": "..\\admin-dashboard\\src\\api\\coupons.ts",
+      "line": 53,
+      "content": "const { data } = await axiosInstance.post<Coupon>(\"/admin/wallet/coupons\", coupon);",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/wallet/coupons/generate",
+      "fullUrl": "/admin/wallet/coupons/generate",
+      "file": "..\\admin-dashboard\\src\\api\\coupons.ts",
+      "line": 113,
+      "content": "const { data } = await axiosInstance.post<{ codes: string[] }>(\"/admin/wallet/coupons/generate\", params);",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/drivers/leave-requests",
+      "fullUrl": "/admin/drivers/leave-requests",
+      "file": "..\\admin-dashboard\\src\\api\\driverLeaveRequests.ts",
+      "line": 56,
+      "content": "const { data } = await axiosInstance.post<DriverLeaveRequest>(\"/admin/drivers/leave-requests\", request);",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/drivers/ratings/recent",
+      "fullUrl": "/admin/drivers/ratings/recent",
+      "file": "..\\admin-dashboard\\src\\api\\driverRatings.ts",
+      "line": 74,
+      "content": "const { data } = await axiosInstance.get<DriverRating[]>(\"/admin/drivers/ratings/recent\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/drivers",
+      "fullUrl": "/admin/drivers",
+      "file": "..\\admin-dashboard\\src\\api\\drivers.ts",
+      "line": 145,
+      "content": "const { data } = await axiosInstance.post<Driver>(\"/admin/drivers\", driver);",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/drivers/shifts",
+      "fullUrl": "/admin/drivers/shifts",
+      "file": "..\\admin-dashboard\\src\\api\\drivers.ts",
+      "line": 211,
+      "content": "const { data } = await axiosInstance.get<DriverShift[]>(\"/admin/drivers/shifts\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/drivers/shifts",
+      "fullUrl": "/admin/drivers/shifts",
+      "file": "..\\admin-dashboard\\src\\api\\drivers.ts",
+      "line": 219,
+      "content": "const { data } = await axiosInstance.post<DriverShift>(\"/admin/drivers/shifts\", shift);",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/drivers/assets",
+      "fullUrl": "/admin/drivers/assets",
+      "file": "..\\admin-dashboard\\src\\api\\drivers.ts",
+      "line": 260,
+      "content": "const { data } = await axiosInstance.post<DriverAsset>(\"/admin/drivers/assets\", asset);",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/employees",
+      "fullUrl": "/employees",
+      "file": "..\\admin-dashboard\\src\\api\\employees.ts",
+      "line": 24,
+      "content": "const { data } = await axiosInstance.get<Employee[]>(\"/employees\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/employees",
+      "fullUrl": "/employees",
+      "file": "..\\admin-dashboard\\src\\api\\employees.ts",
+      "line": 32,
+      "content": "const { data } = await axiosInstance.post<Employee>(\"/employees\", employee);",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/er/journals",
+      "fullUrl": "/er/journals",
+      "file": "..\\admin-dashboard\\src\\api\\journalBook.ts",
+      "line": 54,
+      "content": "const { data } = await axiosInstance.get<JournalBookResponse>(\"/er/journals\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/er/journals",
+      "fullUrl": "/er/journals",
+      "file": "..\\admin-dashboard\\src\\api\\journalBook.ts",
+      "line": 84,
+      "content": "const { data } = await axiosInstance.get<{ openingBalance: number }>(\"/er/journals\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/er/entries/next-no",
+      "fullUrl": "/er/entries/next-no",
+      "file": "..\\admin-dashboard\\src\\api\\journalEntries.ts",
+      "line": 40,
+      "content": "const { data } = await axiosInstance.get<{ voucherNo: string }>(\"/er/entries/next-no\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/er/entries",
+      "fullUrl": "/er/entries",
+      "file": "..\\admin-dashboard\\src\\api\\journalEntries.ts",
+      "line": 77,
+      "content": "const { data } = await axiosInstance.post<JournalEntry>(\"/er/entries\", entry);",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/er/payroll",
+      "fullUrl": "/er/payroll",
+      "file": "..\\admin-dashboard\\src\\api\\payroll.ts",
+      "line": 37,
+      "content": "const { data } = await axiosInstance.get<Payroll[]>(\"/er/payroll\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/er/payroll",
+      "fullUrl": "/er/payroll",
+      "file": "..\\admin-dashboard\\src\\api\\payroll.ts",
+      "line": 53,
+      "content": "const { data } = await axiosInstance.post<Payroll>(\"/er/payroll\", payroll);",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/er/payroll/process",
+      "fullUrl": "/er/payroll/process",
+      "file": "..\\admin-dashboard\\src\\api\\payroll.ts",
+      "line": 70,
+      "content": "const { data } = await axiosInstance.post<Payroll>(\"/er/payroll/process\", payrollData);",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/wallet/subscriptions",
+      "fullUrl": "/admin/wallet/subscriptions",
+      "file": "..\\admin-dashboard\\src\\api\\subscriptions.ts",
+      "line": 48,
+      "content": "const { data } = await axiosInstance.post<Subscription>(\"/admin/wallet/subscriptions\", subscription);",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/wallet/users/search",
+      "fullUrl": "/admin/wallet/users/search",
+      "file": "..\\admin-dashboard\\src\\api\\wallet.ts",
+      "line": 99,
+      "content": "const { data } = await axiosInstance.get<WalletUser[]>(\"/admin/wallet/users/search\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/notifications/campaigns",
+      "fullUrl": "/admin/notifications/campaigns",
+      "file": "..\\admin-dashboard\\src\\pages\\admin\\AdminCampaignsPanel.tsx",
+      "line": 94,
+      "content": "const data = await axios.get<Campaign[]>(\"/admin/notifications/campaigns\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/notifications/campaigns",
+      "fullUrl": "/admin/notifications/campaigns",
+      "file": "..\\admin-dashboard\\src\\pages\\admin\\AdminCampaignsPanel.tsx",
+      "line": 130,
+      "content": "const created = await axios.post<Campaign>(\"/admin/notifications/campaigns\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/stats",
+      "fullUrl": "/admin/stats",
+      "file": "..\\admin-dashboard\\src\\pages\\admin\\HomeDashboard.tsx",
+      "line": 198,
+      "content": "const res = await axios.get<Partial<Stats>>(\"/admin/stats\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/stats",
+      "fullUrl": "/admin/stats",
+      "file": "..\\admin-dashboard\\src\\pages\\admin\\UserDetails.tsx",
+      "line": 58,
+      "content": "const res = await axios.get<Partial<Stats>>(\"/admin/stats\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/stats",
+      "fullUrl": "/admin/stats",
+      "file": "..\\admin-dashboard\\src\\pages\\admin\\UserStats.tsx",
+      "line": 35,
+      "content": "const res = await axios.get<Stats>(\"/admin/stats\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/offer",
+      "fullUrl": "/delivery/offer",
+      "file": "..\\admin-dashboard\\src\\pages\\delivery\\DeliveryOffersPage.tsx",
+      "line": 133,
+      "content": "axios.get<Offer[]>(\"/delivery/offer\"),",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/products",
+      "fullUrl": "/delivery/products",
+      "file": "..\\admin-dashboard\\src\\pages\\delivery\\DeliveryOffersPage.tsx",
+      "line": 134,
+      "content": "axios.get<Product[]>(\"/delivery/products\"),",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/stores",
+      "fullUrl": "/delivery/stores",
+      "file": "..\\admin-dashboard\\src\\pages\\delivery\\DeliveryOffersPage.tsx",
+      "line": 135,
+      "content": "axios.get<Store[]>(\"/delivery/stores\"),",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/categories",
+      "fullUrl": "/delivery/categories",
+      "file": "..\\admin-dashboard\\src\\pages\\delivery\\DeliveryOffersPage.tsx",
+      "line": 136,
+      "content": "axios.get<Category[]>(\"/delivery/categories\"),",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/offer",
+      "fullUrl": "/delivery/offer",
+      "file": "..\\admin-dashboard\\src\\pages\\delivery\\DeliveryOffersPage.tsx",
+      "line": 201,
+      "content": "await axios.post<Offer>(\"/delivery/offer\", payload);",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/stores",
+      "fullUrl": "/delivery/stores",
+      "file": "..\\admin-dashboard\\src\\pages\\delivery\\DeliveryStoresPage.tsx",
+      "line": 141,
+      "content": "await axios.post<DeliveryStore>(\"/delivery/stores\", payload);",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/stores",
+      "fullUrl": "/delivery/stores",
+      "file": "..\\admin-dashboard\\src\\pages\\delivery\\hooks\\useStores.ts",
+      "line": 15,
+      "content": "const res = await axios.get<DeliveryStore[]>(\"/delivery/stores\");",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/categories",
+      "fullUrl": "/delivery/categories",
+      "file": "..\\admin-dashboard\\src\\pages\\delivery\\hooks\\useStores.ts",
+      "line": 27,
+      "content": "const res = await axios.get<Category[]>(\"/delivery/categories\");",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/pricing-strategies",
+      "fullUrl": "/pricing-strategies",
+      "file": "..\\admin-dashboard\\src\\pages\\delivery\\PricingStrategiesPage.tsx",
+      "line": 45,
+      "content": "const res = await axios.get<Strategy[]>(\"/pricing-strategies\"); // <-- مصفوفة + مع سلاش",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/pricing-strategies",
+      "fullUrl": "/pricing-strategies",
+      "file": "..\\admin-dashboard\\src\\pages\\delivery\\PricingStrategiesPage.tsx",
+      "line": 123,
+      "content": "res = await axios.post<Strategy>(\"/pricing-strategies\", payload);",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/marketing/roas",
+      "fullUrl": "/marketing/roas",
+      "file": "..\\admin-dashboard\\src\\pages\\marketing\\Dashboard.tsx",
+      "line": 73,
+      "content": "await axios.get<{ points: RoasPoint[] }>(\"/marketing/roas\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/cms/onboarding",
+      "fullUrl": "/cms/onboarding",
+      "file": "..\\bthwani-web\\src\\api\\cms.ts",
+      "line": 50,
+      "content": "const response = await axiosInstance.get<OnboardingData>(\"/cms/onboarding\");",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/cms/bootstrap",
+      "fullUrl": "/cms/bootstrap",
+      "file": "..\\bthwani-web\\src\\api\\cms.ts",
+      "line": 67,
+      "content": "const response = await axiosInstance.get<BootstrapData>(\"/cms/bootstrap\");",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/cms/pages",
+      "fullUrl": "/cms/pages",
+      "file": "..\\bthwani-web\\src\\api\\cms.ts",
+      "line": 86,
+      "content": "const response = await axiosInstance.get<PageData[]>(\"/cms/pages\");",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/users/me",
+      "fullUrl": "/users/me",
+      "file": "..\\bthwani-web\\src\\api\\user.ts",
+      "line": 8,
+      "content": "const response = await axiosInstance.get<User>(\"/users/me\", { headers });",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/users/profile",
+      "fullUrl": "/users/profile",
+      "file": "..\\bthwani-web\\src\\api\\user.ts",
+      "line": 20,
+      "content": "const response = await axiosInstance.patch<User>(\"/users/profile\", data, {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/cms/onboarding",
+      "fullUrl": "/cms/onboarding",
+      "file": "..\\app-user\\src\\hooks\\useOnboarding.ts",
+      "line": 47,
+      "content": "const resp = await axiosInstance.get<ApiResponse>(\"/cms/onboarding\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/reviews/freelancer-123",
+      "fullUrl": "/reviews/freelancer-123",
+      "file": "..\\app-user\\src\\__tests__\\api\\reviewApi.test.ts",
+      "line": 146,
+      "content": "expect(axiosInstance.get).toHaveBeenCalledWith(\"/reviews/freelancer-123\");",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/reviews/freelancer-123",
+      "fullUrl": "/reviews/freelancer-123",
+      "file": "..\\app-user\\src\\__tests__\\api\\reviewApi.test.ts",
+      "line": 163,
+      "content": "expect(axiosInstance.get).toHaveBeenCalledWith(\"/reviews/freelancer-123\");",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/users/me",
+      "fullUrl": "/users/me",
+      "file": "..\\app-user\\src\\__tests__\\api\\userApi.test.ts",
+      "line": 101,
+      "content": "expect(axiosInstance.get).toHaveBeenCalledWith(\"/users/me\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/users/me",
+      "fullUrl": "/users/me",
+      "file": "..\\app-user\\src\\__tests__\\api\\userApi.test.ts",
+      "line": 376,
+      "content": "expect(axiosInstance.get).toHaveBeenCalledWith(\"/users/me\", {",
+      "note": "Multi-line or variable-based call"
+    }
+  ],
+  "existing": [
+    {
+      "method": "GET",
+      "path": "/merchant/reports",
+      "fullUrl": "/merchant/reports",
+      "file": "..\\admin-dashboard\\src\\pages\\admin\\reports\\MerchantReportsPage.tsx",
+      "line": 33,
+      "content": "const { data } = await axios.get<Resp>(\"/merchant/reports\", {",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/wallet",
+      "fullUrl": "/wallet",
+      "file": "..\\app-user\\src\\__tests__\\api\\wallet.api.test.ts",
+      "line": 36,
+      "content": "expect(axiosInstance.get).toHaveBeenCalledWith(\"/wallet\");",
+      "note": "Multi-line or variable-based call"
+    },
+    {
+      "method": "GET",
+      "path": "/wallet",
+      "fullUrl": "/wallet",
+      "file": "..\\app-user\\src\\__tests__\\api\\wallet.api.test.ts",
+      "line": 55,
+      "content": "expect(axiosInstance.get).toHaveBeenCalledWith(\"/wallet\");",
+      "note": "Multi-line or variable-based call"
+    }
+  ]
+}

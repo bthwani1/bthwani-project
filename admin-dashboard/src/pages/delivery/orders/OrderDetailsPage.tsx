@@ -8,8 +8,7 @@ import {
   Typography,
   Paper,
   Divider,
-  Stack,
-  Chip,
+
   Alert,
 } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
@@ -36,10 +35,10 @@ export default function OrderDetailsPage() {
     const fetchOrder = async () => {
       try {
         setLoading(true);
-        const orderData = await OrdersApi.getById(id);
+        const orderData = await OrdersApi.get(id);
         setOrder(orderData);
-      } catch (err: any) {
-        setError(err?.response?.data?.message || "فشل في جلب تفاصيل الطلب");
+      } catch (err: unknown) {
+        setError((err as { response?: { data?: { message?: string } } })?.response?.data?.message || "فشل في جلب تفاصيل الطلب");
       } finally {
         setLoading(false);
       }
