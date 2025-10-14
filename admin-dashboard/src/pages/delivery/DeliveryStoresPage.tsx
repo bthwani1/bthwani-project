@@ -29,7 +29,6 @@ import {
   type ScheduleSlot,
   type StoreForm_type,
 } from "../../type/delivery";
-import { uploadFileToBunny } from "../../services/uploadFileToCloudinary";
 import axios from "../../utils/axios";
 
 // ---------- helpers ----------
@@ -45,6 +44,7 @@ const buildInitialForm = (): StoreForm_type => ({
   isActive: true,
   image: null,
   logo: null,
+  documents: null,
   schedule: buildDefaultSchedule(),
   commissionRate: "",
   isTrending: false,
@@ -62,6 +62,7 @@ const mapStoreToForm = (s: DeliveryStore): StoreForm_type => ({
   isActive: s.isActive,
   image: null,
   logo: null,
+  documents: null,
   schedule: (s.schedule ?? []).map((sl) => ({ ...sl })), // clone
   commissionRate: s.commissionRate?.toString() ?? "",
   isTrending: s.isTrending ?? false,
@@ -129,11 +130,9 @@ export default function DeliveryStoresPage() {
   const handleSave = useCallback(async () => {
     setSaving(true);
     try {
-      let payload = toPayload(form, editing);
+      const payload = toPayload(form, editing);
 
-      // upload files if picked
-      if (form.image) payload = { ...payload, image: await uploadFileToBunny(form.image) };
-      if (form.logo) payload = { ...payload, logo: await uploadFileToBunny(form.logo) };
+      // Note: File uploads are handled by FileUploader component, form.image/logo are already URLs
 
       if (editing) {
         await axios.put<DeliveryStore>(`/delivery/stores/${editing._id}`, payload);

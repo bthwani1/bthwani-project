@@ -1,0 +1,203 @@
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Query,
+  Param,
+  UseGuards,
+  Req,
+  Patch,
+} from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+  ApiQuery,
+} from '@nestjs/swagger';
+import { LegalService } from './legal.service';
+import { CreatePrivacyPolicyDto } from './dto/create-privacy-policy.dto';
+import { CreateTermsOfServiceDto } from './dto/create-terms-of-service.dto';
+import { RecordConsentDto } from './dto/record-consent.dto';
+import { Public } from '../../common/decorators/auth.decorator';
+import { UnifiedAuthGuard } from '../../common/guards/unified-auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
+import { Roles } from '../../common/decorators/auth.decorator';
+import { UserRole } from '../../common/enums/user-role.enum';
+
+@ApiTags('Legal')
+@Controller('legal')
+export class LegalController {
+  constructor(private readonly legalService: LegalService) {}
+
+  // ========== Public Endpoints ==========
+
+  @Get('privacy-policy')
+  @Public()
+  @ApiOperation({ summary: 'الحصول على سياسة الخصوصية النشطة' })
+  @ApiQuery({
+    name: 'lang',
+    required: false,
+    enum: ['ar', 'en'],
+    description: 'اللغة (ar أو en)',
+  })
+  @ApiResponse({ status: 200, description: 'تم الحصول على سياسة الخصوصية بنجاح' })
+  @ApiResponse({ status: 404, description: 'لا توجد سياسة خصوصية نشطة' })
+  async getPrivacyPolicy(@Query('lang') lang: string = 'ar') {
+    return this.legalService.getActivePrivacyPolicy(lang);
+  }
+
+  @Get('terms-of-service')
+  @Public()
+  @ApiOperation({ summary: 'الحصول على شروط الخدمة النشطة' })
+  @ApiQuery({
+    name: 'lang',
+    required: false,
+    enum: ['ar', 'en'],
+    description: 'اللغة (ar أو en)',
+  })
+  @ApiResponse({ status: 200, description: 'تم الحصول على شروط الخدمة بنجاح' })
+  @ApiResponse({ status: 404, description: 'لا توجد شروط خدمة نشطة' })
+  async getTermsOfService(@Query('lang') lang: string = 'ar') {
+    return this.legalService.getTermsOfService(lang);
+  }
+
+  // ========== User Consent Endpoints ==========
+
+  @Post('consent')
+  @UseGuards(UnifiedAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'تسجيل موافقة المستخدم' })
+  @ApiResponse({ status: 201, description: 'تم تسجيل الموافقة بنجاح' })
+  @ApiResponse({ status: 400, description: 'بيانات غير صحيحة' })
+  @ApiResponse({ status: 401, description: 'غير مصرح' })
+  async recordConsent(@Req() req: any, @Body() dto: RecordConsentDto) {
+    const userId = req.user.userId || req.user.id;
+    // يمكن استخراج IP و User Agent من الطلب
+    const ipAddress = dto.ipAddress || req.ip || req.connection.remoteAddress;
+    const userAgent = dto.userAgent || req.headers['user-agent'];
+    
+    return this.legalService.recordConsent(userId, {
+      ...dto,
+      ipAddress,
+      userAgent,
+    });
+  }
+
+  @Get('consent/my')
+  @UseGuards(UnifiedAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'الحصول على موافقات المستخدم الحالي' })
+  @ApiResponse({ status: 200, description: 'تم الحصول على الموافقات بنجاح' })
+  @ApiResponse({ status: 401, description: 'غير مصرح' })
+  async getMyConsents(@Req() req: any) {
+    const userId = req.user.userId || req.user.id;
+    return this.legalService.getUserConsents(userId);
+  }
+
+  @Get('consent/check/:type')
+  @UseGuards(UnifiedAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'التحقق من موافقة المستخدم على الإصدار الحالي' })
+  @ApiResponse({ status: 200, description: 'تم التحقق بنجاح' })
+  @ApiResponse({ status: 401, description: 'غير مصرح' })
+  async checkConsent(
+    @Req() req: any,
+    @Param('type') type: 'privacy_policy' | 'terms_of_service',
+  ) {
+    const userId = req.user.userId || req.user.id;
+    return this.legalService.checkUserConsent(userId, type);
+  }
+
+  // ========== Admin Endpoints ==========
+
+  @Get('admin/privacy-policies')
+  @UseGuards(UnifiedAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPERADMIN)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'الحصول على جميع سياسات الخصوصية (للإدارة)' })
+  @ApiResponse({ status: 200, description: 'تم الحصول على السياسات بنجاح' })
+  @ApiResponse({ status: 401, description: 'غير مصرح' })
+  @ApiResponse({ status: 403, description: 'ممنوع - يتطلب صلاحيات إدارية' })
+  async getAllPrivacyPolicies() {
+    return this.legalService.getAllPrivacyPolicies();
+  }
+
+  @Post('admin/privacy-policy')
+  @UseGuards(UnifiedAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPERADMIN)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'إنشاء سياسة خصوصية جديدة (للإدارة)' })
+  @ApiResponse({ status: 201, description: 'تم إنشاء السياسة بنجاح' })
+  @ApiResponse({ status: 400, description: 'بيانات غير صحيحة' })
+  @ApiResponse({ status: 401, description: 'غير مصرح' })
+  @ApiResponse({ status: 403, description: 'ممنوع - يتطلب صلاحيات إدارية' })
+  async createPrivacyPolicy(@Body() dto: CreatePrivacyPolicyDto) {
+    return this.legalService.createPrivacyPolicy(dto);
+  }
+
+  @Patch('admin/privacy-policy/:id/activate')
+  @UseGuards(UnifiedAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPERADMIN)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'تفعيل سياسة خصوصية معينة (للإدارة)' })
+  @ApiResponse({ status: 200, description: 'تم تفعيل السياسة بنجاح' })
+  @ApiResponse({ status: 404, description: 'السياسة غير موجودة' })
+  @ApiResponse({ status: 401, description: 'غير مصرح' })
+  @ApiResponse({ status: 403, description: 'ممنوع - يتطلب صلاحيات إدارية' })
+  async activatePrivacyPolicy(@Param('id') id: string) {
+    return this.legalService.activatePrivacyPolicy(id);
+  }
+
+  @Get('admin/terms-of-service')
+  @UseGuards(UnifiedAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPERADMIN)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'الحصول على جميع شروط الخدمة (للإدارة)' })
+  @ApiResponse({ status: 200, description: 'تم الحصول على الشروط بنجاح' })
+  @ApiResponse({ status: 401, description: 'غير مصرح' })
+  @ApiResponse({ status: 403, description: 'ممنوع - يتطلب صلاحيات إدارية' })
+  async getAllTermsOfService() {
+    return this.legalService.getAllTermsOfService();
+  }
+
+  @Post('admin/terms-of-service')
+  @UseGuards(UnifiedAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPERADMIN)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'إنشاء شروط خدمة جديدة (للإدارة)' })
+  @ApiResponse({ status: 201, description: 'تم إنشاء الشروط بنجاح' })
+  @ApiResponse({ status: 400, description: 'بيانات غير صحيحة' })
+  @ApiResponse({ status: 401, description: 'غير مصرح' })
+  @ApiResponse({ status: 403, description: 'ممنوع - يتطلب صلاحيات إدارية' })
+  async createTermsOfService(@Body() dto: CreateTermsOfServiceDto) {
+    return this.legalService.createTermsOfService(dto);
+  }
+
+  @Patch('admin/terms-of-service/:id/activate')
+  @UseGuards(UnifiedAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPERADMIN)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'تفعيل شروط خدمة معينة (للإدارة)' })
+  @ApiResponse({ status: 200, description: 'تم تفعيل الشروط بنجاح' })
+  @ApiResponse({ status: 404, description: 'الشروط غير موجودة' })
+  @ApiResponse({ status: 401, description: 'غير مصرح' })
+  @ApiResponse({ status: 403, description: 'ممنوع - يتطلب صلاحيات إدارية' })
+  async activateTermsOfService(@Param('id') id: string) {
+    return this.legalService.activateTermsOfService(id);
+  }
+
+  @Get('admin/consent/statistics')
+  @UseGuards(UnifiedAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPERADMIN)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'الحصول على إحصائيات الموافقات (للإدارة)' })
+  @ApiResponse({ status: 200, description: 'تم الحصول على الإحصائيات بنجاح' })
+  @ApiResponse({ status: 401, description: 'غير مصرح' })
+  @ApiResponse({ status: 403, description: 'ممنوع - يتطلب صلاحيات إدارية' })
+  async getConsentStatistics() {
+    return this.legalService.getConsentStatistics();
+  }
+}
+

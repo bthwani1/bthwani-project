@@ -1,9 +1,0 @@
-{
-  "devDependencies": {
-    "@axe-core/react": "^4.10.2",
-    "eslint-plugin-jsx-a11y": "^6.10.2"
-  },
-  "dependencies": {
-    "posthog-js": "^1.275.1"
-  }
-}

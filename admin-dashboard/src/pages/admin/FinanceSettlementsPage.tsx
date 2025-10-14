@@ -27,12 +27,7 @@ import {
   MenuItem,
   Tooltip,
   Divider,
-  List,
-  ListItem,
-  ListItemText,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
+
 } from '@mui/material';
 import {
   Search as SearchIcon,
@@ -40,12 +35,10 @@ import {
   CheckCircle as CheckIcon,
   Cancel as CancelIcon,
   Pending as PendingIcon,
-  AttachMoney as MoneyIcon,
   Clear as ClearIcon,
   Refresh as RefreshIcon,
   Download as DownloadIcon,
   Visibility as ViewIcon,
-  ExpandMore as ExpandMoreIcon,
   Schedule as ScheduleIcon,
   Person as PersonIcon,
   Business as BusinessIcon,
@@ -154,7 +147,7 @@ const SettlementDetailsDialog: React.FC<{
         <Box sx={{ pt: 2 }}>
           {/* Settlement Summary */}
           <Grid container spacing={3} sx={{ mb: 3 }}>
-            <Grid item xs={12} md={6}>
+              <Grid  size={{xs: 12, md: 6}}>
               <Card>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
@@ -196,7 +189,7 @@ const SettlementDetailsDialog: React.FC<{
               </Card>
             </Grid>
 
-            <Grid item xs={12} md={6}>
+            <Grid  size={{xs: 12, md: 6}}>
               <Card>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>

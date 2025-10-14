@@ -11,23 +11,15 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Chip,
   Alert,
   CircularProgress,
   LinearProgress,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  IconButton,
-  Tooltip,
+
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
-  Divider,
+
   List,
   ListItem,
   ListItemText,
@@ -40,13 +32,13 @@ import {
   CheckCircle as CheckIcon,
   Error as ErrorIcon,
   Warning as WarningIcon,
-  Info as InfoIcon,
   ExpandMore as ExpandMoreIcon,
   Refresh as RefreshIcon,
   Assessment as ReportIcon,
   TrendingUp as TrendingIcon,
   CompareArrows as CompareIcon,
   FileDownload as FileDownloadIcon,
+  Assessment as AssessmentIcon,
 } from '@mui/icons-material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -63,12 +55,17 @@ import {
   exportRefundsReport,
   getDataSummary,
   validateDataConsistency,
-  type ReportFilter,
 } from '../../api/finance';
 
-import useExportWithProgress from '../../hooks/useExportWithProgress';
+import useExportWithProgress, { type ExportProgress } from '../../hooks/useExportWithProgress';
 
 type ReportType = 'sales' | 'payouts' | 'orders' | 'fees-taxes' | 'refunds';
+
+type ValidatedReportType = 'sales' | 'payouts' | 'orders';
+type ReportSummaryType = {
+  totalAmount: number;
+  totalRecords: number;
+};
 
 interface ValidationResult {
   totalMatch: boolean;
@@ -177,7 +174,7 @@ const ValidationDialog: React.FC<{
           <Box sx={{ pt: 2 }}>
             {/* ملخص المطابقة */}
             <Grid container spacing={2} sx={{ mb: 3 }}>
-              <Grid item xs={12} md={6}>
+              <Grid  size={{xs: 12, md: 6}}>
                 <Card sx={{ bgcolor: result.totalMatch ? 'success.light' : 'error.light' }}>
                   <CardContent>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -199,7 +196,7 @@ const ValidationDialog: React.FC<{
                 </Card>
               </Grid>
 
-              <Grid item xs={12} md={6}>
+              <Grid  size={{xs: 12, md: 6}}>
                 <Card sx={{ bgcolor: result.countMatch ? 'success.light' : 'warning.light' }}>
                   <CardContent>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -305,9 +302,9 @@ export default function UnifiedReportsPage() {
       const startDate = dateFrom.format('YYYY-MM-DD');
       const endDate = dateTo.format('YYYY-MM-DD');
 
-      const summaries: Record<string, any> = {};
+      const summaries: Record<string, ReportSummaryType> = {};
 
-      for (const reportType of ['sales', 'payouts', 'orders'] as ReportType[]) {
+      for (const reportType of ['sales', 'payouts', 'orders'] as ValidatedReportType[]) {
         try {
           const summary = await getDataSummary({
             startDate,
@@ -386,7 +383,7 @@ export default function UnifiedReportsPage() {
 
   // Mutation لفحص المطابقة
   const validateMutation = useMutation({
-    mutationFn: async (reportType: ReportType) => {
+    mutationFn: async (reportType: ValidatedReportType) => {
       const params = {
         reportType,
         startDate: dateFrom?.format('YYYY-MM-DD') || '',
@@ -404,11 +401,8 @@ export default function UnifiedReportsPage() {
     }
   });
 
-  const handleExport = (reportType: ReportType) => {
-    exportMutation.mutate(reportType);
-  };
 
-  const handleValidate = (reportType: ReportType) => {
+  const handleValidate = (reportType: ValidatedReportType) => {
     setValidationDialog({ open: true, reportType });
     validateMutation.mutate(reportType);
   };
@@ -425,7 +419,7 @@ export default function UnifiedReportsPage() {
     switch (reportType) {
       case 'sales': return <TrendingIcon />;
       case 'payouts': return <ReportIcon />;
-      case 'orders': return <Assessment />;
+      case 'orders': return <AssessmentIcon />;
       case 'fees-taxes': return <FileDownloadIcon />;
       case 'refunds': return <CompareIcon />;
       default: return <ReportIcon />;
@@ -476,7 +470,7 @@ export default function UnifiedReportsPage() {
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} md={3}>
+            <Grid  size={{xs: 12, md: 3}}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label="من تاريخ"
@@ -489,7 +483,7 @@ export default function UnifiedReportsPage() {
               </LocalizationProvider>
             </Grid>
 
-            <Grid item xs={12} md={3}>
+            <Grid  size={{xs: 12, md: 3}}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label="إلى تاريخ"
@@ -502,7 +496,7 @@ export default function UnifiedReportsPage() {
               </LocalizationProvider>
             </Grid>
 
-            <Grid item xs={12} md={2}>
+            <Grid  size={{xs: 12, md: 2}}>
               <TextField
                 label="معرف المتجر"
                 value={storeFilter}
@@ -512,7 +506,7 @@ export default function UnifiedReportsPage() {
               />
             </Grid>
 
-            <Grid item xs={12} md={2}>
+              <Grid  size={{xs: 12, md: 2}}>
               <FormControl fullWidth>
                 <InputLabel>الحالة</InputLabel>
                 <Select
@@ -528,7 +522,7 @@ export default function UnifiedReportsPage() {
               </FormControl>
             </Grid>
 
-            <Grid item xs={12} md={2}>
+            <Grid  size={{xs: 12, md: 2}}>
               <FormControl fullWidth>
                 <InputLabel>التنسيق</InputLabel>
                 <Select
@@ -555,7 +549,7 @@ export default function UnifiedReportsPage() {
                   if (!summary) return null;
 
                   return (
-                    <Grid item xs={12} md={4} key={type}>
+                      <Grid  size={{xs: 12, md: 4}} key={type}>
                       <Card variant="outlined">
                         <CardContent>
                           <Typography variant="subtitle1" gutterBottom>
@@ -590,7 +584,7 @@ export default function UnifiedReportsPage() {
 
       {/* شبكة التقارير */}
       <Grid container spacing={3}>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid  size={{xs: 12, md: 6, lg: 4}}>
           <ReportCard
             title={getReportTitle('sales')}
             description={getReportDescription('sales')}
@@ -601,7 +595,7 @@ export default function UnifiedReportsPage() {
           />
         </Grid>
 
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid  size={{xs: 12, md: 6, lg: 4}}>
           <ReportCard
             title={getReportTitle('payouts')}
             description={getReportDescription('payouts')}
@@ -612,7 +606,7 @@ export default function UnifiedReportsPage() {
           />
         </Grid>
 
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid  size={{xs: 12, md: 6, lg: 4}}>
           <ReportCard
             title={getReportTitle('orders')}
             description={getReportDescription('orders')}
@@ -623,7 +617,7 @@ export default function UnifiedReportsPage() {
           />
         </Grid>
 
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid  size={{xs: 12, md: 6, lg: 4}}>
           <ReportCard
             title={getReportTitle('fees-taxes')}
             description={getReportDescription('fees-taxes')}
@@ -634,7 +628,7 @@ export default function UnifiedReportsPage() {
           />
         </Grid>
 
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid  size={{xs: 12, md: 6, lg: 4}}>
           <ReportCard
             title={getReportTitle('refunds')}
             description={getReportDescription('refunds')}
@@ -646,7 +640,7 @@ export default function UnifiedReportsPage() {
         </Grid>
 
         {/* كرت فحص المطابقة */}
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid  size={{xs: 12, md: 6, lg: 4}}>
           <Card sx={{ height: '100%' }}>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
@@ -676,7 +670,11 @@ export default function UnifiedReportsPage() {
                 <Button
                   variant="outlined"
                   startIcon={<CompareIcon />}
-                  onClick={() => handleValidate(selectedReport)}
+                  onClick={() => {
+                    if (selectedReport === 'sales' || selectedReport === 'payouts' || selectedReport === 'orders') {
+                      handleValidate(selectedReport);
+                    }
+                  }}
                   disabled={validateMutation.isPending}
                   fullWidth
                 >
@@ -696,12 +694,6 @@ export default function UnifiedReportsPage() {
       </Grid>
 
       {/* رسائل الخطأ والنجاح */}
-      {exportMutation.error && (
-        <Alert severity="error" sx={{ mt: 2 }}>
-          فشل في تصدير التقرير: {exportMutation.error.message}
-        </Alert>
-      )}
-
       {validateMutation.error && (
         <Alert severity="error" sx={{ mt: 2 }}>
           فشل في فحص المطابقة: {validateMutation.error.message}

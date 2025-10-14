@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import { styled, Box } from "@mui/material";
 import Sidebar from "../components/Sidebar";
 import TopBar from "../components/TopBar";
+import { useKeyboardNavigation } from "../hooks/useKeyboardNavigation";
 
 const drawerWidth = 350;
 
@@ -30,6 +31,7 @@ const Main = styled("main")(({ theme }) => ({
 
 export default function AdminLayout() {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const { getFocusableElements } = useKeyboardNavigation();
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, type ChangeEvent } from 'react';
 import {
   Box,
   Card,
@@ -11,21 +11,16 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Alert,
   CircularProgress,
-  Divider,
   Stack,
   Chip,
-  Avatar,
   IconButton,
-  Tooltip,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   TablePagination,
   Dialog,
   DialogTitle,
@@ -33,23 +28,19 @@ import {
   DialogActions,
   Breadcrumbs,
   Link,
+  type SelectChangeEvent,
 } from '@mui/material';
 import {
   Search,
-  FilterList,
   Refresh,
   Visibility,
-  GetApp,
-  Timeline,
   Person,
   AdminPanelSettings,
   Business,
   AccountCircle,
   CheckCircle,
   Error,
-  AccessTime,
   Computer,
-  Web,
 } from '@mui/icons-material';
 import { useQuery } from '@tanstack/react-query';
 import axios from '../../../utils/axios';
@@ -75,14 +66,7 @@ interface AuditLog {
   createdAt: string;
 }
 
-interface AuditStats {
-  total: number;
-  last24h: number;
-  last7d: number;
-  last30d: number;
-  topActions: Array<{ _id: string; count: number }>;
-  actorTypeDistribution: Array<{ _id: string; count: number }>;
-}
+
 
 const AuditLogPage: React.FC = () => {
   const [filters, setFilters] = useState({
@@ -135,16 +119,16 @@ const AuditLogPage: React.FC = () => {
     },
   });
 
-  const handleFilterChange = (key: string, value: any) => {
+    const handleFilterChange = (key: string, value: string) => {
     setFilters(prev => ({ ...prev, [key]: value, page: 0 }));
   };
 
-  const handlePageChange = (event: unknown, newPage: number) => {
+  const handlePageChange = ( newPage: number) => {
     setFilters(prev => ({ ...prev, page: newPage }));
   };
 
-  const handleLimitChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFilters(prev => ({ ...prev, limit: parseInt(event.target.value, 10), page: 0 }));
+  const handleLimitChange = (event: React.ChangeEvent<HTMLInputElement> | ChangeEvent<Omit<HTMLInputElement, "value"> & { value: number; }> | (Event & { target: { value: number; name: string; }; }) | SelectChangeEvent<number>) => {
+    setFilters(prev => ({ ...prev, limit: parseInt(event.target.value.toString(), 10), page: 0 }));
   };
 
   const handleShowDetails = (log: AuditLog) => {
@@ -230,7 +214,7 @@ const AuditLogPage: React.FC = () => {
       {/* إحصائيات سريعة */}
       {statsData && (
         <Grid container spacing={3} sx={{ mb: 3 }}>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{xs: 12, sm: 6, md: 3}}>
             <Card>
               <CardContent>
                 <Typography color="text.secondary" gutterBottom>
@@ -243,7 +227,7 @@ const AuditLogPage: React.FC = () => {
             </Card>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{xs: 12, sm: 6, md: 3}}>
             <Card>
               <CardContent>
                 <Typography color="text.secondary" gutterBottom>
@@ -256,7 +240,7 @@ const AuditLogPage: React.FC = () => {
             </Card>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{xs: 12, sm: 6, md: 3}}>
             <Card>
               <CardContent>
                 <Typography color="text.secondary" gutterBottom>
@@ -269,7 +253,7 @@ const AuditLogPage: React.FC = () => {
             </Card>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{xs: 12, sm: 6, md: 3}}>
             <Card>
               <CardContent>
                 <Typography color="text.secondary" gutterBottom>
@@ -332,7 +316,7 @@ const AuditLogPage: React.FC = () => {
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{xs: 12, sm: 6, md: 3}}>
               <TextField
                 fullWidth
                 label="بحث"
@@ -345,7 +329,7 @@ const AuditLogPage: React.FC = () => {
               />
             </Grid>
 
-            <Grid item xs={12} sm={6} md={2}>
+            <Grid size={{xs: 12, sm: 6, md: 2}}>
               <FormControl fullWidth>
                 <InputLabel>نوع المنفذ</InputLabel>
                 <Select
@@ -362,7 +346,7 @@ const AuditLogPage: React.FC = () => {
               </FormControl>
             </Grid>
 
-            <Grid item xs={12} sm={6} md={2}>
+            <Grid size={{xs: 12, sm: 6, md: 2}}>
               <FormControl fullWidth>
                 <InputLabel>الحالة</InputLabel>
                 <Select
@@ -377,7 +361,7 @@ const AuditLogPage: React.FC = () => {
               </FormControl>
             </Grid>
 
-            <Grid item xs={12} sm={6} md={2}>
+            <Grid size={{xs: 12, sm: 6, md: 2}}>
               <FormControl fullWidth>
                 <InputLabel>الطريقة</InputLabel>
                 <Select
@@ -395,7 +379,7 @@ const AuditLogPage: React.FC = () => {
               </FormControl>
             </Grid>
 
-            <Grid item xs={12} sm={6} md={2}>
+              <Grid size={{xs: 12, sm: 6, md: 2}}>
               <TextField
                 fullWidth
                 type="date"
@@ -406,7 +390,7 @@ const AuditLogPage: React.FC = () => {
               />
             </Grid>
 
-            <Grid item xs={12} sm={6} md={2}>
+            <Grid size={{xs: 12, sm: 6, md: 2}}>
               <TextField
                 fullWidth
                 type="date"
@@ -417,7 +401,7 @@ const AuditLogPage: React.FC = () => {
               />
             </Grid>
 
-            <Grid item xs={12} sm={6} md={1}>
+            <Grid size={{xs: 12, sm: 6, md: 1}}>
               <Button
                 fullWidth
                 variant="outlined"
@@ -488,7 +472,7 @@ const AuditLogPage: React.FC = () => {
                                   log.actorType
                                 }
                                 size="small"
-                                color={getActorTypeColor(log.actorType) as any}
+                                color={getActorTypeColor(log.actorType) as 'primary' | 'secondary' | 'info' | 'warning' | 'default'}
                               />
                               <Typography variant="caption" display="block">
                                 {log.actorType}
@@ -562,7 +546,7 @@ const AuditLogPage: React.FC = () => {
                     component="div"
                     count={auditData.pagination.total}
                     page={auditData.pagination.page - 1}
-                    onPageChange={handlePageChange}
+                    onPageChange={(_, newPage) => handlePageChange(newPage)}
                     rowsPerPage={auditData.pagination.limit}
                     rowsPerPageOptions={[]}
                     labelDisplayedRows={({ from, to, count }) =>
@@ -600,7 +584,7 @@ const AuditLogPage: React.FC = () => {
 
             <DialogContent>
               <Grid container spacing={3}>
-                <Grid item xs={12} sm={6}>
+                <Grid size={{xs: 12, sm: 6}}>
                   <Typography variant="subtitle2" gutterBottom>
                     معلومات عامة
                   </Typography>
@@ -631,7 +615,7 @@ const AuditLogPage: React.FC = () => {
                   </Stack>
                 </Grid>
 
-                <Grid item xs={12} sm={6}>
+                <Grid size={{xs: 12, sm: 6}}>
                   <Typography variant="subtitle2" gutterBottom>
                     تفاصيل الطلب
                   </Typography>

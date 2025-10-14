@@ -1,5 +1,7 @@
 import axios from "axios";
 import { storage } from "../utils/storage";
+import type { ApiResponse } from "../types/api";
+import { extractErrorMessage, extractSuggestedAction } from "../types/api";
 
 const API_URL =
   import.meta.env.VITE_API_URL || "https://api.bthwani.com/api/v1";
@@ -47,10 +49,29 @@ const flushQueue = (token?: string) => {
 };
 
 axiosInstance.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // تحويل الاستجابة إلى البنية الجديدة إذا لزم الأمر
+    // الباك إند الجديد يرجع البيانات في response.data
+    // لكن axios يضع كل شيء في response.data
+    // لذا نحتاج فقط للتأكد من أن البنية صحيحة
+    return response;
+  },
   async (error) => {
     const status = error?.response?.status;
     const originalRequest = error.config || {};
+    
+    // طباعة تفاصيل الخطأ للتطوير
+    if (import.meta.env.DEV) {
+      const apiError = error?.response?.data as ApiResponse;
+      if (apiError?.error) {
+        console.error(`[API Error ${apiError.error.code}]`, {
+          message: apiError.error.message,
+          userMessage: apiError.error.userMessage,
+          suggestedAction: apiError.error.suggestedAction,
+          details: apiError.error.details,
+        });
+      }
+    }
 
     // معالجة أخطاء 401 مع تحسين للمسارات العامة
     if (status === 401 && !originalRequest.__isRetryRequest) {

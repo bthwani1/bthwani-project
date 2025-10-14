@@ -1,0 +1,254 @@
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Body,
+  Param,
+  Query,
+  SetMetadata,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ContentService } from './services/content.service';
+import { CreateBannerDto, UpdateBannerDto } from './dto/create-banner.dto';
+import {
+  CreateStoreSectionDto,
+  UpdateStoreSectionDto,
+} from './dto/create-section.dto';
+import {
+  CreateSubscriptionPlanDto,
+  SubscribeDto,
+} from './dto/create-subscription.dto';
+import { Auth, CurrentUser } from '../../common/decorators/auth.decorator';
+import { AuthType } from '../../common/guards/unified-auth.guard';
+
+const Roles = (...roles: string[]) => SetMetadata('roles', roles);
+
+@ApiTags('Content')
+@Controller('content')
+export class ContentController {
+  constructor(private readonly contentService: ContentService) {}
+
+  // ==================== Banner Endpoints ====================
+
+  @Get('banners')
+  @ApiOperation({ summary: 'الحصول على البانرات النشطة (public)' })
+  async getActiveBanners(@Query('placement') placement?: string) {
+    return this.contentService.findActiveBanners(placement);
+  }
+
+  @Post('banners/:id/click')
+  @ApiOperation({ summary: 'تسجيل نقرة على بانر' })
+  async recordBannerClick(@Param('id') id: string) {
+    await this.contentService.recordBannerClick(id);
+    return { message: 'تم تسجيل النقرة' };
+  }
+
+  @Post('banners')
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'إنشاء بانر جديد' })
+  async createBanner(
+    @Body() dto: CreateBannerDto,
+    @CurrentUser('id') userId: string,
+  ) {
+    return this.contentService.createBanner(dto, userId);
+  }
+
+  @Get('admin/banners')
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'كل البانرات (admin)' })
+  async getAllBanners() {
+    return this.contentService.findAllBanners();
+  }
+
+  @Patch('banners/:id')
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'تحديث بانر' })
+  async updateBanner(@Param('id') id: string, @Body() dto: UpdateBannerDto) {
+    return this.contentService.updateBanner(id, dto);
+  }
+
+  @Delete('banners/:id')
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'حذف بانر' })
+  async deleteBanner(@Param('id') id: string) {
+    await this.contentService.deleteBanner(id);
+    return { message: 'تم حذف البانر بنجاح' };
+  }
+
+  // ==================== Store Section Endpoints ====================
+
+  @Get('stores/:storeId/sections')
+  @ApiOperation({ summary: 'الحصول على أقسام المتجر (public)' })
+  async getStoreSections(@Param('storeId') storeId: string) {
+    return this.contentService.findStoreSections(storeId);
+  }
+
+  @Post('sections')
+  @Auth(AuthType.VENDOR_JWT)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'إنشاء قسم متجر' })
+  async createStoreSection(@Body() dto: CreateStoreSectionDto) {
+    return this.contentService.createStoreSection(dto);
+  }
+
+  @Patch('sections/:id')
+  @Auth(AuthType.VENDOR_JWT)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'تحديث قسم' })
+  async updateStoreSection(
+    @Param('id') id: string,
+    @Body() dto: UpdateStoreSectionDto,
+  ) {
+    return this.contentService.updateStoreSection(id, dto);
+  }
+
+  @Delete('sections/:id')
+  @Auth(AuthType.VENDOR_JWT)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'حذف قسم' })
+  async deleteStoreSection(@Param('id') id: string) {
+    await this.contentService.deleteStoreSection(id);
+    return { message: 'تم حذف القسم بنجاح' };
+  }
+
+  // ==================== Subscription Endpoints ====================
+
+  @Get('subscription-plans')
+  @ApiOperation({ summary: 'الحصول على خطط الاشتراك (public)' })
+  async getSubscriptionPlans() {
+    return this.contentService.findAllSubscriptionPlans();
+  }
+
+  @Post('subscription-plans')
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'إنشاء خطة اشتراك' })
+  async createSubscriptionPlan(@Body() dto: CreateSubscriptionPlanDto) {
+    return this.contentService.createSubscriptionPlan(dto);
+  }
+
+  @Post('subscribe')
+  @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'الاشتراك في خطة' })
+  async subscribe(
+    @CurrentUser('id') userId: string,
+    @Body() dto: SubscribeDto,
+  ) {
+    return this.contentService.subscribe(userId, dto);
+  }
+
+  @Get('my-subscription')
+  @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'الحصول على اشتراكي' })
+  async getMySubscription(@CurrentUser('id') userId: string) {
+    return this.contentService.getMySubscription(userId);
+  }
+
+  @Patch('my-subscription/cancel')
+  @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'إلغاء الاشتراك' })
+  async cancelSubscription(
+    @CurrentUser('id') userId: string,
+    @Body() dto: { reason: string },
+  ) {
+    return this.contentService.cancelSubscription(userId, dto.reason);
+  }
+
+  // ==================== CMS Pages ====================
+
+  @Get('pages')
+  @ApiOperation({ summary: 'الحصول على صفحات CMS (public)' })
+  async getCMSPages(@Query('type') type?: string) {
+    return this.contentService.getCMSPages(type);
+  }
+
+  @Get('pages/:slug')
+  @ApiOperation({ summary: 'الحصول على صفحة CMS بالـ slug' })
+  async getCMSPageBySlug(@Param('slug') slug: string) {
+    return this.contentService.getCMSPageBySlug(slug);
+  }
+
+  @Post('admin/pages')
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'إنشاء صفحة CMS' })
+  async createCMSPage(@Body() body: any, @CurrentUser('id') adminId: string) {
+    return this.contentService.createCMSPage(body, adminId);
+  }
+
+  @Patch('admin/pages/:id')
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'تحديث صفحة CMS' })
+  async updateCMSPage(@Param('id') id: string, @Body() body: any) {
+    return this.contentService.updateCMSPage(id, body);
+  }
+
+  // ==================== App Settings ====================
+
+  @Get('app-settings')
+  @ApiOperation({ summary: 'إعدادات التطبيق (public)' })
+  async getAppSettings() {
+    return this.contentService.getAppSettings();
+  }
+
+  @Patch('admin/app-settings')
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'تحديث إعدادات التطبيق' })
+  async updateAppSettings(@Body() body: any, @CurrentUser('id') adminId: string) {
+    return this.contentService.updateAppSettings(body, adminId);
+  }
+
+  // ==================== FAQs ====================
+
+  @Get('faqs')
+  @ApiOperation({ summary: 'الأسئلة الشائعة (public)' })
+  async getFAQs(@Query('category') category?: string) {
+    return this.contentService.getFAQs(category);
+  }
+
+  @Post('admin/faqs')
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'إضافة سؤال شائع' })
+  async createFAQ(@Body() body: any) {
+    return this.contentService.createFAQ(body);
+  }
+
+  @Patch('admin/faqs/:id')
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'تحديث سؤال شائع' })
+  async updateFAQ(@Param('id') id: string, @Body() body: any) {
+    return this.contentService.updateFAQ(id, body);
+  }
+
+  @Delete('admin/faqs/:id')
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'حذف سؤال شائع' })
+  async deleteFAQ(@Param('id') id: string) {
+    return this.contentService.deleteFAQ(id);
+  }
+}

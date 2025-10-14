@@ -1,6 +1,7 @@
 import axios from "axios";
 import { auth } from "../config/firebaseConfig";
 import { ERROR_MAP } from "./errorMap";
+import type { ApiResponse } from "../types/api";
 
 // قراءة متغير البيئة أو استخدام قيمة افتراضية
 const getBaseURL = () => {
@@ -15,6 +16,8 @@ const getBaseURL = () => {
 // Axios instance
 const instance = axios.create({
   baseURL: getBaseURL(),
+  timeout: 10000,
+  headers: { "Content-Type": "application/json" },
 });
 
 // ✅ Interceptor آمن وحديث
@@ -34,9 +37,24 @@ instance.interceptors.request.use(
 
 // ✅ Response interceptor لمعالجة الأخطاء الموحّدة
 instance.interceptors.response.use(
-  (res) => res,
+  (res) => {
+    // التحقق من البنية الجديدة
+    return res;
+  },
   async (error) => {
-    const status = error?.response?.status;
+    // طباعة تفاصيل الخطأ للتطوير
+    if (import.meta.env.DEV) {
+      const apiError = error?.response?.data as ApiResponse;
+      if (apiError?.error) {
+        console.error(`[API Error ${apiError.error.code}]`, {
+          message: apiError.error.message,
+          userMessage: apiError.error.userMessage,
+          suggestedAction: apiError.error.suggestedAction,
+          details: apiError.error.details,
+        });
+      }
+    }
+
     const code = error?.response?.data?.error?.code;
 
     if (code && ERROR_MAP[code]) {
@@ -46,9 +64,11 @@ instance.interceptors.response.use(
       // مثال: عرض رسالة خطأ للمستخدم
       // يمكنك استبدال هذا بنظام التنبيهات الخاص بك
       if (typeof window !== 'undefined') {
+        const userMessage = error?.response?.data?.error?.userMessage || ERROR_MAP[code].message;
+        const title = ERROR_MAP[code].title;
         // في React: استخدم toast أو modal
-        // toast.error(ERROR_MAP[code].message, { title: ERROR_MAP[code].title });
-        alert(`${ERROR_MAP[code].title}: ${ERROR_MAP[code].message}`);
+        // toast.error(userMessage, { title });
+        alert(`${title}: ${userMessage}`);
       }
     }
     return Promise.reject(error);

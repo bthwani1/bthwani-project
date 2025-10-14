@@ -1,5 +1,27 @@
 import axiosInstance from "../utils/axios";
 
+export interface WalletStatementLine {
+  _id: string;
+  account_id: string;
+  date: string;
+  description: string;
+  memo?: string;
+  debit: number;
+  credit: number;
+  amount: number;
+  side: 'debit' | 'credit';
+  balance: number;
+  running_balance: number;
+  balance_state: 'pending' | 'available';
+  reference_type: string;
+  reference_id: string;
+  ref_type: string;
+  ref_id: string;
+  ledger_entry_id?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface Settlement {
   _id: string;
   id: string;
@@ -901,7 +923,7 @@ export async function getDataSummary(params: {
     statusCounts: Record<string, number>;
   };
   reportType: string;
-  filters: any;
+  filters: Record<string, string>;
 }> {
   const { data } = await axiosInstance.get('/finance/reports/data-summary', {
     params,

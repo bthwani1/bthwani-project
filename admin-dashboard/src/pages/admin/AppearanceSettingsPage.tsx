@@ -1,5 +1,5 @@
 // src/pages/admin/AppearanceSettingsPage.tsx
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import {
   Box,
   Card,
@@ -30,9 +30,7 @@ import {
   Refresh,
   Preview,
   Image,
-  FormatColorFill,
-  Brightness6,
-  Language,
+    Brightness6,
 } from '@mui/icons-material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from '../../utils/axios';
@@ -88,12 +86,14 @@ export default function AppearanceSettingsPage() {
       const { data } = await axios.get('/admin/settings/appearance');
       return data;
     },
-    onSuccess: (data) => {
-      if (data) {
-        setSettings({ ...defaultSettings, ...data });
-      }
-    },
   });
+
+  // Handle settings update when data changes
+  useEffect(() => {
+    if (currentSettings) {
+      setSettings({ ...defaultSettings, ...currentSettings });
+    }
+  }, [currentSettings]);
 
   // Save settings mutation
   const saveMutation = useMutation({
@@ -147,7 +147,7 @@ export default function AppearanceSettingsPage() {
     }
   };
 
-  const updateSetting = (key: keyof AppearanceSettings, value: any) => {
+  const updateSetting = (key: keyof AppearanceSettings, value: AppearanceSettings[keyof AppearanceSettings]) => {
     setSettings(prev => ({ ...prev, [key]: value }));
   };
 

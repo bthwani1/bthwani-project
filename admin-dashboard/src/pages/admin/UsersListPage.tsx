@@ -20,6 +20,13 @@ import {
   LinearProgress,
   Alert,
   Stack,
+  DialogActions,
+  MenuItem,
+  FormControlLabel,
+  Switch,
+  Dialog,
+  DialogTitle,
+  DialogContent,
 } from "@mui/material";
 import {
   Refresh as RefreshIcon,
@@ -36,7 +43,7 @@ import {
 import axios from "../../utils/axios";
 import { useListQueryState } from "../../hook/useQueryState";
 import { getEnumLabel, getEnumBadge } from "../../constants/statusMap";
-import { createAdmin, updateAdmin, deleteAdmin, type CreateAdminRequest, type UpdateAdminRequest } from "../../api/adminUsers";
+import { createAdmin, updateAdmin, deleteAdmin} from "../../api/adminUsers";
 import { useSnackbar } from "notistack";
 
 interface User {
@@ -64,10 +71,7 @@ export default function UsersListPage() {
     setPerPage,
     search,
     setSearch,
-    sort,
-    setSort,
-    filters,
-    setFilters,
+  
   } = useListQueryState();
 
   const [users, setUsers] = useState<User[]>([]);
@@ -140,7 +144,7 @@ export default function UsersListPage() {
       setCreateDialog(false);
       setNewUser({ name: '', email: '', password: '', roles: ['user'] });
       fetchUsers();
-    } catch (error) {
+    } catch  {
       enqueueSnackbar('فشل في إنشاء المستخدم', { variant: 'error' });
     } finally {
       setLoading(false);
@@ -162,7 +166,7 @@ export default function UsersListPage() {
       setEditDialog(false);
       setSelectedUser(null);
       fetchUsers();
-    } catch (error) {
+    } catch  {
       enqueueSnackbar('فشل في تحديث المستخدم', { variant: 'error' });
     } finally {
       setLoading(false);
@@ -177,7 +181,7 @@ export default function UsersListPage() {
       await deleteAdmin(userId);
       enqueueSnackbar('تم حذف المستخدم بنجاح', { variant: 'success' });
       fetchUsers();
-    } catch (error) {
+    } catch  {
       enqueueSnackbar('فشل في حذف المستخدم', { variant: 'error' });
     } finally {
       setLoading(false);
@@ -209,10 +213,6 @@ export default function UsersListPage() {
     navigate(`/admin/users/${userId}?${currentParams.toString()}`);
   };
 
-  const handleBackToList = () => {
-    // العودة إلى قائمة المستخدمين مع الحفاظ على الفلاتر والصفحة الحالية
-    navigate(`/admin/users?${location.search}`);
-  };
 
   return (
     <Box sx={{ p: 3 }}>
@@ -310,7 +310,7 @@ export default function UsersListPage() {
                     <TableCell>
                       <Chip
                         label={getEnumLabel("user_role", user.role)}
-                        color={getEnumBadge("user_role", user.role) as any}
+                        color={getEnumBadge("user_role", user.role).replace('danger', 'error') as 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'}
                         size="small"
                         icon={<UserIcon fontSize="small" />}
                       />

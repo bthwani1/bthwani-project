@@ -43,7 +43,6 @@ interface NotificationLogProps {
 
 export const NotificationLog: React.FC<NotificationLogProps> = ({
   entries,
-  onMarkAsRead,
   onRetry,
   maxEntries = 50
 }) => {

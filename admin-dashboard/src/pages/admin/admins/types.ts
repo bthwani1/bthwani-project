@@ -48,7 +48,7 @@ export interface AdminListItem {
 // استجابة قائمة المشرفين
 export interface AdminsListResponse {
   data: AdminListItem[];
-  // (لا تضع meta هنا إذا النوع لا يتوقعه)
+  total?: number;
 }
 
 // بارامترات الفلترة (إن وُجدت)

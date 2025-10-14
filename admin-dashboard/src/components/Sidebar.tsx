@@ -63,7 +63,7 @@ const SidebarContainer = styled("div")(({ theme }) => ({
   },
 }));
 
-// عنصر الرابط
+// عنصر الرابط مع دعم الوصول
 const NavItem = styled(NavLink)(({ theme }) => ({
   display: "flex",
   flexDirection: "row",
@@ -82,6 +82,10 @@ const NavItem = styled(NavLink)(({ theme }) => ({
     backgroundColor: theme.palette.action.hover,
     color: theme.palette.primary.main,
   },
+  "&:focus": {
+    outline: `2px solid ${theme.palette.primary.main}`,
+    outlineOffset: "2px",
+  },
   "&.active": {
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.primary.contrastText,
@@ -93,7 +97,7 @@ const NavItem = styled(NavLink)(({ theme }) => ({
   },
 }));
 
-// عنوان القسم القابل للطي
+// عنوان القسم القابل للطي مع دعم الوصول
 const SectionTitle = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -107,6 +111,10 @@ const SectionTitle = styled("div")(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.palette.action.hover,
     color: theme.palette.primary.main,
+  },
+  "&:focus": {
+    outline: `2px solid ${theme.palette.primary.main}`,
+    outlineOffset: "2px",
   },
   "& svg": {
     color: "inherit",

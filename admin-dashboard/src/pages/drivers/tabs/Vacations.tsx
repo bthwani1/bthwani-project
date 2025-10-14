@@ -1,5 +1,5 @@
 // src/pages/drivers/tabs/Vacations.tsx
-import React, { useEffect, useState } from "react";
+import  { useCallback, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -9,7 +9,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   FormControl,
   Grid,
@@ -75,7 +74,7 @@ export default function VacationsTab() {
     toDate: null as dayjs.Dayjs | null,
   });
 
-  const fetchVacations = async () => {
+  const fetchVacations = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
@@ -97,11 +96,11 @@ export default function VacationsTab() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters]);
 
   useEffect(() => {
     fetchVacations();
-  }, [filters]);
+  }, [fetchVacations]);
 
   const handleApprove = async (id: string) => {
     try {
@@ -161,7 +160,7 @@ export default function VacationsTab() {
 
         {/* إحصائيات */}
         <Grid container spacing={3} mb={3}>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid  size={{xs: 12, sm: 6, md: 3}}>
             <Card>
               <CardContent>
                 <Typography color="textSecondary" gutterBottom>
@@ -171,7 +170,7 @@ export default function VacationsTab() {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+            <Grid  size={{xs: 12, sm: 6, md: 3}}>
             <Card>
               <CardContent>
                 <Typography color="textSecondary" gutterBottom>
@@ -183,7 +182,7 @@ export default function VacationsTab() {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid  size={{xs: 12, sm: 6, md: 3}}>
             <Card>
               <CardContent>
                 <Typography color="textSecondary" gutterBottom>
@@ -195,7 +194,7 @@ export default function VacationsTab() {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid  size={{xs: 12, sm: 6, md: 3}}>
             <Card>
               <CardContent>
                 <Typography color="textSecondary" gutterBottom>
@@ -212,7 +211,7 @@ export default function VacationsTab() {
         {/* فلاتر البحث */}
         <Paper sx={{ p: 2, mb: 3 }}>
           <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid  size={{xs: 12, sm: 6, md: 3}}>
               <FormControl fullWidth>
                 <InputLabel>الحالة</InputLabel>
                 <Select
@@ -228,7 +227,7 @@ export default function VacationsTab() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid  size={{xs: 12, sm: 6, md: 3}}>
               <TextField
                 fullWidth
                 label="رقم السائق"
@@ -238,7 +237,7 @@ export default function VacationsTab() {
                 }
               />
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid  size={{xs: 12, sm: 6, md: 3}}>
               <DatePicker
                 label="من تاريخ"
                 value={filters.fromDate}
@@ -248,7 +247,7 @@ export default function VacationsTab() {
                 slotProps={{ textField: { fullWidth: true } }}
               />
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid  size={{xs: 12, sm: 6, md: 3}}>
               <DatePicker
                 label="إلى تاريخ"
                 value={filters.toDate}
