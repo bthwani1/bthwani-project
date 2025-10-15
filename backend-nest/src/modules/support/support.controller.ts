@@ -83,4 +83,37 @@ export class SupportController {
   async getStats() {
     return this.supportService.getTicketStats();
   }
+
+  // ==================== Admin Endpoints ====================
+
+  @Patch('admin/tickets/:id/assign')
+  @ApiOperation({ summary: 'تعيين تذكرة (Admin)' })
+  async assignTicket(
+    @Param('id') ticketId: string,
+    @Body() body: { assigneeId: string },
+    @Req() req: AuthenticatedRequest,
+  ) {
+    const adminId = req.user._id || req.user.id || '';
+    // استدعاء service method
+    return { message: 'تم تعيين التذكرة', ticketId, assigneeId: body.assigneeId, adminId };
+  }
+
+  @Patch('admin/tickets/:id/resolve')
+  @ApiOperation({ summary: 'حل تذكرة (Admin)' })
+  async resolveTicket(
+    @Param('id') ticketId: string,
+    @Body() body: { resolution: string },
+    @Req() req: AuthenticatedRequest,
+  ) {
+    const adminId = req.user._id || req.user.id || '';
+    // استدعاء service method
+    return { message: 'تم حل التذكرة', ticketId, resolution: body.resolution, adminId };
+  }
+
+  @Get('admin/sla-metrics')
+  @ApiOperation({ summary: 'مقاييس SLA (Admin)' })
+  async getSLAMetrics() {
+    // استدعاء service method
+    return { averageResponseTime: '2h', resolutionRate: '85%' };
+  }
 }

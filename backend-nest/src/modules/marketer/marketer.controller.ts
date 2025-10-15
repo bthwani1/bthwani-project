@@ -43,57 +43,7 @@ export class MarketerController {
   }
 
   // ==================== Onboarding ====================
-
-  @Auth(AuthType.MARKETER_JWT)
-  @ApiBearerAuth()
-  @Post('onboarding')
-  @ApiOperation({ summary: 'تسجيل متجر/تاجر جديد' })
-  async createOnboarding(
-    @CurrentUser('id') marketerId: string,
-    @Body()
-    body: {
-      storeName: string;
-      ownerName: string;
-      phone: string;
-      email?: string;
-      address: any;
-      type: 'store' | 'vendor' | 'driver';
-    },
-  ) {
-    return this.marketerService.createOnboarding(marketerId, body);
-  }
-
-  @Auth(AuthType.MARKETER_JWT)
-  @ApiBearerAuth()
-  @Get('onboarding/my')
-  @ApiOperation({ summary: 'طلبات التسجيل الخاصة بي' })
-  async getMyOnboardings(
-    @CurrentUser('id') marketerId: string,
-    @Query('status') status?: string,
-  ) {
-    return this.marketerService.getMyOnboardings(marketerId, status);
-  }
-
-  @Auth(AuthType.MARKETER_JWT)
-  @ApiBearerAuth()
-  @Get('onboarding/:id')
-  @ApiOperation({ summary: 'تفاصيل طلب تسجيل' })
-  async getOnboardingDetails(@Param('id') onboardingId: string) {
-    return this.marketerService.getOnboardingDetails(onboardingId);
-  }
-
-  // ==================== Quick Onboarding ====================
-
-  @Auth(AuthType.MARKETER_JWT)
-  @ApiBearerAuth()
-  @Post('quick-onboard')
-  @ApiOperation({ summary: 'تسجيل سريع' })
-  async quickOnboard(
-    @CurrentUser('id') marketerId: string,
-    @Body() body: { phone: string; storeName: string; location: any },
-  ) {
-    return this.marketerService.quickOnboard(marketerId, body);
-  }
+  // ✅ تم نقل الانضمام إلى OnboardingController - استخدم /onboarding
 
   // ==================== Referrals ====================
 

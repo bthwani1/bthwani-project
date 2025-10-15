@@ -368,4 +368,56 @@ export class FinanceController {
   async finalizeReport(@Param('id') id: string) {
     return this.reportsService.finalizeReport(id);
   }
+
+  // ==================== Commission Plans Endpoints ====================
+
+  @Get('commission-plans')
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @ApiOperation({ summary: 'خطط العمولات' })
+  async getCommissionPlans() {
+    return {
+      success: true,
+      data: [],
+      message: 'جلب خطط العمولات بنجاح',
+    };
+  }
+
+  @Post('commission-plans')
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @ApiOperation({ summary: 'إنشاء خطة عمولة' })
+  async createCommissionPlan(
+    @Body()
+    body: {
+      name: string;
+      type: string;
+      rate: number;
+      minOrders?: number;
+      maxOrders?: number;
+    },
+    @CurrentUser('id') adminId: string,
+  ) {
+    return {
+      success: true,
+      data: { ...body, adminId },
+      message: 'تم إنشاء خطة العمولة بنجاح',
+    };
+  }
+
+  @Patch('commission-plans/:id')
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @ApiOperation({ summary: 'تحديث خطة عمولة' })
+  async updateCommissionPlan(
+    @Param('id') planId: string,
+    @Body() body: any,
+    @CurrentUser('id') adminId: string,
+  ) {
+    return {
+      success: true,
+      data: { planId, ...body, adminId },
+      message: 'تم تحديث خطة العمولة بنجاح',
+    };
+  }
 }

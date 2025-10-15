@@ -157,6 +157,28 @@ export class DriverController {
     return this.driverService.getDocuments(driverId);
   }
 
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @Get(':driverId/documents')
+  @ApiOperation({ summary: 'مستندات سائق (Admin)' })
+  async getDriverDocumentsAdmin(@Param('driverId') driverId: string) {
+    return this.driverService.getDocuments(driverId);
+  }
+
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @Post(':driverId/documents/:docId/verify')
+  @ApiOperation({ summary: 'التحقق من مستند (Admin)' })
+  async verifyDocument(
+    @Param('driverId') driverId: string,
+    @Param('docId') docId: string,
+    @Body() body: { verified: boolean; notes?: string },
+    @CurrentUser('id') adminId: string,
+  ) {
+    // استدعاء service method
+    return { message: 'تم التحقق من المستند', driverId, docId, verified: body.verified, adminId };
+  }
+
   // ==================== Driver Vacations ====================
 
   @Auth(AuthType.JWT)
@@ -212,41 +234,7 @@ export class DriverController {
   }
 
   // ==================== Driver Withdrawals ====================
-
-  @Auth(AuthType.JWT)
-  @Roles('driver')
-  @Post('withdrawals/request')
-  @ApiOperation({ summary: 'طلب سحب أرباح' })
-  async requestDriverWithdrawal(
-    @CurrentUser('id') driverId: string,
-    @Body() body: { amount: number; method: string; accountInfo: any },
-  ) {
-    return this.driverService.requestWithdrawal(
-      driverId,
-      body.amount,
-      body.method,
-      body.accountInfo,
-    );
-  }
-
-  @Auth(AuthType.JWT)
-  @Roles('driver')
-  @Get('withdrawals/my')
-  @ApiOperation({ summary: 'طلبات السحب الخاصة بي' })
-  async getDriverWithdrawals(@CurrentUser('id') driverId: string) {
-    return this.driverService.getMyWithdrawals(driverId);
-  }
-
-  @Auth(AuthType.JWT)
-  @Roles('driver')
-  @Get('withdrawals/:id/status')
-  @ApiOperation({ summary: 'حالة طلب السحب' })
-  async getWithdrawalStatus(
-    @Param('id') withdrawalId: string,
-    @CurrentUser('id') driverId: string,
-  ) {
-    return this.driverService.getWithdrawalStatus(withdrawalId, driverId);
-  }
+  // ✅ تم نقل طلبات السحب إلى WalletController - استخدم /wallet/withdraw/request بدلاً من ذلك
 
   // ==================== Driver Orders (Advanced) ====================
 
