@@ -26,11 +26,11 @@ export class GetOrderHandler implements IQueryHandler<GetOrderQuery> {
     }
 
     // 2. جلب من DB
-    const order = await this.orderModel
+    const order = (await this.orderModel
       .findById(query.orderId)
       .populate('user', 'fullName phone email profileImage')
       .populate('driver', 'fullName phone profileImage')
-      .lean();
+      .lean()) as unknown as Order;
 
     if (!order) {
       throw new NotFoundException({
@@ -43,7 +43,6 @@ export class GetOrderHandler implements IQueryHandler<GetOrderQuery> {
     // 3. حفظ في الـ cache
     await this.cacheManager.set(cacheKey, order, this.ORDER_CACHE_TTL * 1000);
 
-    return order as any;
+    return order;
   }
 }
-

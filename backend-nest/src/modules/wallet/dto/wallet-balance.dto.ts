@@ -11,4 +11,3 @@ export class WalletBalanceDto {
   @IsEnum(['User', 'Driver'])
   userModel: string;
 }
-

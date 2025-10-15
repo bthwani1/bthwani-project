@@ -26,6 +26,7 @@ import { useEffect, useState } from "react";
 import { Edit, Delete } from "@mui/icons-material";
 import axios from "../../../utils/axios";
 import { auth } from "../../../config/firebaseConfig";
+import * as merchantApi from "../../../api/merchant";
 
 type Category = { _id: string; name: string };
 type ProductCatalog = {
@@ -106,9 +107,9 @@ export default function GroceriesMerchantProductsPage() {
     const token = await user.getIdToken(true);
 
     const [mpRes, catsRes, prodsRes, merchRes, storesRes] = await Promise.all([
-      axios.get("/groceries/merchant-products"),
-      axios.get("/groceries/categories"),
-      axios.get("/groceries/catalog?usageType=grocery"),
+      merchantApi.getMerchantProducts(),
+      merchantApi.getCategories(),
+      merchantApi.getCatalogProducts('grocery'),
       axios.get<Vendor[]>("/vendor", {
         headers: { Authorization: `Bearer ${token}` },
       }),
@@ -148,7 +149,7 @@ export default function GroceriesMerchantProductsPage() {
       return;
     }
 
-    const { data } = await axios.get(`/attributes/category/${categoryId}`);
+    const data = await merchantApi.getAttributesByCategory(categoryId);
     setAttributes(data);
   };
 
@@ -238,9 +239,9 @@ export default function GroceriesMerchantProductsPage() {
     }
     const submitData: MerchantProductForm = { ...form };
     if (editId) {
-      await axios.put(`groceries/merchant-products/${editId}`, submitData);
+      await merchantApi.updateMerchantProduct(editId, submitData);
     } else {
-      await axios.post("groceries/merchant-products", submitData);
+      await merchantApi.createMerchantProduct(submitData);
     }
     handleClose();
     fetchAll();
@@ -248,7 +249,7 @@ export default function GroceriesMerchantProductsPage() {
 
   const handleDelete = async (id: string) => {
     if (window.confirm("هل أنت متأكد من الحذف؟")) {
-      await axios.delete(`groceries/merchant-products/${id}`);
+      await merchantApi.deleteMerchantProduct(id);
       fetchAll();
     }
   };

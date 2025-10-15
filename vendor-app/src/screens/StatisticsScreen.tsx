@@ -33,7 +33,7 @@ const StatisticsScreen: React.FC = () => {
 
   const fetchDashboard = async () => {
     try {
-      const res = await axiosInstance.get("/vendor/dashboard/overview");
+      const res = await axiosInstance.get("/vendors/dashboard/overview");
       setData(res.data);
 
       // جلب طلبات اليوم للتصدير
@@ -49,7 +49,7 @@ const StatisticsScreen: React.FC = () => {
     try {
       // جلب الطلبات بدون تحديد تاريخ للحصول على جميع الطلبات ثم فلترة اليوم
       const res = await axiosInstance.get("/delivery/order/vendor/orders");
-      const allOrders = res.data || [];
+      const allOrders = res.data?.data || res.data || [];
 
       // فلترة طلبات اليوم
       const today = new Date().toISOString().split('T')[0];

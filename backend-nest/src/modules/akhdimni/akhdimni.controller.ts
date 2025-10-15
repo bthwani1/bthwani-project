@@ -19,6 +19,7 @@ import {
   AssignDriverDto,
   RateErrandDto,
 } from './dto/create-errand.dto';
+import { CalculateFeeDto } from './dto/calculate-fee.dto';
 import { Auth, CurrentUser } from '../../common/decorators/auth.decorator';
 import { AuthType } from '../../common/guards/unified-auth.guard';
 
@@ -31,6 +32,13 @@ export class AkhdimniController {
   constructor(private readonly akhdimniService: AkhdimniService) {}
 
   // ==================== Customer Endpoints ====================
+
+  @Post('errands/calculate-fee')
+  @Auth(AuthType.FIREBASE)
+  @ApiOperation({ summary: 'حساب رسوم المهمة قبل إنشائها' })
+  async calculateFee(@Body() dto: CalculateFeeDto) {
+    return this.akhdimniService.calculateFee(dto);
+  }
 
   @Post('errands')
   @Auth(AuthType.FIREBASE)

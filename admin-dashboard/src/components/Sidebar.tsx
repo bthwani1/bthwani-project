@@ -179,6 +179,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
     // ==================== ADMIN OVERVIEW ====================
     group(" لوحة الإدارة العامة", <DashboardIcon />, [
       link("/admin/overview", "لوحة الإدارة العامة", <DashboardIcon />),
+      link("/admin/analytics", "التحليلات", <InsightsIcon />),
     ]),
 
     // ==================== ADMIN MANAGEMENT ====================
@@ -270,6 +271,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
 
     // ==================== FINANCE SYSTEM ====================
     group(" النظام المالي", <ReceiptLongIcon />, [
+      link("/admin/finance", "لوحة النظام المالي", <DashboardIcon />),
       link("/admin/finance/ledger", "شجرة الحسابات", <ReceiptLongIcon />),
       link("/admin/finance/accounts", "دفتر الأستاذ العام", <ReceiptLongIcon />),
       link("/admin/finance/reports", "التقارير المالية", <AssessmentIcon />),

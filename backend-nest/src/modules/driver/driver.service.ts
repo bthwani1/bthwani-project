@@ -380,4 +380,39 @@ export class DriverService {
       issueId: 'issue_' + Date.now(),
     };
   }
+
+  async changePassword(
+    driverId: string,
+    oldPassword: string,
+    newPassword: string,
+  ) {
+    const driver = await this.driverModel.findById(driverId);
+    if (!driver) {
+      throw new NotFoundException({
+        code: 'DRIVER_NOT_FOUND',
+        message: 'Driver not found',
+        userMessage: 'السائق غير موجود',
+      });
+    }
+
+    // التحقق من كلمة المرور القديمة
+    const isMatch = await bcrypt.compare(oldPassword, driver.password);
+    if (!isMatch) {
+      throw new ConflictException({
+        code: 'INVALID_PASSWORD',
+        message: 'Invalid old password',
+        userMessage: 'كلمة المرور القديمة غير صحيحة',
+      });
+    }
+
+    // تشفير كلمة المرور الجديدة
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    driver.password = hashedPassword;
+    await driver.save();
+
+    return {
+      success: true,
+      message: 'تم تغيير كلمة المرور بنجاح',
+    };
+  }
 }

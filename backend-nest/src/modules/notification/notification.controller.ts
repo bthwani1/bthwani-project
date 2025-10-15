@@ -8,11 +8,16 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth, ApiParam } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBearerAuth,
+  ApiParam,
+} from '@nestjs/swagger';
 import { NotificationService } from './notification.service';
 import { SuppressionService } from './services/suppression.service';
 import { CreateNotificationDto } from './dto/create-notification.dto';
-import { CreateSuppressionDto, UpdateSuppressionDto } from './dto/suppression.dto';
+import { CreateSuppressionDto } from './dto/suppression.dto';
 import { CursorPaginationDto } from '../../common/dto/pagination.dto';
 import { UnifiedAuthGuard } from '../../common/guards/unified-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
@@ -60,6 +65,20 @@ export class NotificationController {
   }
 
   @Auth(AuthType.FIREBASE)
+  @Get('unread/count')
+  @ApiOperation({ summary: 'عدد الإشعارات غير المقروءة' })
+  async getUnreadCount(@CurrentUser('id') userId: string) {
+    return this.notificationService.getUnreadCount(userId);
+  }
+
+  @Auth(AuthType.FIREBASE)
+  @Post('read-all')
+  @ApiOperation({ summary: 'تحديد جميع الإشعارات كمقروءة' })
+  async markAllAsRead(@CurrentUser('id') userId: string) {
+    return this.notificationService.markAllAsRead(userId);
+  }
+
+  @Auth(AuthType.FIREBASE)
   @Delete(':id')
   @ApiOperation({ summary: 'حذف إشعار' })
   async delete(@Param('id') id: string) {
@@ -92,7 +111,8 @@ export class NotificationController {
   @Get('suppression')
   @ApiOperation({ summary: 'جلب قائمة الحظر للمستخدم' })
   async getUserSuppressions(@CurrentUser('id') userId: string) {
-    const suppressions = await this.suppressionService.getUserSuppressions(userId);
+    const suppressions =
+      await this.suppressionService.getUserSuppressions(userId);
 
     return {
       success: true,
@@ -105,7 +125,8 @@ export class NotificationController {
   @Get('suppression/channels')
   @ApiOperation({ summary: 'جلب القنوات المحظورة' })
   async getSuppressedChannels(@CurrentUser('id') userId: string) {
-    const channels = await this.suppressionService.getSuppressedChannels(userId);
+    const channels =
+      await this.suppressionService.getSuppressedChannels(userId);
 
     return {
       success: true,
@@ -122,7 +143,11 @@ export class NotificationController {
   @Delete('suppression/:id')
   @ApiOperation({ summary: 'إلغاء حظر' })
   @ApiParam({ name: 'id', description: 'معرف الحظر' })
-  async removeSuppression(@Param('id') id: string, @CurrentUser('id') userId: string) {
+  async removeSuppression(
+    @Param('id') id: string,
+    @CurrentUser('id') userId: string,
+  ) {
+    console.log(userId);
     await this.suppressionService.removeSuppression(id);
 
     return {
@@ -154,10 +179,12 @@ export class NotificationController {
   @Get('suppression/stats')
   @ApiOperation({ summary: 'إحصائيات الحظر (للإدارة)' })
   async getSuppressionStats() {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const stats = await this.suppressionService.getSuppressionStats();
 
     return {
       success: true,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       data: stats,
     };
   }

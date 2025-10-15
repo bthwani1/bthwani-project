@@ -3,7 +3,6 @@ import {
   NotFoundException,
   BadRequestException,
   UnauthorizedException,
-  ConflictException,
   Inject,
 } from '@nestjs/common';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
@@ -16,14 +15,18 @@ import { AddAddressDto } from './dto/add-address.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { SetPinDto, VerifyPinDto } from './dto/set-pin.dto';
 import { CursorPaginationDto } from '../../common/dto/pagination.dto';
-import { EntityHelper, CacheHelper, PaginationHelper } from '../../common/utils';
+import {
+  EntityHelper,
+  CacheHelper,
+  PaginationHelper,
+} from '../../common/utils';
 
 @Injectable()
 export class UserService {
   private readonly SALT_ROUNDS = 12; // عدد جولات التشفير
   private readonly MAX_PIN_ATTEMPTS = 5; // عدد محاولات PIN المسموحة
   private readonly PIN_LOCK_DURATION = 30 * 60 * 1000; // 30 دقيقة
-  
+
   // Cache TTL
   private readonly USER_CACHE_TTL = 600; // 10 دقائق
   private readonly USER_PROFILE_CACHE_TTL = 300; // 5 دقائق
@@ -48,10 +51,12 @@ export class UserService {
         );
 
         // استخراج العنوان الافتراضي
-        let defaultAddress: any = null;
+        let defaultAddress: unknown = null;
         if (user.defaultAddressId && user.addresses?.length > 0) {
           defaultAddress = user.addresses.find(
-            (addr: any) => addr._id?.toString() === user.defaultAddressId?.toString(),
+            (addr) =>
+              (addr as { _id?: Types.ObjectId })._id?.toString() ===
+              user.defaultAddressId?.toString(),
           );
         }
 
@@ -63,7 +68,7 @@ export class UserService {
         return {
           ...user,
           defaultAddress,
-        };
+        } as unknown;
       },
     );
   }
@@ -80,11 +85,9 @@ export class UserService {
 
   // تحديث الملف الشخصي
   async updateProfile(userId: string, updateUserDto: UpdateUserDto) {
-    const user = await this.userModel.findByIdAndUpdate(
-      userId,
-      updateUserDto,
-      { new: true },
-    );
+    const user = await this.userModel.findByIdAndUpdate(userId, updateUserDto, {
+      new: true,
+    });
 
     if (!user) {
       throw new NotFoundException({
@@ -108,7 +111,7 @@ export class UserService {
       'User',
     );
 
-    user.addresses.push(addAddressDto as any);
+    user.addresses.push(addAddressDto as never);
     await user.save();
 
     // ⚡ مسح cache بعد التحديث
@@ -121,7 +124,11 @@ export class UserService {
   }
 
   // تحديث عنوان
-  async updateAddress(userId: string, addressId: string, updateData: Partial<AddAddressDto>) {
+  async updateAddress(
+    userId: string,
+    addressId: string,
+    updateData: Partial<AddAddressDto>,
+  ) {
     const user = await this.userModel.findById(userId);
 
     if (!user) {
@@ -132,8 +139,8 @@ export class UserService {
       });
     }
 
-    const address: any = user.addresses.find(
-      (addr: any) => addr._id.toString() === addressId,
+    const address = user.addresses.find(
+      (addr) => (addr as { _id: Types.ObjectId })._id.toString() === addressId,
     );
 
     if (!address) {
@@ -148,7 +155,7 @@ export class UserService {
     Object.assign(address, updateData);
     await user.save();
 
-    return address;
+    return address as unknown;
   }
 
   // حذف عنوان
@@ -164,12 +171,13 @@ export class UserService {
     }
 
     user.addresses = user.addresses.filter(
-      (addr: any) => addr._id.toString() !== addressId,
-    ) as any;
+      (addr) => (addr as { _id: Types.ObjectId })._id.toString() !== addressId,
+    ) as never;
 
     // إزالة العنوان الافتراضي إذا كان محذوفاً
     if (user.defaultAddressId?.toString() === addressId) {
-      user.defaultAddressId = (user.addresses[0] as any)?._id || null;
+      user.defaultAddressId =
+        (user.addresses[0] as { _id?: Types.ObjectId })?._id || undefined;
     }
 
     await user.save();
@@ -193,7 +201,7 @@ export class UserService {
     }
 
     const addressExists = user.addresses.some(
-      (addr: any) => addr._id.toString() === addressId,
+      (addr) => (addr as { _id: Types.ObjectId })._id.toString() === addressId,
     );
 
     if (!addressExists) {
@@ -426,11 +434,7 @@ export class UserService {
   /**
    * تغيير رمز PIN (يتطلب PIN القديم)
    */
-  async changePin(
-    userId: string,
-    oldPin: string,
-    newPinDto: SetPinDto,
-  ) {
+  async changePin(userId: string, oldPin: string, newPinDto: SetPinDto) {
     // التحقق من PIN القديم أولاً
     await this.verifyPin(userId, { pin: oldPin });
 

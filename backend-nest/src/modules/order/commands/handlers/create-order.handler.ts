@@ -59,7 +59,7 @@ export class CreateOrderHandler implements ICommandHandler<CreateOrderCommand> {
     // 4. إصدار Event
     this.eventBus.publish(
       new OrderCreatedEvent(
-        (order._id as any).toString(),
+        String(order._id),
         command.userId,
         order.items,
         order.price,
@@ -69,4 +69,3 @@ export class CreateOrderHandler implements ICommandHandler<CreateOrderCommand> {
     return order;
   }
 }
-

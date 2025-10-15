@@ -326,4 +326,19 @@ export class DriverController {
   ) {
     return this.driverService.reportIssue(driverId, body);
   }
+
+  @Auth(AuthType.JWT)
+  @Roles('driver')
+  @Post('change-password')
+  @ApiOperation({ summary: 'تغيير كلمة المرور' })
+  async changePassword(
+    @CurrentUser('id') driverId: string,
+    @Body() body: { oldPassword: string; newPassword: string },
+  ) {
+    return this.driverService.changePassword(
+      driverId,
+      body.oldPassword,
+      body.newPassword,
+    );
+  }
 }

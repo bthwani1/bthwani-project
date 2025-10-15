@@ -46,7 +46,7 @@ export class VendorService {
 
   // جلب كل التجار
   async findAll(pagination: CursorPaginationDto) {
-    const query: any = {};
+    const query: Record<string, unknown> = {};
 
     if (pagination.cursor) {
       query._id = { $gt: new Types.ObjectId(pagination.cursor) };
@@ -65,7 +65,11 @@ export class VendorService {
     return {
       data: results.map((v) => this.sanitizeVendor(v)),
       pagination: {
-        nextCursor: hasMore ? (results[results.length - 1] as any)._id.toString() : null,
+        nextCursor: hasMore
+          ? (
+              results[results.length - 1] as { _id: Types.ObjectId }
+            )._id.toString()
+          : null,
         hasMore,
         limit,
       },
@@ -121,13 +125,142 @@ export class VendorService {
       { new: true },
     );
 
+    if (!vendor) {
+      throw new NotFoundException({
+        code: 'VENDOR_NOT_FOUND',
+        message: 'Vendor not found',
+        userMessage: 'التاجر غير موجود',
+      });
+    }
+
     return this.sanitizeVendor(vendor);
   }
 
+  // إعادة تعيين كلمة المرور
+  async resetPassword(id: string, newPassword: string) {
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    const vendor = await this.vendorModel.findByIdAndUpdate(
+      id,
+      { password: hashedPassword },
+      { new: true },
+    );
+
+    if (!vendor) {
+      throw new NotFoundException({
+        code: 'VENDOR_NOT_FOUND',
+        message: 'Vendor not found',
+        userMessage: 'التاجر غير موجود',
+      });
+    }
+
+    return { message: 'تم تغيير كلمة المرور بنجاح' };
+  }
+
+  // لوحة معلومات التاجر (Dashboard)
+  async getDashboard(vendorId: string) {
+    const vendor = await this.vendorModel.findById(vendorId);
+    if (!vendor) {
+      throw new NotFoundException('التاجر غير موجود');
+    }
+
+    // Note: هذه بيانات بسيطة، يمكن ربطها بـ Order/Finance modules
+    return {
+      totalSales: vendor.totalRevenue || 0,
+      totalOrders: vendor.salesCount || 0,
+      averageOrderValue:
+        vendor.salesCount > 0
+          ? (vendor.totalRevenue || 0) / vendor.salesCount
+          : 0,
+      todaySales: 0, // يحتاج query على Order module
+      todayOrders: 0, // يحتاج query على Order module
+      pendingOrders: 0, // يحتاج query على Order module
+    };
+  }
+
+  // كشف حساب التاجر
+  async getAccountStatement(vendorId: string) {
+    // Note: يحتاج ربط مع Finance module
+    return {
+      currentBalance: 0,
+      totalEarnings: 0,
+      totalWithdrawals: 0,
+      pendingAmount: 0,
+      transactions: [],
+    };
+  }
+
+  // طلبات التسوية المالية
+  async getSettlements(vendorId: string) {
+    // Note: يحتاج ربط مع Finance module
+    console.log(vendorId);
+    return [];
+  }
+
+  // إنشاء طلب تسوية مالية
+  async createSettlement(
+    vendorId: string,
+    body: { amount: number; bankAccount?: string },
+  ) {
+    // Note: يحتاج ربط مع Finance module
+    return {
+      _id: 'temp-' + Date.now(),
+      amount: body.amount,
+      status: 'pending',
+      requestedDate: new Date(),
+      vendorId,
+      bankAccount: body.bankAccount,
+    };
+  }
+
+  // سجل المبيعات
+  async getSales(vendorId: string, limit?: number) {
+    // Note: يحتاج ربط مع Order module
+    console.log(vendorId, limit);
+    return [];
+  }
+
+  // طلب حذف الحساب
+  async requestAccountDeletion(
+    vendorId: string,
+    body: { reason?: string; exportData?: boolean },
+  ) {
+    const vendor = await this.vendorModel.findByIdAndUpdate(
+      vendorId,
+      {
+        pendingDeletion: {
+          requestedAt: new Date(),
+          reason: body.reason,
+          exportData: body.exportData,
+        },
+      },
+      { new: true },
+    );
+
+    if (!vendor) {
+      throw new NotFoundException('التاجر غير موجود');
+    }
+
+    return {
+      message: 'تم استلام طلب حذف الحساب',
+      scheduledDeletionDate: new Date(
+        Date.now() + 30 * 24 * 60 * 60 * 1000,
+      ).toISOString(),
+    };
+  }
+
   // إزالة كلمة المرور من الرد
-  private sanitizeVendor(vendor: any) {
-    const vendorObject = vendor.toObject ? vendor.toObject() : vendor;
-    delete vendorObject.password;
-    return vendorObject;
+  private sanitizeVendor(
+    vendor: Vendor | (Vendor & { toObject?: () => Record<string, unknown> }),
+  ): Record<string, unknown> {
+    const vendorDoc = vendor as {
+      toObject?: () => Record<string, unknown>;
+    };
+    const vendorObject = vendorDoc.toObject
+      ? vendorDoc.toObject()
+      : (vendor as unknown as Record<string, unknown>);
+    const result = { ...vendorObject };
+    delete result.password;
+    return result;
   }
 }

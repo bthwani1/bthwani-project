@@ -5,4 +5,3 @@ export class AssignDriverCommand {
     public readonly assignedBy: string = 'admin',
   ) {}
 }
-

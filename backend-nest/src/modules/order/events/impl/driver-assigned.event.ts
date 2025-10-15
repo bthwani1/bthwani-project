@@ -5,4 +5,3 @@ export class DriverAssignedEvent {
     public readonly userId: string,
   ) {}
 }
-

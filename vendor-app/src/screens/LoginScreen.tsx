@@ -87,7 +87,7 @@ const LoginScreen = () => {
       setTimeout(async () => {
         const token = await registerForPushNotificationsAsync();
         if (token && res.data?.vendor?._id) {
-          await axios.post("/vendor/push-token", {
+          await axios.patch("/vendors/me", {
             expoPushToken: token,
           });
         }

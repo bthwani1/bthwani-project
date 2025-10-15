@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { StoreController } from './store.controller';
+import { DeliveryStoreController } from './delivery-store.controller';
 import { StoreService } from './store.service';
 import { Store, StoreSchema } from './entities/store.entity';
 import { Product, ProductSchema } from './entities/product.entity';
@@ -14,7 +15,7 @@ import { Product, ProductSchema } from './entities/product.entity';
     ]),
     JwtModule.register({}),
   ],
-  controllers: [StoreController],
+  controllers: [StoreController, DeliveryStoreController],
   providers: [StoreService],
   exports: [StoreService],
 })

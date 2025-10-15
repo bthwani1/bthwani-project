@@ -14,7 +14,7 @@ import {
   Stack,
 } from "@mui/material";
 import { Refresh, Check, Close, Feedback } from "@mui/icons-material";
-import { useOnboarding } from "./useOnboarding";
+import { useOnboardingLegacy as useOnboarding } from "@/api/onboarding";
 
 export default function OnboardingQueuePage() {
   const { rows, loading, list, approve, reject, needsFix } = useOnboarding();

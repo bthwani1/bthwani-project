@@ -14,4 +14,3 @@ export const OrderCommandHandlers = [
   AssignDriverHandler,
   CancelOrderHandler,
 ];
-

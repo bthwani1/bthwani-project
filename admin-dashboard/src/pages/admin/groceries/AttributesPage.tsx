@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Edit, Delete } from "@mui/icons-material";
-import axios from "../../../utils/axios";
+import * as merchantApi from "../../../api/merchant";
 
 type Attribute = {
   _id: string;
@@ -55,12 +55,12 @@ export default function GroceriesAttributesPage() {
 
   // جلب التصنيفات (مطلوب لربط السمة بتصنيف)
   const fetchCategories = async () => {
-    const { data } = await axios.get("groceries/categories");
+    const data = await merchantApi.getCategories();
     setCategories(data);
   };
 
   const fetchAttributes = async () => {
-    const { data } = await axios.get("groceries/attributes");
+    const data = await merchantApi.getAttributes();
     setAttributes(data);
   };
 
@@ -118,9 +118,9 @@ export default function GroceriesAttributesPage() {
       submitData.options = optionsStr.split(",").map((s: string) => s.trim());
     }
     if (editId) {
-      await axios.put(`groceries/attributes/${editId}`, submitData);
+      await merchantApi.updateAttribute(editId, submitData);
     } else {
-      await axios.post("groceries/attributes", submitData);
+      await merchantApi.createAttribute(submitData);
     }
     handleClose();
     fetchAttributes();
@@ -128,7 +128,7 @@ export default function GroceriesAttributesPage() {
 
   const handleDelete = async (id: string) => {
     if (window.confirm("هل أنت متأكد من الحذف؟")) {
-      await axios.delete(`groceries/attributes/${id}`);
+      await merchantApi.deleteAttribute(id);
       fetchAttributes();
     }
   };

@@ -6,14 +6,17 @@ import axios from "./axios-instance";
 // Get user notifications
 export const getUserNotifications = async (
   limit = 50,
-  offset = 0
+  cursor?: string
 ): Promise<Notification[]> => {
   const headers = await getAuthHeader();
-  const response = await axiosInstance.get<Notification[]>("/notifications", {
-    params: { limit, offset },
+  const params: any = { limit };
+  if (cursor) params.cursor = cursor;
+  
+  const response = await axiosInstance.get<{ data: Notification[] }>("/notifications/my", {
+    params,
     headers,
   });
-  return response.data;
+  return response.data.data;
 };
 export async function registerPushToken(payload: {
   token: string;
@@ -39,7 +42,7 @@ export const markNotificationAsRead = async (
   notificationId: string
 ): Promise<void> => {
   const headers = await getAuthHeader();
-  await axiosInstance.patch(
+  await axiosInstance.post(
     `/notifications/${notificationId}/read`,
     {},
     { headers }
@@ -49,7 +52,7 @@ export const markNotificationAsRead = async (
 // Mark all notifications as read
 export const markAllNotificationsAsRead = async (): Promise<void> => {
   const headers = await getAuthHeader();
-  await axiosInstance.patch("/notifications/read-all", {}, { headers });
+  await axiosInstance.post("/notifications/read-all", {}, { headers });
 };
 
 // Delete notification
@@ -60,43 +63,51 @@ export const deleteNotification = async (
   await axiosInstance.delete(`/notifications/${notificationId}`, { headers });
 };
 
-// Get notification settings
+// Get notification suppression settings (channels)
 export const getNotificationSettings =
   async (): Promise<NotificationSettings> => {
     const headers = await getAuthHeader();
-    const response = await axiosInstance.get<NotificationSettings>(
-      "/notifications/settings",
+    const response = await axiosInstance.get<{ data: NotificationSettings }>(
+      "/notifications/suppression/channels",
       { headers }
     );
-    return response.data;
+    return response.data.data;
   };
 
-// Update notification settings
+// Update notification settings (suppression)
 export const updateNotificationSettings = async (
   settings: Partial<NotificationSettings>
 ): Promise<NotificationSettings> => {
   const headers = await getAuthHeader();
-  const response = await axiosInstance.patch<NotificationSettings>(
-    "/notifications/settings",
-    settings,
+  
+  // Create suppression for channels
+  const channels: string[] = [];
+  if (settings.push === false) channels.push('push');
+  if (settings.email === false) channels.push('email');
+  if (settings.sms === false) channels.push('sms');
+  
+  const response = await axiosInstance.post<{ data: NotificationSettings }>(
+    "/notifications/suppression",
+    { channels },
     { headers }
   );
-  return response.data;
+  return response.data.data;
 };
 
-// Send test notification (for development)
+// Send test notification (for development) - NOT IMPLEMENTED IN BACKEND
 export const sendTestNotification = async (
   type: Notification["type"],
   title: string,
   message: string
 ): Promise<Notification> => {
   const headers = await getAuthHeader();
+  // Note: This endpoint doesn't exist in backend, creating notification instead
   const response = await axiosInstance.post<Notification>(
-    "/notifications/test",
+    "/notifications",
     {
       type,
       title,
-      message,
+      message: { title, body: message },
     },
     { headers }
   );

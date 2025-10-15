@@ -215,7 +215,7 @@ export const fetchMerchantProductDetails = async (
   productId: string
 ): Promise<Product> => {
   const response = await axiosInstance.get<Product>(
-    `/merchant/merchant-products/${productId}`
+    `/merchant/products/${productId}`
   );
   return response.data;
 };
@@ -251,76 +251,23 @@ export const fetchNearbyNewProducts = async (location: {
 };
 
 // Get promotions
-export const fetchPromotions = async (): Promise<Promotion[]> => {
+export const fetchPromotions = async (placement?: string, channel?: string): Promise<Promotion[]> => {
   // المسار عام - لا نحتاج مصادقة
-  const response = await axiosInstance.get<Promotion[]>("/delivery/promotions", {
+  const params: any = {};
+  if (placement) params.placement = placement;
+  if (channel) params.channel = channel;
+  
+  const response = await axiosInstance.get<Promotion[]>("/promotions/by-placement", {
+    params,
     // @ts-expect-error skip auth header for public route
     __skipAuthHeader: true,
   });
   return response.data;
 };
 
-// Create order
-export const createOrder = async (
-  orderData: CreateOrderData
-): Promise<Order> => {
-  const headers = await getAuthHeader();
-  const response = await axiosInstance.post<Order>(
-    "/delivery/order",
-    orderData,
-    { headers }
-  );
-  return response.data;
-};
-
-// Get user orders
-export const fetchUserOrders = async (userId: string): Promise<Order[]> => {
-  const headers = await getAuthHeader();
-  const response = await axiosInstance.get<Order[]>(
-    `/delivery/order/user/${userId}`,
-    { headers }
-  );
-  return response.data;
-};
-
-// Get order details
-export const fetchOrderDetails = async (orderId: string): Promise<Order> => {
-  const headers = await getAuthHeader();
-  const response = await axiosInstance.get<Order>(
-    `/delivery/order/${orderId}`,
-    { headers }
-  );
-  return response.data;
-};
-
-// Update order status
-export const updateOrderStatus = async (
-  orderId: string,
-  status: string
-): Promise<Order> => {
-  const headers = await getAuthHeader();
-  const response = await axiosInstance.patch<Order>(
-    `/delivery/order/${orderId}/status`,
-    { status },
-    { headers }
-  );
-  return response.data;
-};
-
-// Rate order
-export const rateOrder = async (
-  orderId: string,
-  rating: number,
-  review?: string
-): Promise<Order> => {
-  const headers = await getAuthHeader();
-  const response = await axiosInstance.post<Order>(
-    `/delivery/order/${orderId}/rate`,
-    { rating, review },
-    { headers }
-  );
-  return response.data;
-};
+// Note: Order functions moved to orders.ts
+// Import from: import * as orderApi from './orders';
+// Kept here for backward compatibility temporarily
 
 // أخدمني Service APIs
 export const createErrandOrder = async (errandData: {

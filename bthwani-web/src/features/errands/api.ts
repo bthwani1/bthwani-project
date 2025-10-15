@@ -1,25 +1,46 @@
 // src/features/errands/api.ts
-import axiosInstance from "../../api/axios-instance";
+import { calculateErrandFee, createErrand } from "../../api/akhdimni";
 import type { ErrandForm } from "./types";
 
+/**
+ * حساب رسوم المهمة
+ * @deprecated استخدم calculateErrandFee من api/akhdimni مباشرة
+ */
 export async function fetchErrandFee(form: ErrandForm) {
-  const { data } = await axiosInstance.post("/delivery/order/errand/fee", {
-    errand: {
-      category: form.category,
-      size: form.size,
-      weightKg: form.weightKg ? Number(form.weightKg) : undefined,
-      pickup: form.pickup,
-      dropoff: form.dropoff,
-      tip: form.tip ? Number(form.tip) : 0,
+  const data = await calculateErrandFee({
+    category: form.category,
+    size: form.size,
+    weightKg: form.weightKg ? Number(form.weightKg) : undefined,
+    pickup: {
+      location: {
+        lat: form.pickup.location.lat!,
+        lng: form.pickup.location.lng!,
+      },
+      city: form.pickup.city,
+      street: form.pickup.street,
     },
+    dropoff: {
+      location: {
+        lat: form.dropoff.location.lat!,
+        lng: form.dropoff.location.lng!,
+      },
+      city: form.dropoff.city,
+      street: form.dropoff.street,
+    },
+    tip: form.tip ? Number(form.tip) : 0,
   });
-  return data as {
-    distanceKm?: number;
-    deliveryFee?: number;
-    totalWithTip?: number;
+  
+  return {
+    distanceKm: data.distanceKm,
+    deliveryFee: data.deliveryFee,
+    totalWithTip: data.totalWithTip,
   };
 }
 
+/**
+ * إنشاء طلب أخدمني
+ * @deprecated استخدم createErrand من api/akhdimni مباشرة
+ */
 export async function submitErrandOrder(payload: {
   paymentMethod: ErrandForm["paymentMethod"];
   scheduledFor: string | null;
@@ -35,6 +56,19 @@ export async function submitErrandOrder(payload: {
     waypoints: ErrandForm["waypoints"];
   };
 }) {
-  const { data } = await axiosInstance.post("/delivery/order/errand", payload);
+  const data = await createErrand({
+    category: payload.errand.category,
+    description: payload.errand.description,
+    size: payload.errand.size || 'medium',
+    weightKg: payload.errand.weightKg,
+    pickup: payload.errand.pickup,
+    dropoff: payload.errand.dropoff,
+    waypoints: payload.errand.waypoints,
+    tip: payload.tip,
+    scheduledFor: payload.scheduledFor,
+    paymentMethod: payload.paymentMethod,
+    notes: payload.notes,
+  });
+  
   return data;
 }

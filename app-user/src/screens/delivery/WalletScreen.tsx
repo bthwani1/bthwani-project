@@ -12,6 +12,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import axiosInstance from "@/utils/api/axiosInstance";
+import { getWalletBalance, getTransactions, getMyCoupons } from "@/api/walletApi";
 import COLORS from "@/constants/colors";
 
 interface WalletData {
@@ -48,13 +49,21 @@ const WalletScreen = () => {
 
   const loadWalletData = useCallback(async () => {
     try {
-      const [walletResponse, couponsResponse] = await Promise.all([
-        axiosInstance.get("/wallet"),
-        axiosInstance.get("/coupons/user"),
+      // ✅ استخدام API الجديد بدلاً من axios مباشرة
+      const [balance, transactions, coupons] = await Promise.all([
+        getWalletBalance(),
+        getTransactions({ limit: 10 }),
+        getMyCoupons(),
       ]);
 
-      setWalletData(walletResponse.data);
-      setCoupons(couponsResponse.data);
+      setWalletData({
+        balance: balance.balance,
+        onHold: balance.onHold,
+        available: balance.available,
+        loyaltyPoints: balance.loyaltyPoints,
+        transactions: transactions.data || [],
+      });
+      setCoupons(coupons);
     } catch (error: any) {
       Alert.alert("خطأ", "تعذر تحميل بيانات المحفظة");
       console.error("Wallet load error:", error);

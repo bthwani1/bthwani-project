@@ -1,5 +1,5 @@
-import  { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Modal, Alert } from "react-native";
+import  { useState, useEffect } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Modal, Alert, TextInput, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../../context/AuthContext";
 import COLORS from "../../constants/colors";
@@ -10,17 +10,47 @@ import {
   Cairo_700Bold,
 } from "@expo-google-fonts/cairo";
 import { api } from "../../api/client";
+import { ENDPOINTS } from "../../api/routes";
 
 export default function ProfileScreen() {
   const { user, logout } = useAuth();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [profileData, setProfileData] = useState<any>(null);
+  const [editing, setEditing] = useState(false);
 
   const [fontsLoaded] = useFonts({
     Cairo_400Regular,
     Cairo_600SemiBold,
     Cairo_700Bold,
   });
+
+  useEffect(() => {
+    loadProfile();
+  }, []);
+
+  const loadProfile = async () => {
+    try {
+      setLoading(true);
+      const res = await api.get(ENDPOINTS.PROFILE_GET);
+      setProfileData(res.data);
+    } catch (error) {
+      console.error('Error loading profile:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateProfile = async () => {
+    try {
+      await api.patch(ENDPOINTS.PROFILE_UPDATE, profileData);
+      Alert.alert('نجح', 'تم تحديث الملف الشخصي');
+      setEditing(false);
+    } catch (error: any) {
+      Alert.alert('خطأ', error?.response?.data?.userMessage || 'فشل التحديث');
+    }
+  };
 
   const handleDeleteAccount = async () => {
     if (!user) return;

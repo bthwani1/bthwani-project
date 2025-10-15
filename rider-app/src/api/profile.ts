@@ -2,12 +2,12 @@
 import axios from "./axios";
 
 export const getProfile = async () => {
-  const res = await axios.get("/driver/me");
+  const res = await axios.get("/drivers/profile");
   return res.data;
 };
 
 export const updateProfile = async (data: any) => {
-  const res = await axios.patch("/driver/me", data);
+  const res = await axios.patch("/drivers/profile", data);
   return res.data;
 };
 
@@ -15,5 +15,5 @@ export const changePassword = async (
   oldPassword: string,
   newPassword: string
 ) => {
-  await axios.post("/driver/change-password", { oldPassword, newPassword });
+  await axios.post("/drivers/change-password", { oldPassword, newPassword });
 };

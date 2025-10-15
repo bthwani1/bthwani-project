@@ -1,12 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
-import * as request from 'supertest';
+import request from 'supertest';
 import { AppModule } from '../src/app.module';
 
 describe('Wallet E2E Tests', () => {
   let app: INestApplication;
   let authToken: string;
-  let userId: string;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -14,7 +13,7 @@ describe('Wallet E2E Tests', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
-    
+
     app.useGlobalPipes(
       new ValidationPipe({
         whitelist: true,
@@ -34,8 +33,10 @@ describe('Wallet E2E Tests', () => {
         password: 'Test@123456',
       });
 
-    authToken = registerResponse.body.data.token;
-    userId = registerResponse.body.data.user.id;
+    const responseBody = registerResponse.body as {
+      data: { token: string; user: { id: string } };
+    };
+    authToken = responseBody.data.token;
   });
 
   afterAll(async () => {
@@ -48,7 +49,7 @@ describe('Wallet E2E Tests', () => {
         .get('/api/v2/wallet/balance')
         .set('Authorization', `Bearer ${authToken}`)
         .expect(200)
-        .expect((res) => {
+        .expect((res: { body: { data: Record<string, unknown> } }) => {
           expect(res.body.data).toHaveProperty('balance');
           expect(res.body.data).toHaveProperty('onHold');
           expect(res.body.data).toHaveProperty('availableBalance');
@@ -69,10 +70,12 @@ describe('Wallet E2E Tests', () => {
         .set('Authorization', `Bearer ${authToken}`)
         .query({ limit: 20 })
         .expect(200)
-        .expect((res) => {
+        .expect((res: { body: { data: Record<string, unknown> } }) => {
           expect(res.body.data).toHaveProperty('data');
           expect(res.body.data).toHaveProperty('pagination');
-          expect(Array.isArray(res.body.data.data)).toBe(true);
+          expect(
+            Array.isArray((res.body.data as { data: unknown[] }).data),
+          ).toBe(true);
         });
     });
   });
@@ -80,7 +83,7 @@ describe('Wallet E2E Tests', () => {
   describe('POST /api/v2/wallet/transaction (with Idempotency)', () => {
     it('should create transaction with idempotency key', () => {
       const idempotencyKey = `test-${Date.now()}`;
-      
+
       return request(app.getHttpServer())
         .post('/api/v2/wallet/transaction')
         .set('Authorization', `Bearer ${authToken}`)
@@ -96,7 +99,7 @@ describe('Wallet E2E Tests', () => {
 
     it('should return same response for duplicate idempotency key', async () => {
       const idempotencyKey = `test-duplicate-${Date.now()}`;
-      
+
       const firstResponse = await request(app.getHttpServer())
         .post('/api/v2/wallet/transaction')
         .set('Authorization', `Bearer ${authToken}`)
@@ -120,7 +123,9 @@ describe('Wallet E2E Tests', () => {
         });
 
       // Should return same response
-      expect(firstResponse.status).toBe(secondResponse.status);
+      expect((firstResponse as { status: number }).status).toBe(
+        (secondResponse as { status: number }).status,
+      );
     });
 
     it('should require idempotency key for sensitive operations', () => {
@@ -134,7 +139,7 @@ describe('Wallet E2E Tests', () => {
           description: 'No idempotency key',
         })
         .expect(400)
-        .expect((res) => {
+        .expect((res: { body: { message: string } }) => {
           expect(res.body.message).toContain('Idempotency-Key');
         });
     });
@@ -146,7 +151,7 @@ describe('Wallet E2E Tests', () => {
         .get('/api/v2/wallet/topup/methods')
         .set('Authorization', `Bearer ${authToken}`)
         .expect(200)
-        .expect((res) => {
+        .expect((res: { body: { data: { methods: unknown[] } } }) => {
           expect(res.body.data).toHaveProperty('methods');
           expect(Array.isArray(res.body.data.methods)).toBe(true);
         });
@@ -155,14 +160,14 @@ describe('Wallet E2E Tests', () => {
 
   describe('Rate Limiting', () => {
     it('should rate limit excessive requests', async () => {
-      const requests = [];
-      
+      const requests: Array<Promise<{ status: number }>> = [];
+
       // Send 150 requests (more than default limit of 100)
       for (let i = 0; i < 150; i++) {
         requests.push(
           request(app.getHttpServer())
             .get('/api/v2/wallet/balance')
-            .set('Authorization', `Bearer ${authToken}`)
+            .set('Authorization', `Bearer ${authToken}`),
         );
       }
 
@@ -175,10 +180,10 @@ describe('Wallet E2E Tests', () => {
 
   describe('Request Timeout', () => {
     it('should timeout long-running requests', async () => {
+      await Promise.resolve();
       // This would require a special endpoint that delays
       // For now, just testing the structure
       expect(app).toBeDefined();
     }, 35000);
   });
 });
-

@@ -75,4 +75,3 @@ WalletEventSchema.index({ aggregateId: 1, sequence: 1 }, { unique: true });
 WalletEventSchema.index({ timestamp: 1 });
 WalletEventSchema.index({ eventType: 1, timestamp: -1 });
 WalletEventSchema.index({ correlationId: 1 });
-

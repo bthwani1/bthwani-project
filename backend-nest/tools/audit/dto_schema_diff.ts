@@ -1,15 +1,15 @@
 #!/usr/bin/env ts-node
 /**
  * DTO vs Schema Consistency Check
- * 
+ *
  * Compares DTOs with Mongoose Schemas/Entities to ensure data contract consistency
- * 
+ *
  * Generates: reports/dto_schema_diff.md with consistency percentage
  */
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { Project, SourceFile, ClassDeclaration, PropertyDeclaration } from 'ts-morph';
+import { Project, ClassDeclaration, PropertyDeclaration } from 'ts-morph';
 
 interface FieldInfo {
   name: string;
@@ -70,14 +70,14 @@ class DtoSchemaConsistencyAuditor {
     });
   }
 
-  async audit(): Promise<void> {
+  audit(): void {
     console.log('🔍 Starting DTO vs Schema Consistency Check...\n');
 
     // 1. Find and parse all DTOs
-    await this.parseDtos();
+    this.parseDtos();
 
     // 2. Find and parse all Entities/Schemas
-    await this.parseEntities();
+    this.parseEntities();
 
     // 3. Compare DTOs with Entities
     this.compareAll();
@@ -93,12 +93,12 @@ class DtoSchemaConsistencyAuditor {
   /**
    * Parse all DTO files
    */
-  private async parseDtos(): Promise<void> {
+  private parseDtos(): void {
     console.log('📋 Parsing DTOs...');
-    
+
     const srcPath = path.join(process.cwd(), 'src');
     const dtoFiles = this.findFiles(srcPath, '.dto.ts');
-    
+
     console.log(`  Found ${dtoFiles.length} DTO files`);
 
     for (const filePath of dtoFiles) {
@@ -114,12 +114,12 @@ class DtoSchemaConsistencyAuditor {
   /**
    * Parse all Entity/Schema files
    */
-  private async parseEntities(): Promise<void> {
+  private parseEntities(): void {
     console.log('📋 Parsing Entities/Schemas...');
-    
+
     const srcPath = path.join(process.cwd(), 'src');
     const entityFiles = this.findFiles(srcPath, '.entity.ts');
-    
+
     console.log(`  Found ${entityFiles.length} entity files`);
 
     for (const filePath of entityFiles) {
@@ -164,9 +164,9 @@ class DtoSchemaConsistencyAuditor {
     try {
       const sourceFile = this.project.addSourceFileAtPath(filePath);
       const relativePath = path.relative(process.cwd(), filePath);
-      
+
       const classes = sourceFile.getClasses();
-      
+
       for (const classDecl of classes) {
         const className = classDecl.getName();
         if (!className || !className.includes('Dto')) {
@@ -190,7 +190,10 @@ class DtoSchemaConsistencyAuditor {
 
       this.project.removeSourceFile(sourceFile);
     } catch (error) {
-      console.error(`  ⚠️  Error parsing ${filePath}:`, error.message);
+      console.error(
+        `  ⚠️  Error parsing ${filePath}:`,
+        (error as Error).message,
+      );
     }
 
     return null;
@@ -203,9 +206,9 @@ class DtoSchemaConsistencyAuditor {
     try {
       const sourceFile = this.project.addSourceFileAtPath(filePath);
       const relativePath = path.relative(process.cwd(), filePath);
-      
+
       const classes = sourceFile.getClasses();
-      
+
       for (const classDecl of classes) {
         const className = classDecl.getName();
         if (!className) {
@@ -214,9 +217,12 @@ class DtoSchemaConsistencyAuditor {
 
         // Check if it's a Mongoose schema
         const hasSchemaDecorator = !!classDecl.getDecorator('Schema');
-        
+
         // Skip sub-schemas without main entity
-        if (!hasSchemaDecorator && !className.toLowerCase().includes('entity')) {
+        if (
+          !hasSchemaDecorator &&
+          !className.toLowerCase().includes('entity')
+        ) {
           continue;
         }
 
@@ -236,7 +242,10 @@ class DtoSchemaConsistencyAuditor {
 
       this.project.removeSourceFile(sourceFile);
     } catch (error) {
-      console.error(`  ⚠️  Error parsing ${filePath}:`, error.message);
+      console.error(
+        `  ⚠️  Error parsing ${filePath}:`,
+        (error as Error).message,
+      );
     }
 
     return null;
@@ -245,7 +254,10 @@ class DtoSchemaConsistencyAuditor {
   /**
    * Extract fields from a class
    */
-  private extractFields(classDecl: ClassDeclaration, type: 'dto' | 'entity'): FieldInfo[] {
+  private extractFields(
+    classDecl: ClassDeclaration,
+    type: 'dto' | 'entity',
+  ): FieldInfo[] {
     const fields: FieldInfo[] = [];
     const properties = classDecl.getProperties();
 
@@ -262,30 +274,38 @@ class DtoSchemaConsistencyAuditor {
   /**
    * Extract field information
    */
-  private extractFieldInfo(prop: PropertyDeclaration, type: 'dto' | 'entity'): FieldInfo | null {
+  private extractFieldInfo(
+    prop: PropertyDeclaration,
+    type: 'dto' | 'entity',
+  ): FieldInfo | null {
     const name = prop.getName();
     if (!name) return null;
 
     const typeNode = prop.getTypeNode();
     let typeName = typeNode ? typeNode.getText() : 'any';
-    
+
     // Clean up type
     typeName = typeName.replace(/\s+/g, ' ').trim();
-    
-    const isOptional = prop.hasQuestionToken() || typeName.includes('undefined');
+
+    const isOptional =
+      prop.hasQuestionToken() || typeName.includes('undefined');
     const isArray = typeName.includes('[]') || typeName.includes('Array<');
-    
+
     // Extract validators
     const validators: string[] = [];
     const decorators: string[] = [];
-    
+
     for (const decorator of prop.getDecorators()) {
       const decoratorName = decorator.getName();
       decorators.push(decoratorName);
 
       if (type === 'dto') {
         // DTO validators
-        if (decoratorName.startsWith('Is') || decoratorName === 'Min' || decoratorName === 'Max') {
+        if (
+          decoratorName.startsWith('Is') ||
+          decoratorName === 'Min' ||
+          decoratorName === 'Max'
+        ) {
           validators.push(decoratorName);
         }
       } else {
@@ -295,7 +315,7 @@ class DtoSchemaConsistencyAuditor {
           const args = decorator.getArguments();
           if (args.length > 0) {
             const argText = args[0].getText();
-            
+
             if (argText.includes('required: true')) {
               validators.push('required');
             }
@@ -340,7 +360,7 @@ class DtoSchemaConsistencyAuditor {
   private extractModuleFromPath(filePath: string): string {
     const parts = filePath.split(path.sep);
     const modulesIndex = parts.indexOf('modules');
-    
+
     if (modulesIndex !== -1 && modulesIndex + 1 < parts.length) {
       return parts[modulesIndex + 1];
     }
@@ -353,14 +373,14 @@ class DtoSchemaConsistencyAuditor {
    */
   private extractDtoPurpose(className: string): string {
     const lowerName = className.toLowerCase();
-    
+
     if (lowerName.includes('create')) return 'create';
     if (lowerName.includes('update')) return 'update';
     if (lowerName.includes('patch')) return 'patch';
     if (lowerName.includes('filter')) return 'filter';
     if (lowerName.includes('query')) return 'query';
     if (lowerName.includes('search')) return 'search';
-    
+
     return 'other';
   }
 
@@ -373,7 +393,7 @@ class DtoSchemaConsistencyAuditor {
     for (const dto of this.dtos) {
       // Find matching entity
       const matchingEntity = this.findMatchingEntity(dto);
-      
+
       if (matchingEntity) {
         const comparison = this.compareDtoWithEntity(dto, matchingEntity);
         this.comparisons.push(comparison);
@@ -388,8 +408,10 @@ class DtoSchemaConsistencyAuditor {
    */
   private findMatchingEntity(dto: DtoInfo): EntityInfo | null {
     // Try exact module match first
-    const sameModuleEntities = this.entities.filter(e => e.module === dto.module);
-    
+    const sameModuleEntities = this.entities.filter(
+      (e) => e.module === dto.module,
+    );
+
     if (sameModuleEntities.length === 0) {
       return null;
     }
@@ -413,7 +435,10 @@ class DtoSchemaConsistencyAuditor {
         .replace(/Schema$/i, '')
         .toLowerCase();
 
-      if (dtoBaseName.includes(entityBaseName) || entityBaseName.includes(dtoBaseName)) {
+      if (
+        dtoBaseName.includes(entityBaseName) ||
+        entityBaseName.includes(dtoBaseName)
+      ) {
         return entity;
       }
     }
@@ -425,9 +450,12 @@ class DtoSchemaConsistencyAuditor {
   /**
    * Compare DTO with Entity
    */
-  private compareDtoWithEntity(dto: DtoInfo, entity: EntityInfo): ComparisonResult {
-    const dtoFields = new Set(dto.fields.map(f => f.name));
-    const entityFields = new Set(entity.fields.map(f => f.name));
+  private compareDtoWithEntity(
+    dto: DtoInfo,
+    entity: EntityInfo,
+  ): ComparisonResult {
+    const dtoFields = new Set(dto.fields.map((f) => f.name));
+    const entityFields = new Set(entity.fields.map((f) => f.name));
 
     const fieldsInBoth: string[] = [];
     const fieldsOnlyInDto: string[] = [];
@@ -441,8 +469,10 @@ class DtoSchemaConsistencyAuditor {
         fieldsInBoth.push(dtoField.name);
 
         // Compare types and optionality
-        const entityField = entity.fields.find(f => f.name === dtoField.name)!;
-        
+        const entityField = entity.fields.find(
+          (f) => f.name === dtoField.name,
+        )!;
+
         if (!this.typesMatch(dtoField.type, entityField.type)) {
           typeMismatches.push({
             field: dtoField.name,
@@ -473,7 +503,8 @@ class DtoSchemaConsistencyAuditor {
     // Calculate match score
     const totalFields = Math.max(dtoFields.size, entityFields.size);
     const matchingFields = fieldsInBoth.length;
-    const matchScore = totalFields > 0 ? Math.round((matchingFields / totalFields) * 100) : 0;
+    const matchScore =
+      totalFields > 0 ? Math.round((matchingFields / totalFields) * 100) : 0;
 
     return {
       dtoName: dto.name,
@@ -502,16 +533,18 @@ class DtoSchemaConsistencyAuditor {
 
     // Check common type mappings
     const typeMap: Record<string, string[]> = {
-      'string': ['string', 'types.objectid', 'objectid'],
-      'number': ['number'],
-      'boolean': ['boolean', 'bool'],
-      'date': ['date'],
-      'any': ['any', 'object', 'record'],
+      string: ['string', 'types.objectid', 'objectid'],
+      number: ['number'],
+      boolean: ['boolean', 'bool'],
+      date: ['date'],
+      any: ['any', 'object', 'record'],
     };
 
-    for (const [baseType, variations] of Object.entries(typeMap)) {
-      if (variations.some(v => normalizeDtoType.includes(v)) &&
-          variations.some(v => normalizeEntityType.includes(v))) {
+    for (const variations of Object.values(typeMap)) {
+      if (
+        variations.some((v) => normalizeDtoType.includes(v)) &&
+        variations.some((v) => normalizeEntityType.includes(v))
+      ) {
         return true;
       }
     }
@@ -523,7 +556,11 @@ class DtoSchemaConsistencyAuditor {
    * Generate markdown report
    */
   private generateReport(): void {
-    const reportPath = path.join(process.cwd(), 'reports', 'dto_schema_diff.md');
+    const reportPath = path.join(
+      process.cwd(),
+      'reports',
+      'dto_schema_diff.md',
+    );
 
     const reportsDir = path.dirname(reportPath);
     if (!fs.existsSync(reportsDir)) {
@@ -543,17 +580,29 @@ class DtoSchemaConsistencyAuditor {
     content += `- **DTOs بدون مطابقات**: ${this.dtos.length - this.comparisons.length}\n\n`;
 
     // Calculate overall consistency
-    const totalScore = this.comparisons.reduce((sum, c) => sum + c.matchScore, 0);
-    const avgConsistency = this.comparisons.length > 0 ? Math.round(totalScore / this.comparisons.length) : 0;
-    
+    const totalScore = this.comparisons.reduce(
+      (sum, c) => sum + c.matchScore,
+      0,
+    );
+    const avgConsistency =
+      this.comparisons.length > 0
+        ? Math.round(totalScore / this.comparisons.length)
+        : 0;
+
     content += `### نسبة الاتساق الإجمالية: **${avgConsistency}%**\n\n`;
     content += this.generateProgressBar('الاتساق', avgConsistency);
     content += '\n';
 
     // Issues summary
-    const withTypeMismatches = this.comparisons.filter(c => c.typeMismatches.length > 0).length;
-    const withOptionalityIssues = this.comparisons.filter(c => c.optionalityMismatches.length > 0).length;
-    const withMissingFields = this.comparisons.filter(c => c.fieldsOnlyInDto.length > 0 || c.fieldsOnlyInEntity.length > 0).length;
+    const withTypeMismatches = this.comparisons.filter(
+      (c) => c.typeMismatches.length > 0,
+    ).length;
+    const withOptionalityIssues = this.comparisons.filter(
+      (c) => c.optionalityMismatches.length > 0,
+    ).length;
+    const withMissingFields = this.comparisons.filter(
+      (c) => c.fieldsOnlyInDto.length > 0 || c.fieldsOnlyInEntity.length > 0,
+    ).length;
 
     content += '### المشاكل المكتشفة\n\n';
     content += `- **اختلافات في الأنواع**: ${withTypeMismatches}\n`;
@@ -562,7 +611,7 @@ class DtoSchemaConsistencyAuditor {
 
     // By Module
     content += '## 📦 حسب المودول\n\n';
-    
+
     const byModule = new Map<string, ComparisonResult[]>();
     for (const comp of this.comparisons) {
       if (!byModule.has(comp.module)) {
@@ -574,13 +623,18 @@ class DtoSchemaConsistencyAuditor {
     content += '| المودول | DTOs | متوسط الاتساق | مشاكل |\n';
     content += '|---------|------|---------------|--------|\n';
 
-    for (const [module, comps] of Array.from(byModule.entries()).sort((a, b) => b[1].length - a[1].length)) {
-      const avgScore = Math.round(comps.reduce((sum, c) => sum + c.matchScore, 0) / comps.length);
-      const issues = comps.filter(c => 
-        c.typeMismatches.length > 0 || 
-        c.optionalityMismatches.length > 0 ||
-        c.fieldsOnlyInDto.length > 0 ||
-        c.fieldsOnlyInEntity.length > 0
+    for (const [module, comps] of Array.from(byModule.entries()).sort(
+      (a, b) => b[1].length - a[1].length,
+    )) {
+      const avgScore = Math.round(
+        comps.reduce((sum, c) => sum + c.matchScore, 0) / comps.length,
+      );
+      const issues = comps.filter(
+        (c) =>
+          c.typeMismatches.length > 0 ||
+          c.optionalityMismatches.length > 0 ||
+          c.fieldsOnlyInDto.length > 0 ||
+          c.fieldsOnlyInEntity.length > 0,
       ).length;
 
       content += `| ${module} | ${comps.length} | ${avgScore}% | ${issues} |\n`;
@@ -604,11 +658,14 @@ class DtoSchemaConsistencyAuditor {
     // Issues
     content += '## ⚠️ المشاكل التي تحتاج إصلاح\n\n';
 
-    const needsFix = this.comparisons.filter(c =>
-      c.matchScore < 80 ||
-      c.typeMismatches.length > 0 ||
-      c.optionalityMismatches.length > 2
-    ).sort((a, b) => a.matchScore - b.matchScore);
+    const needsFix = this.comparisons
+      .filter(
+        (c) =>
+          c.matchScore < 80 ||
+          c.typeMismatches.length > 0 ||
+          c.optionalityMismatches.length > 2,
+      )
+      .sort((a, b) => a.matchScore - b.matchScore);
 
     if (needsFix.length === 0) {
       content += '_جميع DTOs متسقة مع Schemas!_ 🎉\n\n';
@@ -631,7 +688,9 @@ class DtoSchemaConsistencyAuditor {
           content += '**اختلافات في Optional/Required**:\n';
           for (const mismatch of comp.optionalityMismatches) {
             const dtoStatus = mismatch.dtoOptional ? 'optional' : 'required';
-            const entityStatus = mismatch.entityOptional ? 'optional' : 'required';
+            const entityStatus = mismatch.entityOptional
+              ? 'optional'
+              : 'required';
             content += `- \`${mismatch.field}\`: DTO=${dtoStatus} vs Entity=${entityStatus}\n`;
           }
           content += '\n';
@@ -652,8 +711,10 @@ class DtoSchemaConsistencyAuditor {
     // Detailed Comparisons
     content += '## 📋 جميع المقارنات\n\n';
     content += '<details>\n<summary>عرض التفاصيل الكاملة</summary>\n\n';
-    content += '| DTO | Entity | المودول | الاتساق | مشترك | DTO فقط | Entity فقط | اختلافات نوع |\n';
-    content += '|-----|--------|---------|---------|--------|----------|-------------|---------------|\n';
+    content +=
+      '| DTO | Entity | المودول | الاتساق | مشترك | DTO فقط | Entity فقط | اختلافات نوع |\n';
+    content +=
+      '|-----|--------|---------|---------|--------|----------|-------------|---------------|\n';
 
     for (const comp of this.comparisons) {
       content += `| ${comp.dtoName} | ${comp.entityName} | ${comp.module} | `;
@@ -678,8 +739,10 @@ class DtoSchemaConsistencyAuditor {
     content += '### 2. توحيد Optional/Required\n\n';
     if (withOptionalityIssues > 0) {
       content += `يجب مراجعة **${withOptionalityIssues}** حالة من اختلافات Optional/Required:\n\n`;
-      content += '- الحقول المطلوبة في Entity يجب أن تكون required في Create DTOs\n';
-      content += '- الحقول الاختيارية في Entity يمكن أن تكون optional في DTOs\n';
+      content +=
+        '- الحقول المطلوبة في Entity يجب أن تكون required في Create DTOs\n';
+      content +=
+        '- الحقول الاختيارية في Entity يمكن أن تكون optional في DTOs\n';
       content += '- Update DTOs عادة تكون جميع الحقول optional\n\n';
     }
 
@@ -695,7 +758,8 @@ class DtoSchemaConsistencyAuditor {
     content += '- **Create DTOs**: يجب أن تحتوي على الحقول المطلوبة فقط\n';
     content += '- **Update DTOs**: جميع الحقول optional باستثناء ID\n';
     content += '- **Response DTOs**: يمكن أن تحتوي على حقول computed إضافية\n';
-    content += '- **Validation**: استخدام نفس القواعد في DTO validators و Schema validators\n';
+    content +=
+      '- **Validation**: استخدام نفس القواعد في DTO validators و Schema validators\n';
     content += '- **Types**: استخدام Enums مشتركة بين DTOs و Entities\n\n';
 
     content += '## 📝 خطة العمل\n\n';
@@ -707,7 +771,8 @@ class DtoSchemaConsistencyAuditor {
     content += '- [ ] إعداد CI check لهذا الفحص\n\n';
 
     content += '---\n\n';
-    content += '_تم إنشاء هذا التقرير تلقائياً بواسطة `tools/audit/dto_schema_diff.ts`_\n';
+    content +=
+      '_تم إنشاء هذا التقرير تلقائياً بواسطة `tools/audit/dto_schema_diff.ts`_\n';
 
     fs.writeFileSync(reportPath, content, 'utf-8');
     console.log(`📊 Report generated: ${reportPath}`);
@@ -730,8 +795,9 @@ class DtoSchemaConsistencyAuditor {
 
 // Run the audit
 const auditor = new DtoSchemaConsistencyAuditor();
-auditor.audit().catch((error) => {
+try {
+  auditor.audit();
+} catch (error) {
   console.error('❌ Error during audit:', error);
   process.exit(1);
-});
-
+}

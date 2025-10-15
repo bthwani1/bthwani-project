@@ -30,7 +30,7 @@ export class AssignDriverHandler
       });
     }
 
-    if (order.status !== OrderStatus.READY) {
+    if (order.status !== (OrderStatus.READY as string)) {
       throw new BadRequestException({
         code: 'INVALID_ORDER_STATUS',
         message: 'Order must be ready to assign driver',
@@ -44,10 +44,10 @@ export class AssignDriverHandler
     order.assignedAt = new Date();
 
     order.statusHistory.push({
-      status: OrderStatus.PICKED_UP,
+      status: OrderStatus.PICKED_UP as string,
       changedAt: new Date(),
       changedBy: command.assignedBy,
-    } as any);
+    });
 
     await order.save();
 
@@ -59,7 +59,7 @@ export class AssignDriverHandler
     // إصدار Event
     this.eventBus.publish(
       new DriverAssignedEvent(
-        (order._id as any).toString(),
+        String(order._id),
         command.driverId,
         order.user.toString(),
       ),
@@ -68,4 +68,3 @@ export class AssignDriverHandler
     return order;
   }
 }
-

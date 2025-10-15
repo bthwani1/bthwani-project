@@ -129,7 +129,7 @@ export default function DeliveryPromotionsPage() {
       // لذا لن يُعتبر المستخدم Admin وقد ترى العروض النشطة فقط.
       // الحل الأفضل: وفّر Endpoint إداري محمي، أو فعّل verifyFirebase على نفس الراوت.
       const [pRes, sRes, cRes, prRes] = await Promise.all([
-        axios.get<IPromotionPopulated[]>("/delivery/promotions/admin?status=all", { headers }),
+        axios.get<IPromotionPopulated[]>("/promotions", { headers }),
         axios.get<DeliveryStore[]>("/delivery/stores", { headers }),
         axios.get<Category[]>("/delivery/categories", { headers }),
         axios.get<Product[]>("/delivery/products", { headers }),
@@ -192,10 +192,10 @@ export default function DeliveryPromotionsPage() {
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
       if (editing) {
-        await axios.put(`/delivery/promotions/${editing._id}`, payload, { headers });
+        await axios.patch(`/promotions/${editing._id}`, payload, { headers });
         setSuccess("تم تحديث العرض بنجاح");
       } else {
-        await axios.post("/delivery/promotions", payload, { headers });
+        await axios.post("/promotions", payload, { headers });
         setSuccess("تم إضافة العرض بنجاح");
       }
 
@@ -217,7 +217,7 @@ export default function DeliveryPromotionsPage() {
     try {
       const token = await auth.currentUser?.getIdToken();
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
-      await axios.delete(`/delivery/promotions/${id}`, { headers });
+      await axios.delete(`/promotions/${id}`, { headers });
       setSuccess("تم حذف العرض");
       fetchAll();
     } catch (err) {

@@ -164,4 +164,3 @@ export class CalculateUtilityPriceDto {
   @IsObject()
   customerLocation?: { lat: number; lng: number };
 }
-

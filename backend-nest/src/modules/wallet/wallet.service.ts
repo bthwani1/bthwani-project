@@ -12,7 +12,6 @@ import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { CursorPaginationDto } from '../../common/dto/pagination.dto';
 import {
   TransactionHelper,
-  EntityHelper,
   WalletHelper,
   PaginationHelper,
 } from '../../common/utils';
@@ -27,7 +26,7 @@ export class WalletService {
   ) {}
 
   // جلب رصيد المحفظة
-  async getWalletBalance(userId: string, userModel: string = 'User') {
+  async getWalletBalance(userId: string) {
     const user = await this.userModel.findById(userId);
 
     if (!user) {
@@ -217,7 +216,7 @@ export class WalletService {
           'meta.orderId': orderId,
         },
         { status: 'completed' },
-        { session }
+        { session },
       );
 
       await session.commitTransaction();
@@ -226,7 +225,7 @@ export class WalletService {
       await session.abortTransaction();
       throw error;
     } finally {
-      session.endSession();
+      void session.endSession();
     }
   }
 
@@ -265,7 +264,7 @@ export class WalletService {
           'meta.orderId': orderId,
         },
         { status: 'reversed' },
-        { session }
+        { session },
       );
 
       await session.commitTransaction();
@@ -274,14 +273,19 @@ export class WalletService {
       await session.abortTransaction();
       throw error;
     } finally {
-      session.endSession();
+      void session.endSession();
     }
   }
 
   // ==================== Topup (Kuraimi) ====================
 
-  async topupViaKuraimi(userId: string, amount: number, SCustID: string, PINPASS: string) {
-    // TODO: Integrate with Kuraimi API
+  async topupViaKuraimi(
+    userId: string,
+    amount: number,
+    SCustID: string,
+    _PINPASS: string,
+  ) {
+    void _PINPASS; // TODO: Integrate with Kuraimi API
     // const paymentResult = await sendPaymentToKuraimi({ amount, SCustID, PINPASS });
 
     const session = await this.connection.startSession();
@@ -307,36 +311,43 @@ export class WalletService {
           },
           'wallet.lastUpdated': new Date(),
         },
-        { new: true, session }
+        { new: true, session },
       );
 
       // Create transaction
       const [transaction] = await this.walletTransactionModel.create(
-        [{
-          userId: new Types.ObjectId(userId),
-          userModel: 'User',
-          amount,
-          type: 'credit',
-          method: 'kuraimi',
-          status: 'completed',
-          description: 'شحن المحفظة عبر كريمي',
-          meta: { SCustID },
-        }],
-        { session }
+        [
+          {
+            userId: new Types.ObjectId(userId),
+            userModel: 'User',
+            amount,
+            type: 'credit',
+            method: 'kuraimi',
+            status: 'completed',
+            description: 'شحن المحفظة عبر كريمي',
+            meta: { SCustID },
+          },
+        ],
+        { session },
       );
 
       await session.commitTransaction();
-      return { success: true, transaction, newBalance: user.wallet.balance + amount };
+      return {
+        success: true,
+        transaction,
+        newBalance: user.wallet.balance + amount,
+      };
     } catch (error) {
       await session.abortTransaction();
       throw error;
     } finally {
-      session.endSession();
+      void session.endSession();
     }
   }
 
   async verifyTopup(userId: string, transactionId: string) {
-    const transaction = await this.walletTransactionModel.findById(transactionId);
+    const transaction =
+      await this.walletTransactionModel.findById(transactionId);
 
     if (!transaction) {
       throw new NotFoundException({
@@ -362,6 +373,7 @@ export class WalletService {
   }
 
   async getTopupMethods() {
+    await Promise.resolve();
     return {
       methods: [
         { id: 'kuraimi', name: 'كريمي', enabled: true },
@@ -373,7 +385,14 @@ export class WalletService {
 
   // ==================== Withdrawals ====================
 
-  async requestWithdrawal(userId: string, amount: number, method: string, accountInfo: any) {
+  async requestWithdrawal(
+    userId: string,
+    amount: number,
+    _method: string,
+    _accountInfo: Record<string, unknown>,
+  ) {
+    void _method;
+    void _accountInfo;
     const user = await this.userModel.findById(userId);
 
     if (!user) {
@@ -397,23 +416,40 @@ export class WalletService {
 
     // TODO: Create WithdrawalRequest model and record
 
-    return { success: true, message: 'تم تقديم طلب السحب', requestId: 'withdrawal_' + Date.now() };
+    return {
+      success: true,
+      message: 'تم تقديم طلب السحب',
+      requestId: 'withdrawal_' + Date.now(),
+    };
   }
 
-  async getMyWithdrawals(userId: string, pagination: CursorPaginationDto) {
-    // TODO: Implement WithdrawalRequest model
-    return { data: [], pagination: { nextCursor: null, hasMore: false, limit: 20 } };
+  async getMyWithdrawals(_userId: string, _pagination: CursorPaginationDto) {
+    void _userId;
+    void _pagination; // TODO: Implement WithdrawalRequest model
+    await Promise.resolve();
+    return {
+      data: [],
+      pagination: { nextCursor: null, hasMore: false, limit: 20 },
+    };
   }
 
-  async cancelWithdrawal(withdrawalId: string, userId: string) {
-    // TODO: Implement
+  async cancelWithdrawal(_withdrawalId: string, _userId: string) {
+    void _withdrawalId;
+    void _userId; // TODO: Implement
+    await Promise.resolve();
     return { success: true, message: 'تم إلغاء طلب السحب' };
   }
 
   async getWithdrawMethods() {
+    await Promise.resolve();
     return {
       methods: [
-        { id: 'bank_transfer', name: 'تحويل بنكي', minAmount: 100, maxAmount: 10000 },
+        {
+          id: 'bank_transfer',
+          name: 'تحويل بنكي',
+          minAmount: 100,
+          maxAmount: 10000,
+        },
         { id: 'kuraimi', name: 'كريمي', minAmount: 50, maxAmount: 5000 },
         { id: 'cash', name: 'نقداً', minAmount: 100, maxAmount: 2000 },
       ],
@@ -422,46 +458,72 @@ export class WalletService {
 
   // ==================== Coupons ====================
 
-  async applyCoupon(userId: string, code: string, amount?: number) {
-    // TODO: Implement Coupon model and validation
+  async applyCoupon(_userId: string, _code: string, _amount?: number) {
+    void _userId;
+    void _code;
+    void _amount; // TODO: Implement Coupon model and validation
+    await Promise.resolve();
     return { success: true, discount: 0, message: 'الكوبون غير صالح' };
   }
 
-  async validateCoupon(userId: string, code: string) {
-    // TODO: Implement
+  async validateCoupon(_userId: string, _code: string) {
+    void _userId;
+    void _code; // TODO: Implement
+    await Promise.resolve();
     return { valid: false, discount: 0 };
   }
 
-  async getMyCoupons(userId: string) {
-    // TODO: Implement
+  async getMyCoupons(_userId: string) {
+    void _userId; // TODO: Implement
+    await Promise.resolve();
     return { data: [] };
   }
 
-  async getCouponHistory(userId: string, pagination: CursorPaginationDto) {
-    // TODO: Implement
-    return { data: [], pagination: { nextCursor: null, hasMore: false, limit: 20 } };
+  async getCouponHistory(_userId: string, _pagination: CursorPaginationDto) {
+    void _userId;
+    void _pagination; // TODO: Implement
+    await Promise.resolve();
+    return {
+      data: [],
+      pagination: { nextCursor: null, hasMore: false, limit: 20 },
+    };
   }
 
   // ==================== Subscriptions ====================
 
-  async subscribe(userId: string, planId: string, autoRenew?: boolean) {
-    // TODO: Implement Subscription model
-    return { success: true, message: 'تم الاشتراك بنجاح', subscriptionId: 'sub_' + Date.now() };
+  async subscribe(_userId: string, _planId: string, _autoRenew?: boolean) {
+    void _userId;
+    void _planId;
+    void _autoRenew; // TODO: Implement Subscription model
+    await Promise.resolve();
+    return {
+      success: true,
+      message: 'تم الاشتراك بنجاح',
+      subscriptionId: 'sub_' + Date.now(),
+    };
   }
 
-  async getMySubscriptions(userId: string) {
-    // TODO: Implement
+  async getMySubscriptions(_userId: string) {
+    void _userId; // TODO: Implement
+    await Promise.resolve();
     return { data: [] };
   }
 
-  async cancelSubscription(subscriptionId: string, userId: string) {
-    // TODO: Implement
+  async cancelSubscription(_subscriptionId: string, _userId: string) {
+    void _subscriptionId;
+    void _userId; // TODO: Implement
+    await Promise.resolve();
     return { success: true, message: 'تم إلغاء الاشتراك' };
   }
 
   // ==================== Pay Bills ====================
 
-  async payBill(userId: string, billType: string, billNumber: string, amount: number) {
+  async payBill(
+    userId: string,
+    billType: string,
+    billNumber: string,
+    amount: number,
+  ) {
     return TransactionHelper.executeInTransaction(
       this.connection,
       async (session) => {
@@ -516,7 +578,7 @@ export class WalletService {
   }
 
   async getBills(userId: string, pagination: CursorPaginationDto) {
-    const query: any = {
+    const query: Record<string, unknown> = {
       userId: new Types.ObjectId(userId),
       method: 'bill_payment',
     };
@@ -537,7 +599,11 @@ export class WalletService {
     return {
       data: results,
       pagination: {
-        nextCursor: hasMore ? (results[results.length - 1] as any)._id.toString() : null,
+        nextCursor: hasMore
+          ? (
+              results[results.length - 1] as { _id: Types.ObjectId }
+            )._id.toString()
+          : null,
         hasMore,
         limit,
       },
@@ -546,7 +612,12 @@ export class WalletService {
 
   // ==================== Transfers ====================
 
-  async transferFunds(userId: string, recipientPhone: string, amount: number, notes?: string) {
+  async transferFunds(
+    userId: string,
+    recipientPhone: string,
+    amount: number,
+    notes?: string,
+  ) {
     const session = await this.connection.startSession();
     session.startTransaction();
 
@@ -561,7 +632,9 @@ export class WalletService {
         });
       }
 
-      const recipient = await this.userModel.findOne({ phone: recipientPhone }).session(session);
+      const recipient = await this.userModel
+        .findOne({ phone: recipientPhone })
+        .session(session);
 
       if (!recipient) {
         throw new NotFoundException({
@@ -592,7 +665,7 @@ export class WalletService {
           },
           'wallet.lastUpdated': new Date(),
         },
-        { new: true, session }
+        { new: true, session },
       );
 
       // Add to recipient
@@ -605,7 +678,7 @@ export class WalletService {
           },
           'wallet.lastUpdated': new Date(),
         },
-        { new: true, session }
+        { new: true, session },
       );
 
       // Create transactions
@@ -632,7 +705,7 @@ export class WalletService {
             meta: { senderId: sender._id, notes },
           },
         ],
-        { session }
+        { session },
       );
 
       await session.commitTransaction();
@@ -641,12 +714,12 @@ export class WalletService {
       await session.abortTransaction();
       throw error;
     } finally {
-      session.endSession();
+      void session.endSession();
     }
   }
 
   async getTransfers(userId: string, pagination: CursorPaginationDto) {
-    const query: any = {
+    const query: Record<string, unknown> = {
       userId: new Types.ObjectId(userId),
       method: 'transfer',
     };
@@ -667,7 +740,11 @@ export class WalletService {
     return {
       data: results,
       pagination: {
-        nextCursor: hasMore ? (results[results.length - 1] as any)._id.toString() : null,
+        nextCursor: hasMore
+          ? (
+              results[results.length - 1] as { _id: Types.ObjectId }
+            )._id.toString()
+          : null,
         hasMore,
         limit,
       },
@@ -693,9 +770,15 @@ export class WalletService {
     return { transaction };
   }
 
-  async requestRefund(userId: string, transactionId: string, reason: string) {
-    // TODO: Implement refund request logic
+  async requestRefund(
+    _userId: string,
+    _transactionId: string,
+    _reason: string,
+  ) {
+    void _userId;
+    void _transactionId;
+    void _reason; // TODO: Implement refund request logic
+    await Promise.resolve();
     return { success: true, message: 'تم تقديم طلب الاسترجاع' };
   }
 }
-

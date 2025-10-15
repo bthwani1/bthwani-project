@@ -69,4 +69,24 @@ export class NotificationService {
     await this.notificationModel.findByIdAndDelete(notificationId);
     return { message: 'تم حذف الإشعار' };
   }
+
+  // عدد الإشعارات غير المقروءة
+  async getUnreadCount(userId: string) {
+    const count = await this.notificationModel.countDocuments({
+      toUser: userId,
+      status: { $ne: 'delivered' },
+    });
+
+    return { count };
+  }
+
+  // تحديد جميع الإشعارات كمقروءة
+  async markAllAsRead(userId: string) {
+    await this.notificationModel.updateMany(
+      { toUser: userId, status: { $ne: 'delivered' } },
+      { status: 'delivered' },
+    );
+
+    return { message: 'تم تحديد جميع الإشعارات كمقروءة' };
+  }
 }

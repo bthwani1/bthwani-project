@@ -72,7 +72,8 @@ const OrdersScreen = () => {
  
     try {
       const res = await axiosInstance.get("/delivery/order/vendor/orders");
-      setOrders(res.data);
+      const data = res.data?.data || res.data || [];
+      setOrders(data);
       setLoading(false);
       setRefreshing(false);
       setHasMoreOrders(true);
@@ -89,10 +90,10 @@ const updateStatus = async (id: string, status: "preparing" | "cancelled") => {
   try {
     if (status === "preparing") {
       // القبول = vendor-accept (لا يحتاج body)
-      await axiosInstance.put(`/delivery/order/${id}/vendor-accept`);
+      await axiosInstance.post(`/delivery/order/${id}/vendor-accept`);
     } else if (status === "cancelled") {
       // وفّر مسار إلغاء للتاجر (إن لم يكن موجوداً، أضِفه في الباك)
-      await axiosInstance.put(`/delivery/order/${id}/vendor-cancel`, {
+      await axiosInstance.post(`/delivery/order/${id}/vendor-cancel`, {
         reason: "Cancelled by vendor",
       });
     }

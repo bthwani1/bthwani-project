@@ -18,11 +18,14 @@ export const useNotifications = () => {
   const fetchNotifications = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await axiosInstance.get('/users/notifications');
+      const response = await axiosInstance.get('/notifications/my');
       const data = response.data;
 
-      setNotifications(data.notifications || []);
-      setUnreadCount(data.unreadCount || 0);
+      setNotifications(data.data || []);
+      
+      // جلب عدد غير المقروءة
+      const countRes = await axiosInstance.get('/notifications/unread/count');
+      setUnreadCount(countRes.data.count || 0);
     } catch (error) {
       console.error('Failed to fetch notifications:', error);
     } finally {
@@ -32,7 +35,7 @@ export const useNotifications = () => {
 
   const markAllAsRead = useCallback(async () => {
     try {
-      await axiosInstance.post('/users/notifications/mark-all-read');
+      await axiosInstance.post('/notifications/read-all');
       setUnreadCount(0);
       setNotifications(prev =>
         prev.map(notification => ({ ...notification, read: true }))
@@ -44,7 +47,7 @@ export const useNotifications = () => {
 
   const markAsRead = useCallback(async (notificationId: string) => {
     try {
-      await axiosInstance.post(`/users/notifications/${notificationId}/read`);
+      await axiosInstance.post(`/notifications/${notificationId}/read`);
       setNotifications(prev =>
         prev.map(notification =>
           notification.id === notificationId

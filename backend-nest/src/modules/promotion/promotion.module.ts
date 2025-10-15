@@ -17,4 +17,3 @@ import { Promotion, PromotionSchema } from './entities/promotion.entity';
   exports: [PromotionService],
 })
 export class PromotionModule {}
-

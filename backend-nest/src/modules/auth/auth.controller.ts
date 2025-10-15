@@ -48,28 +48,6 @@ export class AuthController {
     return this.authService.loginWithFirebase(firebaseAuthDto.idToken);
   }
 
-  @ApiBearerAuth()
-  @UseGuards(UnifiedAuthGuard)
-  @Auth(AuthType.FIREBASE)
-  @SkipThrottle() // ✅ لا rate limiting على القراءة
-  @Get('me')
-  @ApiOperation({ summary: 'جلب بيانات المستخدم الحالي' })
-  async getProfile(@CurrentUser('id') userId: string) {
-    return this.authService.getProfile(userId);
-  }
-
-  @ApiBearerAuth()
-  @UseGuards(UnifiedAuthGuard)
-  @Auth(AuthType.FIREBASE)
-  @Patch('profile')
-  @ApiOperation({ summary: 'تحديث الملف الشخصي' })
-  async updateProfile(
-    @CurrentUser('id') userId: string,
-    @Body() updateDto: Partial<RegisterDto>,
-  ) {
-    return this.authService.updateProfile(userId, updateDto);
-  }
-
   // ==================== Consent Management ====================
 
   @ApiBearerAuth()

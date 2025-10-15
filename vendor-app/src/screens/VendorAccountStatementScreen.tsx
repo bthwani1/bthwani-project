@@ -75,9 +75,9 @@ const VendorAccountStatementScreen: React.FC = () => {
     (async () => {
       try {
         const [stmt, settlements, sales] = await Promise.all([
-          axiosInstance.get("/vendor/account/statement"),
-          axiosInstance.get("/vendor/settlements"),
-          axiosInstance.get("/vendor/sales?limit=100"),
+          axiosInstance.get("/vendors/account/statement"),
+          axiosInstance.get("/vendors/settlements"),
+          axiosInstance.get("/vendors/sales?limit=100"),
         ]);
 
         setCurrentBalance(stmt.data.currentBalance || 0);
@@ -157,7 +157,7 @@ const VendorAccountStatementScreen: React.FC = () => {
     }
 
     try {
-      const res = await axiosInstance.post("/vendor/settlements", {
+      const res = await axiosInstance.post("/vendors/settlements", {
         amount,
         bankAccount: "YE09 1234 5678 9012 3456 7890", // أو خذه من نموذج إدخال
       });

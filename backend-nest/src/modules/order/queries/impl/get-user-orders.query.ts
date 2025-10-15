@@ -6,4 +6,3 @@ export class GetUserOrdersQuery {
     public readonly pagination: CursorPaginationDto,
   ) {}
 }
-

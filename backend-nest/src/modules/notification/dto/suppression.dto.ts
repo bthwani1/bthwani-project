@@ -113,3 +113,40 @@ export class SuppressionResponseDto {
   @ApiProperty({ description: 'تاريخ التحديث' })
   updatedAt: Date;
 }
+
+export class SuppressionStatsDto {
+  @ApiProperty({ description: 'إجمالي عدد الحظر' })
+  total: number;
+
+  @ApiProperty({ description: 'عدد الحظر النشط' })
+  active: number;
+
+  @ApiProperty({ description: 'عدد الحظر غير النشط' })
+  inactive: number;
+
+  @ApiProperty({
+    description: 'إحصائيات حسب السبب',
+    type: 'array',
+    items: {
+      type: 'object',
+      properties: {
+        _id: { type: 'string', enum: Object.values(SuppressionReason) },
+        count: { type: 'number' },
+      },
+    },
+  })
+  byReason: Array<{ _id: string; count: number }>;
+
+  @ApiProperty({
+    description: 'إحصائيات حسب القناة',
+    type: 'array',
+    items: {
+      type: 'object',
+      properties: {
+        _id: { type: 'string', enum: Object.values(SuppressionChannel) },
+        count: { type: 'number' },
+      },
+    },
+  })
+  byChannel: Array<{ _id: string; count: number }>;
+}

@@ -48,13 +48,22 @@ export default function ReferralScreen() {
     try {
       setLoading(true);
 
-      // Get referral link
-      const linkResponse = await api.get('/referrals/link');
-      setReferralData(linkResponse.data);
+      // Get/generate referral code
+      const codeResponse = await api.post('/marketer/referrals/generate-code');
+      const code = codeResponse.data?.code;
+      setReferralData({
+        link: `https://bthwani.com/join?ref=${code}`,
+        ref: code,
+        marketerId: user.id,
+      });
 
       // Get referral stats
-      const statsResponse = await api.get('/referrals/stats');
-      setStats(statsResponse.data);
+      const statsResponse = await api.get('/marketer/referrals/statistics');
+      setStats({
+        clicks: statsResponse.data?.total || 0,
+        signups: statsResponse.data?.successful || 0,
+        conversions: statsResponse.data?.pending || 0,
+      });
 
     } catch (error: any) {
       console.error('Error loading referral data:', error);
@@ -68,8 +77,12 @@ export default function ReferralScreen() {
     if (!user?.id) return;
 
     try {
-      const statsResponse = await api.get('/referrals/stats');
-      setStats(statsResponse.data);
+      const statsResponse = await api.get('/marketer/referrals/statistics');
+      setStats({
+        clicks: statsResponse.data?.total || 0,
+        signups: statsResponse.data?.successful || 0,
+        conversions: statsResponse.data?.pending || 0,
+      });
     } catch (error: any) {
       console.error('Error loading referral stats:', error);
     }

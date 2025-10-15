@@ -74,4 +74,3 @@ WalletTransactionSchema.index({ userId: 1, type: 1, status: 1 }); // معامل�
 WalletTransactionSchema.index({ status: 1, createdAt: -1 }); // المعاملات المعلقة
 WalletTransactionSchema.index({ userModel: 1, userId: 1 }); // للبحث السريع
 WalletTransactionSchema.index({ amount: -1 }, { sparse: true }); // للمعاملات الكبيرة
-

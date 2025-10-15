@@ -190,7 +190,7 @@ export class AdminController {
     @Body() body: { transactionRef?: string; notes?: string },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.approveWithdrawal({
+    return await this.adminService.approveWithdrawal({
       withdrawalId,
       adminId,
       transactionRef: body.transactionRef,
@@ -205,7 +205,7 @@ export class AdminController {
     @Body() body: { reason: string },
     @CurrentUser('id') adminId: string,
   ) {
-    return this.adminService.rejectWithdrawal({
+    return await this.adminService.rejectWithdrawal({
       withdrawalId,
       reason: body.reason,
       adminId,
@@ -213,41 +213,6 @@ export class AdminController {
   }
 
   // ==================== Store Moderation ====================
-
-  @Get('stores/pending')
-  @ApiOperation({ summary: 'المتاجر المعلقة' })
-  async getPendingStores() {
-    return this.adminService.getPendingStores();
-  }
-
-  @Post('stores/:id/approve')
-  @ApiOperation({ summary: 'الموافقة على متجر' })
-  async approveStore(
-    @Param('id') storeId: string,
-    @CurrentUser('id') adminId: string,
-  ) {
-    return this.adminService.approveStore(storeId, adminId);
-  }
-
-  @Post('stores/:id/reject')
-  @ApiOperation({ summary: 'رفض متجر' })
-  async rejectStore(
-    @Param('id') storeId: string,
-    @Body() body: { reason: string },
-    @CurrentUser('id') adminId: string,
-  ) {
-    return this.adminService.rejectStore(storeId, body.reason, adminId);
-  }
-
-  @Post('stores/:id/suspend')
-  @ApiOperation({ summary: 'تعليق متجر' })
-  async suspendStore(
-    @Param('id') storeId: string,
-    @Body() body: { reason: string },
-    @CurrentUser('id') adminId: string,
-  ) {
-    return this.adminService.suspendStore(storeId, body.reason, adminId);
-  }
 
   // ==================== Vendor Moderation ====================
 
@@ -341,39 +306,15 @@ export class AdminController {
     return this.adminService.getDailyReport({ date });
   }
 
-  @Get('reports/weekly')
-  @ApiOperation({ summary: 'تقرير أسبوعي' })
-  async getWeeklyReport(
-    @Query('startDate') startDate?: string,
-    @Query('endDate') endDate?: string,
-  ) {
-    return this.adminService.getWeeklyReport({ startDate, endDate });
-  }
-
-  @Get('reports/monthly')
-  @ApiOperation({ summary: 'تقرير شهري' })
-  async getMonthlyReport(
-    @Query('month') month?: number,
-    @Query('year') year?: number,
-  ) {
-    return this.adminService.getMonthlyReport({ month, year });
-  }
-
-  @Get('reports/export')
-  @ApiOperation({ summary: 'تصدير تقرير' })
-  async exportReport(
-    @Query('type') type: 'orders' | 'revenue' | 'drivers' | 'stores',
-    @Query('startDate') startDate?: string,
-    @Query('endDate') endDate?: string,
-  ) {
-    return this.adminService.exportReport({ type, startDate, endDate });
-  }
+  // TODO: Implement getWeeklyReport
+  // TODO: Implement getMonthlyReport
+  // TODO: Implement exportReport
 
   // ==================== Notifications ====================
 
   @Post('notifications/send-bulk')
   @ApiOperation({ summary: 'إرسال إشعار جماعي' })
-  async sendBulkNotification(
+  sendBulkNotification(
     @Body()
     body: {
       title: string;
@@ -393,58 +334,7 @@ export class AdminController {
   }
 
   // ==================== Driver Assets ====================
-
-  @Get('drivers/:id/assets')
-  @ApiOperation({ summary: 'أصول السائق' })
-  async getDriverAssets(@Param('id') driverId: string) {
-    return this.adminService.getDriverAssets(driverId);
-  }
-
-  @Post('drivers/assets')
-  @ApiOperation({ summary: 'إضافة أصل جديد' })
-  async createAsset(
-    @Body()
-    body: {
-      type: string;
-      name: string;
-      serialNumber?: string;
-      value: number;
-    },
-    @CurrentUser('id') adminId: string,
-  ) {
-    return this.adminService.createAsset(body, adminId);
-  }
-
-  @Post('drivers/:driverId/assets/:assetId/assign')
-  @ApiOperation({ summary: 'تعيين أصل لسائق' })
-  async assignAssetToDriver(
-    @Param('driverId') driverId: string,
-    @Param('assetId') assetId: string,
-    @CurrentUser('id') adminId: string,
-  ) {
-    return this.adminService.assignAssetToDriver({
-      driverId,
-      assetId,
-      adminId,
-    });
-  }
-
-  @Post('drivers/:driverId/assets/:assetId/return')
-  @ApiOperation({ summary: 'إرجاع أصل من سائق' })
-  async returnAssetFromDriver(
-    @Param('driverId') driverId: string,
-    @Param('assetId') assetId: string,
-    @Body() body: { condition?: string; notes?: string },
-    @CurrentUser('id') adminId: string,
-  ) {
-    return this.adminService.returnAssetFromDriver({
-      driverId,
-      assetId,
-      condition: body.condition,
-      notes: body.notes,
-      adminId,
-    });
-  }
+  // TODO: Implement Driver Assets Management
 
   // ==================== Driver Documents ====================
 
@@ -550,12 +440,8 @@ export class AdminController {
 
   @Patch('shifts/:id')
   @ApiOperation({ summary: 'تحديث وردية' })
-  async updateShift(
-    @Param('id') shiftId: string,
-    @Body() body: any,
-    @CurrentUser('id') adminId: string,
-  ) {
-    return this.adminService.updateShift(shiftId, body, adminId);
+  async updateShift(@Param('id') shiftId: string, @Body() body: any) {
+    return this.adminService.updateShift(shiftId, body);
   }
 
   @Post('shifts/:shiftId/assign/:driverId')
@@ -564,14 +450,12 @@ export class AdminController {
     @Param('shiftId') shiftId: string,
     @Param('driverId') driverId: string,
     @Body() body: { startDate: string; endDate?: string },
-    @CurrentUser('id') adminId: string,
   ) {
     return this.adminService.assignShiftToDriver(
       shiftId,
       driverId,
       body.startDate,
       body.endDate,
-      adminId,
     );
   }
 
@@ -626,43 +510,13 @@ export class AdminController {
   @ApiOperation({ summary: 'تعديل رصيد الإجازات' })
   async adjustLeaveBalance(
     @Param('id') driverId: string,
-    @Body() body: { days: number; reason: string; type: 'add' | 'deduct' },
-    @CurrentUser('id') adminId: string,
+    @Body() body: { days: number; type: 'add' | 'deduct' },
   ) {
-    return this.adminService.adjustLeaveBalance(
-      driverId,
-      body.days,
-      body.type,
-      body.reason,
-      adminId,
-    );
+    return this.adminService.adjustLeaveBalance(driverId, body.days, body.type);
   }
 
   // ==================== Quality & Reviews ====================
-
-  @Get('quality/reviews')
-  @ApiOperation({ summary: 'مراجعات الجودة' })
-  async getQualityReviews(
-    @Query('type') type?: 'driver' | 'store' | 'order',
-    @Query('rating') rating?: number,
-  ) {
-    return this.adminService.getQualityReviews(type, rating);
-  }
-
-  @Post('quality/reviews')
-  @ApiOperation({ summary: 'إنشاء مراجعة جودة' })
-  async createQualityReview(
-    @Body()
-    body: {
-      type: 'driver' | 'store' | 'order';
-      entityId: string;
-      rating: number;
-      comments: string;
-    },
-    @CurrentUser('id') adminId: string,
-  ) {
-    return this.adminService.createQualityReview(body, adminId);
-  }
+  // TODO: Implement Quality & Reviews Management
 
   @Get('quality/metrics')
   @ApiOperation({ summary: 'مقاييس الجودة' })
@@ -844,26 +698,7 @@ export class AdminController {
   }
 
   // ==================== Activation Codes ====================
-
-  @Post('activation/generate')
-  @ApiOperation({ summary: 'إنشاء أكواد تفعيل' })
-  async generateActivationCodes(
-    @Body() body: { count: number; expiryDays?: number; userType?: string },
-    @CurrentUser('id') adminId: string,
-  ) {
-    return this.adminService.generateActivationCodes({
-      count: body.count,
-      expiryDays: body.expiryDays,
-      userType: body.userType,
-      adminId,
-    });
-  }
-
-  @Get('activation/codes')
-  @ApiOperation({ summary: 'أكواد التفعيل' })
-  async getActivationCodes(@Query('status') status?: string) {
-    return this.adminService.getActivationCodes({ status });
-  }
+  // TODO: Implement Activation Codes Management
 
   // ==================== Marketer Management ====================
 
@@ -997,7 +832,7 @@ export class AdminController {
   @Get('marketers/export')
   @ApiOperation({ summary: 'تصدير المسوقين' })
   async exportMarketers() {
-    return this.adminService.exportMarketers();
+    return await this.adminService.exportMarketers();
   }
 
   // ==================== Onboarding Management ====================
@@ -1088,34 +923,7 @@ export class AdminController {
   }
 
   // ==================== Admin Users Management ====================
-
-  @Get('admin-users')
-  @ApiOperation({ summary: 'المسؤولين' })
-  async getAdminUsers() {
-    return this.adminService.getAdminUsers();
-  }
-
-  @Post('admin-users')
-  @ApiOperation({ summary: 'إضافة مسؤول' })
-  async createAdminUser(
-    @Body()
-    body: { fullName: string; email: string; role: string; password: string },
-    @CurrentUser('id') adminId: string,
-  ) {
-    return this.adminService.createAdminUser(body, adminId);
-  }
-
-  @Patch('admin-users/:id')
-  @ApiOperation({ summary: 'تحديث مسؤول' })
-  async updateAdminUser(@Param('id') userId: string, @Body() body: any) {
-    return this.adminService.updateAdminUser(userId, body);
-  }
-
-  @Post('admin-users/:id/reset-password')
-  @ApiOperation({ summary: 'إعادة تعيين كلمة مرور مسؤول' })
-  async resetAdminPassword(@Param('id') userId: string) {
-    return this.adminService.resetAdminPassword(userId);
-  }
+  // TODO: Implement Admin Users Management
 
   // ==================== Audit Logs ====================
 
@@ -1140,21 +948,17 @@ export class AdminController {
 
   @Get('system/health')
   @ApiOperation({ summary: 'صحة النظام' })
-  async getSystemHealth() {
+  getSystemHealth() {
     return this.adminService.getSystemHealth();
   }
 
   @Get('system/metrics')
   @ApiOperation({ summary: 'مقاييس النظام' })
-  async getSystemMetrics() {
+  getSystemMetrics() {
     return this.adminService.getSystemMetrics();
   }
 
-  @Get('system/errors')
-  @ApiOperation({ summary: 'سجل الأخطاء' })
-  async getSystemErrors(@Query('severity') severity?: string) {
-    return this.adminService.getSystemErrors({ severity });
-  }
+  // TODO: Implement getSystemErrors
 
   // ==================== Database Management ====================
 
@@ -1164,96 +968,19 @@ export class AdminController {
     return this.adminService.getDatabaseStats();
   }
 
-  @Post('database/cleanup')
-  @ApiOperation({ summary: 'تنظيف قاعدة البيانات' })
-  async cleanupDatabase(@CurrentUser('id') adminId: string) {
-    return this.adminService.cleanupDatabase(adminId);
-  }
+  // TODO: Implement cleanupDatabase
 
   // ==================== Payments Management ====================
-
-  @Get('payments')
-  @ApiOperation({ summary: 'المدفوعات' })
-  async getPayments(
-    @Query('status') status?: string,
-    @Query('method') method?: string,
-    @Query('page') page: number = 1,
-    @Query('limit') limit: number = 20,
-  ) {
-    return this.adminService.getPayments(status, method, page, limit);
-  }
-
-  @Get('payments/:id')
-  @ApiOperation({ summary: 'تفاصيل دفعة' })
-  async getPaymentDetails(@Param('id') paymentId: string) {
-    return this.adminService.getPaymentDetails(paymentId);
-  }
-
-  @Post('payments/:id/refund')
-  @ApiOperation({ summary: 'استرجاع دفعة' })
-  async refundPayment(
-    @Param('id') paymentId: string,
-    @Body() body: { reason: string; amount?: number },
-    @CurrentUser('id') adminId: string,
-  ) {
-    return this.adminService.refundPayment(
-      paymentId,
-      body.reason,
-      body.amount,
-      adminId,
-    );
-  }
+  // TODO: Implement Payments Management
 
   // ==================== Promotions Management ====================
-
-  @Get('promotions/active')
-  @ApiOperation({ summary: 'العروض النشطة' })
-  async getActivePromotions() {
-    return this.adminService.getActivePromotions();
-  }
-
-  @Post('promotions/:id/pause')
-  @ApiOperation({ summary: 'إيقاف عرض مؤقت' })
-  async pausePromotion(@Param('id') promotionId: string) {
-    return this.adminService.pausePromotion(promotionId);
-  }
-
-  @Post('promotions/:id/resume')
-  @ApiOperation({ summary: 'استئناف عرض' })
-  async resumePromotion(@Param('id') promotionId: string) {
-    return this.adminService.resumePromotion(promotionId);
-  }
+  // TODO: Implement Promotions Management
 
   // ==================== Coupons Management ====================
-
-  @Get('coupons/usage')
-  @ApiOperation({ summary: 'استخدام الكوبونات' })
-  async getCouponUsage(@Query('couponCode') couponCode?: string) {
-    return this.adminService.getCouponUsage(couponCode);
-  }
-
-  @Post('coupons/:code/deactivate')
-  @ApiOperation({ summary: 'تعطيل كوبون' })
-  async deactivateCoupon(@Param('code') couponCode: string) {
-    return this.adminService.deactivateCoupon(couponCode);
-  }
+  // TODO: Implement Coupons Management
 
   // ==================== Notifications Management ====================
-
-  @Get('notifications/history')
-  @ApiOperation({ summary: 'سجل الإشعارات' })
-  async getNotificationHistory(
-    @Query('page') page: number = 1,
-    @Query('limit') limit: number = 20,
-  ) {
-    return this.adminService.getNotificationHistory(page, limit);
-  }
-
-  @Get('notifications/stats')
-  @ApiOperation({ summary: 'إحصائيات الإشعارات' })
-  async getNotificationStats() {
-    return this.adminService.getNotificationStats();
-  }
+  // TODO: Implement Notifications Management
 
   // ==================== Orders Advanced ====================
 
@@ -1272,34 +999,11 @@ export class AdminController {
     return this.adminService.getOrdersByPaymentMethod();
   }
 
-  @Get('orders/disputed')
-  @ApiOperation({ summary: 'الطلبات المتنازع عليها' })
-  async getDisputedOrders() {
-    return this.adminService.getDisputedOrders();
-  }
-
-  @Post('orders/:id/dispute/resolve')
-  @ApiOperation({ summary: 'حل نزاع' })
-  async resolveDispute(
-    @Param('id') orderId: string,
-    @Body() body: { resolution: string; refundAmount?: number },
-    @CurrentUser('id') adminId: string,
-  ) {
-    return this.adminService.resolveDispute(
-      orderId,
-      body.resolution,
-      body.refundAmount,
-      adminId,
-    );
-  }
+  // TODO: Implement getDisputedOrders
+  // TODO: Implement resolveDispute
 
   // ==================== Drivers Advanced ====================
-
-  @Get('drivers/stats/top-performers')
-  @ApiOperation({ summary: 'أفضل السائقين' })
-  async getTopDrivers(@Query('limit') limit: number = 10) {
-    return this.adminService.getTopDrivers(limit);
-  }
+  // TODO: Implement Advanced Driver Statistics
 
   @Get('drivers/stats/by-status')
   @ApiOperation({ summary: 'السائقين حسب الحالة' })
@@ -1307,59 +1011,13 @@ export class AdminController {
     return this.adminService.getDriversByStatus();
   }
 
-  @Post('drivers/:id/payout/calculate')
-  @ApiOperation({ summary: 'حساب مستحقات سائق' })
-  async calculateDriverPayout(
-    @Param('id') driverId: string,
-    @Query('startDate') startDate: string,
-    @Query('endDate') endDate: string,
-  ) {
-    return this.adminService.calculateDriverPayout(
-      driverId,
-      startDate,
-      endDate,
-    );
-  }
-
   // ==================== Stores Advanced ====================
-
-  @Get('stores/stats/top-performers')
-  @ApiOperation({ summary: 'أفضل المتاجر' })
-  async getTopStores(@Query('limit') limit: number = 10) {
-    return this.adminService.getTopStores(limit);
-  }
-
-  @Get('stores/:id/orders-history')
-  @ApiOperation({ summary: 'سجل طلبات المتجر' })
-  async getStoreOrdersHistory(
-    @Param('id') storeId: string,
-    @Query('startDate') startDate?: string,
-    @Query('endDate') endDate?: string,
-  ) {
-    return this.adminService.getStoreOrdersHistory(storeId, startDate, endDate);
-  }
+  // TODO: Implement Stores Advanced Features
 
   // ==================== Vendors Advanced ====================
-
-  @Get('vendors/:id/settlements-history')
-  @ApiOperation({ summary: 'سجل تسويات التاجر' })
-  async getVendorSettlementsHistory(@Param('id') vendorId: string) {
-    return this.adminService.getVendorSettlementsHistory(vendorId);
-  }
-
-  @Get('vendors/:id/financials')
-  @ApiOperation({ summary: 'مالية التاجر' })
-  async getVendorFinancials(@Param('id') vendorId: string) {
-    return this.adminService.getVendorFinancials(vendorId);
-  }
+  // TODO: Implement Vendors Advanced Features
 
   // ==================== Users Advanced ====================
-
-  @Get('users/:id/wallet-history')
-  @ApiOperation({ summary: 'سجل محفظة المستخدم' })
-  async getUserWalletHistory(@Param('id') userId: string) {
-    return this.adminService.getUserWalletHistory(userId);
-  }
 
   @Get('users/:id/orders-history')
   @ApiOperation({ summary: 'سجل طلبات المستخدم' })
@@ -1367,157 +1025,35 @@ export class AdminController {
     return this.adminService.getUserOrdersHistory(userId);
   }
 
-  @Patch('users/:id/wallet/adjust')
-  @ApiOperation({ summary: 'تعديل محفظة المستخدم' })
-  async adjustUserWallet(
-    @Param('id') userId: string,
-    @Body() body: { amount: number; type: 'credit' | 'debit'; reason: string },
-    @CurrentUser('id') adminId: string,
-  ) {
-    return this.adminService.adjustUserWallet(
-      userId,
-      body.amount,
-      body.type,
-      body.reason,
-      adminId,
-    );
-  }
+  // TODO: Implement getUserWalletHistory
+  // TODO: Implement adjustUserWallet
 
   // ==================== Reports Advanced ====================
-
-  @Get('reports/drivers/performance')
-  @ApiOperation({ summary: 'تقرير أداء السائقين' })
-  async getDriversPerformanceReport(
-    @Query('startDate') startDate?: string,
-    @Query('endDate') endDate?: string,
-  ) {
-    return this.adminService.getDriversPerformanceReport(startDate, endDate);
-  }
-
-  @Get('reports/stores/performance')
-  @ApiOperation({ summary: 'تقرير أداء المتاجر' })
-  async getStoresPerformanceReport(
-    @Query('startDate') startDate?: string,
-    @Query('endDate') endDate?: string,
-  ) {
-    return this.adminService.getStoresPerformanceReport(startDate, endDate);
-  }
-
-  @Get('reports/financial/detailed')
-  @ApiOperation({ summary: 'تقرير مالي تفصيلي' })
-  async getDetailedFinancialReport(
-    @Query('startDate') startDate?: string,
-    @Query('endDate') endDate?: string,
-  ) {
-    return this.adminService.getDetailedFinancialReport(startDate, endDate);
-  }
-
-  @Get('reports/users/activity')
-  @ApiOperation({ summary: 'تقرير نشاط المستخدمين' })
-  async getUserActivityReport() {
-    return this.adminService.getUserActivityReport();
-  }
+  // TODO: Implement Advanced Reports
 
   // ==================== Analytics Dashboard ====================
-
-  @Get('analytics/overview')
-  @ApiOperation({ summary: 'نظرة تحليلية شاملة' })
-  async getAnalyticsOverview(
-    @Query('startDate') startDate?: string,
-    @Query('endDate') endDate?: string,
-  ) {
-    return this.adminService.getAnalyticsOverview(startDate, endDate);
-  }
-
-  @Get('analytics/trends')
-  @ApiOperation({ summary: 'الاتجاهات' })
-  async getTrends(
-    @Query('metric') metric: string,
-    @Query('days') days: number = 30,
-  ) {
-    return this.adminService.getTrends(metric, days);
-  }
-
-  @Get('analytics/comparisons')
-  @ApiOperation({ summary: 'المقارنات' })
-  async getComparisons(
-    @Query('period1Start') period1Start: string,
-    @Query('period1End') period1End: string,
-    @Query('period2Start') period2Start: string,
-    @Query('period2End') period2End: string,
-  ) {
-    return this.adminService.getComparisons(
-      period1Start,
-      period1End,
-      period2Start,
-      period2End,
-    );
-  }
+  // TODO: Implement Analytics Dashboard
 
   // ==================== Content Management ====================
-
-  @Get('cms/pages')
-  @ApiOperation({ summary: 'صفحات CMS' })
-  async getCMSPages() {
-    return this.adminService.getCMSPages();
-  }
-
-  @Post('cms/pages')
-  @ApiOperation({ summary: 'إنشاء صفحة' })
-  async createCMSPage(@Body() body: any) {
-    return this.adminService.createCMSPage(body);
-  }
-
-  @Patch('cms/pages/:id')
-  @ApiOperation({ summary: 'تحديث صفحة' })
-  async updateCMSPage(@Param('id') pageId: string, @Body() body: any) {
-    return this.adminService.updateCMSPage(pageId, body);
-  }
+  // TODO: Implement Content Management System
 
   // ==================== Emergency Actions ====================
-
-  @Post('emergency/pause-system')
-  @ApiOperation({ summary: 'إيقاف النظام للطوارئ' })
-  @Roles('superadmin')
-  async pauseSystem(
-    @Body() body: { reason: string },
-    @CurrentUser('id') adminId: string,
-  ) {
-    return this.adminService.pauseSystem(body.reason, adminId);
-  }
-
-  @Post('emergency/resume-system')
-  @ApiOperation({ summary: 'استئناف النظام' })
-  @Roles('superadmin')
-  async resumeSystem(@CurrentUser('id') adminId: string) {
-    return this.adminService.resumeSystem(adminId);
-  }
+  // TODO: Implement Emergency Actions (System Pause/Resume)
 
   // ==================== Export & Import ====================
-
-  @Get('export/all-data')
-  @ApiOperation({ summary: 'تصدير كل البيانات' })
-  async exportAllData() {
-    return this.adminService.exportAllData();
-  }
-
-  @Post('import/data')
-  @ApiOperation({ summary: 'استيراد بيانات' })
-  async importData(@Body() body: { data: any; type: string }) {
-    return this.adminService.importData(body.data, body.type);
-  }
+  // TODO: Implement Export & Import Data
 
   // ==================== Cache Management ====================
 
   @Post('cache/clear')
   @ApiOperation({ summary: 'مسح الكاش' })
-  async clearCache(@Body() body: { key?: string }) {
-    return this.adminService.clearCache(body.key);
+  clearCache() {
+    return this.adminService.clearCache();
   }
 
   @Get('cache/stats')
   @ApiOperation({ summary: 'إحصائيات الكاش' })
-  async getCacheStats() {
+  getCacheStats() {
     return this.adminService.getCacheStats();
   }
 
@@ -1525,19 +1061,19 @@ export class AdminController {
 
   @Get('roles')
   @ApiOperation({ summary: 'الأدوار' })
-  async getRoles() {
+  getRoles() {
     return this.adminService.getRoles();
   }
 
   @Post('roles')
   @ApiOperation({ summary: 'إنشاء دور' })
-  async createRole(@Body() body: { name: string; permissions: string[] }) {
-    return this.adminService.createRole(body);
+  createRole(@Body() _body: { name: string; permissions: string[] }) {
+    return this.adminService.createRole(_body);
   }
 
   @Patch('roles/:id')
   @ApiOperation({ summary: 'تحديث دور' })
-  async updateRole(@Param('id') roleId: string, @Body() body: any) {
-    return this.adminService.updateRole(roleId, body);
+  updateRole() {
+    return this.adminService.updateRole();
   }
 }

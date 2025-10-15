@@ -8,4 +8,3 @@ export class UpdateOrderStatusCommand {
     public readonly reason?: string,
   ) {}
 }
-

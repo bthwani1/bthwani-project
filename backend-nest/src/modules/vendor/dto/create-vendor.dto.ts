@@ -40,9 +40,11 @@ export class CreateVendorDto {
   @IsString()
   createdByMarketerUid?: string;
 
-  @ApiPropertyOptional({ description: 'المصدر', enum: ['marketerQuickOnboard', 'admin', 'other'] })
+  @ApiPropertyOptional({
+    description: 'المصدر',
+    enum: ['marketerQuickOnboard', 'admin', 'other'],
+  })
   @IsOptional()
   @IsEnum(['marketerQuickOnboard', 'admin', 'other'])
   source?: string;
 }
-

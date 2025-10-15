@@ -1,11 +1,7 @@
 import { CommandHandler, ICommandHandler, EventBus } from '@nestjs/cqrs';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import {
-  NotFoundException,
-  BadRequestException,
-  Inject,
-} from '@nestjs/common';
+import { NotFoundException, BadRequestException, Inject } from '@nestjs/common';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import type { Cache } from 'cache-manager';
 import { CancelOrderCommand } from '../impl/cancel-order.command';
@@ -43,9 +39,11 @@ export class CancelOrderHandler implements ICommandHandler<CancelOrderCommand> {
 
     // التحقق من إمكانية الإلغاء
     if (
-      ![OrderStatus.CREATED, OrderStatus.CONFIRMED, OrderStatus.PREPARING].includes(
-        order.status as OrderStatus,
-      )
+      ![
+        OrderStatus.CREATED,
+        OrderStatus.CONFIRMED,
+        OrderStatus.PREPARING,
+      ].includes(order.status as OrderStatus)
     ) {
       throw new BadRequestException({
         code: 'CANNOT_CANCEL',
@@ -61,11 +59,10 @@ export class CancelOrderHandler implements ICommandHandler<CancelOrderCommand> {
     order.canceledAt = new Date();
 
     order.statusHistory.push({
-      status: OrderStatus.CANCELLED,
+      status: OrderStatus.CANCELLED as string,
       changedAt: new Date(),
       changedBy: command.canceledBy,
-      reason: command.reason,
-    } as any);
+    });
 
     await order.save();
 
@@ -76,7 +73,7 @@ export class CancelOrderHandler implements ICommandHandler<CancelOrderCommand> {
     // إصدار Event
     this.eventBus.publish(
       new OrderCancelledEvent(
-        (order._id as any).toString(),
+        String(order._id),
         order.user.toString(),
         command.reason,
         command.canceledBy,
@@ -86,4 +83,3 @@ export class CancelOrderHandler implements ICommandHandler<CancelOrderCommand> {
     return order;
   }
 }
-

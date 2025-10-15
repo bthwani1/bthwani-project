@@ -39,4 +39,3 @@ export class DriverAssignedHandler
     // - تحديث driver availability
   }
 }
-

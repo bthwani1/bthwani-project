@@ -8,4 +8,3 @@ export class OrderCreatedEvent {
     public readonly totalAmount: number,
   ) {}
 }
-

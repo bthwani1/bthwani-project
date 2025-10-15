@@ -22,10 +22,7 @@ export class PromotionService {
   /**
    * إنشاء عرض ترويجي جديد
    */
-  async create(
-    dto: CreatePromotionDto,
-    createdBy: string,
-  ): Promise<Promotion> {
+  async create(dto: CreatePromotionDto, createdBy: string): Promise<Promotion> {
     // التحقق من التواريخ
     const startDate = new Date(dto.startDate);
     const endDate = new Date(dto.endDate);
@@ -37,13 +34,13 @@ export class PromotionService {
     }
 
     // التحقق من وجود الهدف المطلوب
-    if (dto.target === 'product' && !dto.product) {
+    if ((dto.target as string) === 'product' && !dto.product) {
       throw new BadRequestException('معرف المنتج مطلوب');
     }
-    if (dto.target === 'store' && !dto.store) {
+    if ((dto.target as string) === 'store' && !dto.store) {
       throw new BadRequestException('معرف المتجر مطلوب');
     }
-    if (dto.target === 'category' && !dto.category) {
+    if ((dto.target as string) === 'category' && !dto.category) {
       throw new BadRequestException('معرف الفئة مطلوب');
     }
 
@@ -63,9 +60,9 @@ export class PromotionService {
   /**
    * الحصول على عروض حسب الموضع
    */
-  async getByPlacement(dto: GetPromotionsByPlacementDto): Promise<any[]> {
+  async getByPlacement(dto: GetPromotionsByPlacementDto): Promise<Promotion[]> {
     const now = new Date();
-    const query: any = {
+    const query: Record<string, unknown> = {
       placements: dto.placement,
       isActive: true,
       startDate: { $lte: now },
@@ -93,11 +90,15 @@ export class PromotionService {
 
     // زيادة عداد المشاهدات
     await this.promotionModel.updateMany(
-      { _id: { $in: promotions.map((p: any) => p._id) } },
+      {
+        _id: {
+          $in: promotions.map((p) => (p as { _id: unknown })._id),
+        },
+      },
       { $inc: { viewsCount: 1 } },
     );
 
-    return promotions;
+    return promotions as unknown as Promotion[];
   }
 
   /**
@@ -122,7 +123,13 @@ export class PromotionService {
    * حساب الخصم من العرض
    */
   calculateDiscount(
-    promotion: any,
+    promotion: {
+      minOrderSubtotal?: number;
+      minQty?: number;
+      valueType: string;
+      value: number;
+      maxDiscountAmount?: number;
+    },
     orderSubtotal: number,
     itemQty?: number,
   ): number {
@@ -145,7 +152,10 @@ export class PromotionService {
       discount = (orderSubtotal * promotion.value) / 100;
 
       // تطبيق السقف إذا كان موجوداً
-      if (promotion.maxDiscountAmount && discount > promotion.maxDiscountAmount) {
+      if (
+        promotion.maxDiscountAmount &&
+        discount > promotion.maxDiscountAmount
+      ) {
         discount = promotion.maxDiscountAmount;
       }
     } else {
@@ -164,18 +174,20 @@ export class PromotionService {
   /**
    * الحصول على كل العروض (admin)
    */
-  async findAll(isActive?: boolean): Promise<any[]> {
-    const query: any = {};
+  async findAll(isActive?: boolean): Promise<Promotion[]> {
+    const query: Record<string, unknown> = {};
     if (isActive !== undefined) {
       query.isActive = isActive;
     }
 
-    return this.promotionModel
+    const result = await this.promotionModel
       .find(query)
       .sort({ createdAt: -1 })
       .populate('product store category')
       .lean()
       .exec();
+
+    return result as unknown as Promotion[];
   }
 
   /**
@@ -207,7 +219,7 @@ export class PromotionService {
     if (dto.image) promotion.image = dto.image;
     if (dto.isActive !== undefined) promotion.isActive = dto.isActive;
     if (dto.endDate) promotion.endDate = new Date(dto.endDate);
-    if (dto.placements) promotion.placements = dto.placements as any;
+    if (dto.placements) promotion.placements = dto.placements as never;
     if (dto.order !== undefined) promotion.order = dto.order;
 
     return promotion.save();
@@ -226,8 +238,33 @@ export class PromotionService {
   /**
    * إحصائيات العروض
    */
-  async getStatistics() {
-    const stats = await this.promotionModel.aggregate([
+  async getStatistics(): Promise<{
+    active: {
+      _id: boolean;
+      count: number;
+      totalViews: number;
+      totalClicks: number;
+      totalConversions: number;
+    };
+    inactive: {
+      _id: boolean;
+      count: number;
+      totalViews: number;
+      totalClicks: number;
+      totalConversions: number;
+    };
+    ctr: number;
+    conversionRate: number;
+  }> {
+    interface StatItem {
+      _id: boolean;
+      count: number;
+      totalViews: number;
+      totalClicks: number;
+      totalConversions: number;
+    }
+
+    const stats = await this.promotionModel.aggregate<StatItem>([
       {
         $group: {
           _id: '$isActive',
@@ -239,14 +276,16 @@ export class PromotionService {
       },
     ]);
 
-    const active = stats.find((s) => s._id === true) || {
+    const active: StatItem = stats.find((s) => s._id === true) || {
+      _id: true,
       count: 0,
       totalViews: 0,
       totalClicks: 0,
       totalConversions: 0,
     };
 
-    const inactive = stats.find((s) => s._id === false) || {
+    const inactive: StatItem = stats.find((s) => s._id === false) || {
+      _id: false,
       count: 0,
       totalViews: 0,
       totalClicks: 0,
@@ -256,7 +295,10 @@ export class PromotionService {
     return {
       active,
       inactive,
-      ctr: active.totalViews > 0 ? (active.totalClicks / active.totalViews) * 100 : 0,
+      ctr:
+        active.totalViews > 0
+          ? (active.totalClicks / active.totalViews) * 100
+          : 0,
       conversionRate:
         active.totalClicks > 0
           ? (active.totalConversions / active.totalClicks) * 100
@@ -264,4 +306,3 @@ export class PromotionService {
     };
   }
 }
-

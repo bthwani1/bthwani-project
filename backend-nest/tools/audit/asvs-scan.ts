@@ -56,7 +56,7 @@ function searchPattern(
 
   function searchInDirectory(dir: string) {
     if (!fs.existsSync(dir)) return;
-    
+
     const items = fs.readdirSync(dir, { withFileTypes: true });
 
     for (const item of items) {
@@ -83,13 +83,15 @@ function searchPattern(
         lines.forEach((line, index) => {
           if (regex.test(line)) {
             evidence.push({
-              file: fullPath.replace(/\\/g, '/').replace(process.cwd().replace(/\\/g, '/') + '/', ''),
+              file: fullPath
+                .replace(/\\/g, '/')
+                .replace(process.cwd().replace(/\\/g, '/') + '/', ''),
               line: index + 1,
               code: line.trim(),
             });
           }
         });
-      } catch (error) {
+      } catch {
         // Skip files that can't be read
       }
     }
@@ -104,7 +106,7 @@ function searchPattern(
  */
 function fileContains(filePath: string, pattern: string | RegExp): Evidence[] {
   const evidence: Evidence[] = [];
-  
+
   try {
     if (!fs.existsSync(filePath)) {
       return evidence;
@@ -114,7 +116,11 @@ function fileContains(filePath: string, pattern: string | RegExp): Evidence[] {
     const lines = content.split('\n');
 
     lines.forEach((line, index) => {
-      if (typeof pattern === 'string' ? line.includes(pattern) : pattern.test(line)) {
+      if (
+        typeof pattern === 'string'
+          ? line.includes(pattern)
+          : pattern.test(line)
+      ) {
         evidence.push({
           file: filePath.replace(/\\/g, '/'),
           line: index + 1,
@@ -122,7 +128,7 @@ function fileContains(filePath: string, pattern: string | RegExp): Evidence[] {
         });
       }
     });
-  } catch (error) {
+  } catch {
     // Silent fail
   }
 
@@ -144,12 +150,14 @@ function performSecurityChecks(): SecurityCheck[] {
     id: 'V1.1',
     category: 'Architecture',
     name: 'API Versioning',
-    description: 'API versioning is implemented to support backward compatibility',
+    description:
+      'API versioning is implemented to support backward compatibility',
     level: 'L1',
     passed: false,
     evidence: fileContains('src/main.ts', 'enableVersioning'),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   checks.push({
     id: 'V1.2',
@@ -160,7 +168,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: searchPattern('env.validation', ['ts']),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   // V2: Authentication
   console.log('📋 V2: Authentication');
@@ -174,7 +183,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: searchPattern('JwtStrategy', ['ts']),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   checks.push({
     id: 'V2.2',
@@ -185,7 +195,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: searchPattern('firebase-admin', ['ts']),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   checks.push({
     id: 'V2.3',
@@ -196,7 +207,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: searchPattern('bcrypt', ['ts']),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   // V3: Session Management
   console.log('📋 V3: Session Management');
@@ -210,7 +222,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: searchPattern('redis', ['ts']),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   // V4: Access Control
   console.log('📋 V4: Access Control');
@@ -224,7 +237,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: searchPattern('RolesGuard', ['ts']),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   checks.push({
     id: 'V4.2',
@@ -235,7 +249,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: searchPattern('AuthGuard', ['ts']),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   // V5: Validation, Sanitization and Encoding
   console.log('📋 V5: Validation & Sanitization');
@@ -249,7 +264,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: fileContains('src/main.ts', 'ValidationPipe'),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   checks.push({
     id: 'V5.2',
@@ -260,7 +276,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: searchPattern('class-validator', ['ts']),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   checks.push({
     id: 'V5.3',
@@ -271,7 +288,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: searchPattern('sanitization.helper', ['ts']),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   checks.push({
     id: 'V5.4',
@@ -282,7 +300,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: fileContains('src/main.ts', 'whitelist: true'),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   // V7: Error Handling and Logging
   console.log('📋 V7: Error Handling & Logging');
@@ -296,7 +315,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: searchPattern('GlobalExceptionFilter', ['ts']),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   checks.push({
     id: 'V7.2',
@@ -307,7 +327,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: searchPattern('winston', ['ts']),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   checks.push({
     id: 'V7.3',
@@ -316,9 +337,13 @@ function performSecurityChecks(): SecurityCheck[] {
     description: 'Error messages are sanitized for production',
     level: 'L2',
     passed: false,
-    evidence: fileContains('src/common/filters/global-exception.filter.ts', 'userMessage'),
+    evidence: fileContains(
+      'src/common/filters/global-exception.filter.ts',
+      'userMessage',
+    ),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   // V8: Data Protection
   console.log('📋 V8: Data Protection');
@@ -332,7 +357,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: searchPattern('encrypt.*pin', ['ts']),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   // V9: Communication Security
   console.log('📋 V9: Communication Security');
@@ -346,7 +372,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: fileContains('src/main.ts', 'enableCors'),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   checks.push({
     id: 'V9.2',
@@ -357,7 +384,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: fileContains('src/main.ts', 'helmet'),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   checks.push({
     id: 'V9.3',
@@ -368,7 +396,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: fileContains('src/main.ts', 'hsts'),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   checks.push({
     id: 'V9.4',
@@ -379,7 +408,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: fileContains('src/main.ts', 'contentSecurityPolicy'),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   // V10: Malicious Code
   console.log('📋 V10: Malicious Code Prevention');
@@ -393,7 +423,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: fileContains('package.json', 'audit'),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   // V11: Business Logic
   console.log('📋 V11: Business Logic');
@@ -407,7 +438,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: searchPattern('transaction.helper', ['ts']),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   checks.push({
     id: 'V11.2',
@@ -418,7 +450,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: searchPattern('idempotency', ['ts']),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   // V12: File and Resources
   console.log('📋 V12: File Upload Security');
@@ -432,7 +465,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: searchPattern('FileInterceptor|MulterModule', ['ts']),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   // V13: API and Web Service
   console.log('📋 V13: API Security');
@@ -446,7 +480,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: fileContains('src/main.ts', 'rateLimit'),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   checks.push({
     id: 'V13.2',
@@ -457,7 +492,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: searchPattern('TimeoutInterceptor', ['ts']),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   checks.push({
     id: 'V13.3',
@@ -468,7 +504,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: fileContains('src/main.ts', 'SwaggerModule'),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   checks.push({
     id: 'V13.4',
@@ -479,7 +516,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: searchPattern('csrf|csurf', ['ts']),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   // V14: Configuration
   console.log('📋 V14: Configuration');
@@ -493,7 +531,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: searchPattern('@nestjs/config', ['ts']),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   checks.push({
     id: 'V14.2',
@@ -504,7 +543,8 @@ function performSecurityChecks(): SecurityCheck[] {
     passed: false,
     evidence: fileContains('.gitignore', '.env'),
   });
-  checks[checks.length - 1].passed = checks[checks.length - 1].evidence.length > 0;
+  checks[checks.length - 1].passed =
+    checks[checks.length - 1].evidence.length > 0;
 
   console.log('\n✅ Security checks completed\n');
 
@@ -683,7 +723,7 @@ function generateMarkdownReport(report: ASVSReport): string {
 /**
  * Main execution
  */
-async function main() {
+function main() {
   console.log('🔒 ASVS Quick Scan - Security Baseline Check\n');
   console.log('Checking security features based on OWASP ASVS standards...\n');
 
@@ -730,9 +770,15 @@ async function main() {
   console.log(`   Total Checks: ${summary.total_checks}`);
   console.log(`   Passed: ${summary.passed} ✅`);
   console.log(`   Failed: ${summary.failed} ❌`);
-  console.log(`\n   L1 (Basic): ${summary.l1_passed}/${summary.l1_total} (${Math.round((summary.l1_passed / summary.l1_total) * 100)}%)`);
-  console.log(`   L2 (Standard): ${summary.l2_passed}/${summary.l2_total} (${Math.round((summary.l2_passed / summary.l2_total) * 100)}%)`);
-  console.log(`   L3 (Advanced): ${summary.l3_passed}/${summary.l3_total} (${summary.l3_total > 0 ? Math.round((summary.l3_passed / summary.l3_total) * 100) : 0}%)`);
+  console.log(
+    `\n   L1 (Basic): ${summary.l1_passed}/${summary.l1_total} (${Math.round((summary.l1_passed / summary.l1_total) * 100)}%)`,
+  );
+  console.log(
+    `   L2 (Standard): ${summary.l2_passed}/${summary.l2_total} (${Math.round((summary.l2_passed / summary.l2_total) * 100)}%)`,
+  );
+  console.log(
+    `   L3 (Advanced): ${summary.l3_passed}/${summary.l3_total} (${summary.l3_total > 0 ? Math.round((summary.l3_passed / summary.l3_total) * 100) : 0}%)`,
+  );
   console.log(`\n   🎯 Overall Score: ${summary.overall_score}%`);
 
   console.log('\n✨ ASVS security scan complete!\n');
@@ -740,8 +786,9 @@ async function main() {
 }
 
 // Run the script
-main().catch((error) => {
+try {
+  main();
+} catch (error) {
   console.error('❌ Error:', error);
   process.exit(1);
-});
-
+}

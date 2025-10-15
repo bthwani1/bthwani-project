@@ -1,4 +1,7 @@
-import { WalletEventType, WalletEventMetadata } from '../entities/wallet-event.entity';
+import {
+  WalletEventType,
+  WalletEventMetadata,
+} from '../entities/wallet-event.entity';
 
 export interface CreateWalletEventDto {
   userId: string;
@@ -26,4 +29,3 @@ export interface EventReplayResult {
   finalOnHold: number;
   errors?: string[];
 }
-

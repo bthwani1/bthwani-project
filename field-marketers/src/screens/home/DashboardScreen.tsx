@@ -47,8 +47,8 @@ export default function DashboardScreenEnhanced() {
       setLoading(true);
   
       const res = await api.get(
-        ENDPOINTS.REPORT_ME(user.id),         // ← id فقط
-        { params: { page, limit, from, to } } // ← لو فعّلتها في الباك
+        ENDPOINTS.OVERVIEW,
+        { params: { page, limit, from, to } }
       );
       const resp = res.data;
       setData(resp);

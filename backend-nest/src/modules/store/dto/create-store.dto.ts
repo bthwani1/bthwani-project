@@ -2,7 +2,6 @@ import {
   IsNotEmpty,
   IsString,
   IsOptional,
-  IsBoolean,
   IsNumber,
   IsMongoId,
   IsArray,
@@ -68,7 +67,10 @@ export class CreateStoreDto {
   @IsNumber()
   commissionRate?: number;
 
-  @ApiPropertyOptional({ description: 'نوع المتجر', enum: ['restaurant', 'grocery', 'pharmacy', 'bakery', 'cafe', 'other'] })
+  @ApiPropertyOptional({
+    description: 'نوع المتجر',
+    enum: ['restaurant', 'grocery', 'pharmacy', 'bakery', 'cafe', 'other'],
+  })
   @IsOptional()
   @IsEnum(['restaurant', 'grocery', 'pharmacy', 'bakery', 'cafe', 'other'])
   usageType?: string;
@@ -78,4 +80,3 @@ export class CreateStoreDto {
   @IsArray()
   tags?: string[];
 }
-

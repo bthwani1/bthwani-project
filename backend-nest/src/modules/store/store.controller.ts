@@ -1,5 +1,15 @@
-import { Controller, Get, Post, Patch, Body, Param, Query, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Body,
+  Param,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { StoreService } from './store.service';
 import { CreateStoreDto } from './dto/create-store.dto';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -9,8 +19,8 @@ import { RolesGuard } from '../../common/guards/roles.guard';
 import { Auth, Roles, Public } from '../../common/decorators/auth.decorator';
 import { AuthType } from '../../common/guards/unified-auth.guard';
 
-@ApiTags('Store')
-@Controller('stores')
+@ApiTags('Admin - Stores')
+@Controller('admin/stores')
 @UseGuards(UnifiedAuthGuard, RolesGuard)
 export class StoreController {
   constructor(private readonly storeService: StoreService) {}
@@ -23,50 +33,88 @@ export class StoreController {
     return this.storeService.createStore(createStoreDto);
   }
 
-  @Public()
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
   @Get()
-  @ApiOperation({ summary: 'جلب المتاجر' })
-  async findStores(@Query() pagination: CursorPaginationDto) {
-    return this.storeService.findStores(pagination);
+  @ApiOperation({ summary: 'جلب المتاجر - الإدارة' })
+  async findStores(
+    @Query() pagination: CursorPaginationDto,
+    @Query('isActive') isActive?: string,
+    @Query('usageType') usageType?: string,
+    @Query('q') q?: string,
+  ) {
+    return this.storeService.findStoresAdmin(pagination, { isActive, usageType, q });
   }
 
-  @Public()
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
   @Get(':id')
-  @ApiOperation({ summary: 'جلب متجر محدد' })
+  @ApiOperation({ summary: 'جلب متجر محدد - الإدارة' })
   async findStore(@Param('id') id: string) {
     return this.storeService.findStoreById(id);
   }
 
-  @Auth(AuthType.VENDOR_JWT)
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin', 'vendor')
   @Post('products')
   @ApiOperation({ summary: 'إنشاء منتج' })
   async createProduct(@Body() createProductDto: CreateProductDto) {
     return this.storeService.createProduct(createProductDto);
   }
 
-  @Public()
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
   @Get(':id/products')
-  @ApiOperation({ summary: 'جلب منتجات المتجر' })
-  async getProducts(@Param('id') storeId: string, @Query() pagination: CursorPaginationDto) {
+  @ApiOperation({ summary: 'جلب منتجات المتجر - الإدارة' })
+  async getProducts(
+    @Param('id') storeId: string,
+    @Query() pagination: CursorPaginationDto,
+  ) {
     return this.storeService.findProductsByStore(storeId, pagination);
   }
 
   @Auth(AuthType.JWT)
-  @Roles('admin', 'superadmin', 'vendor')
+  @Roles('admin', 'superadmin')
   @Patch(':id')
   @ApiOperation({ summary: 'تحديث متجر' })
   async updateStore(@Param('id') storeId: string, @Body() updates: any) {
     return this.storeService.updateStore(storeId, updates);
   }
 
-  @Public()
-  @Get(':id/statistics')
-  @ApiOperation({ summary: 'إحصائيات المتجر' })
-  async getStoreStatistics(@Param('id') storeId: string) {
-    return this.storeService.getStoreStatistics(storeId);
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @Post(':id/activate')
+  @ApiOperation({ summary: 'تفعيل متجر' })
+  async activateStore(@Param('id') storeId: string) {
+    return this.storeService.activateStore(storeId);
   }
 
-  @Auth(AuthType.VENDOR_JWT)
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @Post(':id/deactivate')
+  @ApiOperation({ summary: 'تعطيل متجر' })
+  async deactivateStore(@Param('id') storeId: string) {
+    return this.storeService.deactivateStore(storeId);
+  }
+
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @Post(':id/force-close')
+  @ApiOperation({ summary: 'إغلاق قسري للمتجر' })
+  async forceCloseStore(@Param('id') storeId: string) {
+    return this.storeService.forceCloseStore(storeId);
+  }
+
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @Post(':id/force-open')
+  @ApiOperation({ summary: 'فتح قسري للمتجر' })
+  async forceOpenStore(@Param('id') storeId: string) {
+    return this.storeService.forceOpenStore(storeId);
+  }
+
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin', 'vendor')
   @Patch('products/:id')
   @ApiOperation({ summary: 'تحديث منتج' })
   async updateProduct(@Param('id') productId: string, @Body() updates: any) {
@@ -75,15 +123,10 @@ export class StoreController {
 
   // ==================== Store Extended Features ====================
 
-  @Get(':id/reviews')
-  @ApiOperation({ summary: 'مراجعات المتجر' })
-  async getStoreReviews(@Param('id') storeId: string, @Query() pagination: CursorPaginationDto) {
-    return this.storeService.getStoreReviews(storeId, pagination);
-  }
-
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
   @Get(':id/analytics')
-  @Auth(AuthType.VENDOR_JWT)
-  @ApiOperation({ summary: 'تحليلات المتجر' })
+  @ApiOperation({ summary: 'تحليلات المتجر - الإدارة' })
   async getStoreAnalytics(
     @Param('id') storeId: string,
     @Query('startDate') startDate?: string,
@@ -92,23 +135,78 @@ export class StoreController {
     return this.storeService.getStoreAnalytics(storeId, startDate, endDate);
   }
 
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
   @Get('products/:id/variants')
   @ApiOperation({ summary: 'متغيرات المنتج' })
   async getProductVariants(@Param('id') productId: string) {
     return this.storeService.getProductVariants(productId);
   }
 
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin', 'vendor')
   @Post('products/:id/variants')
-  @Auth(AuthType.VENDOR_JWT)
   @ApiOperation({ summary: 'إضافة متغير' })
-  async addProductVariant(@Param('id') productId: string, @Body() variant: any) {
+  async addProductVariant(
+    @Param('id') productId: string,
+    @Body() variant: any,
+  ) {
     return this.storeService.addProductVariant(productId, variant);
   }
 
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
   @Get(':id/inventory')
-  @Auth(AuthType.VENDOR_JWT)
-  @ApiOperation({ summary: 'جرد المتجر' })
+  @ApiOperation({ summary: 'جرد المتجر - الإدارة' })
   async getStoreInventory(@Param('id') storeId: string) {
     return this.storeService.getStoreInventory(storeId);
+  }
+
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @Delete(':id')
+  @ApiOperation({ summary: 'حذف متجر' })
+  async deleteStore(@Param('id') storeId: string) {
+    return this.storeService.deleteStore(storeId);
+  }
+
+  // ==================== Store Approval & Moderation ====================
+
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @Get('pending')
+  @ApiOperation({ summary: 'المتاجر المعلقة - تحتاج موافقة' })
+  async getPendingStores() {
+    return this.storeService.getPendingStores();
+  }
+
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @Post(':id/approve')
+  @ApiOperation({ summary: 'الموافقة على متجر' })
+  async approveStore(@Param('id') storeId: string) {
+    return this.storeService.approveStore(storeId);
+  }
+
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @Post(':id/reject')
+  @ApiOperation({ summary: 'رفض متجر' })
+  async rejectStore(
+    @Param('id') storeId: string,
+    @Body() body: { reason: string },
+  ) {
+    return this.storeService.rejectStore(storeId, body.reason);
+  }
+
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @Post(':id/suspend')
+  @ApiOperation({ summary: 'تعليق متجر' })
+  async suspendStore(
+    @Param('id') storeId: string,
+    @Body() body: { reason: string },
+  ) {
+    return this.storeService.suspendStore(storeId, body.reason);
   }
 }

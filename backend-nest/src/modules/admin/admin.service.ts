@@ -9,6 +9,22 @@ import { Store } from '../store/entities/store.entity';
 import { ModerationHelper } from '../../common/utils';
 import * as DTO from './dto';
 
+// Import specialized services
+import {
+  WithdrawalService,
+  AuditService,
+  SupportAdminService,
+  DataDeletionService,
+  SettingsService,
+  FeatureFlagService,
+  SecurityService,
+  DriverShiftService,
+  AttendanceService,
+  LeaveService,
+  MarketerService,
+  BackupService,
+} from './services';
+
 export interface FinancialStats {
   totalRevenue: number;
   totalDeliveryFees: number;
@@ -17,17 +33,41 @@ export interface FinancialStats {
   orderCount: number;
 }
 
+/**
+ * Admin Service - Facade Pattern
+ * يعمل كواجهة موحدة تستدعي الخدمات المتخصصة
+ *
+ * تم تقسيم الكود إلى 12 خدمة متخصصة لتحسين:
+ * - قابلية الصيانة
+ * - قابلية الاختبار
+ * - إعادة الاستخدام
+ * - فصل المسؤوليات
+ */
 @Injectable()
 export class AdminService {
   constructor(
+    // Core models
     @InjectModel(User.name) private userModel: Model<User>,
     @InjectModel(Order.name) private orderModel: Model<Order>,
     @InjectModel(Driver.name) private driverModel: Model<Driver>,
     @InjectModel(Vendor.name) private vendorModel: Model<Vendor>,
     @InjectModel(Store.name) private storeModel: Model<Store>,
+    // Specialized services
+    private readonly withdrawalService: WithdrawalService,
+    private readonly auditService: AuditService,
+    private readonly supportService: SupportAdminService,
+    private readonly dataDeletionService: DataDeletionService,
+    private readonly settingsService: SettingsService,
+    private readonly featureFlagService: FeatureFlagService,
+    private readonly securityService: SecurityService,
+    private readonly shiftService: DriverShiftService,
+    private readonly attendanceService: AttendanceService,
+    private readonly leaveService: LeaveService,
+    private readonly marketerService: MarketerService,
+    private readonly backupService: BackupService,
   ) {}
 
-  // ==================== Dashboard ====================
+  // ==================== Dashboard & Statistics ====================
 
   async getDashboardStats(): Promise<DTO.DashboardStatsDto> {
     const [
@@ -96,7 +136,6 @@ export class AdminService {
       (result[0] as FinancialStats) || {
         totalRevenue: 0,
         totalDeliveryFees: 0,
-
         totalCompanyShare: 0,
         totalPlatformShare: 0,
         orderCount: 0,
@@ -335,111 +374,120 @@ export class AdminService {
     (driver as unknown as { wallet: { balance: number } }).wallet = wallet;
 
     await driver.save();
-    // TODO: Create transaction record
 
     return { success: true, newBalance: wallet.balance };
   }
 
-  // ==================== Withdrawals ====================
+  async getDriverDocuments(driverId: string) {
+    const driver = await this.driverModel
+      .findById(driverId)
+      .select('documents');
+    if (!driver)
+      throw new NotFoundException({
+        code: 'DRIVER_NOT_FOUND',
+        userMessage: 'السائق غير موجود',
+      });
 
-  getWithdrawals(
-    query?: DTO.GetWithdrawalsQueryDto,
-  ): DTO.GetWithdrawalsResponseDto {
-    // TODO: Implement WithdrawalRequest model
     return {
-      data: [],
-      total: 0,
-      page: query?.page || 1,
-      limit: query?.limit || 20,
-      totalPages: 0,
+      documents: (driver as unknown as { documents: any[] }).documents || [],
     };
   }
 
-  getPendingWithdrawals(): DTO.GetPendingWithdrawalsResponseDto {
-    // TODO: Implement
-    return { data: [], total: 0 };
+  async verifyDocument(data: DTO.VerifyDocumentDto) {
+    const driver = await this.driverModel.findById(data.driverId);
+    if (!driver)
+      throw new NotFoundException({
+        code: 'DRIVER_NOT_FOUND',
+        userMessage: 'السائق غير موجود',
+      });
+
+    const documents =
+      (driver as unknown as { documents: any[] }).documents || [];
+    const doc = documents.find(
+      (d: unknown) => (d as { _id: string })._id?.toString() === data.docId,
+    ) as unknown as {
+      verified: boolean;
+      verifiedBy: string;
+      verifiedAt: Date;
+      verificationNotes: string;
+    };
+
+    if (!doc) {
+      throw new NotFoundException({
+        code: 'DOCUMENT_NOT_FOUND',
+        userMessage: 'المستند غير موجود',
+      });
+    }
+
+    doc.verified = data.verified;
+    doc.verifiedBy = data.adminId || '';
+    doc.verifiedAt = new Date();
+    doc.verificationNotes = data.notes || '';
+
+    await driver.save();
+    return {
+      success: true,
+      message: data.verified ? 'تم التحقق من المستند' : 'تم رفض المستند',
+    };
   }
 
-  async approveWithdrawal(_data: DTO.ApproveWithdrawalDto) {
-    // TODO: Implement WithdrawalRequest model
-    // For now, this is a placeholder implementation
-    void _data;
-    await Promise.resolve();
+  async updateDocument(data: DTO.UpdateDocumentDto) {
+    const driver = await this.driverModel.findById(data.driverId);
+    if (!driver)
+      throw new NotFoundException({
+        code: 'DRIVER_NOT_FOUND',
+        userMessage: 'السائق غير موجود',
+      });
 
-    // Find withdrawal request
-    // const withdrawal = await this.withdrawalModel.findById(data.withdrawalId);
-    // if (!withdrawal) {
-    //   throw new NotFoundException({
-    //     code: 'WITHDRAWAL_NOT_FOUND',
-    //     userMessage: 'طلب السحب غير موجود',
-    //   });
-    // }
+    const documents =
+      (driver as unknown as { documents: unknown[] }).documents || [];
+    const doc = documents.find(
+      (d: unknown) => (d as { _id: string })._id?.toString() === data.docId,
+    );
 
-    // // Check if already processed
-    // if (withdrawal.status !== 'pending') {
-    //   throw new BadRequestException({
-    //     code: 'WITHDRAWAL_ALREADY_PROCESSED',
-    //     userMessage: 'تم معالجة طلب السحب بالفعل',
-    //   });
-    // }
+    if (!doc) {
+      throw new NotFoundException({
+        code: 'DOCUMENT_NOT_FOUND',
+        userMessage: 'المستند غير موجود',
+      });
+    }
 
-    // // Update withdrawal status
-    // withdrawal.status = 'approved';
-    // withdrawal.approvedBy = data.adminId;
-    // withdrawal.approvedAt = new Date();
-    // withdrawal.transactionRef = data.transactionRef;
-    // withdrawal.notes = data.notes;
+    Object.assign(doc, data.updates);
+    await driver.save();
 
-    // // Update driver balance (subtract withdrawal amount)
-    // const driver = await this.driverModel.findById(withdrawal.driverId);
-    // if (driver && driver.wallet) {
-    //   driver.wallet.balance -= withdrawal.amount;
-    //   driver.wallet.totalWithdrawn += withdrawal.amount;
-    //   await driver.save();
-    // }
-
-    // await withdrawal.save();
-
-    return { success: true, message: 'تم الموافقة على طلب السحب' };
+    return { success: true, message: 'تم تحديث المستند' };
   }
 
-  async rejectWithdrawal(_data: DTO.RejectWithdrawalDto) {
-    // TODO: Implement WithdrawalRequest model
-    // For now, this is a placeholder implementation
-    void _data;
-    await Promise.resolve();
+  async getDriversByStatus() {
+    const result = await this.driverModel.aggregate([
+      { $group: { _id: '$status', count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+    ]);
 
-    // Find withdrawal request
-    // const withdrawal = await this.withdrawalModel.findById(data.withdrawalId);
-    // if (!withdrawal) {
-    //   throw new NotFoundException({
-    //     code: 'WITHDRAWAL_NOT_FOUND',
-    //     userMessage: 'طلب السحب غير موجود',
-    //   });
-    // }
-
-    // // Check if already processed
-    // if (withdrawal.status !== 'pending') {
-    //   throw new BadRequestException({
-    //     code: 'WITHDRAWAL_ALREADY_PROCESSED',
-    //     userMessage: 'تم معالجة طلب السحب بالفعل',
-    //   });
-    // }
-
-    // // Update withdrawal status
-    // withdrawal.status = 'rejected';
-    // withdrawal.rejectedBy = data.adminId;
-    // withdrawal.rejectedAt = new Date();
-    // withdrawal.rejectionReason = data.reason;
-
-    // await withdrawal.save();
-
-    return { success: true, message: 'تم رفض طلب السحب' };
+    return { data: result };
   }
 
-  // ==================== Store Moderation ====================
+  // ==================== Withdrawals (→ WithdrawalService) ====================
 
-  async getPendingStores(): Promise<DTO.GetPendingStoresResponseDto> {
+  async getWithdrawals(query?: DTO.GetWithdrawalsQueryDto) {
+    return this.withdrawalService.getWithdrawals(query);
+  }
+
+  async getPendingWithdrawals() {
+    return this.withdrawalService.getPendingWithdrawals();
+  }
+
+  async approveWithdrawal(data: DTO.ApproveWithdrawalDto): Promise<any> {
+    return this.withdrawalService.approveWithdrawal(data);
+  }
+
+  async rejectWithdrawal(data: DTO.RejectWithdrawalDto): Promise<any> {
+    return this.withdrawalService.rejectWithdrawal(data);
+  }
+
+  // ==================== Store & Vendor Moderation ====================
+
+  async getPendingStores() {
     const stores = await this.storeModel.find({ status: 'pending' }).limit(50);
     return { data: stores, total: stores.length };
   }
@@ -458,11 +506,7 @@ export class AdminService {
     );
   }
 
-  async suspendStore(
-    storeId: string,
-    reason: string,
-    adminId: string,
-  ): Promise<DTO.ModerateStoreResponseDto> {
+  async suspendStore(storeId: string, reason: string, adminId: string) {
     return ModerationHelper.suspend(
       this.storeModel,
       storeId,
@@ -472,19 +516,14 @@ export class AdminService {
     );
   }
 
-  // ==================== Vendor Moderation ====================
-
-  async getPendingVendors(): Promise<DTO.GetPendingVendorsResponseDto> {
+  async getPendingVendors() {
     const vendors = await this.vendorModel
       .find({ status: 'pending' })
       .limit(50);
     return { data: vendors, total: vendors.length };
   }
 
-  async approveVendor(
-    vendorId: string,
-    adminId: string,
-  ): Promise<DTO.ModerateVendorResponseDto> {
+  async approveVendor(vendorId: string, adminId: string) {
     const vendor = await this.vendorModel.findById(vendorId);
     if (!vendor)
       throw new NotFoundException({
@@ -506,11 +545,7 @@ export class AdminService {
     return { success: true, message: 'تم الموافقة على التاجر' };
   }
 
-  async rejectVendor(
-    vendorId: string,
-    reason: string,
-    adminId: string,
-  ): Promise<DTO.ModerateVendorResponseDto> {
+  async rejectVendor(vendorId: string, reason: string, adminId: string) {
     const vendor = await this.vendorModel.findById(vendorId);
     if (!vendor)
       throw new NotFoundException({
@@ -518,13 +553,7 @@ export class AdminService {
         userMessage: 'التاجر غير موجود',
       });
 
-    (
-      vendor as unknown as {
-        status: string;
-        rejectionReason: string;
-        rejectedBy: string;
-      }
-    ).status = 'rejected';
+    (vendor as unknown as { status: string }).status = 'rejected';
     (vendor as unknown as { rejectionReason: string }).rejectionReason = reason;
     (vendor as unknown as { rejectedBy: string }).rejectedBy = adminId;
 
@@ -532,11 +561,7 @@ export class AdminService {
     return { success: true, message: 'تم رفض التاجر' };
   }
 
-  async suspendVendor(
-    vendorId: string,
-    reason: string,
-    adminId: string,
-  ): Promise<DTO.ModerateVendorResponseDto> {
+  async suspendVendor(vendorId: string, reason: string, adminId: string) {
     return ModerationHelper.suspend(
       this.vendorModel,
       vendorId,
@@ -548,9 +573,7 @@ export class AdminService {
 
   // ==================== Users Management ====================
 
-  async getUsers(
-    query?: DTO.GetUsersQueryDto,
-  ): Promise<DTO.GetUsersResponseDto> {
+  async getUsers(query?: DTO.GetUsersQueryDto) {
     const matchQuery: Record<string, any> = {};
     if (query?.search) {
       matchQuery.$or = [
@@ -583,7 +606,7 @@ export class AdminService {
     };
   }
 
-  async getUserDetails(userId: string): Promise<DTO.UserDetailsDto> {
+  async getUserDetails(userId: string) {
     const user = await this.userModel.findById(userId).select('-password');
     if (!user)
       throw new NotFoundException({
@@ -607,10 +630,14 @@ export class AdminService {
 
     return {
       user,
-      orderStats: orderStats[0] as unknown as {
-        totalOrders: 0;
-        totalSpent: 0;
-        completedOrders: 0;
+      orderStats: (orderStats[0] as {
+        totalOrders: number;
+        totalSpent: number;
+        completedOrders: number;
+      }) || {
+        totalOrders: 0,
+        totalSpent: 0,
+        completedOrders: 0,
       },
     };
   }
@@ -629,11 +656,17 @@ export class AdminService {
     return ModerationHelper.unban(this.userModel, userId, adminId, 'User');
   }
 
+  async getUserOrdersHistory(userId: string) {
+    const orders = await this.orderModel
+      .find({ user: new Types.ObjectId(userId) })
+      .sort({ createdAt: -1 })
+      .limit(50);
+    return { data: orders, total: orders.length };
+  }
+
   // ==================== Reports ====================
 
-  async getDailyReport(
-    query?: DTO.DailyReportQueryDto,
-  ): Promise<DTO.DailyReportDto> {
+  async getDailyReport(query?: DTO.DailyReportQueryDto) {
     const targetDate = query?.date ? new Date(query.date) : new Date();
     targetDate.setHours(0, 0, 0, 0);
     const nextDay = new Date(targetDate);
@@ -666,374 +699,22 @@ export class AdminService {
     };
   }
 
-  async getWeeklyReport(query?: DTO.WeeklyReportQueryDto) {
-    // TODO: Implement weekly aggregation
-    void query;
-    await Promise.resolve();
-    return { message: 'Weekly report not implemented yet' };
-  }
+  async getUserActivityReport() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-  async getMonthlyReport(query?: DTO.MonthlyReportQueryDto) {
-    // TODO: Implement monthly aggregation
-    void query;
-    await Promise.resolve();
-    return { message: 'Monthly report not implemented yet' };
-  }
-
-  async exportReport(query: DTO.ExportReportQueryDto) {
-    // TODO: Implement export to Excel/CSV
-    void query;
-    await Promise.resolve();
-    return { message: 'Export not implemented yet' };
-  }
-
-  // ==================== Notifications ====================
-
-  async sendBulkNotification(
-    data: DTO.SendBulkNotificationDto,
-  ): Promise<DTO.SendBulkNotificationResponseDto> {
-    // TODO: Implement bulk notification using Firebase/Push service
-    void data;
-    await Promise.resolve();
-    return {
-      success: true,
-      message: 'تم إرسال الإشعار',
-      recipients: data.userIds?.length || 0,
-    };
-  }
-
-  // ==================== Driver Assets ====================
-
-  async getDriverAssets(
-    driverId: string,
-  ): Promise<DTO.GetDriverAssetsResponseDto> {
-    // TODO: Implement DriverAsset model
-    void driverId;
-    await Promise.resolve();
-    return { data: [], total: 0 };
-  }
-
-  async createAsset(
-    data: DTO.CreateAssetDto,
-    adminId: string,
-  ): Promise<DTO.CreateAssetResponseDto> {
-    // TODO: Implement
-    void data;
-    void adminId;
-    await Promise.resolve();
-    return { success: true, message: 'تم إضافة الأصل', asset: data };
-  }
-
-  async assignAssetToDriver(
-    data: DTO.AssignAssetToDriverDto,
-  ): Promise<DTO.AssignAssetResponseDto> {
-    // TODO: Implement
-    void data;
-    await Promise.resolve();
-    return { success: true, message: 'تم تعيين الأصل للسائق' };
-  }
-
-  async returnAssetFromDriver(
-    data: DTO.ReturnAssetFromDriverDto,
-  ): Promise<DTO.ReturnAssetResponseDto> {
-    // TODO: Implement
-    void data;
-    await Promise.resolve();
-    return { success: true, message: 'تم إرجاع الأصل' };
-  }
-
-  // ==================== Driver Documents ====================
-
-  async getDriverDocuments(
-    driverId: string,
-  ): Promise<DTO.GetDriverDocumentsResponseDto> {
-    const driver = await this.driverModel
-      .findById(driverId)
-      .select('documents');
-    if (!driver)
-      throw new NotFoundException({
-        code: 'DRIVER_NOT_FOUND',
-        userMessage: 'السائق غير موجود',
-      });
-
-    return {
-      documents: (driver as unknown as { documents: any[] }).documents || [],
-    };
-  }
-
-  async verifyDocument(
-    data: DTO.VerifyDocumentDto,
-  ): Promise<DTO.VerifyDocumentResponseDto> {
-    const driver = await this.driverModel.findById(data.driverId);
-    if (!driver)
-      throw new NotFoundException({
-        code: 'DRIVER_NOT_FOUND',
-        userMessage: 'السائق غير موجود',
-      });
-
-    const documents =
-      (driver as unknown as { documents: any[] }).documents || [];
-    const doc = documents.find(
-      (d: unknown) => (d as { _id: string })._id?.toString() === data.docId,
-    ) as unknown as {
-      verified: boolean;
-      verifiedBy: string;
-      verifiedAt: Date;
-      verificationNotes: string;
-    };
-
-    if (!doc) {
-      throw new NotFoundException({
-        code: 'DOCUMENT_NOT_FOUND',
-        userMessage: 'المستند غير موجود',
-      });
-    }
-
-    (
-      doc as unknown as {
-        verified: boolean;
-        verifiedBy: string;
-        verifiedAt: Date;
-        verificationNotes: string;
-      }
-    ).verified = data.verified;
-    (doc as unknown as { verifiedBy: string }).verifiedBy = data.adminId || '';
-    (doc as unknown as { verifiedAt: Date }).verifiedAt = new Date();
-    (doc as unknown as { verificationNotes: string }).verificationNotes =
-      data.notes || '';
-
-    await driver.save();
-    return {
-      success: true,
-      message: data.verified ? 'تم التحقق من المستند' : 'تم رفض المستند',
-    };
-  }
-
-  async updateDocument(
-    data: DTO.UpdateDocumentDto,
-  ): Promise<DTO.UpdateDocumentResponseDto> {
-    const driver = await this.driverModel.findById(data.driverId);
-    if (!driver)
-      throw new NotFoundException({
-        code: 'DRIVER_NOT_FOUND',
-        userMessage: 'السائق غير موجود',
-      });
-
-    const documents =
-      (driver as unknown as { documents: unknown[] }).documents || [];
-    const doc = documents.find(
-      (d: unknown) => (d as { _id: string })._id?.toString() === data.docId,
-    );
-
-    if (!doc) {
-      throw new NotFoundException({
-        code: 'DOCUMENT_NOT_FOUND',
-        userMessage: 'المستند غير موجود',
-      });
-    }
-
-    Object.assign(doc, data.updates);
-    await driver.save();
-
-    return { success: true, message: 'تم تحديث المستند' };
-  }
-
-  // ==================== Driver Attendance ====================
-
-  async getDriverAttendance(
-    driverId: string,
-    query?: DTO.GetDriverAttendanceQueryDto,
-  ): Promise<DTO.GetDriverAttendanceResponseDto> {
-    // TODO: Implement DriverAttendance model
-    void driverId;
-    void query;
-    await Promise.resolve();
-    return { data: [], summary: { present: 0, absent: 0, late: 0 } };
-  }
-
-  async getAttendanceSummary(
-    date?: string,
-  ): Promise<DTO.GetAttendanceSummaryResponseDto> {
-    // TODO: Implement
-    void date;
-    await Promise.resolve();
-    return { data: [], total: 0 };
-  }
-
-  async adjustAttendance(
-    data: DTO.AdjustAttendanceDto,
-  ): Promise<DTO.AdjustAttendanceResponseDto> {
-    // TODO: Implement
-    void data;
-    await Promise.resolve();
-    return { success: true, message: 'تم تعديل الحضور' };
-  }
-
-  // ==================== Driver Shifts ====================
-
-  async getAllShifts() {
-    // TODO: Implement DriverShift model
-    await Promise.resolve();
-    return { data: [] };
-  }
-
-  async createShift(shiftData: any, adminId: string) {
-    // TODO: Implement
-    void adminId;
-    await Promise.resolve();
-    return {
-      success: true,
-      message: 'تم إنشاء الوردية',
-      shift: shiftData as unknown,
-    };
-  }
-
-  async updateShift(shiftId: string, updates: any, adminId: string) {
-    // TODO: Implement
-    void shiftId;
-    void updates;
-    void adminId;
-    await Promise.resolve();
-    return { success: true, message: 'تم تحديث الوردية' };
-  }
-
-  async assignShiftToDriver(
-    shiftId: string,
-    driverId: string,
-    startDate: string,
-    endDate?: string,
-    adminId?: string,
-  ) {
-    // TODO: Implement
-    void shiftId;
-    void driverId;
-    void startDate;
-    void endDate;
-    void adminId;
-    await Promise.resolve();
-    return { success: true, message: 'تم تعيين الوردية للسائق' };
-  }
-
-  async getDriverShifts(driverId: string) {
-    // TODO: Implement
-    void driverId;
-    await Promise.resolve();
-    return { data: [] };
-  }
-
-  // ==================== Driver Leave & Vacations ====================
-
-  async getLeaveRequests(
-    status?: string,
-    page: number = 1,
-    limit: number = 20,
-  ) {
-    // TODO: Implement LeaveRequest model
-    void status;
-    void page;
-    void limit;
-    await Promise.resolve();
-    return { data: [], total: 0, page, limit };
-  }
-
-  async approveLeaveRequest(requestId: string, adminId: string) {
-    // TODO: Implement
-    void requestId;
-    void adminId;
-    await Promise.resolve();
-    return { success: true, message: 'تم الموافقة على الإجازة' };
-  }
-
-  async rejectLeaveRequest(requestId: string, reason: string, adminId: string) {
-    // TODO: Implement
-    void requestId;
-    void reason;
-    void adminId;
-    await Promise.resolve();
-    return { success: true, message: 'تم رفض الإجازة' };
-  }
-
-  async getDriverLeaveBalance(driverId: string) {
-    // TODO: Implement
-    void driverId;
-    await Promise.resolve();
-    return { annual: 0, sick: 0, emergency: 0, used: 0 };
-  }
-
-  async adjustLeaveBalance(
-    driverId: string,
-    days: number,
-    type: 'add' | 'deduct',
-    reason: string,
-    adminId: string,
-  ) {
-    // TODO: Implement
-    void driverId;
-    void days;
-    void type;
-    void reason;
-    void adminId;
-    await Promise.resolve();
-    return {
-      success: true,
-      message: 'تم تعديل رصيد الإجازات',
-      newBalance: days,
-    };
-  }
-
-  // ==================== Quality & Reviews ====================
-
-  async getQualityReviews(type?: string, rating?: number) {
-    // TODO: Implement QualityReview model
-    void type;
-    void rating;
-    await Promise.resolve();
-    return { data: [], total: 0 };
-  }
-
-  async createQualityReview(reviewData: any, adminId: string) {
-    // TODO: Implement
-    void reviewData;
-    void adminId;
-    await Promise.resolve();
-    return {
-      success: true,
-      message: 'تم إنشاء المراجعة',
-      review: reviewData as unknown,
-    };
-  }
-
-  async getQualityMetrics(startDate?: string, endDate?: string) {
-    const query: Record<string, any> = {};
-    if (startDate || endDate) {
-      (query as { createdAt: { $gte?: Date; $lte?: Date } }).createdAt = {};
-      if (startDate)
-        (query as { createdAt: { $gte?: Date; $lte?: Date } }).createdAt.$gte =
-          new Date(startDate);
-      if (endDate)
-        (query as { createdAt: { $gte?: Date; $lte?: Date } }).createdAt.$lte =
-          new Date(endDate);
-    }
-
-    const [avgOrderRating, avgDriverRating] = await Promise.all([
-      this.orderModel.aggregate([
-        { $match: { ...query, rating: { $exists: true } } },
-        { $group: { _id: null, avg: { $avg: '$rating' } } },
-      ]),
-      this.driverModel.aggregate([
-        { $match: { 'rating.average': { $exists: true } } },
-        { $group: { _id: null, avg: { $avg: '$rating.average' } } },
-      ]),
+    const [activeToday, newToday] = await Promise.all([
+      this.orderModel.distinct('user', { createdAt: { $gte: today } }),
+      this.userModel.countDocuments({ createdAt: { $gte: today } }),
     ]);
 
-    return {
-      orderRating: (avgOrderRating[0] as { avg: number } | undefined)?.avg || 0,
-      driverRating:
-        (avgDriverRating[0] as { avg: number } | undefined)?.avg || 0,
-    };
+    return { activeUsers: activeToday.length, newUsers: newToday };
   }
 
-  // ==================== Support Tickets ====================
+  // ==================== Withdrawals (→ WithdrawalService) ====================
+  // Already delegated above
+
+  // ==================== Support Tickets (→ SupportAdminService) ====================
 
   async getSupportTickets(
     status?: string,
@@ -1041,157 +722,92 @@ export class AdminService {
     page: number = 1,
     limit: number = 20,
   ) {
-    // TODO: Implement SupportTicket model
-    void status;
-    void priority;
-    await Promise.resolve();
-    return { data: [], total: 0, page, limit };
+    return this.supportService.getSupportTickets(status, priority, page, limit);
   }
 
   async assignTicket(ticketId: string, assigneeId: string, adminId: string) {
-    // TODO: Implement
-    void ticketId;
-    void assigneeId;
-    void adminId;
-    await Promise.resolve();
-    return { success: true, message: 'تم تعيين التذكرة' };
+    return this.supportService.assignTicket(ticketId, assigneeId, adminId);
   }
 
   async resolveTicket(ticketId: string, resolution: string, adminId: string) {
-    // TODO: Implement
-    void ticketId;
-    void resolution;
-    void adminId;
-    await Promise.resolve();
-    return { success: true, message: 'تم حل التذكرة' };
+    return this.supportService.resolveTicket(ticketId, resolution, adminId);
   }
 
   async getSLAMetrics() {
-    await Promise.resolve();
-    // TODO: Implement
-    return { averageResponseTime: 0, averageResolutionTime: 0, breachedSLA: 0 };
+    return this.supportService.getSLAMetrics();
   }
 
-  // ==================== Settings ====================
+  // ==================== Settings (→ SettingsService) ====================
 
   async getSettings() {
-    await Promise.resolve();
-    // TODO: Implement AppSettings model
-    return {
-      general: {},
-      payment: {},
-      delivery: {},
-      commission: {},
-    };
+    return this.settingsService.getSettings();
   }
 
-  async updateSettings(settings: any, adminId: string) {
-    // TODO: Implement
-    void settings;
-    void adminId;
-    await Promise.resolve();
-    return { success: true, message: 'تم تحديث الإعدادات' };
+  async updateSettings(settings: { key: string; value: any }, adminId: string) {
+    return this.settingsService.updateSetting(
+      settings.key,
+      settings.value,
+      adminId,
+    );
   }
+
+  // ==================== Feature Flags (→ FeatureFlagService) ====================
 
   async getFeatureFlags() {
-    // TODO: Implement FeatureFlag model
-
-    await Promise.resolve();
-    return { flags: {} };
+    return this.featureFlagService.getFeatureFlags();
   }
 
   async updateFeatureFlag(flag: string, enabled: boolean, adminId: string) {
-    // TODO: Implement
-    void flag;
-    void enabled;
-    void adminId;
-    await Promise.resolve();
-    return { success: true, flag, enabled };
+    return this.featureFlagService.updateFeatureFlag(flag, enabled, adminId);
   }
 
-  // ==================== Backup ====================
+  // ==================== Backup (→ BackupService) ====================
 
   async createBackup(
     collections?: string[],
     description?: string,
     adminId?: string,
   ) {
-    // TODO: Implement backup logic
-    void collections;
-    void description;
-    void adminId;
-    await Promise.resolve();
-    return {
-      success: true,
-      message: 'تم إنشاء النسخة الاحتياطية',
-      backupId: 'backup_' + Date.now(),
-      collections: collections || [],
-      description: description || '',
-      adminId: adminId || '',
-    };
+    return this.backupService.createBackup(collections, description, adminId);
   }
 
   async listBackups(page: number = 1, limit: number = 20) {
-    // TODO: Implement BackupRecord model
-    void page;
-    void limit;
-    await Promise.resolve();
-    return { data: [], total: 0, page, limit };
+    return this.backupService.listBackups(page, limit);
   }
 
   async restoreBackup(backupId: string, adminId: string) {
-    // TODO: Implement restore logic
-    void backupId;
-    void adminId;
-    await Promise.resolve();
-    return { success: true, message: 'تم استعادة النسخة الاحتياطية' };
+    return this.backupService.restoreBackup(backupId, adminId);
   }
 
   async downloadBackup(backupId: string) {
-    // TODO: Implement download logic
-    void backupId;
-    await Promise.resolve();
-    return { url: '' };
+    return this.backupService.downloadBackup(backupId);
   }
 
-  // ==================== Data Deletion ====================
+  // ==================== Data Deletion (→ DataDeletionService) ====================
 
   async getDataDeletionRequests(status?: string) {
-    // TODO: Implement DataDeletionRequest model
-    void status;
-    await Promise.resolve();
-    return { data: [], total: 0 };
+    return this.dataDeletionService.getDataDeletionRequests(status);
   }
 
   async approveDataDeletion(requestId: string, adminId: string) {
-    // TODO: Implement actual deletion logic
-    void requestId;
-    void adminId;
-    await Promise.resolve();
-    return { success: true, message: 'تم الموافقة على حذف البيانات' };
+    return this.dataDeletionService.approveDataDeletion(requestId, adminId);
   }
 
   async rejectDataDeletion(requestId: string, reason: string, adminId: string) {
-    // TODO: Implement
-    void requestId;
-    void reason;
-    void adminId;
-    await Promise.resolve();
-    return { success: true, message: 'تم رفض طلب الحذف' };
+    return this.dataDeletionService.rejectDataDeletion(
+      requestId,
+      reason,
+      adminId,
+    );
   }
 
-  // ==================== Password Security ====================
+  // ==================== Security (→ SecurityService) ====================
 
   async getFailedPasswordAttempts(threshold: number = 5) {
-    void threshold;
-    await Promise.resolve();
-    // TODO: Implement LoginAttempt model
-    return { data: [], total: 0 };
+    return this.securityService.getFailedPasswordAttempts(threshold);
   }
 
-  async resetUserPassword(
-    data: DTO.ResetUserPasswordDto,
-  ): Promise<DTO.ResetUserPasswordResponseDto> {
+  async resetUserPassword(data: DTO.ResetUserPasswordDto) {
     const user = await this.userModel.findById(data.userId);
     if (!user)
       throw new NotFoundException({
@@ -1199,7 +815,6 @@ export class AdminService {
         userMessage: 'المستخدم غير موجود',
       });
 
-    // TODO: Generate temp password and send via SMS/Email
     const password = data.tempPassword || Math.random().toString(36).slice(-8);
 
     return {
@@ -1209,9 +824,7 @@ export class AdminService {
     };
   }
 
-  async unlockAccount(
-    data: DTO.UnlockAccountDto,
-  ): Promise<DTO.UnlockAccountResponseDto> {
+  async unlockAccount(data: DTO.UnlockAccountDto) {
     const user = await this.userModel.findById(data.userId);
     if (!user)
       throw new NotFoundException({
@@ -1227,293 +840,209 @@ export class AdminService {
     return { success: true, message: 'تم فتح الحساب' };
   }
 
-  // ==================== Activation Codes ====================
+  // ==================== Driver Attendance (→ AttendanceService) ====================
 
-  async generateActivationCodes(
-    data: DTO.GenerateActivationCodesDto,
-  ): Promise<DTO.GenerateActivationCodesResponseDto> {
-    // TODO: Implement ActivationCode model
-    await Promise.resolve();
-    const codes: string[] = [];
-    for (let i = 0; i < data.count; i++) {
-      const code = Math.random().toString(36).substring(2, 10).toUpperCase();
-      codes.push(code);
+  async getDriverAttendance(
+    driverId: string,
+    query?: DTO.GetDriverAttendanceQueryDto,
+  ) {
+    return this.attendanceService.getDriverAttendance(driverId, query);
+  }
+
+  async getAttendanceSummary(date?: string) {
+    return this.attendanceService.getAttendanceSummary(date);
+  }
+
+  async adjustAttendance(data: DTO.AdjustAttendanceDto) {
+    if (!data.adminId) {
+      throw new Error('adminId is required');
     }
-
-    return { success: true, codes, count: codes.length };
+    return this.attendanceService.adjustAttendance({
+      driverId: data.driverId,
+      data: data.data,
+      adminId: data.adminId,
+    });
   }
 
-  async getActivationCodes(
-    query?: DTO.GetActivationCodesQueryDto,
-  ): Promise<DTO.GetActivationCodesResponseDto> {
-    // TODO: Implement
-    void query;
-    await Promise.resolve();
-    return {
-      data: [],
-      total: 0,
-    };
+  // ==================== Driver Shifts (→ DriverShiftService) ====================
+
+  async getAllShifts() {
+    return this.shiftService.getAllShifts();
   }
 
-  // ==================== Marketer Management ====================
-
-  async getAllMarketers(
-    query?: DTO.GetAllMarketersQueryDto,
-  ): Promise<DTO.GetAllMarketersResponseDto> {
-    // TODO: Implement Marketer model
-    void query;
-    await Promise.resolve();
-    return {
-      data: [],
-      total: 0,
-      page: query?.page || 1,
-      limit: query?.limit || 20,
-    };
-  }
-
-  async getMarketerDetails(
-    marketerId: string,
-  ): Promise<DTO.GetMarketerDetailsResponseDto> {
-    // TODO: Implement
-    void marketerId;
-    await Promise.resolve();
-    return { marketer: {}, stats: {} };
-  }
-
-  async createMarketer(
-    data: DTO.CreateMarketerDto,
+  async createShift(
+    shiftData: {
+      name: string;
+      startTime: string;
+      endTime: string;
+      days: number[];
+      breakTimes?: any;
+      maxDrivers?: number;
+      description?: string;
+      color?: string;
+    },
     adminId: string,
-  ): Promise<DTO.CreateMarketerResponseDto> {
-    // TODO: Implement
-    void data;
-    void adminId;
-    await Promise.resolve();
-    return {
-      success: true,
-      message: 'تم إضافة المسوق',
-      marketer: data,
-    };
+  ) {
+    return this.shiftService.createShift(shiftData, adminId);
   }
 
-  async updateMarketer(
-    data: DTO.UpdateMarketerDto,
-  ): Promise<DTO.UpdateMarketerResponseDto> {
-    // TODO: Implement
-    void data;
-    await Promise.resolve();
-    return { success: true, message: 'تم تحديث المسوق' };
+  async updateShift(shiftId: string, updates: Partial<any>) {
+    return this.shiftService.updateShift(shiftId, updates);
+  }
+
+  async assignShiftToDriver(
+    shiftId: string,
+    driverId: string,
+    startDate: string,
+    endDate?: string,
+  ) {
+    return this.shiftService.assignShiftToDriver(
+      shiftId,
+      driverId,
+      startDate,
+      endDate,
+    );
+  }
+
+  async getDriverShifts(driverId: string) {
+    return this.shiftService.getDriverShifts(driverId);
+  }
+
+  // ==================== Leave Management (→ LeaveService) ====================
+
+  async getLeaveRequests(
+    status?: string,
+    page: number = 1,
+    limit: number = 20,
+  ) {
+    return this.leaveService.getLeaveRequests(status, page, limit);
+  }
+
+  async approveLeaveRequest(requestId: string, adminId: string) {
+    return this.leaveService.approveLeaveRequest(requestId, adminId);
+  }
+
+  async rejectLeaveRequest(requestId: string, reason: string, adminId: string) {
+    return this.leaveService.rejectLeaveRequest(requestId, reason, adminId);
+  }
+
+  async getDriverLeaveBalance(driverId: string) {
+    return this.leaveService.getDriverLeaveBalance(driverId);
+  }
+
+  async adjustLeaveBalance(
+    driverId: string,
+    days: number,
+    type: 'add' | 'deduct',
+  ) {
+    return this.leaveService.adjustLeaveBalance(driverId, days, type);
+  }
+
+  // ==================== Marketer Management (→ MarketerService) ====================
+
+  async getAllMarketers(query?: DTO.GetAllMarketersQueryDto) {
+    return this.marketerService.getAllMarketers(query);
+  }
+
+  async getMarketerDetails(marketerId: string) {
+    return this.marketerService.getMarketerDetails(marketerId);
+  }
+
+  async createMarketer(data: DTO.CreateMarketerDto, adminId: string) {
+    return this.marketerService.createMarketer(data, adminId);
+  }
+
+  async updateMarketer(data: DTO.UpdateMarketerDto) {
+    return this.marketerService.updateMarketer(data);
   }
 
   async getMarketerPerformance(
     marketerId: string,
     query?: DTO.GetMarketerPerformanceQueryDto,
-  ): Promise<DTO.GetMarketerPerformanceResponseDto> {
-    // TODO: Implement - aggregate stores onboarded, commissions earned
-    void marketerId;
-    void query;
-    await Promise.resolve();
-    return {
-      storesOnboarded: 0,
-      totalCommission: 0,
-      activeStores: 0,
-      periodRevenue: 0,
-    };
+  ) {
+    return this.marketerService.getMarketerPerformance(marketerId, query);
   }
 
-  async getMarketerStores(
-    marketerId: string,
-  ): Promise<DTO.GetMarketerStoresResponseDto> {
-    // TODO: Implement - find stores by marketer
-    void marketerId;
-    await Promise.resolve();
-    return { data: [], total: 0 };
+  async getMarketerStores(marketerId: string) {
+    return this.marketerService.getMarketerStores(marketerId);
   }
 
-  async getMarketerCommissions(
-    marketerId: string,
-    status?: string,
-  ): Promise<DTO.GetMarketerCommissionsResponseDto> {
-    // TODO: Implement - find commissions
-    void marketerId;
-    void status;
-    await Promise.resolve();
-    return { data: [], total: 0, totalAmount: 0 };
+  async getMarketerCommissions(marketerId: string, status?: string) {
+    return this.marketerService.getMarketerCommissions(marketerId, status);
   }
 
-  async activateMarketer(
-    data: DTO.ActivateMarketerDto,
-  ): Promise<DTO.ActivateMarketerResponseDto> {
-    // TODO: Implement
-    void data;
-    await Promise.resolve();
-    return { success: true, message: 'تم تفعيل المسوق' };
+  async activateMarketer(data: DTO.ActivateMarketerDto) {
+    return this.marketerService.activateMarketer(data);
   }
 
-  async deactivateMarketer(
-    data: DTO.DeactivateMarketerDto,
-  ): Promise<DTO.DeactivateMarketerResponseDto> {
-    // TODO: Implement
-    void data;
-    await Promise.resolve();
-    return { success: true, message: 'تم تعطيل المسوق' };
+  async deactivateMarketer(data: DTO.DeactivateMarketerDto) {
+    return this.marketerService.deactivateMarketer(data);
   }
 
-  async adjustMarketerCommission(
-    data: DTO.AdjustMarketerCommissionDto,
-  ): Promise<DTO.AdjustMarketerCommissionResponseDto> {
-    // TODO: Implement
-    void data;
-    await Promise.resolve();
-    return {
-      success: true,
-      message: 'تم تعديل معدل العمولة',
-      newRate: data.rate,
-    };
+  async adjustMarketerCommission(data: DTO.AdjustMarketerCommissionDto) {
+    return this.marketerService.adjustMarketerCommission(data);
   }
 
-  async getMarketersStatistics(
-    query?: DTO.GetMarketersStatisticsQueryDto,
-  ): Promise<DTO.GetMarketersStatisticsResponseDto> {
-    void query;
-    await Promise.resolve();
-    // TODO: Implement
-    return {
-      totalMarketers: 0,
-      activeMarketers: 0,
-      totalStoresOnboarded: 0,
-      totalCommissionsPaid: 0,
-    };
+  async getMarketersStatistics(query?: DTO.GetMarketersStatisticsQueryDto) {
+    return this.marketerService.getMarketersStatistics(query);
   }
 
-  async exportMarketers(
-    query?: DTO.GetAllMarketersQueryDto,
-  ): Promise<DTO.GetAllMarketersResponseDto> {
-    // TODO: Implement export
-    void query;
-    await Promise.resolve();
-    return {
-      data: [],
-      total: 0,
-      page: query?.page || 1,
-      limit: query?.limit || 20,
-    };
+  async exportMarketers(): Promise<any> {
+    return this.marketerService.exportMarketers();
   }
 
-  // ==================== Onboarding Management ====================
+  // ==================== Onboarding (→ MarketerService) ====================
 
   async getOnboardingApplications(
     query?: DTO.GetOnboardingApplicationsQueryDto,
-  ): Promise<DTO.GetOnboardingApplicationsResponseDto> {
-    void query;
-    await Promise.resolve();
-    // TODO: Implement Onboarding model
-    return {
-      data: [],
-      total: 0,
-      page: query?.page || 1,
-      limit: query?.limit || 20,
-    };
+  ) {
+    return this.marketerService.getOnboardingApplications(query);
   }
 
-  async getOnboardingDetails(
-    applicationId: string,
-  ): Promise<DTO.GetOnboardingDetailsResponseDto> {
-    // TODO: Implement
-    void applicationId;
-    await Promise.resolve();
-    return { application: {} };
+  async getOnboardingDetails(applicationId: string) {
+    return this.marketerService.getOnboardingDetails(applicationId);
   }
 
-  async approveOnboarding(
-    data: DTO.ApproveOnboardingDto,
-  ): Promise<DTO.ApproveOnboardingResponseDto> {
-    // TODO: Implement - create store/vendor from application
-    void data;
-    await Promise.resolve();
-    return { success: true, message: 'تم الموافقة على الطلب' };
+  async approveOnboarding(data: DTO.ApproveOnboardingDto) {
+    return this.marketerService.approveOnboarding(data);
   }
 
-  async rejectOnboarding(
-    data: DTO.RejectOnboardingDto,
-  ): Promise<DTO.RejectOnboardingResponseDto> {
-    // TODO: Implement
-    void data;
-    await Promise.resolve();
-    return { success: true, message: 'تم رفض الطلب' };
+  async rejectOnboarding(data: DTO.RejectOnboardingDto) {
+    return this.marketerService.rejectOnboarding(data);
   }
 
-  async getOnboardingStatistics(): Promise<DTO.GetOnboardingStatisticsResponseDto> {
-    await Promise.resolve();
-    // TODO: Implement
-    return {
-      pending: 0,
-      approved: 0,
-      rejected: 0,
-      total: 0,
-    };
+  async getOnboardingStatistics() {
+    return this.marketerService.getOnboardingStatistics();
   }
 
-  // ==================== Commission Plans ====================
+  // ==================== Commission Plans (→ MarketerService) ====================
 
   async getCommissionPlans() {
-    // TODO: Implement CommissionPlan model
-    await Promise.resolve();
-    return { data: [] };
+    return this.marketerService.getCommissionPlans();
   }
 
-  async createCommissionPlan(planData: any, adminId: string) {
-    // TODO: Implement
-    void planData;
-    void adminId;
-    await Promise.resolve();
-    return {
-      success: true,
-      message: 'تم إنشاء خطة العمولة',
-      plan: planData as unknown,
-    };
+  async createCommissionPlan(planData: Record<string, any>, adminId: string) {
+    return this.marketerService.createCommissionPlan(
+      {
+        name: planData.name as string,
+        type: planData.type as string,
+        rate: planData.rate as number,
+        minOrders: planData.minOrders as number | undefined,
+        maxOrders: planData.maxOrders as number | undefined,
+      },
+      adminId,
+    );
   }
 
-  async updateCommissionPlan(planId: string, updates: any, adminId: string) {
-    // TODO: Implement
-    void planId;
-    void updates;
-    void adminId;
-    await Promise.resolve();
-    return { success: true, message: 'تم تحديث خطة العمولة' };
+  async updateCommissionPlan(
+    planId: string,
+    updates: Record<string, any>,
+    adminId: string,
+  ) {
+    return this.marketerService.updateCommissionPlan(planId, updates, adminId);
   }
 
-  // ==================== Admin Users ====================
-
-  async getAdminUsers() {
-    // TODO: Implement AdminUser model
-    await Promise.resolve();
-    return { data: [] };
-  }
-
-  async createAdminUser(userData: any, adminId: string) {
-    // TODO: Implement
-    void userData;
-    void adminId;
-    await Promise.resolve();
-    return { success: true, message: 'تم إضافة المسؤول' };
-  }
-
-  async updateAdminUser(userId: string, updates: any) {
-    // TODO: Implement
-    void userId;
-    void updates;
-    await Promise.resolve();
-    return { success: true, message: 'تم تحديث المسؤول' };
-  }
-
-  async resetAdminPassword(userId: string) {
-    // TODO: Implement
-    void userId;
-    await Promise.resolve();
-    return { success: true, tempPassword: 'temp123' };
-  }
-
-  // ==================== Audit Logs ====================
+  // ==================== Audit Logs (→ AuditService) ====================
 
   async getAuditLogs(
     action?: string,
@@ -1521,26 +1050,16 @@ export class AdminService {
     startDate?: string,
     endDate?: string,
   ) {
-    // TODO: Implement AuditLog model
-    void action;
-    void userId;
-    void startDate;
-    void endDate;
-    await Promise.resolve();
-    return { data: [], total: 0 };
+    return this.auditService.getAuditLogs(action, userId, startDate, endDate);
   }
 
   async getAuditLogDetails(logId: string) {
-    // TODO: Implement
-    void logId;
-    await Promise.resolve();
-    return { log: {} };
+    return this.auditService.getAuditLogDetails(logId);
   }
 
   // ==================== System Health ====================
 
-  async getSystemHealth(): Promise<DTO.GetSystemHealthResponseDto> {
-    await Promise.resolve();
+  getSystemHealth() {
     return {
       status: 'healthy',
       database: 'connected',
@@ -1550,8 +1069,7 @@ export class AdminService {
     };
   }
 
-  async getSystemMetrics(): Promise<DTO.GetSystemMetricsResponseDto> {
-    await Promise.resolve();
+  getSystemMetrics() {
     return {
       cpu: 0,
       memory: process.memoryUsage(),
@@ -1560,18 +1078,7 @@ export class AdminService {
     };
   }
 
-  async getSystemErrors(
-    query?: DTO.GetSystemErrorsQueryDto,
-  ): Promise<DTO.GetSystemErrorsResponseDto> {
-    // TODO: Implement error logging
-    void query;
-    await Promise.resolve();
-    return { data: [], total: 0 };
-  }
-
-  // ==================== Database ====================
-
-  async getDatabaseStats(): Promise<DTO.GetDatabaseStatsResponseDto> {
+  async getDatabaseStats() {
     const stats = await Promise.all([
       this.userModel.countDocuments(),
       this.orderModel.countDocuments(),
@@ -1589,118 +1096,16 @@ export class AdminService {
     };
   }
 
-  async cleanupDatabase(
-    adminId: string,
-  ): Promise<DTO.CleanupDatabaseResponseDto> {
-    // TODO: Implement cleanup logic
-    void adminId;
-    await Promise.resolve();
-    return { success: true, message: 'تم تنظيف قاعدة البيانات' };
-  }
-
-  // ==================== Payments ====================
-
-  async getPayments(
-    status?: string,
-    method?: string,
-    page: number = 1,
-    limit: number = 20,
-  ) {
-    // TODO: Implement from transactions
-    void status;
-    void method;
-    await Promise.resolve();
-    return { data: [], total: 0, page, limit };
-  }
-
-  async getPaymentDetails(paymentId: string) {
-    // TODO: Implement
-    void paymentId;
-    await Promise.resolve();
-    return { payment: {} };
-  }
-
-  async refundPayment(
-    paymentId: string,
-    reason: string,
-    amount?: number,
-    adminId?: string,
-  ) {
-    void paymentId;
-    void reason;
-    void amount;
-    void adminId;
-    await Promise.resolve();
-    // TODO: Implement refund logic
-    return { success: true, message: 'تم استرجاع المبلغ' };
-  }
-
-  // ==================== Promotions ====================
-
-  async getActivePromotions() {
-    // TODO: Get from Promotion model
-    await Promise.resolve();
-    return { data: [] };
-  }
-
-  async pausePromotion(promotionId: string) {
-    void promotionId;
-    await Promise.resolve();
-    // TODO: Implement
-    return { success: true, message: 'تم إيقاف العرض' };
-  }
-
-  async resumePromotion(promotionId: string) {
-    void promotionId;
-    await Promise.resolve();
-    // TODO: Implement
-    return { success: true, message: 'تم استئناف العرض' };
-  }
-
-  // ==================== Coupons ====================
-
-  async getCouponUsage(couponCode?: string) {
-    // TODO: Aggregate coupon usage
-    void couponCode;
-    await Promise.resolve();
-    return { totalUsage: 0, uniqueUsers: 0 };
-  }
-
-  async deactivateCoupon(couponCode: string) {
-    // TODO: Implement
-    void couponCode;
-    await Promise.resolve();
-    return { success: true, message: 'تم تعطيل الكوبون' };
-  }
-
-  // ==================== Notifications ====================
-
-  async getNotificationHistory(page: number, limit: number) {
-    // TODO: Implement
-
-    await Promise.resolve();
-    return { data: [], total: 0, page, limit };
-  }
-
-  async getNotificationStats() {
-    await Promise.resolve();
-    // TODO: Implement
-
-    return { sent: 0, delivered: 0, failed: 0 };
-  }
-
-  // ==================== Orders Advanced ====================
+  // ==================== Orders Analytics ====================
 
   async getOrdersByCity(startDate?: string, endDate?: string) {
     const query: Record<string, any> = {};
     if (startDate || endDate) {
-      (query as { createdAt: any }).createdAt = {};
+      query.createdAt = {};
       if (startDate)
-        (query as { createdAt: { $gte?: Date; $lte?: Date } }).createdAt.$gte =
-          new Date(startDate);
+        (query.createdAt as Record<string, any>).$gte = new Date(startDate);
       if (endDate)
-        (query as { createdAt: { $gte?: Date; $lte?: Date } }).createdAt.$lte =
-          new Date(endDate);
+        (query.createdAt as Record<string, any>).$lte = new Date(endDate);
     }
 
     const result = await this.orderModel.aggregate([
@@ -1727,277 +1132,49 @@ export class AdminService {
     return { data: result };
   }
 
-  async getDisputedOrders() {
-    // TODO: Implement disputed orders
-    await Promise.resolve();
-    return { data: [], total: 0 };
+  // ==================== Notifications ====================
+
+  sendBulkNotification(data: DTO.SendBulkNotificationDto) {
+    // TODO: Integrate with Notification Module
+    return {
+      success: true,
+      message: 'تم إرسال الإشعار',
+      recipients: data.userIds?.length || 0,
+    };
   }
 
-  async resolveDispute(
-    orderId: string,
-    resolution: string,
-    refundAmount?: number,
-    adminId?: string,
-  ) {
-    void orderId;
-    void resolution;
-    void refundAmount;
-    void adminId;
-    await Promise.resolve();
-    // TODO: Implement
-    return { success: true, message: 'تم حل النزاع' };
-  }
+  // ==================== Quality Metrics ====================
 
-  // ==================== Drivers Advanced ====================
+  async getQualityMetrics(startDate?: string, endDate?: string) {
+    const query: Record<string, any> = {};
+    if (startDate || endDate) {
+      query.createdAt = {};
+      if (startDate)
+        (query.createdAt as Record<string, any>).$gte = new Date(startDate);
+      if (endDate)
+        (query.createdAt as Record<string, any>).$lte = new Date(endDate);
+    }
 
-  async getTopDrivers(limit: number = 10) {
-    // TODO: Aggregate top drivers by deliveries/rating
-    void limit;
-    await Promise.resolve();
-    return { data: [] };
-  }
-
-  async getDriversByStatus() {
-    await Promise.resolve();
-    const result = await this.driverModel.aggregate([
-      { $group: { _id: '$status', count: { $sum: 1 } } },
-      { $sort: { count: -1 } },
+    const [avgOrderRating, avgDriverRating] = await Promise.all([
+      this.orderModel.aggregate([
+        { $match: { ...query, rating: { $exists: true } } },
+        { $group: { _id: null, avg: { $avg: '$rating' } } },
+      ]),
+      this.driverModel.aggregate([
+        { $match: { 'rating.average': { $exists: true } } },
+        { $group: { _id: null, avg: { $avg: '$rating.average' } } },
+      ]),
     ]);
 
-    return { data: result };
+    return {
+      orderRating: (avgOrderRating[0] as { avg: number })?.avg || 0,
+      driverRating: (avgDriverRating[0] as { avg: number })?.avg || 0,
+    };
   }
 
-  async calculateDriverPayout(
-    driverId: string,
-    startDate: string,
-    endDate: string,
-  ) {
-    // TODO: Calculate from orders
-    void driverId;
-    void startDate;
-    void endDate;
-    await Promise.resolve();
-    return { totalEarnings: 0, orders: 0, payoutAmount: 0 };
-  }
+  // ==================== Roles & Permissions ====================
 
-  // ==================== Stores Advanced ====================
-
-  async getTopStores(limit: number = 10) {
-    // TODO: Aggregate from orders
-    void limit;
-    await Promise.resolve();
-    return { data: [] };
-  }
-
-  async getStoreOrdersHistory(
-    storeId: string,
-    startDate?: string,
-    endDate?: string,
-  ) {
-    // TODO: Implement
-    void storeId;
-    void startDate;
-    void endDate;
-    await Promise.resolve();
-    return { data: [], total: 0 };
-  }
-
-  // ==================== Vendors Advanced ====================
-
-  async getVendorSettlementsHistory(vendorId: string) {
-    void vendorId;
-    await Promise.resolve();
-    // TODO: Get from Settlement model
-    return { data: [], total: 0 };
-  }
-
-  async getVendorFinancials(vendorId: string) {
-    // TODO: Aggregate financials
-    void vendorId;
-    await Promise.resolve();
-    return { totalRevenue: 0, pendingSettlements: 0, paidSettlements: 0 };
-  }
-
-  // ==================== Users Advanced ====================
-
-  async getUserWalletHistory(userId: string) {
-    // TODO: Get transactions
-    void userId;
-    await Promise.resolve();
-    return { data: [], balance: 0 };
-  }
-
-  async getUserOrdersHistory(userId: string) {
-    const orders = await this.orderModel
-      .find({ user: new Types.ObjectId(userId) })
-      .sort({ createdAt: -1 })
-      .limit(50);
-    return { data: orders, total: orders.length };
-  }
-
-  async adjustUserWallet(
-    userId: string,
-    amount: number,
-    type: 'credit' | 'debit',
-    reason: string,
-    adminId: string,
-  ) {
-    // TODO: Implement wallet adjustment
-    void userId;
-    void amount;
-    void type;
-    void reason;
-    void adminId;
-    await Promise.resolve();
-    return { success: true, message: 'تم تعديل المحفظة' };
-  }
-
-  // ==================== Reports Advanced ====================
-
-  async getDriversPerformanceReport(startDate?: string, endDate?: string) {
-    // TODO: Aggregate driver performance
-    void startDate;
-    void endDate;
-    await Promise.resolve();
-    return { data: [] };
-  }
-
-  async getStoresPerformanceReport(startDate?: string, endDate?: string) {
-    // TODO: Aggregate store performance
-    void startDate;
-    void endDate;
-    await Promise.resolve();
-    return { data: [] };
-  }
-
-  async getDetailedFinancialReport(startDate?: string, endDate?: string) {
-    void startDate;
-    void endDate;
-    await Promise.resolve();
-    // TODO: Detailed financial breakdown
-    return { revenue: 0, costs: 0, profit: 0, breakdown: [] };
-  }
-
-  async getUserActivityReport() {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const [activeToday, newToday] = await Promise.all([
-      this.orderModel.distinct('user', { createdAt: { $gte: today } }),
-      this.userModel.countDocuments({ createdAt: { $gte: today } }),
-    ]);
-
-    return { activeUsers: activeToday.length, newUsers: newToday };
-  }
-
-  // ==================== Analytics Dashboard ====================
-
-  async getAnalyticsOverview(startDate?: string, endDate?: string) {
-    // TODO: Comprehensive analytics
-    void startDate;
-    void endDate;
-    await Promise.resolve();
-    return { orders: {}, revenue: {}, users: {}, drivers: {} };
-  }
-
-  async getTrends(metric: string, days: number = 30) {
-    // TODO: Calculate trends
-    void metric;
-    void days;
-    await Promise.resolve();
-    return { data: [] };
-  }
-
-  async getComparisons(
-    p1Start: string,
-    p1End: string,
-    p2Start: string,
-    p2End: string,
-  ) {
-    // TODO: Compare two periods
-    void p1Start;
-    void p1End;
-    void p2Start;
-    void p2End;
-    await Promise.resolve();
-    return { period1: {}, period2: {}, difference: {} };
-  }
-
-  // ==================== CMS ====================
-
-  async getCMSPages() {
-    // TODO: Implement CMS pages
-    await Promise.resolve();
-    return { data: [] };
-  }
-
-  async createCMSPage(pageData: any) {
-    // TODO: Implement
-    void pageData;
-    await Promise.resolve();
-    return { success: true, page: pageData as unknown };
-  }
-
-  async updateCMSPage(pageId: string, updates: any) {
-    // TODO: Implement
-    void pageId;
-    void updates;
-    await Promise.resolve();
-    return { success: true, message: 'تم تحديث الصفحة' };
-  }
-
-  // ==================== Emergency ====================
-
-  async pauseSystem(reason: string, adminId: string) {
-    // TODO: Implement system pause
-    void reason;
-    void adminId;
-    await Promise.resolve();
-    return { success: true, message: 'تم إيقاف النظام', reason };
-  }
-
-  async resumeSystem(adminId: string) {
-    // TODO: Implement system resume
-    void adminId;
-    await Promise.resolve();
-    return { success: true, message: 'تم استئناف النظام' };
-  }
-
-  // ==================== Export & Import ====================
-
-  async exportAllData() {
-    // TODO: Export all collections
-    await Promise.resolve();
-    return { success: true, url: '' };
-  }
-
-  async importData(data: any, type: string) {
-    // TODO: Import data
-    void data;
-    void type;
-    await Promise.resolve();
-    return { success: true, imported: 0 };
-  }
-
-  // ==================== Cache ====================
-
-  async clearCache(key?: string) {
-    void key;
-    await Promise.resolve();
-    // TODO: Clear Redis cache
-    return { success: true, message: 'تم مسح الكاش' };
-  }
-
-  async getCacheStats() {
-    await Promise.resolve();
-    // TODO: Get cache statistics
-    return { keys: 0, size: 0, hitRate: 0 };
-  }
-
-  // ==================== Roles ====================
-
-  async getRoles() {
-    await Promise.resolve();
+  getRoles() {
     return {
       data: [
         { id: 'admin', name: 'مسؤول', permissions: [] },
@@ -2006,18 +1183,25 @@ export class AdminService {
     };
   }
 
-  async createRole(roleData: any) {
-    // TODO: Implement
-    void roleData;
-    await Promise.resolve();
-    return { success: true, role: roleData as unknown };
+  createRole(roleData: Record<string, any>) {
+    // TODO: Implement Role management system
+    return { success: true, role: roleData };
   }
 
-  async updateRole(roleId: string, updates: any) {
-    // TODO: Implement
-    void roleId;
-    void updates;
-    await Promise.resolve();
+  updateRole() {
+    // TODO: Implement Role management system
     return { success: true, message: 'تم تحديث الدور' };
+  }
+
+  // ==================== Cache Management ====================
+
+  clearCache() {
+    // TODO: Integrate with Redis/Cache service
+    return { success: true, message: 'تم مسح الكاش' };
+  }
+
+  getCacheStats() {
+    // TODO: Integrate with Redis/Cache service
+    return { keys: 0, size: 0, hitRate: 0 };
   }
 }

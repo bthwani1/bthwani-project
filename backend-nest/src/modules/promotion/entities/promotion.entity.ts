@@ -136,4 +136,3 @@ PromotionSchema.index({ target: 1, product: 1, store: 1, category: 1 });
 PromotionSchema.index({ placements: 1, order: 1 });
 PromotionSchema.index({ cities: 1 });
 PromotionSchema.index({ channels: 1 });
-

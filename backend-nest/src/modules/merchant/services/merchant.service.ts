@@ -210,6 +210,49 @@ export class MerchantService {
     });
   }
 
+  async findMerchantProductById(id: string): Promise<MerchantProduct> {
+    const product = await this.merchantProductModel
+      .findById(id)
+      .populate('merchant')
+      .populate('store')
+      .populate('product')
+      .exec();
+
+    if (!product) {
+      throw new NotFoundException('المنتج غير موجود');
+    }
+
+    return product;
+  }
+
+  async deleteMerchantProduct(id: string): Promise<void> {
+    const result = await this.merchantProductModel.findByIdAndDelete(id);
+    if (!result) {
+      throw new NotFoundException('المنتج غير موجود');
+    }
+  }
+
+  async findAllMerchantProducts(filters: {
+    merchantId?: string;
+    storeId?: string;
+    isAvailable?: boolean;
+  }): Promise<any[]> {
+    const query: Record<string, any> = {};
+
+    if (filters.merchantId) query.merchant = filters.merchantId;
+    if (filters.storeId) query.store = filters.storeId;
+    if (filters.isAvailable !== undefined) query.isAvailable = filters.isAvailable;
+
+    return this.merchantProductModel
+      .find(query)
+      .populate('merchant')
+      .populate('store')
+      .populate('product')
+      .sort({ createdAt: -1 })
+      .lean()
+      .exec();
+  }
+
   // ==================== Category Management ====================
 
   async createCategory(

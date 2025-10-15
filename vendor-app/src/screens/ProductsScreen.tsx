@@ -22,6 +22,8 @@ import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context"
 import { RootStackParamList } from "../AppNavigator";
 import axiosInstance from "../api/axiosInstance";
 import { COLORS } from "../constants/colors";
+import * as merchantApi from "../api/merchant";
+import { useUser } from "../hooks/userContext";
 
 type MerchantProduct = {
   _id: string;
@@ -156,6 +158,7 @@ const ProductCard = React.memo(function ProductCard({
 });
 
 const ProductsScreen = () => {
+  const { user } = useUser();
   const [products, setProducts] = useState<MerchantProduct[]>([]);
   const [search, setSearch] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -189,11 +192,9 @@ const ProductsScreen = () => {
   const fetchProducts = useCallback(async () => {
     try {
       setRefreshing(true);
-      let data: MerchantProduct[] = [];
-    
-        const res = await axiosInstance.get("/groceries/merchant-products");
-        data = res.data;
+      if (!user?._id) return;
       
+      const data = await merchantApi.getMyProducts(user._id);
 
       // تحديث واحد لجميع الحالات
       setProducts(data);
@@ -204,7 +205,7 @@ const ProductsScreen = () => {
     } finally {
       setRefreshing(false);
     }
-  }, []);
+  }, [user?._id]);
 
   useEffect(() => {
     fetchProducts();
@@ -263,7 +264,7 @@ const ProductsScreen = () => {
 
   const toggleAvailability = useCallback(async (id: string, current: boolean) => {
     try {
-      await axiosInstance.put(`/groceries/merchant-products/${id}`, { isAvailable: !current });
+      await merchantApi.updateProduct(id, { isAvailable: !current });
       // تحديث محلي (تفاؤلي)
       setProducts(prev => prev.map(p => p._id === id ? { ...p, isAvailable: !current } : p));
     } catch {
@@ -279,7 +280,7 @@ const ProductsScreen = () => {
         style: "destructive",
         onPress: async () => {
           try {
-            await axiosInstance.delete(`/groceries/merchant-products/${id}`);
+            await merchantApi.deleteProduct(id);
             // تحديث محلي (تفاؤلي)
             setProducts(prev => prev.filter(p => p._id !== id));
           } catch {

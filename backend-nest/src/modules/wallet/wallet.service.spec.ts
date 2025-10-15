@@ -3,7 +3,7 @@ import { getModelToken, getConnectionToken } from '@nestjs/mongoose';
 import { WalletService } from './wallet.service';
 import { User } from '../auth/entities/user.entity';
 import { WalletTransaction } from './entities/wallet-transaction.entity';
-import { NotFoundException, BadRequestException } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
 
 describe('WalletService', () => {
   let service: WalletService;

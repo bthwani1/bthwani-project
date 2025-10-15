@@ -189,7 +189,10 @@ export class Order extends Document {
   @Prop()
   cancelReason?: string;
 
-  @Prop({ type: String, enum: ['admin', 'customer', 'driver', 'store', 'vendor'] })
+  @Prop({
+    type: String,
+    enum: ['admin', 'customer', 'driver', 'store', 'vendor'],
+  })
   canceledBy?: string;
 
   @Prop({ type: Date })

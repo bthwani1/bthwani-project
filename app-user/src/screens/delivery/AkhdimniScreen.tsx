@@ -1,7 +1,7 @@
 import { fetchUserProfile } from "@/api/userApi";
+import { calculateErrandFee, createErrand } from "@/api/akhdimniApi";
 import { useAuth } from "@/auth/AuthContext";
 import { getAuthBanner } from "@/guards/bannerGateway";
-import axiosInstance from "@/utils/api/axiosInstance";
 
 import COLORS from "@/constants/colors";
 import { RootStackParamList } from "@/types/navigation";
@@ -645,20 +645,32 @@ const AkhdimniScreen: React.FC<ScreenProps> = ({ navigation }) => {
 
     setFeeLoading(true);
     try {
-      const { data } = await axiosInstance.post("/delivery/order/errand/fee", {
-        errand: {
-          category: form.category,
-          size: form.size,
-          weightKg: form.weightKg ? Number(form.weightKg) : undefined,
-          pickup: form.pickup,
-          dropoff: form.dropoff,
-          tip: form.tip ? Number(form.tip) : 0,
+      const data = await calculateErrandFee({
+        category: form.category,
+        size: form.size,
+        weightKg: form.weightKg ? Number(form.weightKg) : undefined,
+        pickup: {
+          location: {
+            lat: form.pickup.location.lat!,
+            lng: form.pickup.location.lng!,
+          },
+          city: form.pickup.city,
+          street: form.pickup.street,
         },
+        dropoff: {
+          location: {
+            lat: form.dropoff.location.lat!,
+            lng: form.dropoff.location.lng!,
+          },
+          city: form.dropoff.city,
+          street: form.dropoff.street,
+        },
+        tip: form.tip ? Number(form.tip) : 0,
       });
       setEstimate({
-        distanceKm: data?.distanceKm ?? localDistanceKm ?? null,
-        deliveryFee: data?.deliveryFee ?? null,
-        totalWithTip: data?.totalWithTip ?? null,
+        distanceKm: data.distanceKm ?? localDistanceKm ?? null,
+        deliveryFee: data.deliveryFee ?? null,
+        totalWithTip: data.totalWithTip ?? null,
       });
     } catch {
       const dist = localDistanceKm ?? 0;
@@ -688,27 +700,22 @@ const AkhdimniScreen: React.FC<ScreenProps> = ({ navigation }) => {
     setBusy(true);
     try {
       const payload = {
-        paymentMethod: form.paymentMethod,
+        category: form.category,
+        description: form.description?.trim() || undefined,
+        size: form.size,
+        weightKg: form.weightKg ? Number(form.weightKg) : undefined,
+        pickup: form.pickup,
+        dropoff: form.dropoff,
+        waypoints: form.waypoints,
+        tip: form.tip ? Number(form.tip) : 0,
         scheduledFor: form.scheduledFor
           ? new Date(form.scheduledFor).toISOString()
           : null,
-        tip: form.tip ? Number(form.tip) : 0,
+        paymentMethod: form.paymentMethod,
         notes: form.notes?.trim() || undefined,
-        errand: {
-          category: form.category,
-          description: form.description?.trim() || undefined,
-          size: form.size,
-          weightKg: form.weightKg ? Number(form.weightKg) : undefined,
-          pickup: form.pickup,
-          dropoff: form.dropoff,
-          waypoints: form.waypoints,
-        },
       };
-      const { data: order } = await axiosInstance.post(
-        "/delivery/order/errand",
-        payload
-      );
-      Alert.alert("تم إنشاء الطلب", `رقم الطلب: ${order._id || order.id}`);
+      const order = await createErrand(payload);
+      Alert.alert("تم إنشاء الطلب", `رقم الطلب: ${order.orderNumber || order._id}`);
       navigation.navigate("OrderDetailsScreen" as any, { order });
     } catch (err: any) {
       const msg =

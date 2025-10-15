@@ -9,7 +9,9 @@ export class GetUserOrdersHandler implements IQueryHandler<GetUserOrdersQuery> {
   constructor(@InjectModel(Order.name) private orderModel: Model<Order>) {}
 
   async execute(query: GetUserOrdersQuery) {
-    const mongoQuery: any = { user: new Types.ObjectId(query.userId) };
+    const mongoQuery: Record<string, any> = {
+      user: new Types.ObjectId(query.userId),
+    };
 
     if (query.pagination.cursor) {
       mongoQuery._id = { $gt: new Types.ObjectId(query.pagination.cursor) };
@@ -30,7 +32,9 @@ export class GetUserOrdersHandler implements IQueryHandler<GetUserOrdersQuery> {
       data: results,
       pagination: {
         nextCursor: hasMore
-          ? (results[results.length - 1] as any)._id.toString()
+          ? String(
+              (results[results.length - 1] as unknown as { _id: string })._id,
+            )
           : null,
         hasMore,
         limit,
@@ -38,4 +42,3 @@ export class GetUserOrdersHandler implements IQueryHandler<GetUserOrdersQuery> {
     };
   }
 }
-

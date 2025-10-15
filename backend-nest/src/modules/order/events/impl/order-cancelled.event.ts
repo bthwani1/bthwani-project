@@ -6,4 +6,3 @@ export class OrderCancelledEvent {
     public readonly canceledBy: string,
   ) {}
 }
-

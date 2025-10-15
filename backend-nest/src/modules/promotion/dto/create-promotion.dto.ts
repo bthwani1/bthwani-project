@@ -8,7 +8,6 @@ import {
   IsArray,
   IsMongoId,
   Min,
-  Max,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
@@ -25,12 +24,18 @@ export class CreatePromotionDto {
   @IsString({ message: 'العنوان يجب أن يكون نصاً' })
   title?: string;
 
-  @ApiPropertyOptional({ description: 'الوصف', example: 'خصم 20% على جميع المنتجات' })
+  @ApiPropertyOptional({
+    description: 'الوصف',
+    example: 'خصم 20% على جميع المنتجات',
+  })
   @IsOptional()
   @IsString({ message: 'الوصف يجب أن يكون نصاً' })
   description?: string;
 
-  @ApiPropertyOptional({ description: 'الصورة', example: 'https://example.com/promo.jpg' })
+  @ApiPropertyOptional({
+    description: 'الصورة',
+    example: 'https://example.com/promo.jpg',
+  })
   @IsOptional()
   @IsString({ message: 'الصورة يجب أن تكون نصاً' })
   image?: string;
@@ -40,7 +45,11 @@ export class CreatePromotionDto {
   @IsString({ message: 'الرابط يجب أن يكون نصاً' })
   link?: string;
 
-  @ApiProperty({ description: 'الهدف', enum: PromotionTarget, example: PromotionTarget.PRODUCT })
+  @ApiProperty({
+    description: 'الهدف',
+    enum: PromotionTarget,
+    example: PromotionTarget.PRODUCT,
+  })
   @IsEnum(PromotionTarget, {
     message: 'الهدف يجب أن يكون product أو store أو category',
   })
@@ -52,7 +61,11 @@ export class CreatePromotionDto {
   @Min(0)
   value?: number;
 
-  @ApiPropertyOptional({ description: 'نوع القيمة', enum: PromotionValueType, example: PromotionValueType.PERCENTAGE })
+  @ApiPropertyOptional({
+    description: 'نوع القيمة',
+    enum: PromotionValueType,
+    example: PromotionValueType.PERCENTAGE,
+  })
   @IsOptional()
   @IsEnum(PromotionValueType, {
     message: 'نوع القيمة يجب أن يكون percentage أو fixed',
@@ -74,7 +87,12 @@ export class CreatePromotionDto {
   @IsMongoId({ message: 'معرف الفئة غير صحيح' })
   category?: string;
 
-  @ApiProperty({ description: 'المواضع', enum: PromotionPlacement, isArray: true, example: [PromotionPlacement.HOME_HERO] })
+  @ApiProperty({
+    description: 'المواضع',
+    enum: PromotionPlacement,
+    isArray: true,
+    example: [PromotionPlacement.HOME_HERO],
+  })
   @IsArray({ message: 'المواضع يجب أن تكون مصفوفة' })
   @IsEnum(PromotionPlacement, { each: true, message: 'الموضع غير صحيح' })
   placements: PromotionPlacement[];
@@ -91,7 +109,11 @@ export class CreatePromotionDto {
   @IsEnum(['app', 'web'], { each: true })
   channels?: string[];
 
-  @ApiPropertyOptional({ description: 'قاعدة التكديس', enum: StackingRule, example: StackingRule.BEST })
+  @ApiPropertyOptional({
+    description: 'قاعدة التكديس',
+    enum: StackingRule,
+    example: StackingRule.BEST,
+  })
   @IsOptional()
   @IsEnum(StackingRule, {
     message: 'قاعدة التكديس غير صحيحة',
@@ -203,4 +225,3 @@ export class GetPromotionsByPlacementDto {
   @IsEnum(['app', 'web'])
   channel?: string;
 }
-

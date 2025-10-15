@@ -1,14 +1,14 @@
 #!/usr/bin/env ts-node
 /**
  * Disaster Recovery & Backup Readiness Probe
- * 
+ *
  * Searches for:
  * - Backup strategies and configurations
  * - Recovery procedures and runbooks
  * - SLIs/SLAs/SLOs
  * - Database backup settings
  * - Disaster recovery documentation
- * 
+ *
  * Generates: reports/dr_readiness.md with RPO/RTO analysis
  */
 
@@ -61,7 +61,7 @@ class DRProbeAuditor {
     this.configPath = path.join(process.cwd(), 'src', 'config');
   }
 
-  async audit(): Promise<void> {
+  audit(): void {
     console.log('🔍 Starting Disaster Recovery & Backup Probe...\n');
 
     // 1. Check backup configurations
@@ -102,7 +102,9 @@ class DRProbeAuditor {
     // Check file uploads backup
     this.checkFileBackup();
 
-    console.log(`  ✓ Found ${this.backupConfigs.length} backup configurations\n`);
+    console.log(
+      `  ✓ Found ${this.backupConfigs.length} backup configurations\n`,
+    );
   }
 
   /**
@@ -120,13 +122,16 @@ class DRProbeAuditor {
       this.backupConfigs.push({
         service: 'MongoDB',
         configured: hasRetryWrites && hasWriteConcern,
-        strategy: hasWriteConcern ? 'Replica Set with majority write concern' : 'Single instance',
+        strategy: hasWriteConcern
+          ? 'Replica Set with majority write concern'
+          : 'Single instance',
         location: dbConfigPath,
         frequency: '[TBD]',
         retention: '[TBD]',
-        notes: hasRetryWrites && hasWriteConcern 
-          ? 'Good write durability settings, but automated backup not detected'
-          : 'Missing replica set configuration for high availability',
+        notes:
+          hasRetryWrites && hasWriteConcern
+            ? 'Good write durability settings, but automated backup not detected'
+            : 'Missing replica set configuration for high availability',
       });
     } else {
       this.backupConfigs.push({
@@ -156,9 +161,10 @@ class DRProbeAuditor {
         location: dockerComposePath,
         frequency: '[TBD]',
         retention: '[TBD]',
-        notes: hasMongoVolume && hasRedisVolume
-          ? 'Volumes configured but backup automation not detected'
-          : 'Missing volume configuration',
+        notes:
+          hasMongoVolume && hasRedisVolume
+            ? 'Volumes configured but backup automation not detected'
+            : 'Missing volume configuration',
       });
     }
   }
@@ -221,11 +227,26 @@ class DRProbeAuditor {
     console.log('📚 Searching for runbooks and DR documentation...');
 
     const runbookTypes = [
-      { name: 'Disaster Recovery Runbook', patterns: ['DR', 'disaster', 'recovery', 'failover'] },
-      { name: 'Backup & Restore Runbook', patterns: ['backup', 'restore', 'recovery'] },
-      { name: 'Incident Response Plan', patterns: ['incident', 'response', 'escalation'] },
-      { name: 'Database Recovery Procedure', patterns: ['database', 'mongo', 'restore'] },
-      { name: 'Service Degradation Runbook', patterns: ['degradation', 'fallback'] },
+      {
+        name: 'Disaster Recovery Runbook',
+        patterns: ['DR', 'disaster', 'recovery', 'failover'],
+      },
+      {
+        name: 'Backup & Restore Runbook',
+        patterns: ['backup', 'restore', 'recovery'],
+      },
+      {
+        name: 'Incident Response Plan',
+        patterns: ['incident', 'response', 'escalation'],
+      },
+      {
+        name: 'Database Recovery Procedure',
+        patterns: ['database', 'mongo', 'restore'],
+      },
+      {
+        name: 'Service Degradation Runbook',
+        patterns: ['degradation', 'fallback'],
+      },
     ];
 
     for (const runbookType of runbookTypes) {
@@ -238,13 +259,19 @@ class DRProbeAuditor {
       });
     }
 
-    console.log(`  ✓ Found ${this.runbooks.filter(r => r.found).length}/${this.runbooks.length} runbooks\n`);
+    console.log(
+      `  ✓ Found ${this.runbooks.filter((r) => r.found).length}/${this.runbooks.length} runbooks\n`,
+    );
   }
 
   /**
    * Search for runbook in reports
    */
-  private searchForRunbook(patterns: string[]): { found: boolean; location?: string; coverage: string[] } {
+  private searchForRunbook(patterns: string[]): {
+    found: boolean;
+    location?: string;
+    coverage: string[];
+  } {
     if (!fs.existsSync(this.reportsPath)) {
       return { found: false, coverage: [] };
     }
@@ -280,12 +307,24 @@ class DRProbeAuditor {
     console.log('📊 Checking SLIs/SLAs/SLOs...');
 
     const sliTypes = [
-      { metric: 'Uptime/Availability SLI', patterns: ['uptime', 'availability', 'sli'] },
-      { metric: 'Response Time SLI', patterns: ['response time', 'latency', 'p99'] },
+      {
+        metric: 'Uptime/Availability SLI',
+        patterns: ['uptime', 'availability', 'sli'],
+      },
+      {
+        metric: 'Response Time SLI',
+        patterns: ['response time', 'latency', 'p99'],
+      },
       { metric: 'Error Rate SLI', patterns: ['error rate', 'success rate'] },
       { metric: 'Data Durability SLI', patterns: ['durability', 'data loss'] },
-      { metric: 'Recovery Time Objective (RTO)', patterns: ['rto', 'recovery time'] },
-      { metric: 'Recovery Point Objective (RPO)', patterns: ['rpo', 'recovery point'] },
+      {
+        metric: 'Recovery Time Objective (RTO)',
+        patterns: ['rto', 'recovery time'],
+      },
+      {
+        metric: 'Recovery Point Objective (RPO)',
+        patterns: ['rpo', 'recovery point'],
+      },
     ];
 
     for (const sliType of sliTypes) {
@@ -298,13 +337,19 @@ class DRProbeAuditor {
       });
     }
 
-    console.log(`  ✓ Found ${this.slis.filter(s => s.defined).length}/${this.slis.length} SLI definitions\n`);
+    console.log(
+      `  ✓ Found ${this.slis.filter((s) => s.defined).length}/${this.slis.length} SLI definitions\n`,
+    );
   }
 
   /**
    * Search for SLI definitions
    */
-  private searchForSLI(patterns: string[]): { found: boolean; target?: string; location?: string } {
+  private searchForSLI(patterns: string[]): {
+    found: boolean;
+    target?: string;
+    location?: string;
+  } {
     if (!fs.existsSync(this.reportsPath)) {
       return { found: false };
     }
@@ -343,7 +388,9 @@ class DRProbeAuditor {
         rto: '[TBD]',
         rpo: '[TBD]',
         backupStrategy: this.getBackupStrategy('MongoDB'),
-        recoveryProcedure: this.hasRunbook('Database Recovery') ? 'Documented' : '[TBD]',
+        recoveryProcedure: this.hasRunbook('Database Recovery')
+          ? 'Documented'
+          : '[TBD]',
         status: this.getComponentStatus('MongoDB'),
       },
       {
@@ -387,7 +434,7 @@ class DRProbeAuditor {
    * Get backup strategy for service
    */
   private getBackupStrategy(service: string): string {
-    const backup = this.backupConfigs.find(b => b.service === service);
+    const backup = this.backupConfigs.find((b) => b.service === service);
     return backup?.strategy || '[TBD]';
   }
 
@@ -395,15 +442,15 @@ class DRProbeAuditor {
    * Check if runbook exists
    */
   private hasRunbook(name: string): boolean {
-    return this.runbooks.some(r => r.name.includes(name) && r.found);
+    return this.runbooks.some((r) => r.name.includes(name) && r.found);
   }
 
   /**
    * Get component DR status
    */
   private getComponentStatus(service: string): 'ready' | 'partial' | 'missing' {
-    const backup = this.backupConfigs.find(b => b.service === service);
-    
+    const backup = this.backupConfigs.find((b) => b.service === service);
+
     if (!backup || !backup.configured) {
       return 'missing';
     }
@@ -428,30 +475,40 @@ class DRProbeAuditor {
     let content = '# تقرير جاهزية Disaster Recovery\n\n';
     content += `**التاريخ**: ${new Date().toLocaleDateString('ar-EG', { dateStyle: 'full' })}\n`;
     content += `**الوقت**: ${new Date().toLocaleTimeString('ar-EG')}\n\n`;
-    content += '**الهدف**: تقييم جاهزية النظام للتعافي من الكوارث والنسخ الاحتياطية\n\n';
+    content +=
+      '**الهدف**: تقييم جاهزية النظام للتعافي من الكوارث والنسخ الاحتياطية\n\n';
     content += '---\n\n';
 
     // Executive Summary
     content += '## 📊 الملخص التنفيذي\n\n';
 
-    const readyComponents = this.drComponents.filter(c => c.status === 'ready').length;
-    const partialComponents = this.drComponents.filter(c => c.status === 'partial').length;
-    const missingComponents = this.drComponents.filter(c => c.status === 'missing').length;
+    const readyComponents = this.drComponents.filter(
+      (c) => c.status === 'ready',
+    ).length;
+    const partialComponents = this.drComponents.filter(
+      (c) => c.status === 'partial',
+    ).length;
+    const missingComponents = this.drComponents.filter(
+      (c) => c.status === 'missing',
+    ).length;
 
-    const readyPercent = Math.round((readyComponents / this.drComponents.length) * 100);
+    const readyPercent = Math.round(
+      (readyComponents / this.drComponents.length) * 100,
+    );
 
     content += `- **المكونات الجاهزة**: ${readyComponents}/${this.drComponents.length}\n`;
     content += `- **المكونات الجزئية**: ${partialComponents}/${this.drComponents.length}\n`;
     content += `- **المكونات المفقودة**: ${missingComponents}/${this.drComponents.length}\n`;
-    content += `- **Runbooks الموثّقة**: ${this.runbooks.filter(r => r.found).length}/${this.runbooks.length}\n`;
-    content += `- **SLIs المُعرّفة**: ${this.slis.filter(s => s.defined).length}/${this.slis.length}\n\n`;
+    content += `- **Runbooks الموثّقة**: ${this.runbooks.filter((r) => r.found).length}/${this.runbooks.length}\n`;
+    content += `- **SLIs المُعرّفة**: ${this.slis.filter((s) => s.defined).length}/${this.slis.length}\n\n`;
 
     content += this.generateProgressBar('جاهزية DR', readyPercent);
     content += '\n';
 
     // RTO/RPO Summary
     content += '## ⏱️ أهداف التعافي (RTO/RPO)\n\n';
-    content += '> **ملاحظة**: القيم الحالية [TBD] تحتاج تحديد بناءً على متطلبات العمل\n\n';
+    content +=
+      '> **ملاحظة**: القيم الحالية [TBD] تحتاج تحديد بناءً على متطلبات العمل\n\n';
 
     content += '| المكون | RTO | RPO | الحالة |\n';
     content += '|--------|-----|-----|--------|\n';
@@ -468,14 +525,18 @@ class DRProbeAuditor {
     content += '\n';
 
     content += '**التعريفات**:\n';
-    content += '- **RTO (Recovery Time Objective)**: أقصى وقت توقف مقبول للخدمة\n';
-    content += '- **RPO (Recovery Point Objective)**: أقصى فترة فقد بيانات مقبولة\n\n';
+    content +=
+      '- **RTO (Recovery Time Objective)**: أقصى وقت توقف مقبول للخدمة\n';
+    content +=
+      '- **RPO (Recovery Point Objective)**: أقصى فترة فقد بيانات مقبولة\n\n';
 
     // Backup Configurations
     content += '## 💾 إعدادات النسخ الاحتياطي\n\n';
 
-    content += '| الخدمة | الحالة | الاستراتيجية | التكرار | الاحتفاظ | ملاحظات |\n';
-    content += '|--------|--------|--------------|----------|----------|----------|\n';
+    content +=
+      '| الخدمة | الحالة | الاستراتيجية | التكرار | الاحتفاظ | ملاحظات |\n';
+    content +=
+      '|--------|--------|--------------|----------|----------|----------|\n';
 
     for (const backup of this.backupConfigs) {
       const status = backup.configured ? '✅' : '❌';
@@ -497,9 +558,9 @@ class DRProbeAuditor {
     }
     content += '\n';
 
-    if (this.runbooks.some(r => !r.found)) {
+    if (this.runbooks.some((r) => !r.found)) {
       content += '**المفقود**: يُنصح بإنشاء Runbooks للعمليات التالية:\n';
-      for (const runbook of this.runbooks.filter(r => !r.found)) {
+      for (const runbook of this.runbooks.filter((r) => !r.found)) {
         content += `- ${runbook.name}\n`;
       }
       content += '\n';
@@ -541,29 +602,40 @@ class DRProbeAuditor {
     const gaps: string[] = [];
 
     // Backup gaps
-    const missingBackups = this.backupConfigs.filter(b => !b.configured);
+    const missingBackups = this.backupConfigs.filter((b) => !b.configured);
     if (missingBackups.length > 0) {
-      gaps.push(`**نسخ احتياطية مفقودة**: ${missingBackups.map(b => b.service).join(', ')}`);
+      gaps.push(
+        `**نسخ احتياطية مفقودة**: ${missingBackups.map((b) => b.service).join(', ')}`,
+      );
     }
 
     // Runbook gaps
-    const missingRunbooks = this.runbooks.filter(r => !r.found);
+    const missingRunbooks = this.runbooks.filter((r) => !r.found);
     if (missingRunbooks.length > 0) {
-      gaps.push(`**Runbooks مفقودة**: ${missingRunbooks.length} من ${this.runbooks.length}`);
+      gaps.push(
+        `**Runbooks مفقودة**: ${missingRunbooks.length} من ${this.runbooks.length}`,
+      );
     }
 
     // SLI gaps
-    const missingSLIs = this.slis.filter(s => !s.defined);
+    const missingSLIs = this.slis.filter((s) => !s.defined);
     if (missingSLIs.length > 0) {
-      gaps.push(`**SLIs غير محددة**: ${missingSLIs.length} من ${this.slis.length}`);
+      gaps.push(
+        `**SLIs غير محددة**: ${missingSLIs.length} من ${this.slis.length}`,
+      );
     }
 
     // TBD values
-    const tbdCount = this.drComponents.filter(c => 
-      c.rto === '[TBD]' || c.rpo === '[TBD]' || c.recoveryProcedure === '[TBD]'
+    const tbdCount = this.drComponents.filter(
+      (c) =>
+        c.rto === '[TBD]' ||
+        c.rpo === '[TBD]' ||
+        c.recoveryProcedure === '[TBD]',
     ).length;
     if (tbdCount > 0) {
-      gaps.push(`**قيم غير محددة (TBD)**: ${tbdCount} مكون يحتاج تحديد RTO/RPO/Recovery`);
+      gaps.push(
+        `**قيم غير محددة (TBD)**: ${tbdCount} مكون يحتاج تحديد RTO/RPO/Recovery`,
+      );
     }
 
     if (gaps.length === 0) {
@@ -607,7 +679,7 @@ class DRProbeAuditor {
     content += '### 3. Runbooks والوثائق\n\n';
     content += '**الأولوية**: عالية\n\n';
     content += 'إنشاء Runbooks للعمليات التالية:\n';
-    for (const runbook of this.runbooks.filter(r => !r.found)) {
+    for (const runbook of this.runbooks.filter((r) => !r.found)) {
       content += `- [ ] ${runbook.name}\n`;
     }
     content += '\n';
@@ -681,7 +753,8 @@ class DRProbeAuditor {
     content += '- [ ] مراجعة وتحديث الوثائق\n\n';
 
     content += '---\n\n';
-    content += '_تم إنشاء هذا التقرير تلقائياً بواسطة `tools/audit/dr_probe.ts`_\n';
+    content +=
+      '_تم إنشاء هذا التقرير تلقائياً بواسطة `tools/audit/dr_probe.ts`_\n';
 
     fs.writeFileSync(reportPath, content, 'utf-8');
     console.log(`📊 Report generated: ${reportPath}`);
@@ -704,8 +777,9 @@ class DRProbeAuditor {
 
 // Run the audit
 const auditor = new DRProbeAuditor();
-auditor.audit().catch((error) => {
+try {
+  auditor.audit();
+} catch (error) {
   console.error('❌ Error during audit:', error);
   process.exit(1);
-});
-
+}

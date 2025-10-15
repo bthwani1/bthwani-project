@@ -38,6 +38,8 @@ import EditAddress from './pages/profile/EditAddress';
 import Search from './pages/search/Search';
 import SelectLocation from './pages/map/SelectLocation';
 import Akhdimni from './pages/akhdimni/Akhdimni';
+import MyErrandsPage from './pages/orders/MyErrandsPage';
+import ErrandDetailsPage from './pages/orders/ErrandDetailsPage';
 
 import UtilityGasScreen from './pages/utility/UtilityGasScreen';
 import UtilityWaterScreen from './pages/utility/UtilityWaterScreen';
@@ -204,6 +206,29 @@ const AppContent: React.FC = () => {
           <AppLayout>
             <Akhdimni />
           </AppLayout>
+        }
+      />
+
+      {/* My Errands */}
+      <Route
+        path="/orders/errands"
+        element={
+          <ProtectedRoute>
+            <AppLayout>
+              <MyErrandsPage />
+            </AppLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/orders/errands/:id"
+        element={
+          <ProtectedRoute>
+            <AppLayout>
+              <ErrandDetailsPage />
+            </AppLayout>
+          </ProtectedRoute>
         }
       />
 

@@ -15,6 +15,7 @@ import {
 import {
   CreateSuppressionDto,
   UpdateSuppressionDto,
+  SuppressionStatsDto,
 } from '../dto/suppression.dto';
 
 @Injectable()
@@ -65,7 +66,7 @@ export class SuppressionService {
 
         const updated = await existing.save();
         this.logger.log(
-          `Updated existing suppression: ${(updated as NotificationSuppression)._id}`,
+          `Updated existing suppression: ${(updated as NotificationSuppression)._id?.toString()}`,
         );
         return updated;
       }
@@ -83,13 +84,14 @@ export class SuppressionService {
       });
 
       const saved = await suppression.save();
-      this.logger.log(`Suppression created successfully: ${saved._id}`);
-      return saved;
-    } catch (error) {
-      this.logger.error(
-        `Failed to create suppression: ${error.message}`,
-        error.stack,
+      this.logger.log(
+        `Suppression created successfully: ${(saved as NotificationSuppression)._id?.toString()}`,
       );
+      return saved;
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      const stack = error instanceof Error ? error.stack : undefined;
+      this.logger.error(`Failed to create suppression: ${message}`, stack);
       throw new BadRequestException('فشل في إنشاء الحظر');
     }
   }
@@ -116,11 +118,10 @@ export class SuppressionService {
       });
 
       return !!suppression;
-    } catch (error) {
-      this.logger.error(
-        `Failed to check suppression: ${error.message}`,
-        error.stack,
-      );
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      const stack = error instanceof Error ? error.stack : undefined;
+      this.logger.error(`Failed to check suppression: ${message}`, stack);
       return false; // في حالة الخطأ، نسمح بالإرسال للأمان
     }
   }
@@ -148,11 +149,10 @@ export class SuppressionService {
       });
 
       return Array.from(channels);
-    } catch (error) {
-      this.logger.error(
-        `Failed to get suppressed channels: ${error.message}`,
-        error.stack,
-      );
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      const stack = error instanceof Error ? error.stack : undefined;
+      this.logger.error(`Failed to get suppressed channels: ${message}`, stack);
       return [];
     }
   }
@@ -168,11 +168,10 @@ export class SuppressionService {
         .find({ userId: new Types.ObjectId(userId) })
         .sort({ createdAt: -1 })
         .exec();
-    } catch (error) {
-      this.logger.error(
-        `Failed to get user suppressions: ${error.message}`,
-        error.stack,
-      );
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      const stack = error instanceof Error ? error.stack : undefined;
+      this.logger.error(`Failed to get user suppressions: ${message}`, stack);
       throw new BadRequestException('فشل في جلب قائمة الحظر');
     }
   }
@@ -208,14 +207,15 @@ export class SuppressionService {
       }
 
       const updated = await suppression.save();
-      this.logger.log(`Suppression updated: ${updated._id}`);
-      return updated;
-    } catch (error) {
-      if (error instanceof NotFoundException) throw error;
-      this.logger.error(
-        `Failed to update suppression: ${error.message}`,
-        error.stack,
+      this.logger.log(
+        `Suppression updated: ${(updated as NotificationSuppression)._id?.toString()}`,
       );
+      return updated;
+    } catch (error: unknown) {
+      if (error instanceof NotFoundException) throw error;
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      const stack = error instanceof Error ? error.stack : undefined;
+      this.logger.error(`Failed to update suppression: ${message}`, stack);
       throw new BadRequestException('فشل في تحديث الحظر');
     }
   }
@@ -235,12 +235,11 @@ export class SuppressionService {
       await suppression.save();
 
       this.logger.log(`Suppression removed: ${suppressionId}`);
-    } catch (error) {
+    } catch (error: unknown) {
       if (error instanceof NotFoundException) throw error;
-      this.logger.error(
-        `Failed to remove suppression: ${error.message}`,
-        error.stack,
-      );
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      const stack = error instanceof Error ? error.stack : undefined;
+      this.logger.error(`Failed to remove suppression: ${message}`, stack);
       throw new BadRequestException('فشل في إلغاء الحظر');
     }
   }
@@ -274,10 +273,12 @@ export class SuppressionService {
       this.logger.log(
         `Channel ${channel} suppression removed for user ${userId}`,
       );
-    } catch (error) {
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      const stack = error instanceof Error ? error.stack : undefined;
       this.logger.error(
-        `Failed to remove channel suppression: ${error.message}`,
-        error.stack,
+        `Failed to remove channel suppression: ${message}`,
+        stack,
       );
       throw new BadRequestException('فشل في إلغاء حظر القناة');
     }
@@ -305,10 +306,7 @@ export class SuppressionService {
         await suppression.save();
       } else {
         // إنشاء حظر تلقائي بعد 5 فشلات
-        const recentFailures = await this.getRecentFailureCount(
-          userId,
-          channel,
-        );
+        const recentFailures = this.getRecentFailureCount();
 
         if (recentFailures >= 5) {
           await this.createSuppression(
@@ -322,23 +320,20 @@ export class SuppressionService {
           );
         }
       }
-    } catch (error) {
-      this.logger.error(
-        `Failed to record failure: ${error.message}`,
-        error.stack,
-      );
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      const stack = error instanceof Error ? error.stack : undefined;
+      this.logger.error(`Failed to record failure: ${message}`, stack);
     }
   }
 
   /**
    * حساب عدد الفشلات الأخيرة
    */
-  private async getRecentFailureCount(
-    userId: string,
-    channel: SuppressionChannel,
-  ): Promise<number> {
+  private getRecentFailureCount(): number {
     // يمكن تنفيذ هذا بطريقة أكثر تعقيداً مع تخزين الفشلات
     // هنا نستخدم طريقة مبسّطة
+    // TODO: Implement with userId and channel parameters when needed
     return 0;
   }
 
@@ -365,10 +360,12 @@ export class SuppressionService {
       this.logger.log(
         `Cleaned up ${result.modifiedCount} expired suppressions`,
       );
-    } catch (error) {
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      const stack = error instanceof Error ? error.stack : undefined;
       this.logger.error(
-        `Failed to cleanup expired suppressions: ${error.message}`,
-        error.stack,
+        `Failed to cleanup expired suppressions: ${message}`,
+        stack,
       );
     }
   }
@@ -376,36 +373,49 @@ export class SuppressionService {
   /**
    * إحصائيات الحظر
    */
-  async getSuppressionStats(): Promise<any> {
+  async getSuppressionStats(): Promise<SuppressionStatsDto> {
     try {
       const total = await this.suppressionModel.countDocuments();
       const active = await this.suppressionModel.countDocuments({
         isActive: true,
       });
 
-      const byReason = await this.suppressionModel.aggregate([
+      const byReason = await this.suppressionModel.aggregate<{
+        _id: string;
+        count: number;
+      }>([
         { $match: { isActive: true } },
         { $group: { _id: '$reason', count: { $sum: 1 } } },
       ]);
 
-      const byChannel = await this.suppressionModel.aggregate([
+      const byChannel = await this.suppressionModel.aggregate<{
+        _id: string;
+        count: number;
+      }>([
         { $match: { isActive: true } },
         { $unwind: '$suppressedChannels' },
         { $group: { _id: '$suppressedChannels', count: { $sum: 1 } } },
       ]);
 
-      return {
+      const result: SuppressionStatsDto = {
         total,
         active,
         inactive: total - active,
-        byReason,
-        byChannel,
+        byReason: byReason.map((item) => ({
+          _id: item._id,
+          count: item.count,
+        })),
+        byChannel: byChannel.map((item) => ({
+          _id: item._id,
+          count: item.count,
+        })),
       };
-    } catch (error) {
-      this.logger.error(
-        `Failed to get suppression stats: ${error.message}`,
-        error.stack,
-      );
+
+      return result;
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      const stack = error instanceof Error ? error.stack : undefined;
+      this.logger.error(`Failed to get suppression stats: ${message}`, stack);
       throw new BadRequestException('فشل في جلب الإحصائيات');
     }
   }

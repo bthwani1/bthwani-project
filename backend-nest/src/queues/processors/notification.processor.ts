@@ -1,4 +1,10 @@
-import { Processor, Process, OnQueueActive, OnQueueCompleted, OnQueueFailed } from '@nestjs/bull';
+import {
+  Processor,
+  Process,
+  OnQueueActive,
+  OnQueueCompleted,
+  OnQueueFailed,
+} from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
 import type { Job } from 'bull';
 
@@ -7,7 +13,7 @@ export interface SendNotificationJobData {
   title: string;
   body: string;
   type: 'order' | 'payment' | 'promo' | 'system';
-  data?: any;
+  data?: Record<string, unknown>;
 }
 
 export interface SendBulkNotificationsJobData {
@@ -23,7 +29,9 @@ export class NotificationProcessor {
 
   @Process('send-notification')
   async sendNotification(job: Job<SendNotificationJobData>) {
-    this.logger.log(`Processing notification job ${job.id} for user ${job.data.userId}`);
+    this.logger.log(
+      `Processing notification job ${job.id} for user ${job.data.userId}`,
+    );
 
     try {
       // TODO: Integrate with Firebase Cloud Messaging or your notification service
@@ -39,22 +47,30 @@ export class NotificationProcessor {
       // Simulate sending notification
       await this.simulateSendNotification(notification);
 
-      this.logger.log(`Notification sent successfully to user ${job.data.userId}`);
-      
+      this.logger.log(
+        `Notification sent successfully to user ${job.data.userId}`,
+      );
+
       return {
         success: true,
         userId: job.data.userId,
         sentAt: new Date(),
       };
     } catch (error) {
-      this.logger.error(`Failed to send notification: ${error.message}`, error.stack);
+      const err = error as Error;
+      this.logger.error(
+        `Failed to send notification: ${err.message}`,
+        err.stack,
+      );
       throw error;
     }
   }
 
   @Process('send-bulk-notifications')
   async sendBulkNotifications(job: Job<SendBulkNotificationsJobData>) {
-    this.logger.log(`Processing bulk notifications for ${job.data.userIds.length} users`);
+    this.logger.log(
+      `Processing bulk notifications for ${job.data.userIds.length} users`,
+    );
 
     const results = {
       total: job.data.userIds.length,
@@ -75,23 +91,33 @@ export class NotificationProcessor {
         results.successful++;
       } catch (error) {
         results.failed++;
-        results.errors.push(`User ${userId}: ${error.message}`);
-        this.logger.error(`Failed to send notification to user ${userId}`, error.stack);
+        const err = error as Error;
+        results.errors.push(`User ${userId}: ${err.message}`);
+        this.logger.error(
+          `Failed to send notification to user ${userId}`,
+          err.stack,
+        );
       }
 
       // Small delay to avoid overwhelming the service
       await new Promise((resolve) => setTimeout(resolve, 100));
     }
 
-    this.logger.log(`Bulk notifications completed: ${results.successful}/${results.total} successful`);
+    this.logger.log(
+      `Bulk notifications completed: ${results.successful}/${results.total} successful`,
+    );
     return results;
   }
 
   @Process('send-order-update')
-  async sendOrderUpdate(job: Job<{ orderId: string; status: string; userId: string }>) {
-    this.logger.log(`Sending order update notification for order ${job.data.orderId}`);
+  async sendOrderUpdate(
+    job: Job<{ orderId: string; status: string; userId: string }>,
+  ) {
+    this.logger.log(
+      `Sending order update notification for order ${job.data.orderId}`,
+    );
 
-    const statusMessages = {
+    const statusMessages: Record<string, string> = {
       confirmed: 'تم تأكيد طلبك',
       preparing: 'جاري تحضير طلبك',
       ready: 'طلبك جاهز للتوصيل',
@@ -109,13 +135,13 @@ export class NotificationProcessor {
         userId: job.data.userId,
         title,
         body,
-        type: 'order',
+        type: 'order' as const,
         data: {
           orderId: job.data.orderId,
           status: job.data.status,
         },
       },
-    } as any);
+    } as unknown as Job<SendNotificationJobData>);
   }
 
   @OnQueueActive()
@@ -124,16 +150,21 @@ export class NotificationProcessor {
   }
 
   @OnQueueCompleted()
-  onCompleted(job: Job, result: any) {
+  onCompleted(job: Job, result: unknown) {
     this.logger.log(`Job ${job.id} completed with result:`, result);
   }
 
   @OnQueueFailed()
   onFailed(job: Job, error: Error) {
-    this.logger.error(`Job ${job.id} failed with error: ${error.message}`, error.stack);
+    this.logger.error(
+      `Job ${job.id} failed with error: ${error.message}`,
+      error.stack,
+    );
   }
 
-  private async simulateSendNotification(notification: any): Promise<void> {
+  private async simulateSendNotification(
+    notification: Record<string, unknown>,
+  ): Promise<void> {
     // Simulate API call delay
     await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -151,4 +182,3 @@ export class NotificationProcessor {
     this.logger.debug(`[SIMULATED] Notification sent:`, notification);
   }
 }
-

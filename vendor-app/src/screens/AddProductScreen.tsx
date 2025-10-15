@@ -24,9 +24,9 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { RootStackParamList } from "../AppNavigator";
-import axiosInstance from "../api/axiosInstance";
 import { COLORS } from "../constants/colors";
 import { useUser } from "../hooks/userContext";
+import * as merchantApi from "../api/merchant";
 
 // ===== Helpers: product قد يكون String أو Object
 type CatalogRef =
@@ -95,10 +95,9 @@ const AddProductScreen = () => {
       try {
         setLoading(true);
         console.log("[AddProduct] fetching product:", productId);
-        const res = await axiosInstance.get(`/groceries/merchant-products/${productId}`);
-        console.log("[AddProduct] fetched OK:", res.status, res.data?._id);
+        const mp = await merchantApi.getProduct(productId);
+        console.log("[AddProduct] fetched OK:", mp._id);
 
-        const mp = res.data || {};
         const p: CatalogRef | undefined =
           mp.product ? (typeof mp.product === "string" ? mp.product : mp.product) : undefined;
 
@@ -189,10 +188,10 @@ const AddProductScreen = () => {
       console.log("[AddProduct] submit payload:", payload);
 
       if (productId) {
-        await axiosInstance.put(`/groceries/merchant-products/${productId}`, payload);
+        await merchantApi.updateProduct(productId, payload);
         Alert.alert("تم", "تم تحديث المنتج بنجاح");
       } else {
-        await axiosInstance.post(`/groceries/merchant-products`, payload);
+        await merchantApi.createProduct(payload);
         Alert.alert("تم", "تم إضافة المنتج بنجاح");
       }
       navigation.goBack();

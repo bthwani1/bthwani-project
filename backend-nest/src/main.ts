@@ -42,7 +42,7 @@ async function bootstrap() {
   // Rate Limiting - حماية من هجمات DDoS
   const rateLimitTTL = parseInt(process.env.RATE_LIMIT_TTL || '60', 10); // seconds
   const rateLimitMax = parseInt(process.env.RATE_LIMIT_MAX || '100', 10); // requests
-  
+
   app.use(
     rateLimit({
       windowMs: rateLimitTTL * 1000, // تحويل إلى milliseconds
@@ -147,20 +147,16 @@ async function bootstrap() {
   await app.listen(port);
 
   // استخدام Logger بدلاً من console.log
-  const appLogger = app.get('Logger');
-  appLogger.log(
+  logger.log(
     `🚀 Application running on: http://localhost:${port}`,
     'Bootstrap',
   );
-  appLogger.log(
-    `📚 Swagger docs: http://localhost:${port}/api/docs`,
-    'Bootstrap',
-  );
-  appLogger.log(
+  logger.log(`📚 Swagger docs: http://localhost:${port}/api/docs`, 'Bootstrap');
+  logger.log(
     `🔥 Environment: ${process.env.NODE_ENV || 'development'}`,
     'Bootstrap',
   );
-  appLogger.log(
+  logger.log(
     `📊 Log Level: ${process.env.LOG_LEVEL || (process.env.NODE_ENV === 'production' ? 'info' : 'debug')}`,
     'Bootstrap',
   );

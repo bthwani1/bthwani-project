@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import * as request from 'supertest';
+import request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { GlobalExceptionFilter } from '../src/common/filters/global-exception.filter';
 
@@ -36,8 +36,8 @@ describe('Error Codes (e2e)', () => {
         success: false,
         error: {
           code: 'BAD_REQUEST',
-          userMessage: expect.stringContaining('البيانات'),
-          suggestedAction: expect.stringContaining('التحقق'),
+          userMessage: expect.stringContaining('البيانات') as string,
+          suggestedAction: expect.stringContaining('التحقق') as string,
         },
       });
     });
@@ -72,7 +72,7 @@ describe('Error Codes (e2e)', () => {
         error: {
           code: 'NOT_FOUND',
           userMessage: 'البيانات المطلوبة غير موجودة',
-          suggestedAction: expect.stringContaining('التحقق'),
+          suggestedAction: expect.stringContaining('التحقق') as string,
         },
       });
     });
@@ -151,13 +151,15 @@ describe('Error Codes (e2e)', () => {
     describe('413 - PAYLOAD_TOO_LARGE', () => {
       it('should return 413 for oversized payload', async () => {
         const largePayload = 'x'.repeat(10 * 1024 * 1024); // 10MB
-        
+
         const response = await request(app.getHttpServer())
           .post('/test-endpoint')
           .send({ data: largePayload })
           .expect(HttpStatus.PAYLOAD_TOO_LARGE);
 
-        expect(response.body.error.code).toBe('PAYLOAD_TOO_LARGE');
+        expect((response.body as { error: { code: string } }).error.code).toBe(
+          'PAYLOAD_TOO_LARGE',
+        );
       });
     });
 
@@ -169,7 +171,9 @@ describe('Error Codes (e2e)', () => {
           .send('plain text data')
           .expect(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
 
-        expect(response.body.error.code).toBe('UNSUPPORTED_MEDIA_TYPE');
+        expect((response.body as { error: { code: string } }).error.code).toBe(
+          'UNSUPPORTED_MEDIA_TYPE',
+        );
       });
     });
 
@@ -205,16 +209,21 @@ describe('Error Codes (e2e)', () => {
         .expect(HttpStatus.UNAUTHORIZED);
 
       // التحقق من البنية الكاملة
-      expect(response.body).toHaveProperty('success', false);
-      expect(response.body).toHaveProperty('error');
-      expect(response.body.error).toHaveProperty('code');
-      expect(response.body.error).toHaveProperty('message');
-      expect(response.body.error).toHaveProperty('userMessage');
-      expect(response.body.error).toHaveProperty('suggestedAction');
-      expect(response.body).toHaveProperty('meta');
-      expect(response.body.meta).toHaveProperty('timestamp');
-      expect(response.body.meta).toHaveProperty('path');
-      expect(response.body.meta).toHaveProperty('version');
+      const body = response.body as {
+        success: boolean;
+        error: Record<string, unknown>;
+        meta: Record<string, unknown>;
+      };
+      expect(body).toHaveProperty('success', false);
+      expect(body).toHaveProperty('error');
+      expect(body.error).toHaveProperty('code');
+      expect(body.error).toHaveProperty('message');
+      expect(body.error).toHaveProperty('userMessage');
+      expect(body.error).toHaveProperty('suggestedAction');
+      expect(body).toHaveProperty('meta');
+      expect(body.meta).toHaveProperty('timestamp');
+      expect(body.meta).toHaveProperty('path');
+      expect(body.meta).toHaveProperty('version');
     });
 
     it('should include Arabic user message', async () => {
@@ -223,7 +232,13 @@ describe('Error Codes (e2e)', () => {
         .expect(HttpStatus.UNAUTHORIZED);
 
       // التحقق من وجود رسالة عربية
-      expect(response.body.error.userMessage).toMatch(/[\u0600-\u06FF]/);
+      expect(
+        (
+          response.body as {
+            error: { userMessage: string };
+          }
+        ).error.userMessage,
+      ).toMatch(/[\u0600-\u06FF]/);
     });
 
     it('should include suggested action', async () => {
@@ -231,8 +246,11 @@ describe('Error Codes (e2e)', () => {
         .get('/auth/me')
         .expect(HttpStatus.UNAUTHORIZED);
 
-      expect(response.body.error.suggestedAction).toBeTruthy();
-      expect(response.body.error.suggestedAction.length).toBeGreaterThan(0);
+      const body = response.body as {
+        error: { suggestedAction: string };
+      };
+      expect(body.error.suggestedAction).toBeTruthy();
+      expect(body.error.suggestedAction.length).toBeGreaterThan(0);
     });
   });
 
@@ -240,15 +258,15 @@ describe('Error Codes (e2e)', () => {
     it('should support all 20 error codes', () => {
       const supportedCodes = [
         // Client Errors (4xx)
-        400, 401, 402, 403, 404, 405, 406, 408, 409, 410,
-        413, 415, 422, 423, 429,
+        400, 401, 402, 403, 404, 405, 406, 408, 409, 410, 413, 415, 422, 423,
+        429,
         // Server Errors (5xx)
         500, 501, 502, 503, 504,
       ];
 
       // التحقق من أن GlobalExceptionFilter يدعم جميع الأكواد
-      const filter = new GlobalExceptionFilter();
-      supportedCodes.forEach(code => {
+      void new GlobalExceptionFilter();
+      supportedCodes.forEach((code) => {
         // يمكن اختبار getErrorCode هنا إذا كان public
         expect(code).toBeGreaterThan(0);
       });
@@ -257,4 +275,3 @@ describe('Error Codes (e2e)', () => {
     });
   });
 });
-

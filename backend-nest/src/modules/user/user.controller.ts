@@ -9,7 +9,15 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth, ApiResponse, ApiParam, ApiBody, ApiQuery } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBearerAuth,
+  ApiResponse,
+  ApiParam,
+  ApiBody,
+  ApiQuery,
+} from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { AddAddressDto } from './dto/add-address.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -17,7 +25,11 @@ import { SetPinDto, VerifyPinDto } from './dto/set-pin.dto';
 import { CursorPaginationDto } from '../../common/dto/pagination.dto';
 import { UnifiedAuthGuard } from '../../common/guards/unified-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
-import { Auth, Roles, CurrentUser } from '../../common/decorators/auth.decorator';
+import {
+  Auth,
+  Roles,
+  CurrentUser,
+} from '../../common/decorators/auth.decorator';
 import { AuthType } from '../../common/guards/unified-auth.guard';
 
 @ApiTags('User')
@@ -29,7 +41,10 @@ export class UserController {
 
   @Auth(AuthType.FIREBASE)
   @Get('me')
-  @ApiOperation({ summary: 'جلب بيانات المستخدم الحالي', description: 'الحصول على جميع بيانات المستخدم الحالي' })
+  @ApiOperation({
+    summary: 'جلب بيانات المستخدم الحالي',
+    description: 'الحصول على جميع بيانات المستخدم الحالي',
+  })
   @ApiResponse({ status: 200, description: 'بيانات المستخدم' })
   @ApiResponse({ status: 401, description: 'غير مصرّح' })
   @ApiResponse({ status: 404, description: 'المستخدم غير موجود' })
@@ -39,7 +54,10 @@ export class UserController {
 
   @Auth(AuthType.FIREBASE)
   @Patch('me')
-  @ApiOperation({ summary: 'تحديث الملف الشخصي', description: 'تحديث بيانات المستخدم الحالي' })
+  @ApiOperation({
+    summary: 'تحديث الملف الشخصي',
+    description: 'تحديث بيانات المستخدم الحالي',
+  })
   @ApiBody({ type: UpdateUserDto, description: 'البيانات المراد تحديثها' })
   @ApiResponse({ status: 200, description: 'تم التحديث بنجاح' })
   @ApiResponse({ status: 401, description: 'غير مصرّح' })
@@ -53,7 +71,10 @@ export class UserController {
 
   @Auth(AuthType.FIREBASE)
   @Get('addresses')
-  @ApiOperation({ summary: 'جلب جميع عناوين المستخدم', description: 'الحصول على قائمة عناوين التوصيل المحفوظة' })
+  @ApiOperation({
+    summary: 'جلب جميع عناوين المستخدم',
+    description: 'الحصول على قائمة عناوين التوصيل المحفوظة',
+  })
   @ApiResponse({ status: 200, description: 'قائمة العناوين' })
   @ApiResponse({ status: 401, description: 'غير مصرّح' })
   async getAddresses(@CurrentUser('id') userId: string) {
@@ -62,7 +83,10 @@ export class UserController {
 
   @Auth(AuthType.FIREBASE)
   @Post('addresses')
-  @ApiOperation({ summary: 'إضافة عنوان توصيل جديد', description: 'إضافة عنوان توصيل مع الإحداثيات والتفاصيل' })
+  @ApiOperation({
+    summary: 'إضافة عنوان توصيل جديد',
+    description: 'إضافة عنوان توصيل مع الإحداثيات والتفاصيل',
+  })
   @ApiBody({ type: AddAddressDto, description: 'بيانات العنوان' })
   @ApiResponse({ status: 201, description: 'تمت إضافة العنوان بنجاح' })
   @ApiResponse({ status: 400, description: 'بيانات العنوان غير صالحة' })
@@ -76,7 +100,10 @@ export class UserController {
 
   @Auth(AuthType.FIREBASE)
   @Patch('addresses/:addressId')
-  @ApiOperation({ summary: 'تحديث عنوان موجود', description: 'تعديل بيانات عنوان توصيل محفوظ' })
+  @ApiOperation({
+    summary: 'تحديث عنوان موجود',
+    description: 'تعديل بيانات عنوان توصيل محفوظ',
+  })
   @ApiParam({ name: 'addressId', description: 'معرّف العنوان' })
   @ApiBody({ type: AddAddressDto, description: 'البيانات المراد تحديثها' })
   @ApiResponse({ status: 200, description: 'تم تحديث العنوان بنجاح' })
@@ -92,7 +119,10 @@ export class UserController {
 
   @Auth(AuthType.FIREBASE)
   @Delete('addresses/:addressId')
-  @ApiOperation({ summary: 'حذف عنوان', description: 'حذف عنوان توصيل من القائمة' })
+  @ApiOperation({
+    summary: 'حذف عنوان',
+    description: 'حذف عنوان توصيل من القائمة',
+  })
   @ApiParam({ name: 'addressId', description: 'معرّف العنوان' })
   @ApiResponse({ status: 200, description: 'تم حذف العنوان بنجاح' })
   @ApiResponse({ status: 404, description: 'العنوان غير موجود' })
@@ -106,7 +136,10 @@ export class UserController {
 
   @Auth(AuthType.FIREBASE)
   @Post('addresses/:addressId/set-default')
-  @ApiOperation({ summary: 'تعيين العنوان الافتراضي', description: 'جعل عنوان معين هو العنوان الافتراضي للتوصيل' })
+  @ApiOperation({
+    summary: 'تعيين العنوان الافتراضي',
+    description: 'جعل عنوان معين هو العنوان الافتراضي للتوصيل',
+  })
   @ApiParam({ name: 'addressId', description: 'معرّف العنوان' })
   @ApiResponse({ status: 200, description: 'تم تعيين العنوان الافتراضي بنجاح' })
   @ApiResponse({ status: 404, description: 'العنوان غير موجود' })
@@ -120,7 +153,10 @@ export class UserController {
 
   @Auth(AuthType.FIREBASE)
   @Delete('deactivate')
-  @ApiOperation({ summary: 'إلغاء تفعيل الحساب', description: 'تعطيل حساب المستخدم بشكل مؤقت أو دائم' })
+  @ApiOperation({
+    summary: 'إلغاء تفعيل الحساب',
+    description: 'تعطيل حساب المستخدم بشكل مؤقت أو دائم',
+  })
   @ApiResponse({ status: 200, description: 'تم تعطيل الحساب بنجاح' })
   @ApiResponse({ status: 401, description: 'غير مصرّح' })
   async deactivateAccount(@CurrentUser('id') userId: string) {
@@ -130,9 +166,16 @@ export class UserController {
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @Get('search')
-  @ApiOperation({ summary: 'البحث عن مستخدمين', description: 'البحث في قاعدة بيانات المستخدمين (admin only)' })
+  @ApiOperation({
+    summary: 'البحث عن مستخدمين',
+    description: 'البحث في قاعدة بيانات المستخدمين (admin only)',
+  })
   @ApiQuery({ name: 'q', description: 'نص البحث (اسم، رقم، email)' })
-  @ApiQuery({ name: 'cursor', required: false, description: 'Cursor للصفحة التالية' })
+  @ApiQuery({
+    name: 'cursor',
+    required: false,
+    description: 'Cursor للصفحة التالية',
+  })
   @ApiQuery({ name: 'limit', required: false, description: 'عدد النتائج' })
   @ApiResponse({ status: 200, description: 'نتائج البحث' })
   @ApiResponse({ status: 401, description: 'غير مصرّح' })
@@ -196,7 +239,17 @@ export class UserController {
     summary: 'تغيير رمز PIN',
     description: 'تغيير PIN الحالي (يتطلب PIN القديم)',
   })
-  @ApiBody({ schema: { type: 'object', properties: { oldPin: { type: 'string' }, newPin: { type: 'string' }, confirmNewPin: { type: 'string' } }, required: ['oldPin', 'newPin', 'confirmNewPin'] } })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        oldPin: { type: 'string' },
+        newPin: { type: 'string' },
+        confirmNewPin: { type: 'string' },
+      },
+      required: ['oldPin', 'newPin', 'confirmNewPin'],
+    },
+  })
   @ApiResponse({ status: 200, description: 'تم تغيير PIN بنجاح' })
   @ApiResponse({ status: 401, description: 'PIN القديم غير صحيح' })
   @ApiResponse({ status: 400, description: 'PIN الجديد غير صالح' })

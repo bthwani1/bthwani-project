@@ -40,7 +40,7 @@ export async function sendPushTokenToServer(expoPushToken: string): Promise<void
       return;
     }
 
-    await axiosInstance.post('/vendor/push-token', {
+    await axiosInstance.patch('/vendors/me', {
       vendorId,
       expoPushToken,
     });

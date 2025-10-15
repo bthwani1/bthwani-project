@@ -45,7 +45,12 @@ export class Vendor extends Document {
   @Prop({ required: true, select: false })
   password: string;
 
-  @Prop({ type: Types.ObjectId, ref: 'DeliveryStore', required: true, index: true })
+  @Prop({
+    type: Types.ObjectId,
+    ref: 'DeliveryStore',
+    required: true,
+    index: true,
+  })
   store: Types.ObjectId;
 
   @Prop({ default: true })
@@ -84,4 +89,3 @@ VendorSchema.index({ phone: 1 });
 VendorSchema.index({ store: 1 });
 VendorSchema.index({ createdByMarketerUid: 1, createdAt: -1 });
 VendorSchema.index({ isActive: 1 });
-

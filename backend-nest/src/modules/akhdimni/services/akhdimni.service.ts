@@ -10,6 +10,10 @@ import {
   CreateErrandDto,
   UpdateErrandStatusDto,
 } from '../dto/create-errand.dto';
+import {
+  CalculateFeeDto,
+  FeeCalculationResult,
+} from '../dto/calculate-fee.dto';
 import { getDistance } from 'geolib';
 
 interface OrderQuery {
@@ -305,6 +309,67 @@ export class AkhdimniService {
           : null,
         hasMore,
         limit,
+      },
+    };
+  }
+
+  /**
+   * حساب رسوم المهمة
+   */
+  async calculateFee(dto: CalculateFeeDto): Promise<FeeCalculationResult> {
+    // 1. حساب المسافة
+    const distanceMeters = getDistance(
+      {
+        latitude: dto.pickup.location.lat,
+        longitude: dto.pickup.location.lng,
+      },
+      {
+        latitude: dto.dropoff.location.lat,
+        longitude: dto.dropoff.location.lng,
+      },
+    );
+
+    const distanceKm = distanceMeters / 1000;
+
+    // 2. حساب الرسوم بناءً على المعايير المختلفة
+    const baseFee = 300; // رسوم أساسية
+
+    // رسوم المسافة: 150 ريال لكل كيلومتر
+    const distanceFee = Math.round(distanceKm * 150);
+
+    // رسوم الحجم
+    const sizeMultipliers = {
+      small: 1,
+      medium: 1.3,
+      large: 1.6,
+    };
+    const sizeMultiplier = sizeMultipliers[dto.size] || 1;
+    const sizeFee = Math.round(baseFee * (sizeMultiplier - 1));
+
+    // رسوم الوزن (إذا كان أكثر من 5 كجم)
+    let weightFee = 0;
+    if (dto.weightKg && dto.weightKg > 5) {
+      weightFee = Math.round((dto.weightKg - 5) * 50);
+    }
+
+    // 3. حساب الرسوم الكلية
+    const deliveryFee = Math.round(
+      baseFee + distanceFee + sizeFee + weightFee,
+    );
+
+    const tip = dto.tip || 0;
+    const totalWithTip = deliveryFee + tip;
+
+    return {
+      distanceKm: Math.round(distanceKm * 100) / 100, // تقريب لرقمين عشريين
+      deliveryFee,
+      totalWithTip,
+      breakdown: {
+        baseFee,
+        distanceFee,
+        sizeFee,
+        weightFee,
+        tip,
       },
     };
   }

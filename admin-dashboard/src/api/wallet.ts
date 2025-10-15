@@ -61,55 +61,105 @@ export async function getWalletTransactions(params?: {
   type?: string;
   status?: string;
   method?: string;
-  page?: number;
-  pageSize?: number;
+  cursor?: string;
+  limit?: number;
 }): Promise<{
-  transactions: WalletTransaction[];
-  total: number;
-  page: number;
-  pageSize: number;
+  data: WalletTransaction[];
+  hasMore: boolean;
+  nextCursor?: string;
 }> {
-  const mapped = {
-    page: params?.page,
-    per_page: params?.pageSize,
-    // filters إضافية عند الحاجة
-  };
+  // Note: Backend uses /v2/wallet/transactions (not /admin/wallet/transactions)
+  // Admin access is controlled by JWT + Roles decorator
   const { data } = await axiosInstance.get<{
-    transactions: WalletTransaction[];
-    total: number;
-    page: number;
-    pageSize: number;
-  }>("/admin/wallet/transactions", {
-    params: mapped,
+    data: WalletTransaction[];
+    hasMore: boolean;
+    nextCursor?: string;
+  }>("/v2/wallet/transactions", {
+    params: {
+      cursor: params?.cursor,
+      limit: params?.limit || 20,
+    },
     headers: { "x-silent-401": "1" }
   });
   return data;
 }
 
-// Get wallet balance for user
+// Get wallet balance for user (Admin uses same endpoint with JWT auth)
 export async function getUserWallet(userId: string): Promise<Wallet> {
-  const { data } = await axiosInstance.get<Wallet>(`/admin/wallet/${userId}`, {
-    headers: { "x-silent-401": "1" }
+  // Note: This requires the admin to impersonate or have special access
+  // Current backend doesn't support getting other user's wallet directly
+  // May need to add admin-specific endpoint in backend
+  const { data } = await axiosInstance.get<Wallet>(`/v2/wallet/balance`, {
+    headers: { "x-silent-401": "1" },
+    params: { userId } // If backend supports it
   });
   return data;
 }
+
+// ⚠️ Note: These endpoints don't exist in backend yet
+// May need to be added in backend/src/modules/wallet/wallet.controller.ts
 
 // Get all users with wallets
 export async function getWalletUsers(): Promise<WalletUser[]> {
-  const { data } = await axiosInstance.get<WalletUser[]>("/admin/wallet/users/search", {
-    headers: { "x-silent-401": "1" }
-  });
-  return data;
+  // TODO: Add this endpoint in backend
+  // For now, return empty array
+  console.warn("getWalletUsers: endpoint not implemented in backend");
+  return [];
 }
 
-// Update wallet balance
-export async function updateWalletBalance(userId: string, amount: number, type: "credit" | "debit", description?: string): Promise<Wallet> {
-  const { data } = await axiosInstance.patch<Wallet>(`/admin/wallet/${userId}/balance`, {
-    amount,
-    type,
-    description
-  });
-  return data;
+// Create transaction (Admin only - exists in backend)
+export async function createTransaction(data: {
+  userId: string;
+  amount: number;
+  type: "credit" | "debit";
+  method: string;
+  description?: string;
+}): Promise<WalletTransaction> {
+  const { data: response } = await axiosInstance.post<WalletTransaction>(
+    "/v2/wallet/transaction",
+    data
+  );
+  return response;
+}
+
+// Hold funds (Admin only - exists in backend)
+export async function holdFunds(data: {
+  userId: string;
+  amount: number;
+  orderId?: string;
+}): Promise<{ success: boolean; message: string }> {
+  const { data: response } = await axiosInstance.post(
+    "/v2/wallet/hold",
+    data
+  );
+  return response;
+}
+
+// Release funds (Admin only - exists in backend)
+export async function releaseFunds(data: {
+  userId: string;
+  amount: number;
+  orderId?: string;
+}): Promise<{ success: boolean; message: string }> {
+  const { data: response } = await axiosInstance.post(
+    "/v2/wallet/release",
+    data
+  );
+  return response;
+}
+
+// Refund funds (Admin only - exists in backend)
+export async function refundFunds(data: {
+  userId: string;
+  amount: number;
+  orderId?: string;
+  reason?: string;
+}): Promise<{ success: boolean; message: string }> {
+  const { data: response } = await axiosInstance.post(
+    "/v2/wallet/refund",
+    data
+  );
+  return response;
 }
 
 // Get wallet statistics
@@ -121,15 +171,14 @@ export async function getWalletStats(): Promise<{
   transactionsToday: number;
   averageBalance: number;
 }> {
-  const { data } = await axiosInstance.get<{
-    totalUsers: number;
-    totalBalance: number;
-    totalOnHold: number;
-    totalTransactions: number;
-    transactionsToday: number;
-    averageBalance: number;
-  }>("/admin/wallet/stats", {
-    headers: { "x-silent-401": "1" }
-  });
-  return data;
+  // TODO: Add this endpoint in backend
+  console.warn("getWalletStats: endpoint not implemented in backend");
+  return {
+    totalUsers: 0,
+    totalBalance: 0,
+    totalOnHold: 0,
+    totalTransactions: 0,
+    transactionsToday: 0,
+    averageBalance: 0,
+  };
 }

@@ -72,7 +72,7 @@ useEffect(() => {
   (async () => {
     try {
       // 1) استخدم المسار الموجود فعلاً في الباك:
-      const me = await axiosInstance.get("/vendor/me/profile");
+      const me = await axiosInstance.get("/vendors/me");
 
       if (mounted) {
         // 2) اقرأ الحقول الصحيحة كما يرجعها الباك
@@ -83,15 +83,15 @@ useEffect(() => {
         });
       }
 
-      // لو عندك GET /vendor/settings/notifications شغال، أبقه كما هو
-      const prefs = await axiosInstance.get("/vendor/settings/notifications");
+      // Get notification settings from vendor entity
+      const prefs = me.data?.notificationSettings || {};
       if (mounted) {
         setNotificationSettings({
-          enabled: !!prefs.data?.enabled,
-          orderAlerts: !!prefs.data?.orderAlerts,
-          financialAlerts: !!prefs.data?.financialAlerts,
-          marketingAlerts: !!prefs.data?.marketingAlerts,
-          systemUpdates: !!prefs.data?.systemUpdates,
+          enabled: prefs?.enabled ?? true,
+          orderAlerts: prefs?.orderAlerts ?? true,
+          financialAlerts: prefs?.financialAlerts ?? true,
+          marketingAlerts: prefs?.marketingAlerts ?? false,
+          systemUpdates: prefs?.systemUpdates ?? true,
         });
       }
     } catch (e: any) {
@@ -108,7 +108,9 @@ useEffect(() => {
     try {
       setSavingPrefs(true);
       setNotificationSettings(next); // تحديث تفاؤلي
-      await axiosInstance.put("/vendor/settings/notifications", next);
+      await axiosInstance.patch("/vendors/me", {
+        notificationSettings: next
+      });
     } catch (e: any) {
       Alert.alert("خطأ", e?.response?.data?.message || "تعذر حفظ الإعدادات");
     } finally {
@@ -169,7 +171,7 @@ useEffect(() => {
 
     try {
       setDeleting(true);
-      await axiosInstance.post("/vendor/account/delete-request", {
+      await axiosInstance.post("/vendors/account/delete-request", {
         reason: deleteReason || null,
         exportData: !!exportData,
       });

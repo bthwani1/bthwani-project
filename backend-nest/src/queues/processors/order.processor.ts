@@ -1,18 +1,24 @@
-import { Processor, Process, OnQueueActive, OnQueueCompleted, OnQueueFailed } from '@nestjs/bull';
+import {
+  Processor,
+  Process,
+  OnQueueActive,
+  OnQueueCompleted,
+  OnQueueFailed,
+} from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
 import type { Job } from 'bull';
 
 export interface ProcessOrderJobData {
   orderId: string;
   userId: string;
-  items: any[];
+  items: Array<Record<string, unknown>>;
   totalAmount: number;
 }
 
 export interface GenerateInvoiceJobData {
   orderId: string;
   userId: string;
-  orderDetails: any;
+  orderDetails: Record<string, unknown>;
 }
 
 @Processor('orders')
@@ -44,7 +50,11 @@ export class OrderProcessor {
         processedAt: new Date(),
       };
     } catch (error) {
-      this.logger.error(`Failed to process order ${job.data.orderId}: ${error.message}`, error.stack);
+      const err = error as Error;
+      this.logger.error(
+        `Failed to process order ${job.data.orderId}: ${err.message}`,
+        err.stack,
+      );
       throw error;
     }
   }
@@ -68,21 +78,30 @@ export class OrderProcessor {
         generatedAt: new Date(),
       };
     } catch (error) {
-      this.logger.error(`Failed to generate invoice: ${error.message}`, error.stack);
+      const err = error as Error;
+      this.logger.error(
+        `Failed to generate invoice: ${err.message}`,
+        err.stack,
+      );
       throw error;
     }
   }
 
   @Process('calculate-commission')
-  async calculateCommission(job: Job<{ orderId: string; amount: number; marketerId?: string }>) {
+  async calculateCommission(
+    job: Job<{ orderId: string; amount: number; marketerId?: string }>,
+  ) {
     this.logger.log(`Calculating commission for order ${job.data.orderId}`);
 
     try {
       // Calculate commission based on rules
+      await Promise.resolve(); // Placeholder for async operations
       const commissionRate = 0.05; // 5%
       const commission = job.data.amount * commissionRate;
 
-      this.logger.log(`Commission calculated: ${commission} for order ${job.data.orderId}`);
+      this.logger.log(
+        `Commission calculated: ${commission} for order ${job.data.orderId}`,
+      );
 
       return {
         success: true,
@@ -91,13 +110,23 @@ export class OrderProcessor {
         marketerId: job.data.marketerId,
       };
     } catch (error) {
-      this.logger.error(`Failed to calculate commission: ${error.message}`, error.stack);
+      const err = error as Error;
+      this.logger.error(
+        `Failed to calculate commission: ${err.message}`,
+        err.stack,
+      );
       throw error;
     }
   }
 
   @Process('update-analytics')
-  async updateAnalytics(job: Job<{ orderId: string; eventType: string; data: any }>) {
+  async updateAnalytics(
+    job: Job<{
+      orderId: string;
+      eventType: string;
+      data: Record<string, unknown>;
+    }>,
+  ) {
     this.logger.log(`Updating analytics for order ${job.data.orderId}`);
 
     try {
@@ -108,7 +137,11 @@ export class OrderProcessor {
 
       return { success: true };
     } catch (error) {
-      this.logger.error(`Failed to update analytics: ${error.message}`, error.stack);
+      const err = error as Error;
+      this.logger.error(
+        `Failed to update analytics: ${err.message}`,
+        err.stack,
+      );
       throw error;
     }
   }
@@ -119,33 +152,43 @@ export class OrderProcessor {
   }
 
   @OnQueueCompleted()
-  onCompleted(job: Job, result: any) {
+  onCompleted(job: Job) {
     this.logger.log(`Order job ${job.id} completed successfully`);
   }
 
   @OnQueueFailed()
   onFailed(job: Job, error: Error) {
-    this.logger.error(`Order job ${job.id} failed: ${error.message}`, error.stack);
+    this.logger.error(
+      `Order job ${job.id} failed: ${error.message}`,
+      error.stack,
+    );
   }
 
-  private async validateInventory(items: any[]): Promise<void> {
-    // TODO: Implement inventory validation
+  private async validateInventory(
+    _items: Array<Record<string, unknown>>,
+  ): Promise<void> {
+    void _items; // TODO: Implement inventory validation
     await new Promise((resolve) => setTimeout(resolve, 500));
   }
 
-  private async processPayment(orderId: string, amount: number): Promise<void> {
-    // TODO: Implement payment processing
+  private async processPayment(
+    _orderId: string,
+    _amount: number,
+  ): Promise<void> {
+    void _orderId;
+    void _amount; // TODO: Implement payment processing
     await new Promise((resolve) => setTimeout(resolve, 1000));
   }
 
-  private async updateInventory(items: any[]): Promise<void> {
-    // TODO: Implement inventory update
+  private async updateInventory(
+    _items: Array<Record<string, unknown>>,
+  ): Promise<void> {
+    void _items; // TODO: Implement inventory update
     await new Promise((resolve) => setTimeout(resolve, 500));
   }
 
-  private async notifyMerchant(orderId: string): Promise<void> {
-    // TODO: Send notification to merchant
+  private async notifyMerchant(_orderId: string): Promise<void> {
+    void _orderId; // TODO: Send notification to merchant
     await new Promise((resolve) => setTimeout(resolve, 300));
   }
 }
-

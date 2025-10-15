@@ -1,12 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
-import * as request from 'supertest';
+import request from 'supertest';
 import { AppModule } from '../src/app.module';
 
 describe('Order E2E Tests', () => {
   let app: INestApplication;
   let authToken: string;
-  let userId: string;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -14,7 +13,7 @@ describe('Order E2E Tests', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
-    
+
     app.useGlobalPipes(
       new ValidationPipe({
         whitelist: true,
@@ -34,8 +33,10 @@ describe('Order E2E Tests', () => {
         password: 'Test@123456',
       });
 
-    authToken = registerResponse.body.data.token;
-    userId = registerResponse.body.data.user.id;
+    const responseBody = registerResponse.body as {
+      data: { token: string; user: { id: string } };
+    };
+    authToken = responseBody.data.token;
   });
 
   afterAll(async () => {
@@ -45,7 +46,7 @@ describe('Order E2E Tests', () => {
   describe('POST /api/v2/order (with Idempotency)', () => {
     it('should create order with idempotency key', () => {
       const idempotencyKey = `order-${Date.now()}`;
-      
+
       return request(app.getHttpServer())
         .post('/api/v2/order')
         .set('Authorization', `Bearer ${authToken}`)
@@ -60,12 +61,12 @@ describe('Order E2E Tests', () => {
           ],
           deliveryAddress: {
             street: 'Test Street',
-            city: 'Sana\'a',
+            city: "Sana'a",
             building: '123',
           },
           paymentMethod: 'wallet',
         })
-        .expect((res) => {
+        .expect((res: { status: number }) => {
           // May be 201 or 400 depending on data validity
           expect([201, 400, 404]).toContain(res.status);
         });
@@ -89,16 +90,21 @@ describe('Order E2E Tests', () => {
         .get('/api/v2/order')
         .set('Authorization', `Bearer ${authToken}`)
         .expect(200)
-        .expect((res) => {
-          expect(res.body.data).toBeDefined();
-          expect(Array.isArray(res.body.data.data || res.body.data)).toBe(true);
+        .expect((res: { body: { data: unknown } }) => {
+          const resBody = res.body as {
+            data: { data?: unknown } | unknown[];
+          };
+          expect(resBody.data).toBeDefined();
+          expect(
+            Array.isArray(
+              (resBody.data as { data?: unknown }).data || resBody.data,
+            ),
+          ).toBe(true);
         });
     });
 
     it('should return 401 without auth', () => {
-      return request(app.getHttpServer())
-        .get('/api/v2/order')
-        .expect(401);
+      return request(app.getHttpServer()).get('/api/v2/order').expect(401);
     });
   });
 
@@ -110,4 +116,3 @@ describe('Order E2E Tests', () => {
     });
   });
 });
-

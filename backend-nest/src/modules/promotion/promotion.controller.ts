@@ -111,4 +111,3 @@ export class PromotionController {
     return this.promotionService.getStatistics();
   }
 }
-

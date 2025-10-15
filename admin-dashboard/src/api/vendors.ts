@@ -56,7 +56,7 @@ export interface VendorDetails {
 
 // Get vendor by ID
 export async function getVendor(id: string): Promise<VendorDetails> {
-  const { data } = await axiosInstance.get<VendorDetails>(`/admin/vendors/${id}`, {
+  const { data } = await axiosInstance.get<VendorDetails>(`/vendors/${id}`, {
     headers: { "x-silent-401": "1" }
   });
   return data;
@@ -67,95 +67,45 @@ export async function getVendors(params?: {
   isActive?: boolean;
   storeId?: string;
   search?: string;
-  page?: number;
+  cursor?: string;
   limit?: number;
 }): Promise<{
-  vendors: VendorDetails[];
+  data: VendorDetails[];
   pagination: {
-    page: number;
+    nextCursor: string | null;
+    hasMore: boolean;
     limit: number;
-    total: number;
-    pages: number;
   };
 }> {
-  const mapped = {
-    q: params?.search,
-    page: params?.page,
-    per_page: params?.limit,
-    // filters إضافية عند الحاجة
-  };
-  const { data } = await axiosInstance.get<{
-    vendors: VendorDetails[];
-    pagination: {
-      page: number;
-      limit: number;
-      total: number;
-      pages: number;
-    };
-  }>("/admin/vendors", {
-    params: mapped,
+  const queryParams: any = { limit: params?.limit || 20 };
+  if (params?.cursor) queryParams.cursor = params.cursor;
+  if (params?.isActive !== undefined) queryParams.isActive = params.isActive;
+  
+  const { data } = await axiosInstance.get("/vendors", {
+    params: queryParams,
     headers: { "x-silent-401": "1" }
   });
   return data;
 }
 
 // Create new vendor
-export async function createVendor(vendor: Omit<VendorDetails, '_id' | 'createdAt'>): Promise<VendorDetails> {
-  const { data } = await axiosInstance.post<VendorDetails>("/admin/vendors", vendor);
+export async function createVendor(vendorData: {
+  fullName: string;
+  phone: string;
+  email?: string;
+  password: string;
+  store: string;
+}): Promise<VendorDetails> {
+  const { data } = await axiosInstance.post<VendorDetails>("/vendors", vendorData);
   return data;
 }
 
-// إحصائيات عامة (بدون id)
-export const getVendorStats = (filters?: { store?: string; city?: string }) => {
-  return axiosInstance.get<VendorStats>('/admin/vendors/stats', {
-    params: compact(filters || {}),
-    headers: { "x-silent-401": "1" }
-  }).then(res => res.data);
-};
-
-// إحصائيات تاجر محدد (عند الحاجة فقط)
-export const getSingleVendorStats = (vendorId: string) => {
-  return axiosInstance.get<VendorStats>(`/admin/vendors/${vendorId}/stats`, {
-    headers: { "x-silent-401": "1" }
-  }).then(res => res.data);
-};
-
-// Get detailed vendor performance
-export async function getVendorPerformance(vendorId: string, params?: {
-  period?: 'week' | 'month' | 'quarter' | 'year';
-  fromDate?: string;
-  toDate?: string;
-}): Promise<VendorPerformance> {
-  const { data } = await axiosInstance.get<VendorPerformance>(`/admin/vendors/${vendorId}/performance`, {
-    params,
-    headers: { "x-silent-401": "1" }
-  });
-  return data;
-}
-
-// Get vendor sales data for charts
-export async function getVendorSalesData(vendorId: string, params?: {
-  period?: 'week' | 'month' | 'quarter';
-  groupBy?: 'day' | 'week' | 'month';
-}): Promise<{
-  labels: string[];
-  sales: number[];
-  orders: number[];
-}> {
-  const { data } = await axiosInstance.get<{
-    labels: string[];
-    sales: number[];
-    orders: number[];
-  }>(`/admin/vendors/${vendorId}/sales-data`, {
-    params,
-    headers: { "x-silent-401": "1" }
-  });
-  return data;
-}
+// Note: Stats/Performance endpoints غير موجودة في Backend
+// يمكن استخدام /vendors/dashboard/overview أو إضافتها في admin module لاحقاً
 
 // Update vendor status
 export async function updateVendorStatus(vendorId: string, isActive: boolean): Promise<VendorDetails> {
-  const { data } = await axiosInstance.patch<VendorDetails>(`/admin/vendors/${vendorId}/status`, {
+  const { data } = await axiosInstance.patch<VendorDetails>(`/vendors/${vendorId}/status`, {
     isActive
   });
   return data;
@@ -163,31 +113,16 @@ export async function updateVendorStatus(vendorId: string, isActive: boolean): P
 
 // Update vendor information
 export async function updateVendor(vendorId: string, updates: Partial<VendorDetails>): Promise<VendorDetails> {
-  const { data } = await axiosInstance.patch<VendorDetails>(`/admin/vendors/${vendorId}`, updates);
+  const { data } = await axiosInstance.patch<VendorDetails>(`/vendors/${vendorId}`, updates);
   return data;
 }
 
 // Reset vendor password
 export async function resetVendorPassword(vendorId: string, newPassword: string): Promise<void> {
-  await axiosInstance.post(`/admin/vendors/${vendorId}/reset-password`, {
+  await axiosInstance.post(`/vendors/${vendorId}/reset-password`, {
     password: newPassword
   });
 }
 
-// Delete vendor
-export async function deleteVendor(vendorId: string): Promise<void> {
-  await axiosInstance.delete(`/admin/vendors/${vendorId}`);
-}
-
-// Export vendors data
-export async function exportVendors(params?: {
-  format?: 'excel' | 'csv';
-  isActive?: boolean;
-}): Promise<Blob> {
-  const { data } = await axiosInstance.get("/admin/vendors/export", {
-    params,
-    responseType: 'blob',
-    headers: { "x-silent-401": "1" }
-  });
-  return data;
-}
+// Note: Delete & Export endpoints غير موجودة في Backend
+// يمكن إضافتها في vendor.controller.ts أو admin.controller.ts عند الحاجة

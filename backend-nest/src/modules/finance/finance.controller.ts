@@ -297,8 +297,18 @@ export class FinanceController {
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'إضافة مشكلة للمطابقة' })
-  async addReconciliationIssue(@Param('id') id: string, @Body() dto: any) {
-    return this.reconciliationService.addIssue(id, dto as Record<string, any>);
+  async addReconciliationIssue(
+    @Param('id') id: string,
+    @Body()
+    dto: {
+      type: 'missing_transaction' | 'amount_mismatch' | 'duplicate' | 'other';
+      description: string;
+      expectedAmount?: number;
+      actualAmount?: number;
+      transactionRef?: string;
+    },
+  ) {
+    return this.reconciliationService.addIssue(id, dto);
   }
 
   @Patch('reconciliations/:id/issues/:issueIndex/resolve')

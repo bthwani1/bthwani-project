@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
 @Schema({ _id: false })
@@ -131,4 +131,3 @@ StoreSchema.index({ category: 1 });
 StoreSchema.index({ isTrending: 1, isFeatured: 1 });
 StoreSchema.index({ 'location.lat': 1, 'location.lng': 1 });
 StoreSchema.index({ createdByMarketerUid: 1 });
-

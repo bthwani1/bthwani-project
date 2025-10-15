@@ -97,6 +97,43 @@ import GeneralLedger from "./pages/money/GeneralLedger";
 import ReportsPage from "./pages/money/ReportsPage";
 import JournalVoucherPage from "./pages/money/JournalVoucherPage";
 
+// ==================== NEW ADMIN PAGES ====================
+import FinanceDashboard from "./pages/admin/finance/FinanceDashboard";
+import AnalyticsDashboard from "./pages/admin/analytics/AnalyticsDashboard";
+import ApiTestPage from "./pages/admin/test/ApiTestPage";
+
+// ==================== ANALYTICS SYSTEM ====================
+import ROASDashboard from "./pages/admin/analytics/ROASDashboard";
+import KPIDashboard from "./pages/admin/analytics/KPIDashboard";
+import AdvancedAnalytics from "./pages/admin/analytics/AdvancedAnalytics";
+import FunnelDashboard from "./pages/admin/analytics/FunnelDashboard";
+import UsersDashboard from "./pages/admin/analytics/UsersDashboard";
+import RevenueDashboard from "./pages/admin/analytics/RevenueDashboard";
+
+// ==================== CONTENT MANAGEMENT ====================
+import ContentDashboard from "./pages/admin/content/ContentDashboard";
+import BannersManager from "./pages/admin/content/BannersManager";
+import CMSPagesManager from "./pages/admin/content/CMSPagesManager";
+import AppSettingsManager from "./pages/admin/content/AppSettingsManager";
+import FAQsManager from "./pages/admin/content/FAQsManager";
+
+// ==================== ER/HR SYSTEM ====================
+import ERDashboard from "./pages/admin/er/ERDashboard";
+
+// ==================== FINANCE SYSTEM - NEW ====================
+import FinanceDashboardNew from "./pages/admin/finance/FinanceDashboardNew";
+import PayoutBatchesPage from "./pages/admin/finance/PayoutBatchesPage";
+import SettlementsPage from "./pages/admin/finance/SettlementsPage";
+import CouponsPage from "./pages/admin/finance/CouponsPage";
+import ReconciliationsPage from "./pages/admin/finance/ReconciliationsPage";
+import FinancialReportsPage from "./pages/admin/finance/FinancialReportsPage";
+
+// ==================== HEALTH & LEGAL & METRICS & SUPPORT ====================
+import HealthMonitorPage from "./pages/admin/system/HealthMonitorPage";
+import LegalDashboard from "./pages/admin/legal/LegalDashboard";
+import MetricsPage from "./pages/admin/system/MetricsPage";
+import SupportDashboard from "./pages/admin/support/SupportDashboard";
+
 // ==================== HR SYSTEM ====================
 import EmployeesPage from "./pages/admin/er/EmployeesPage";
 import AttendancePage from "./pages/admin/er/AttendancePage";
@@ -130,6 +167,10 @@ import AdminReportsPage from "./pages/admin/AdminReportsPage";
 // ==================== NOTIFICATIONS ====================
 import { NotificationsListPage } from "./pages/admin/notifications/NotificationsCenter";
 import TestOtpPage from "./pages/admin/TestOtpPage";
+
+// ==================== AKHDIMNI ====================
+import ErrandsListPage from "./pages/akhdimni/ErrandsListPage";
+import ErrandDetailsPage from "./pages/akhdimni/ErrandDetailsPage";
 
 // ==================== CMS SYSTEM ====================
 const CmsOnboardingPage = React.lazy(() => import("./pages/cms/CmsOnboardingPage"));
@@ -249,6 +290,49 @@ export default function App() {
         <Route path="groceries/catalog" element={<GroceriesCatalogPage />} />
         <Route path="groceries/merchant-products" element={<GroceriesMerchantProductsPage />} />
 
+        {/* ==================== FINANCE DASHBOARD ==================== */}
+        <Route path="finance" element={<FinanceDashboard />} />
+        <Route path="finance/new" element={<FinanceDashboardNew />} />
+        <Route path="finance/payouts" element={<PayoutBatchesPage />} />
+        <Route path="finance/settlements" element={<SettlementsPage />} />
+        <Route path="finance/coupons" element={<CouponsPage />} />
+        <Route path="finance/reconciliations" element={<ReconciliationsPage />} />
+        <Route path="finance/reports" element={<FinancialReportsPage />} />
+
+        {/* ==================== ANALYTICS DASHBOARD ==================== */}
+        <Route path="analytics" element={<AnalyticsDashboard />} />
+        <Route path="analytics/roas" element={<ROASDashboard />} />
+        <Route path="analytics/kpis" element={<KPIDashboard />} />
+        <Route path="analytics/advanced" element={<AdvancedAnalytics />} />
+        <Route path="analytics/funnel" element={<FunnelDashboard />} />
+        <Route path="analytics/users" element={<UsersDashboard />} />
+        <Route path="analytics/revenue" element={<RevenueDashboard />} />
+
+        {/* ==================== CONTENT MANAGEMENT ==================== */}
+        <Route path="content" element={<ContentDashboard />} />
+        <Route path="content/banners" element={<BannersManager />} />
+        <Route path="content/cms-pages" element={<CMSPagesManager />} />
+        <Route path="content/app-settings" element={<AppSettingsManager />} />
+        <Route path="content/faqs" element={<FAQsManager />} />
+
+        {/* ==================== ER/HR SYSTEM ==================== */}
+        <Route path="er" element={<ERDashboard />} />
+
+        {/* ==================== HEALTH MONITORING ==================== */}
+        <Route path="system/health" element={<HealthMonitorPage />} />
+
+        {/* ==================== METRICS ==================== */}
+        <Route path="system/metrics" element={<MetricsPage />} />
+
+        {/* ==================== LEGAL SYSTEM ==================== */}
+        <Route path="legal" element={<LegalDashboard />} />
+
+        {/* ==================== SUPPORT SYSTEM ==================== */}
+        <Route path="support/dashboard" element={<SupportDashboard />} />
+
+        {/* ==================== API TESTING ==================== */}
+        <Route path="test/api" element={<ApiTestPage />} />
+
         {/* ==================== DRIVER SUB-PAGES ==================== */}
         <Route path="drivers/attendance" element={<DriverAttendancePage />} />
         <Route path="drivers/shifts" element={<DriverShiftsPage />} />
@@ -311,6 +395,10 @@ export default function App() {
 
         {/* ==================== SETTINGS ==================== */}
         <Route path="settings/pricing" element={<PricingSettingsPage />} />
+
+        {/* ==================== AKHDIMNI ==================== */}
+        <Route path="akhdimni" element={<ErrandsListPage />} />
+        <Route path="akhdimni/:id" element={<ErrandDetailsPage />} />
 
         {/* ==================== CMS SYSTEM ==================== */}
         <Route path="cms/onboarding" element={

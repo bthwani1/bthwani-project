@@ -33,4 +33,3 @@ export class VerifyPinDto {
   @Matches(/^\d+$/, { message: 'PIN must contain only numbers' })
   pin: string;
 }
-

@@ -27,4 +27,3 @@ export class OrderCreatedHandler implements IEventHandler<OrderCreatedEvent> {
     // - إضافة إلى queue للمعالجة
   }
 }
-

@@ -85,7 +85,8 @@ export const fetchMyOrders = async (userId: string) => {
   const res = await axiosInstance.get(`/delivery/order/user/${userId}`, {
     headers,
   });
-  return res.data.map(mapOrder); // mapOrder كما عرفته
+  const data = res.data?.data || res.data || [];
+  return data.map(mapOrder); // mapOrder كما عرفته
 };
 export const updateUserAvatar = async (imageUrl: string) => {
   const headers = await getAuthHeaders();

@@ -12,7 +12,11 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { UnifiedAuthGuard } from '../../common/guards/unified-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
-import { Auth, Roles, CurrentUser } from '../../common/decorators/auth.decorator';
+import {
+  Auth,
+  Roles,
+  CurrentUser,
+} from '../../common/decorators/auth.decorator';
 import { AuthType } from '../../common/guards/unified-auth.guard';
 
 // Commands
@@ -29,6 +33,8 @@ import { GetUserOrdersQuery } from './queries/impl/get-user-orders.query';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
 import { CursorPaginationDto } from '../../common/dto/pagination.dto';
+import { OrderItem } from './entities/order.entity';
+import { OrderStatus } from './enums/order-status.enum';
 
 @ApiTags('Orders (CQRS)')
 @ApiBearerAuth()
@@ -51,10 +57,10 @@ export class OrderCqrsController {
   async create(
     @CurrentUser('id') userId: string,
     @Body() createOrderDto: CreateOrderDto,
-  ) {
+  ): Promise<{ success: boolean; message: string; data: unknown }> {
     const command = new CreateOrderCommand(
       userId,
-      createOrderDto.items as any,
+      createOrderDto.items as unknown as OrderItem[],
       createOrderDto.address,
       createOrderDto.paymentMethod,
       createOrderDto.price,
@@ -62,10 +68,10 @@ export class OrderCqrsController {
       createOrderDto.companyShare,
       createOrderDto.platformShare,
       createOrderDto.walletUsed,
-      (createOrderDto as any).coupon?.code,
+      (createOrderDto as unknown as { coupon?: { code: string } }).coupon?.code,
     );
 
-    const order = await this.commandBus.execute(command);
+    const order: unknown = await this.commandBus.execute(command);
 
     return {
       success: true,
@@ -81,16 +87,15 @@ export class OrderCqrsController {
   async updateStatus(
     @Param('id') orderId: string,
     @Body() updateStatusDto: UpdateOrderStatusDto,
-    @CurrentUser('id') adminId: string,
-  ) {
+  ): Promise<{ success: boolean; message: string; data: unknown }> {
     const command = new UpdateOrderStatusCommand(
       orderId,
-      updateStatusDto.status as any,
+      updateStatusDto.status as unknown as OrderStatus,
       updateStatusDto.changedBy || 'admin',
       updateStatusDto.reason,
     );
 
-    const order = await this.commandBus.execute(command);
+    const order: unknown = await this.commandBus.execute(command);
 
     return {
       success: true,
@@ -106,11 +111,10 @@ export class OrderCqrsController {
   async assignDriver(
     @Param('id') orderId: string,
     @Body() body: { driverId: string },
-    @CurrentUser('id') adminId: string,
-  ) {
+  ): Promise<{ success: boolean; message: string; data: unknown }> {
     const command = new AssignDriverCommand(orderId, body.driverId, 'admin');
 
-    const order = await this.commandBus.execute(command);
+    const order: unknown = await this.commandBus.execute(command);
 
     return {
       success: true,
@@ -126,7 +130,7 @@ export class OrderCqrsController {
     @Param('id') orderId: string,
     @Body() body: { reason: string },
     @CurrentUser('id') userId: string,
-  ) {
+  ): Promise<{ success: boolean; message: string; data: unknown }> {
     const command = new CancelOrderCommand(
       orderId,
       body.reason,
@@ -134,7 +138,7 @@ export class OrderCqrsController {
       userId,
     );
 
-    const order = await this.commandBus.execute(command);
+    const order: unknown = await this.commandBus.execute(command);
 
     return {
       success: true,
@@ -148,9 +152,11 @@ export class OrderCqrsController {
   @Auth(AuthType.FIREBASE)
   @Get(':id')
   @ApiOperation({ summary: 'جلب طلب محدد (CQRS)' })
-  async findOne(@Param('id') orderId: string) {
+  async findOne(
+    @Param('id') orderId: string,
+  ): Promise<{ success: boolean; data: unknown }> {
     const query = new GetOrderQuery(orderId);
-    const order = await this.queryBus.execute(query);
+    const order: unknown = await this.queryBus.execute(query);
 
     return {
       success: true,
@@ -164,14 +170,13 @@ export class OrderCqrsController {
   async findUserOrders(
     @CurrentUser('id') userId: string,
     @Query() pagination: CursorPaginationDto,
-  ) {
+  ): Promise<{ success: boolean; [key: string]: unknown }> {
     const query = new GetUserOrdersQuery(userId, pagination);
-    const result = await this.queryBus.execute(query);
+    const result: unknown = await this.queryBus.execute(query);
 
     return {
       success: true,
-      ...result,
+      ...(result as Record<string, unknown>),
     };
   }
 }
-

@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Edit, Delete } from "@mui/icons-material";
-import axios from "../../../utils/axios"; // عدل المسار حسب مشروعك
+import * as merchantApi from "../../../api/merchant";
 
 type Category = {
   _id: string;
@@ -45,7 +45,7 @@ export default function GroceriesCategoriesPage() {
   const [editId, setEditId] = useState<string | null>(null);
 
   const fetchCategories = async () => {
-    const { data } = await axios.get("groceries/categories");
+    const data = await merchantApi.getCategories();
     setCategories(data);
   };
 
@@ -81,9 +81,9 @@ export default function GroceriesCategoriesPage() {
     }
     const submitData = { ...form, usageType: "grocery" };
     if (editId) {
-      await axios.put(`groceries/categories/${editId}`, submitData);
+      await merchantApi.updateCategory(editId, submitData);
     } else {
-      await axios.post("groceries/categories", submitData);
+      await merchantApi.createCategory(submitData);
     }
     handleClose();
     fetchCategories();
@@ -91,7 +91,7 @@ export default function GroceriesCategoriesPage() {
 
   const handleDelete = async (id: string) => {
     if (window.confirm("هل أنت متأكد من الحذف؟")) {
-      await axios.delete(`groceries/categories/${id}`);
+      await merchantApi.deleteCategory(id);
       fetchCategories();
     }
   };

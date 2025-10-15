@@ -69,4 +69,3 @@ export class CreateProductDto {
   @Min(0)
   discount: number;
 }
-

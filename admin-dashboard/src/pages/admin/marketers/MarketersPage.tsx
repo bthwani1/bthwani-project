@@ -16,8 +16,21 @@ import {
   Alert,
 } from "@mui/material";
 import { Add, Refresh } from "@mui/icons-material";
-import { useMarketers, type Marketer } from "./useMarketers";
+import { useMarketersLegacy } from "@/api/marketers";
 import MarketerDialog from "./MarketerDialog";
+
+// Type من الملف القديم - سنحافظ عليه مؤقتاً
+type Marketer = {
+  _id: string;
+  fullName: string;
+  phone: string;
+  email?: string;
+  city?: string;
+  team?: string;
+  area?: string;
+  status: "active" | "suspended";
+  createdAt: string;
+};
 
 export default function MarketersPage() {
   const {
@@ -30,7 +43,7 @@ export default function MarketersPage() {
     setStatus,
     resetPassword,
     remove,
-  } = useMarketers();
+  } = useMarketersLegacy();
 
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Marketer | null>(null);

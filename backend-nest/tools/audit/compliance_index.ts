@@ -4,7 +4,7 @@
  *
  * Builds compliance evidence table:
  * Requirement | Artifact | Evidence (Path) | Owner | Status
- * 
+ *
  * Generates: reports/compliance_index.csv
  */
 
@@ -41,7 +41,11 @@ const COMPLIANCE_REQUIREMENTS: ComplianceRequirement[] = [
     title: 'Personal Data Encryption',
     description: 'Personal data must be encrypted at rest and in transit',
     category: 'Both',
-    searchPatterns: ['encrypt|bcrypt|crypto|hash', 'password.*hash', 'pin.*encrypt'],
+    searchPatterns: [
+      'encrypt|bcrypt|crypto|hash',
+      'password.*hash',
+      'pin.*encrypt',
+    ],
     owner: 'Security Team',
   },
   {
@@ -60,14 +64,18 @@ const COMPLIANCE_REQUIREMENTS: ComplianceRequirement[] = [
     searchPatterns: ['retention|ttl|expire|delete.*after', 'removeOn'],
     owner: 'Data Team',
   },
-  
+
   // Consent Management
   {
     id: 'CM-01',
     title: 'User Consent Tracking',
     description: 'Track and store user consent for data processing',
     category: 'Both',
-    searchPatterns: ['consent|agree|accept.*terms', 'privacy.*policy', 'terms.*condition'],
+    searchPatterns: [
+      'consent|agree|accept.*terms',
+      'privacy.*policy',
+      'terms.*condition',
+    ],
     owner: 'Legal Team',
   },
   {
@@ -143,7 +151,11 @@ const COMPLIANCE_REQUIREMENTS: ComplianceRequirement[] = [
     title: 'Input Validation',
     description: 'Validate all user inputs to prevent injection',
     category: 'Both',
-    searchPatterns: ['ValidationPipe|class-validator', '@IsString|@IsEmail', 'sanitize'],
+    searchPatterns: [
+      'ValidationPipe|class-validator',
+      '@IsString|@IsEmail',
+      'sanitize',
+    ],
     owner: 'Security Team',
   },
 
@@ -161,7 +173,10 @@ const COMPLIANCE_REQUIREMENTS: ComplianceRequirement[] = [
     title: 'Transaction History',
     description: 'Maintain complete transaction history',
     category: 'PDPL',
-    searchPatterns: ['transaction.*history|wallet.*event', 'createdAt|updatedAt'],
+    searchPatterns: [
+      'transaction.*history|wallet.*event',
+      'createdAt|updatedAt',
+    ],
     owner: 'Finance Team',
   },
 
@@ -259,7 +274,9 @@ const COMPLIANCE_REQUIREMENTS: ComplianceRequirement[] = [
 /**
  * Search for evidence in codebase
  */
-function searchForEvidence(pattern: string | RegExp): Array<{ file: string; line: number; code: string }> {
+function searchForEvidence(
+  pattern: string | RegExp,
+): Array<{ file: string; line: number; code: string }> {
   const evidence: Array<{ file: string; line: number; code: string }> = [];
   const srcPath = path.join(process.cwd(), 'src');
 
@@ -284,25 +301,28 @@ function searchForEvidence(pattern: string | RegExp): Array<{ file: string; line
       try {
         const content = fs.readFileSync(fullPath, 'utf-8');
         const lines = content.split('\n');
-        const regex = typeof pattern === 'string' ? new RegExp(pattern, 'i') : pattern;
+        const regex =
+          typeof pattern === 'string' ? new RegExp(pattern, 'i') : pattern;
 
         lines.forEach((line, index) => {
           if (regex.test(line)) {
             evidence.push({
-              file: fullPath.replace(/\\/g, '/').replace(process.cwd().replace(/\\/g, '/') + '/', ''),
+              file: fullPath
+                .replace(/\\/g, '/')
+                .replace(process.cwd().replace(/\\/g, '/') + '/', ''),
               line: index + 1,
               code: line.trim().substring(0, 100),
             });
           }
         });
-      } catch (error) {
+      } catch {
         // Skip files that can't be read
       }
     }
   }
 
   searchInDirectory(srcPath);
-  
+
   // Also check config files
   const configFiles = ['package.json', 'env.example', '.gitignore'];
   for (const file of configFiles) {
@@ -311,7 +331,8 @@ function searchForEvidence(pattern: string | RegExp): Array<{ file: string; line
       try {
         const content = fs.readFileSync(filePath, 'utf-8');
         const lines = content.split('\n');
-        const regex = typeof pattern === 'string' ? new RegExp(pattern, 'i') : pattern;
+        const regex =
+          typeof pattern === 'string' ? new RegExp(pattern, 'i') : pattern;
 
         lines.forEach((line, index) => {
           if (regex.test(line)) {
@@ -322,7 +343,7 @@ function searchForEvidence(pattern: string | RegExp): Array<{ file: string; line
             });
           }
         });
-      } catch (error) {
+      } catch {
         // Skip
       }
     }
@@ -343,7 +364,7 @@ function assessCompliance(): ComplianceEvidence[] {
     console.log(`📋 Checking ${req.id}: ${req.title}`);
 
     let allEvidence: Array<{ file: string; line: number; code: string }> = [];
-    
+
     // Search for all patterns
     for (const pattern of req.searchPatterns) {
       const evidence = searchForEvidence(pattern);
@@ -352,7 +373,7 @@ function assessCompliance(): ComplianceEvidence[] {
 
     // Remove duplicates
     allEvidence = Array.from(
-      new Map(allEvidence.map(e => [`${e.file}:${e.line}`, e])).values()
+      new Map(allEvidence.map((e) => [`${e.file}:${e.line}`, e])).values(),
     );
 
     if (allEvidence.length === 0) {
@@ -369,7 +390,7 @@ function assessCompliance(): ComplianceEvidence[] {
     } else {
       // Evidence found - create entries for top evidences
       const topEvidence = allEvidence.slice(0, 5);
-      
+
       topEvidence.forEach((ev, index) => {
         results.push({
           requirement: index === 0 ? req.title : '',
@@ -406,11 +427,14 @@ function assessCompliance(): ComplianceEvidence[] {
  * Generate CSV report
  */
 function generateCSV(evidence: ComplianceEvidence[]): string {
-  let csv = 'Requirement ID,Requirement,Artifact,Evidence Path,Owner,Status,Notes\n';
+  let csv =
+    'Requirement ID,Requirement,Artifact,Evidence Path,Owner,Status,Notes\n';
 
   evidence.forEach((e) => {
     const req = e.requirementId ? `"${e.requirementId}"` : '""';
-    const title = e.requirement ? `"${e.requirement.replace(/"/g, '""')}"` : '""';
+    const title = e.requirement
+      ? `"${e.requirement.replace(/"/g, '""')}"`
+      : '""';
     const artifact = `"${e.artifact.replace(/"/g, '""')}"`;
     const path = `"${e.evidencePath.replace(/"/g, '""')}"`;
     const owner = e.owner ? `"${e.owner}"` : '""';
@@ -428,15 +452,20 @@ function generateCSV(evidence: ComplianceEvidence[]): string {
  */
 function generateSummary(evidence: ComplianceEvidence[]): string {
   // Get unique requirements (skip empty rows)
-  const requirements = evidence.filter(e => e.requirementId !== '');
-  
-  const total = requirements.length;
-  const implemented = requirements.filter(e => e.status === 'Implemented').length;
-  const partial = requirements.filter(e => e.status === 'Partial').length;
-  const missing = requirements.filter(e => e.status === 'Missing').length;
-  const notApplicable = requirements.filter(e => e.status === 'Not Applicable').length;
+  const requirements = evidence.filter((e) => e.requirementId !== '');
 
-  const coverage = total > 0 ? Math.round(((implemented + partial * 0.5) / total) * 100) : 0;
+  const total = requirements.length;
+  const implemented = requirements.filter(
+    (e) => e.status === 'Implemented',
+  ).length;
+  const partial = requirements.filter((e) => e.status === 'Partial').length;
+  const missing = requirements.filter((e) => e.status === 'Missing').length;
+  const notApplicable = requirements.filter(
+    (e) => e.status === 'Not Applicable',
+  ).length;
+
+  const coverage =
+    total > 0 ? Math.round(((implemented + partial * 0.5) / total) * 100) : 0;
 
   let summary = '\n=== COMPLIANCE SUMMARY ===\n\n';
   summary += `Total Requirements: ${total}\n`;
@@ -447,17 +476,21 @@ function generateSummary(evidence: ComplianceEvidence[]): string {
   summary += `\n📊 Overall Coverage: ${coverage}%\n`;
 
   // By category
-  const gdprReqs = COMPLIANCE_REQUIREMENTS.filter(r => r.category === 'GDPR' || r.category === 'Both');
-  const pdplReqs = COMPLIANCE_REQUIREMENTS.filter(r => r.category === 'PDPL' || r.category === 'Both');
+  const gdprReqs = COMPLIANCE_REQUIREMENTS.filter(
+    (r) => r.category === 'GDPR' || r.category === 'Both',
+  );
+  const pdplReqs = COMPLIANCE_REQUIREMENTS.filter(
+    (r) => r.category === 'PDPL' || r.category === 'Both',
+  );
 
   summary += `\nGDPR Requirements: ${gdprReqs.length}\n`;
   summary += `PDPL Requirements: ${pdplReqs.length}\n`;
 
   // By owner
-  const owners = [...new Set(requirements.map(r => r.owner))];
+  const owners = [...new Set(requirements.map((r) => r.owner))];
   summary += `\nResponsible Teams: ${owners.length}\n`;
-  owners.forEach(owner => {
-    const count = requirements.filter(r => r.owner === owner).length;
+  owners.forEach((owner) => {
+    const count = requirements.filter((r) => r.owner === owner).length;
     summary += `  - ${owner}: ${count} requirements\n`;
   });
 
@@ -467,9 +500,11 @@ function generateSummary(evidence: ComplianceEvidence[]): string {
 /**
  * Main execution
  */
-async function main() {
+function main() {
   console.log('📋 Compliance Map - GDPR/PDPL Evidence Index\n');
-  console.log(`Checking ${COMPLIANCE_REQUIREMENTS.length} compliance requirements...\n`);
+  console.log(
+    `Checking ${COMPLIANCE_REQUIREMENTS.length} compliance requirements...\n`,
+  );
 
   // Assess compliance
   const evidence = assessCompliance();
@@ -506,8 +541,9 @@ async function main() {
 }
 
 // Run the script
-main().catch((error) => {
+try {
+  main();
+} catch (error) {
   console.error('❌ Error:', error);
   process.exit(1);
-});
-
+}

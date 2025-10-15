@@ -25,7 +25,7 @@ import { Auth, CurrentUser } from '../../common/decorators/auth.decorator';
 import { AuthType } from '../../common/guards/unified-auth.guard';
 
 @ApiTags('Order')
-@Controller({ path: 'orders', version: '2' })
+@Controller('delivery/order')
 @UseGuards(UnifiedAuthGuard, RolesGuard)
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
@@ -48,9 +48,22 @@ export class OrderController {
   }
 
   @Auth(AuthType.FIREBASE)
+  @Get('user/:userId')
+  @ApiOperation({
+    summary: 'جلب طلبات مستخدم محدد',
+    description: 'جلب جميع طلبات مستخدم معين',
+  })
+  async getUserOrders(
+    @Param('userId') userId: string,
+    @Query() pagination: CursorPaginationDto,
+  ) {
+    return this.orderService.findUserOrders(userId, pagination);
+  }
+
+  @Auth(AuthType.FIREBASE)
   @Get('my-orders')
   @ApiOperation({
-    summary: 'جلب طلبات المستخدم',
+    summary: 'جلب طلبات المستخدم الحالي',
     description: 'جلب جميع طلبات المستخدم الحالي مع pagination',
   })
   @ApiQuery({
@@ -129,7 +142,9 @@ export class OrderController {
     @Body() body: { note: string },
     @CurrentUser('id') userId: string,
   ) {
-    return this.orderService.addNote(orderId, body.note, 'public', userId);
+    return this.orderService.addNote(orderId, body.note, 'public', {
+      id: userId,
+    });
   }
 
   @Auth(AuthType.FIREBASE)
@@ -142,6 +157,16 @@ export class OrderController {
   // ==================== Vendor Operations ====================
 
   @Auth(AuthType.VENDOR_JWT)
+  @Get('vendor/orders')
+  @ApiOperation({ summary: 'جلب طلبات التاجر' })
+  async getVendorOrders(
+    @CurrentUser('id') vendorId: string,
+    @Query() pagination: CursorPaginationDto,
+  ) {
+    return this.orderService.findVendorOrders(vendorId, pagination);
+  }
+
+  @Auth(AuthType.VENDOR_JWT)
   @Post(':id/vendor-accept')
   @ApiOperation({
     summary: 'قبول الطلب من قبل التاجر',
@@ -152,11 +177,8 @@ export class OrderController {
   @ApiResponse({ status: 404, description: 'الطلب غير موجود' })
   @ApiResponse({ status: 403, description: 'ليس لديك صلاحية' })
   @ApiResponse({ status: 400, description: 'الطلب لا يمكن قبوله' })
-  async vendorAcceptOrder(
-    @Param('id') orderId: string,
-    @CurrentUser('id') vendorId: string,
-  ) {
-    return this.orderService.vendorAcceptOrder(orderId, vendorId);
+  async vendorAcceptOrder(@Param('id') orderId: string) {
+    return this.orderService.vendorAcceptOrder(orderId);
   }
 
   @Auth(AuthType.VENDOR_JWT)
@@ -179,9 +201,8 @@ export class OrderController {
   async vendorCancelOrder(
     @Param('id') orderId: string,
     @Body() body: { reason: string },
-    @CurrentUser('id') vendorId: string,
   ) {
-    return this.orderService.vendorCancelOrder(orderId, body.reason, vendorId);
+    return this.orderService.vendorCancelOrder(orderId, body.reason);
   }
 
   // ==================== Proof of Delivery ====================
@@ -336,13 +357,11 @@ export class OrderController {
   async adminChangeStatus(
     @Param('id') orderId: string,
     @Body() body: { status: string; reason?: string },
-    @CurrentUser('id') adminId: string,
   ) {
     return this.orderService.adminChangeStatus(
       orderId,
       body.status,
       body.reason,
-      adminId,
     );
   }
 
@@ -412,9 +431,8 @@ export class OrderController {
   async scheduleOrder(
     @Param('id') orderId: string,
     @Body() body: { scheduledDate: string },
-    @CurrentUser('id') userId: string,
   ) {
-    return this.orderService.scheduleOrder(orderId, body.scheduledDate, userId);
+    return this.orderService.scheduleOrder(orderId, body.scheduledDate);
   }
 
   @Get('public/:id/status')
@@ -468,14 +486,8 @@ export class OrderController {
   async updateDriverLocation(
     @Param('id') orderId: string,
     @Body() body: { lat: number; lng: number },
-    @CurrentUser('id') driverId: string,
   ) {
-    return this.orderService.updateDriverLocation(
-      orderId,
-      body.lat,
-      body.lng,
-      driverId,
-    );
+    return this.orderService.updateDriverLocation(orderId, body.lat, body.lng);
   }
 
   @Auth(AuthType.FIREBASE)

@@ -129,12 +129,35 @@ export class MerchantController {
 
   // ==================== Merchant Product Endpoints ====================
 
+  @Get('products')
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'الحصول على جميع منتجات التجار' })
+  async getAllMerchantProducts(
+    @Query('merchantId') merchantId?: string,
+    @Query('storeId') storeId?: string,
+    @Query('isAvailable') isAvailable?: boolean,
+  ) {
+    return this.merchantService.findAllMerchantProducts({
+      merchantId,
+      storeId,
+      isAvailable,
+    });
+  }
+
   @Post('products')
   @Auth(AuthType.VENDOR_JWT)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'إضافة منتج لمتجر التاجر' })
   async createMerchantProduct(@Body() dto: CreateMerchantProductDto) {
     return this.merchantService.createMerchantProduct(dto);
+  }
+
+  @Get('products/:id')
+  @ApiOperation({ summary: 'الحصول على منتج تاجر محدد' })
+  async getMerchantProduct(@Param('id') id: string) {
+    return this.merchantService.findMerchantProductById(id);
   }
 
   @Get(':merchantId/products')
@@ -180,6 +203,15 @@ export class MerchantController {
     @Body() dto: { quantity: number },
   ) {
     return this.merchantService.updateStock(id, dto.quantity);
+  }
+
+  @Delete('products/:id')
+  @Auth(AuthType.VENDOR_JWT)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'حذف منتج تاجر' })
+  async deleteMerchantProduct(@Param('id') id: string) {
+    await this.merchantService.deleteMerchantProduct(id);
+    return { message: 'تم حذف المنتج بنجاح' };
   }
 
   // ==================== Category Endpoints ====================

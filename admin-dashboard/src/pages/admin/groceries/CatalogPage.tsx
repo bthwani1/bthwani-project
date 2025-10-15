@@ -23,7 +23,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Edit, Delete } from "@mui/icons-material";
-import axios from "../../../utils/axios";
+import * as merchantApi from "../../../api/merchant";
 
 type Attribute = {
   _id: string;
@@ -68,17 +68,17 @@ export default function GroceriesCatalogPage() {
 
   // لجلب التصنيفات والسمات
   const fetchCategories = async () => {
-    const { data } = await axios.get("groceries/categories");
+    const data = await merchantApi.getCategories();
     setCategories(data);
   };
   const fetchAttributes = async (catId?: string) => {
     if (!catId) return setAttributes([]);
-    const { data } = await axios.get(`groceries/attributes/category/${catId}`);
+    const data = await merchantApi.getAttributesByCategory(catId);
     setAttributes(data);
   };
   const fetchProducts = async () => {
     // في حال دعم الAPI للفلترة
-    const { data } = await axios.get("groceries/catalog?usageType=grocery");
+    const data = await merchantApi.getCatalogProducts('grocery');
     setProducts(data);
   };
 
@@ -141,9 +141,9 @@ export default function GroceriesCatalogPage() {
     // ممكن تتوسع وتتحقق من usageType أيضاً
 
     if (editId) {
-      await axios.put(`groceries/catalog/${editId}`, submitData);
+      await merchantApi.updateCatalogProduct(editId, submitData);
     } else {
-      await axios.post("groceries/catalog", submitData);
+      await merchantApi.createCatalogProduct(submitData);
     }
     handleClose();
     fetchProducts();
@@ -151,7 +151,7 @@ export default function GroceriesCatalogPage() {
 
   const handleDelete = async (id: string) => {
     if (window.confirm("هل أنت متأكد من الحذف؟")) {
-      await axios.delete(`groceries/catalog/${id}`);
+      await merchantApi.updateCatalogProduct(id, { isActive: false });
       fetchProducts();
     }
   };

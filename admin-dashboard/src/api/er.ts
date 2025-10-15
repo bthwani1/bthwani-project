@@ -1,80 +1,130 @@
-import api from "../utils/axios";
-import type { Account, JournalEntry, JournalQuery, PagedResult } from "../type/er";
+/**
+ * ER/HR System API
+ * واجهة نظام الموارد البشرية والمحاسبة
+ */
 
+import { useAdminAPI, useAdminQuery } from '@/hooks/useAdminAPI';
+import { ALL_ADMIN_ENDPOINTS } from '@/config/admin-endpoints';
+import type * as Types from '@/types/er';
 
+const getEndpoint = (id: string) => {
+  const endpoint = ALL_ADMIN_ENDPOINTS.find(ep => ep.id === id);
+  if (!endpoint) throw new Error(`Endpoint "${id}" not found`);
+  return endpoint;
+};
 
-// بحث مرن: يحاول تمريـر query/onlyLeaf/limit للخادم، ويستخدم فلترة احتياطية على العميل إن تجاهلها الخادم.
-export async function listChartAccounts(query = "", onlyLeaf = true, limit = 50): Promise<Account[]> {
-const { data } = await api.get(`/accounts/chart`, {
-params: { query, limit, onlyLeaf: onlyLeaf ? 1 : 0 },
-});
+// ==================== Employee Hooks ====================
 
-
-let rows: Account[] = Array.isArray(data) ? data : (data?.data ?? []);
-
-
-// فلترة احتياطية على الطرف الأمامي
-if (onlyLeaf) {
-rows = rows.filter((a: Account) => a?.isLeaf === true || !a?.children || a?.children?.length === 0);
-}
-if (query) {
-const q = String(query).toLowerCase();
-rows = rows.filter((a: Account) =>
-String(a?.code ?? "").toLowerCase().includes(q) ||
-String(a?.name ?? "").toLowerCase().includes(q)
-);
+export function useEmployees(status?: string) {
+  return useAdminQuery<Types.ERResponse<Types.Employee[]>>(
+    getEndpoint('er-employees-all'),
+    { query: { status } },
+    { enabled: true }
+  );
 }
 
-
-return rows.slice(0, limit);
+export function useEmployee(id: string) {
+  return useAdminQuery<Types.ERResponse<Types.Employee>>(
+    getEndpoint('er-employee-get'),
+    { params: { id } },
+    { enabled: !!id }
+  );
 }
 
+// ==================== Attendance Hooks ====================
 
-// (اختياري) تميرات CRUD إذا رغبت بتجميعها هنا بدل ملفاتك الحالية
-export const createAccount = (payload: Account) => api.post(`/accounts/chart`, payload).then(r => r.data);
-export const updateAccount = (id: string, payload: Account) => api.patch(`/accounts/chart/${id}`, payload).then(r => r.data);
-export const deleteAccount = (id: string) => api.delete(`/accounts/chart/${id}`).then(r => r.data);
-
-
-// === Journal Entries ===
-export async function listJournalEntries(q: JournalQuery): Promise<JournalEntry[]> {
-const { data } = await api.get(`/entries`, { params: q });
-return data;
+export function useEmployeeAttendance(employeeId: string, month?: number, year?: number) {
+  return useAdminQuery<Types.ERResponse<Types.Attendance[]>>(
+    getEndpoint('er-attendance-get'),
+    { params: { employeeId }, query: { month, year } },
+    { enabled: !!employeeId }
+  );
 }
 
+// ==================== Accounting Hooks ====================
 
-export async function getNextVoucherNo(): Promise<{ voucherNo: string }> {
-const { data } = await api.get(`/entries/next-no`);
-return data;
+export function useChartAccounts(type?: string) {
+  return useAdminQuery<Types.ERResponse<Types.ChartAccount[]>>(
+    getEndpoint('er-accounts-all'),
+    { query: { type } },
+    { enabled: true }
+  );
 }
 
-
-export async function getJournalEntry(voucherNo: string): Promise<JournalEntry> {
-const { data } = await api.get(`/entries/${voucherNo}`);
-return data;
+export function useJournalEntries(filters?: {
+  type?: string;
+  status?: string;
+  startDate?: string;
+  endDate?: string;
+}) {
+  return useAdminQuery<Types.ERResponse<Types.JournalEntry[]>>(
+    getEndpoint('er-journal-all'),
+    { query: filters },
+    { enabled: true }
+  );
 }
 
-
-export async function createJournalEntry(payload: JournalEntry): Promise<JournalEntry> {
-const { data } = await api.post(`/entries`, payload);
-return data;
+export function useTrialBalance(date?: string) {
+  return useAdminQuery<Types.ERResponse<any>>(
+    getEndpoint('er-trial-balance'),
+    { query: { date } },
+    { enabled: true }
+  );
 }
 
+// ==================== Mutations API ====================
 
-export async function updateJournalEntry(voucherNo: string, payload: Partial<JournalEntry>): Promise<JournalEntry> {
-const { data } = await api.put(`/entries/${voucherNo}`, payload);
-return data;
-}
+export function useERAPI() {
+  const { callEndpoint } = useAdminAPI();
 
+  return {
+    // Employees
+    createEmployee: async (data: Types.CreateEmployeeDto) => {
+      return callEndpoint(getEndpoint('er-employees-create'), { body: data });
+    },
+    
+    updateEmployee: async (id: string, data: Types.UpdateEmployeeDto) => {
+      return callEndpoint(getEndpoint('er-employee-update'), { params: { id }, body: data });
+    },
 
-export async function postJournalEntry(voucherNo: string): Promise<{ ok: true }>{
-const { data } = await api.post(`/entries/${voucherNo}/post`);
-return data;
-}
+    // Leave Requests
+    approveLeaveRequest: async (id: string) => {
+      return callEndpoint(getEndpoint('er-leave-approve'), { params: { id } });
+    },
 
+    rejectLeaveRequest: async (id: string, reason: string) => {
+      return callEndpoint(getEndpoint('er-leave-reject'), { params: { id }, body: { reason } });
+    },
 
-// === Ledger / Journal Book ===
-export async function getJournalBook(params: { account?: string; from?: string; to?: string; page?: number; pageSize?: number }): Promise<PagedResult> {
-const { data } = await api.get(`/journals`, { params });
-return data;
+    // Payroll
+    generatePayroll: async (employeeId: string, month: number, year: number) => {
+      return callEndpoint(getEndpoint('er-payroll-generate'), { 
+        body: { employeeId, month, year } 
+      });
+    },
+
+    approvePayroll: async (id: string) => {
+      return callEndpoint(getEndpoint('er-payroll-approve'), { params: { id } });
+    },
+
+    markPayrollAsPaid: async (id: string, transactionRef: string) => {
+      return callEndpoint(getEndpoint('er-payroll-mark-paid'), { 
+        params: { id }, 
+        body: { transactionRef } 
+      });
+    },
+
+    // Accounting
+    createAccount: async (data: Types.CreateChartAccountDto) => {
+      return callEndpoint(getEndpoint('er-accounts-create'), { body: data });
+    },
+
+    createJournalEntry: async (data: Types.CreateJournalEntryDto) => {
+      return callEndpoint(getEndpoint('er-journal-create'), { body: data });
+    },
+
+    postJournalEntry: async (id: string) => {
+      return callEndpoint(getEndpoint('er-journal-post'), { params: { id } });
+    },
+  };
 }

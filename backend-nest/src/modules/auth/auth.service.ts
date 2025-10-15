@@ -89,43 +89,6 @@ export class AuthService {
     }
   }
 
-  // تحديث ملف المستخدم
-  async updateProfile(userId: string, updateDto: Partial<RegisterDto>) {
-    const user = await this.userModel.findById(userId);
-
-    if (!user) {
-      throw new NotFoundException({
-        code: 'USER_NOT_FOUND',
-        message: 'User not found',
-        userMessage: 'المستخدم غير موجود',
-        suggestedAction: 'يرجى التحقق من البيانات',
-      });
-    }
-
-    // تحديث البيانات
-    Object.assign(user, updateDto);
-    await user.save();
-
-    return {
-      user: this.sanitizeUser(user),
-    };
-  }
-
-  // جلب ملف المستخدم
-  async getProfile(userId: string) {
-    const user = await this.userModel.findById(userId);
-
-    if (!user) {
-      throw new NotFoundException({
-        code: 'USER_NOT_FOUND',
-        message: 'User not found',
-        userMessage: 'المستخدم غير موجود',
-      });
-    }
-
-    return this.sanitizeUser(user);
-  }
-
   // إنشاء JWT Token
   private async generateToken(user: {
     _id?: any;

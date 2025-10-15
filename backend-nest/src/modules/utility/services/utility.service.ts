@@ -11,6 +11,8 @@ import {
   UpdateUtilityPricingDto,
   CalculateUtilityPriceDto,
 } from '../dto/create-utility-pricing.dto';
+import { DailyPrice } from '../entities/daily-price.entity';
+import { CreateDailyPriceDto } from '../dto/daily-price.dto';
 import { getDistance } from 'geolib';
 
 @Injectable()
@@ -18,6 +20,8 @@ export class UtilityService {
   constructor(
     @InjectModel(UtilityPricing.name)
     private utilityPricingModel: Model<UtilityPricing>,
+    @InjectModel(DailyPrice.name)
+    private dailyPriceModel: Model<DailyPrice>,
   ) {}
 
   /**
@@ -49,8 +53,8 @@ export class UtilityService {
     }
 
     if (dto.isActive !== undefined) pricing.isActive = dto.isActive;
-    if (dto.gas) pricing.gas = dto.gas as any;
-    if (dto.water) pricing.water = dto.water as any;
+    if (dto.gas) pricing.gas = dto.gas as never;
+    if (dto.water) pricing.water = dto.water as never;
 
     return pricing.save();
   }
@@ -239,5 +243,68 @@ export class UtilityService {
       throw new NotFoundException('تسعير المدينة غير موجود');
     }
   }
-}
 
+  // ==================== Daily Pricing Methods ====================
+
+  /**
+   * إنشاء أو تحديث سعر يومي
+   */
+  async upsertDailyPrice(dto: CreateDailyPriceDto): Promise<DailyPrice> {
+    const filter = {
+      kind: dto.kind,
+      city: dto.city,
+      date: dto.date,
+      variant: dto.variant || '',
+    };
+
+    const updated = await this.dailyPriceModel.findOneAndUpdate(
+      filter,
+      { $set: dto },
+      { new: true, upsert: true },
+    );
+
+    return updated;
+  }
+
+  /**
+   * الحصول على قائمة الأسعار اليومية
+   */
+  async listDailyPrices(
+    kind: 'gas' | 'water',
+    city: string,
+  ): Promise<any[]> {
+    return this.dailyPriceModel
+      .find({ kind, city })
+      .sort({ date: -1 })
+      .lean()
+      .exec();
+  }
+
+  /**
+   * حذف سعر يومي حسب ID
+   */
+  async deleteDailyPrice(id: string): Promise<void> {
+    const result = await this.dailyPriceModel.findByIdAndDelete(id);
+    if (!result) {
+      throw new NotFoundException('السعر اليومي غير موجود');
+    }
+  }
+
+  /**
+   * حذف سعر يومي حسب المفتاح المركب
+   */
+  async deleteDailyPriceByKey(
+    kind: 'gas' | 'water',
+    city: string,
+    date: string,
+    variant?: string,
+  ): Promise<void> {
+    const filter: any = { kind, city, date };
+    if (variant) filter.variant = variant;
+
+    const result = await this.dailyPriceModel.findOneAndDelete(filter);
+    if (!result) {
+      throw new NotFoundException('السعر اليومي غير موجود');
+    }
+  }
+}

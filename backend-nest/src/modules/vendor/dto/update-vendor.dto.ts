@@ -22,4 +22,3 @@ export class UpdateVendorDto {
     systemUpdates?: boolean;
   };
 }
-

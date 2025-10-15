@@ -6,4 +6,3 @@ export class OrderStatusChangedEvent {
     public readonly changedBy: string,
   ) {}
 }
-

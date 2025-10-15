@@ -67,4 +67,3 @@ export class CreateTransactionDto {
   @IsOptional()
   meta?: any;
 }
-

@@ -1,4 +1,10 @@
-import { Processor, Process, OnQueueActive, OnQueueCompleted, OnQueueFailed } from '@nestjs/bull';
+import {
+  Processor,
+  Process,
+  OnQueueActive,
+  OnQueueCompleted,
+  OnQueueFailed,
+} from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
 import type { Job } from 'bull';
 
@@ -6,7 +12,7 @@ export interface SendEmailJobData {
   to: string;
   subject: string;
   template: string;
-  context?: any;
+  context?: Record<string, unknown>;
 }
 
 export interface SendBulkEmailsJobData {
@@ -14,7 +20,7 @@ export interface SendBulkEmailsJobData {
     to: string;
     subject: string;
     template: string;
-    context?: any;
+    context?: Record<string, unknown>;
   }>;
 }
 
@@ -31,14 +37,18 @@ export class EmailProcessor {
       await this.simulateSendEmail(job.data);
 
       this.logger.log(`Email sent successfully to ${job.data.to}`);
-      
+
       return {
         success: true,
         to: job.data.to,
         sentAt: new Date(),
       };
     } catch (error) {
-      this.logger.error(`Failed to send email to ${job.data.to}: ${error.message}`, error.stack);
+      const err = error as Error;
+      this.logger.error(
+        `Failed to send email to ${job.data.to}: ${err.message}`,
+        err.stack,
+      );
       throw error;
     }
   }
@@ -60,19 +70,24 @@ export class EmailProcessor {
         results.successful++;
       } catch (error) {
         results.failed++;
-        results.errors.push(`${emailData.to}: ${error.message}`);
+        const err = error as Error;
+        results.errors.push(`${emailData.to}: ${err.message}`);
       }
 
       // Rate limiting: 10 emails per second
       await new Promise((resolve) => setTimeout(resolve, 100));
     }
 
-    this.logger.log(`Bulk emails completed: ${results.successful}/${results.total} successful`);
+    this.logger.log(
+      `Bulk emails completed: ${results.successful}/${results.total} successful`,
+    );
     return results;
   }
 
   @Process('send-order-confirmation')
-  async sendOrderConfirmation(job: Job<{ email: string; orderDetails: any }>) {
+  async sendOrderConfirmation(
+    job: Job<{ email: string; orderDetails: Record<string, unknown> }>,
+  ) {
     this.logger.log(`Sending order confirmation to ${job.data.email}`);
 
     return this.sendEmail({
@@ -83,7 +98,7 @@ export class EmailProcessor {
         template: 'order-confirmation',
         context: job.data.orderDetails,
       },
-    } as any);
+    } as unknown as Job<SendEmailJobData>);
   }
 
   @Process('send-password-reset')
@@ -101,7 +116,7 @@ export class EmailProcessor {
           resetLink: `https://app.bthwani.com/reset-password?token=${job.data.resetToken}`,
         },
       },
-    } as any);
+    } as unknown as Job<SendEmailJobData>);
   }
 
   @Process('send-welcome-email')
@@ -118,7 +133,7 @@ export class EmailProcessor {
           name: job.data.name,
         },
       },
-    } as any);
+    } as unknown as Job<SendEmailJobData>);
   }
 
   @OnQueueActive()
@@ -127,13 +142,16 @@ export class EmailProcessor {
   }
 
   @OnQueueCompleted()
-  onCompleted(job: Job, result: any) {
+  onCompleted(job: Job) {
     this.logger.log(`Email job ${job.id} completed`);
   }
 
   @OnQueueFailed()
   onFailed(job: Job, error: Error) {
-    this.logger.error(`Email job ${job.id} failed: ${error.message}`, error.stack);
+    this.logger.error(
+      `Email job ${job.id} failed: ${error.message}`,
+      error.stack,
+    );
   }
 
   private async simulateSendEmail(emailData: SendEmailJobData): Promise<void> {
@@ -154,4 +172,3 @@ export class EmailProcessor {
     this.logger.debug(`[SIMULATED] Email sent to ${emailData.to}`);
   }
 }
-

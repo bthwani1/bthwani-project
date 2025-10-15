@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler, EventBus } from '@nestjs/cqrs';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
 import { NotFoundException, Inject } from '@nestjs/common';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import type { Cache } from 'cache-manager';
@@ -37,8 +37,7 @@ export class UpdateOrderStatusHandler
       status: command.status,
       changedAt: new Date(),
       changedBy: command.changedBy,
-      reason: command.reason,
-    } as any);
+    });
 
     await order.save();
 
@@ -49,7 +48,7 @@ export class UpdateOrderStatusHandler
     // إصدار Event
     this.eventBus.publish(
       new OrderStatusChangedEvent(
-        (order._id as any).toString(),
+        String(order._id),
         oldStatus,
         command.status,
         command.changedBy,
@@ -59,4 +58,3 @@ export class UpdateOrderStatusHandler
     return order;
   }
 }
-

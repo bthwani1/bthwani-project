@@ -18,7 +18,12 @@ export class Product extends Document {
   @Prop({ required: true })
   price: number;
 
-  @Prop({ type: Types.ObjectId, ref: 'DeliveryStore', required: true, index: true })
+  @Prop({
+    type: Types.ObjectId,
+    ref: 'DeliveryStore',
+    required: true,
+    index: true,
+  })
   store: Types.ObjectId;
 
   @Prop({ type: Types.ObjectId, ref: 'DeliveryCategory', index: true })
@@ -75,4 +80,3 @@ ProductSchema.index({ store: 1, isActive: 1 });
 ProductSchema.index({ category: 1 });
 ProductSchema.index({ price: 1 });
 ProductSchema.index({ isFeatured: 1 });
-

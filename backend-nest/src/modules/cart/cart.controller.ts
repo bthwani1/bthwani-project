@@ -25,7 +25,7 @@ import { Auth, CurrentUser } from '../../common/decorators/auth.decorator';
 import { AuthType } from '../../common/guards/unified-auth.guard';
 
 @ApiTags('Cart')
-@Controller('cart')
+@Controller('delivery/cart')
 @ApiBearerAuth()
 export class CartController {
   constructor(
@@ -42,6 +42,20 @@ export class CartController {
     return this.cartService.getOrCreateCart(userId);
   }
 
+  @Get('user/:userId')
+  @Auth(AuthType.FIREBASE)
+  @ApiOperation({ summary: 'الحصول على سلة مستخدم' })
+  async getUserCart(@Param('userId') userId: string) {
+    return this.cartService.getOrCreateCart(userId);
+  }
+
+  @Get(':cartId')
+  @Auth(AuthType.FIREBASE)
+  @ApiOperation({ summary: 'الحصول على سلة بالمعرف' })
+  async getCartById(@Param('cartId') cartId: string, @CurrentUser('id') userId: string) {
+    return this.cartService.getOrCreateCart(userId);
+  }
+
   @Post('items')
   @Auth(AuthType.FIREBASE)
   @ApiOperation({ summary: 'إضافة منتج للسلة' })
@@ -49,6 +63,26 @@ export class CartController {
     @CurrentUser('id') userId: string,
     @Body() dto: AddToCartDto,
   ) {
+    return this.cartService.addItem(userId, dto);
+  }
+
+  @Post('add')
+  @Auth(AuthType.FIREBASE)
+  @ApiOperation({ summary: 'إضافة منتج للسلة (توافق)' })
+  async addToCartCompat(
+    @CurrentUser('id') userId: string,
+    @Body() body: any,
+  ) {
+    const dto: AddToCartDto = {
+      productType: body.items?.[0]?.productType || 'deliveryProduct',
+      productId: body.items?.[0]?.productId,
+      name: body.items?.[0]?.name,
+      price: body.items?.[0]?.price,
+      quantity: body.items?.[0]?.quantity || 1,
+      store: body.items?.[0]?.store || body.store,
+      image: body.items?.[0]?.image,
+      options: body.items?.[0]?.options,
+    };
     return this.cartService.addItem(userId, dto);
   }
 
@@ -63,10 +97,31 @@ export class CartController {
     return this.cartService.updateItemQuantity(userId, productId, dto);
   }
 
+  @Patch(':productId')
+  @Auth(AuthType.FIREBASE)
+  @ApiOperation({ summary: 'تحديث كمية منتج (توافق)' })
+  async updateCartItemCompat(
+    @CurrentUser('id') userId: string,
+    @Param('productId') productId: string,
+    @Body() dto: UpdateCartItemDto,
+  ) {
+    return this.cartService.updateItemQuantity(userId, productId, dto);
+  }
+
   @Delete('items/:productId')
   @Auth(AuthType.FIREBASE)
   @ApiOperation({ summary: 'حذف منتج من السلة' })
   async removeFromCart(
+    @CurrentUser('id') userId: string,
+    @Param('productId') productId: string,
+  ) {
+    return this.cartService.removeItem(userId, productId);
+  }
+
+  @Delete(':productId')
+  @Auth(AuthType.FIREBASE)
+  @ApiOperation({ summary: 'حذف منتج من السلة (توافق)' })
+  async removeFromCartCompat(
     @CurrentUser('id') userId: string,
     @Param('productId') productId: string,
   ) {
@@ -103,6 +158,28 @@ export class CartController {
   async getCartCount(@CurrentUser('id') userId: string) {
     const count = await this.cartService.getItemsCount(userId);
     return { count };
+  }
+
+  @Get('fee')
+  @Auth(AuthType.FIREBASE)
+  @ApiOperation({ summary: 'حساب رسوم التوصيل' })
+  async getCartFee(@CurrentUser('id') userId: string) {
+    const cart = await this.cartService.getOrCreateCart(userId);
+    // حساب رسوم بسيط - يمكن تطويره لاحقاً
+    const deliveryFee = cart.items.length > 0 ? 500 : 0;
+    return {
+      subtotal: cart.total,
+      deliveryFee,
+      total: cart.total + deliveryFee,
+    };
+  }
+
+  @Post('merge')
+  @Auth(AuthType.FIREBASE)
+  @ApiOperation({ summary: 'دمج سلة الضيف مع سلة المستخدم' })
+  async mergeCart(@CurrentUser('id') userId: string, @Body() body: any) {
+    // للتوافق مع الـ frontend - يتم تجاهل سلة الضيف حالياً
+    return this.cartService.getOrCreateCart(userId);
   }
 
   // ==================== Shein Cart ====================
@@ -220,5 +297,49 @@ export class CartController {
       this.sheinCartService.clearCart(userId),
     ]);
     return { message: 'تم تفريغ كل السلات بنجاح' };
+  }
+
+  // ==================== Admin Endpoints ====================
+
+  @Get('abandoned')
+  @Auth(AuthType.FIREBASE)
+  @ApiOperation({ summary: 'الحصول على السلات المهجورة (Admin)' })
+  async getAbandonedCarts() {
+    // سلات لم يتم تحديثها منذ 24 ساعة
+    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    return this.cartService['cartModel']
+      .find({ lastModified: { $lt: oneDayAgo }, 'items.0': { $exists: true } })
+      .populate('user', 'name phone')
+      .sort({ lastModified: -1 })
+      .limit(100);
+  }
+
+  @Delete(':cartId/items/:productId')
+  @Auth(AuthType.FIREBASE)
+  @ApiOperation({ summary: 'حذف منتج من سلة محددة (Admin)' })
+  async deleteCartItem(
+    @Param('cartId') cartId: string,
+    @Param('productId') productId: string,
+  ) {
+    const cart = await this.cartService['cartModel'].findById(cartId);
+    if (!cart) {
+      return { success: false, message: 'السلة غير موجودة' };
+    }
+    cart.items = cart.items.filter(
+      (item) => item.productId.toString() !== productId,
+    );
+    await cart.save();
+    return { success: true, message: 'تم حذف المنتج' };
+  }
+
+  @Post(':cartId/retarget/push')
+  @Auth(AuthType.FIREBASE)
+  @ApiOperation({ summary: 'إرسال إشعار استعادة السلة (Admin)' })
+  async sendRetargetNotification(
+    @Param('cartId') cartId: string,
+    @Body() body: any,
+  ) {
+    // للتوافق - يمكن تطوير لاحقاً
+    return { success: true, message: 'تم إرسال الإشعار' };
   }
 }

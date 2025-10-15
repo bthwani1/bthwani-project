@@ -20,6 +20,9 @@ export default defineConfig(({ mode }) => {
         "@utils": resolve(__dirname, "src/utils"),
         "@seo": resolve(__dirname, "src/seo"),
         "@landing": resolve(__dirname, "src/landing"),
+        "@config": resolve(__dirname, "src/config"),
+        "@api": resolve(__dirname, "src/api"),
+        "@hooks": resolve(__dirname, "src/hooks"),
       },
       // يمنع تحميل نسخ متعددة من React/Emotion (مهم للسرعة وتفادي hook errors)
       dedupe: ["react", "react-dom", "@emotion/react", "@emotion/styled"],

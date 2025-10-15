@@ -1,4 +1,9 @@
-import { IsNotEmpty, IsString, IsOptional, ValidateNested } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsOptional,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
@@ -32,4 +37,3 @@ export class AddAddressDto {
   @Type(() => LocationDto)
   location?: LocationDto;
 }
-

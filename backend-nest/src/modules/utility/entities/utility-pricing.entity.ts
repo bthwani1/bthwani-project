@@ -102,4 +102,3 @@ export const UtilityPricingSchema =
 // Indexes
 UtilityPricingSchema.index({ city: 1 }, { unique: true });
 UtilityPricingSchema.index({ isActive: 1 });
-

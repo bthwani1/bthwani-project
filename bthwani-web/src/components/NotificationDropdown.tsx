@@ -50,7 +50,7 @@ const NotificationDropdown: React.FC<NotificationDropdownProps> = ({
 
     try {
       setLoading(true);
-      const data = await getUserNotifications(10, 0);
+      const data = await getUserNotifications(10);
       setNotifications(data);
     } catch (error) {
       console.error("Error loading notifications:", error);
