@@ -4,7 +4,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { InjectModel, InjectConnection } from '@nestjs/mongoose';
-import { Model, Types, Connection } from 'mongoose';
+import { Model, Types, Connection, ClientSession } from 'mongoose';
 import { Settlement } from '../entities/settlement.entity';
 import { Order } from '../../order/entities/order.entity';
 import {
@@ -135,7 +135,9 @@ export class SettlementService {
   /**
    * توليد رقم تسوية فريد
    */
-  private async generateSettlementNumber(session?: any): Promise<string> {
+  private async generateSettlementNumber(
+    session?: ClientSession,
+  ): Promise<string> {
     const year = new Date().getFullYear();
     const month = String(new Date().getMonth() + 1).padStart(2, '0');
 
@@ -204,7 +206,9 @@ export class SettlementService {
     return TransactionHelper.executeInTransaction(
       this.connection,
       async (session) => {
-        const settlement = await this.settlementModel.findById(id).session(session);
+        const settlement = await this.settlementModel
+          .findById(id)
+          .session(session);
         if (!settlement) {
           throw new NotFoundException('التسوية غير موجودة');
         }
@@ -238,7 +242,9 @@ export class SettlementService {
     return TransactionHelper.executeInTransaction(
       this.connection,
       async (session) => {
-        const settlement = await this.settlementModel.findById(id).session(session);
+        const settlement = await this.settlementModel
+          .findById(id)
+          .session(session);
         if (!settlement) {
           throw new NotFoundException('التسوية غير موجودة');
         }

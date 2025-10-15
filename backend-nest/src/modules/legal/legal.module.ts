@@ -3,8 +3,14 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { LegalController } from './legal.controller';
 import { LegalService } from './legal.service';
-import { PrivacyPolicy, PrivacyPolicySchema } from './entities/privacy-policy.entity';
-import { TermsOfService, TermsOfServiceSchema } from './entities/terms-of-service.entity';
+import {
+  PrivacyPolicy,
+  PrivacyPolicySchema,
+} from './entities/privacy-policy.entity';
+import {
+  TermsOfService,
+  TermsOfServiceSchema,
+} from './entities/terms-of-service.entity';
 import { UserConsent, UserConsentSchema } from './entities/user-consent.entity';
 
 @Module({

@@ -23,7 +23,10 @@ export class CreateStoreSectionDto {
   @IsString()
   nameAr?: string;
 
-  @ApiPropertyOptional({ description: 'الوصف', example: 'قسم الخضروات الطازجة' })
+  @ApiPropertyOptional({
+    description: 'الوصف',
+    example: 'قسم الخضروات الطازجة',
+  })
   @IsOptional()
   @IsString()
   description?: string;

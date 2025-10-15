@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsOptional, IsBoolean, IsDateString } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  IsBoolean,
+  IsDateString,
+} from 'class-validator';
 
 export class CreatePrivacyPolicyDto {
   @ApiProperty({ description: 'إصدار السياسة', example: '1.0.0' })
@@ -22,9 +28,12 @@ export class CreatePrivacyPolicyDto {
   @IsDateString()
   effectiveDate?: Date;
 
-  @ApiProperty({ description: 'هل السياسة نشطة', default: true, required: false })
+  @ApiProperty({
+    description: 'هل السياسة نشطة',
+    default: true,
+    required: false,
+  })
   @IsOptional()
   @IsBoolean()
   isActive?: boolean;
 }
-

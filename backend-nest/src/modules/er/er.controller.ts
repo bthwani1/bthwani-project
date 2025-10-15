@@ -18,6 +18,7 @@ import { CreateLeaveRequestDto } from './dto/create-leave-request.dto';
 import { CreateChartAccountDto } from './dto/create-chart-account.dto';
 import { CreateJournalEntryDto } from './dto/create-journal-entry.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
+import { User } from '../auth/entities';
 
 const Roles = (...roles: string[]) => SetMetadata('roles', roles);
 
@@ -73,7 +74,7 @@ export class ERController {
   @Auth(AuthType.JWT)
   @ApiOperation({ summary: 'تسجيل حضور' })
   async checkIn(
-    @CurrentUser('employeeId' as any) employeeId: string,
+    @CurrentUser('employeeId' as unknown as keyof User) employeeId: string,
     @Body() dto: { location?: { lat: number; lng: number } },
   ) {
     return this.hrService.recordCheckIn(employeeId, dto.location);
@@ -83,7 +84,7 @@ export class ERController {
   @Auth(AuthType.JWT)
   @ApiOperation({ summary: 'تسجيل انصراف' })
   async checkOut(
-    @CurrentUser('employeeId' as any) employeeId: string,
+    @CurrentUser('employeeId' as unknown as keyof User) employeeId: string,
     @Body() dto: { location?: { lat: number; lng: number } },
   ) {
     return this.hrService.recordCheckOut(employeeId, dto.location);
@@ -107,7 +108,7 @@ export class ERController {
   @Auth(AuthType.JWT)
   @ApiOperation({ summary: 'تقديم طلب إجازة' })
   async createLeaveRequest(
-    @CurrentUser('employeeId' as any) employeeId: string,
+    @CurrentUser('employeeId' as unknown as keyof User) employeeId: string,
     @Body() dto: CreateLeaveRequestDto,
   ) {
     return this.hrService.createLeaveRequest(employeeId, dto);

@@ -213,7 +213,10 @@ export class ContentController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @ApiOperation({ summary: 'تحديث إعدادات التطبيق' })
-  async updateAppSettings(@Body() body: any, @CurrentUser('id') adminId: string) {
+  async updateAppSettings(
+    @Body() body: any,
+    @CurrentUser('id') adminId: string,
+  ) {
     return this.contentService.updateAppSettings(body, adminId);
   }
 

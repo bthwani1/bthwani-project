@@ -9,13 +9,13 @@ export enum SuppressionChannel {
 }
 
 export enum SuppressionReason {
-  USER_REQUEST = 'user_request',           // طلب من المستخدم
-  BOUNCE = 'bounce',                       // ارتداد البريد
-  COMPLAINT = 'complaint',                 // شكوى spam
-  UNSUBSCRIBE = 'unsubscribe',            // إلغاء الاشتراك
-  INVALID_CONTACT = 'invalid_contact',    // معلومات اتصال غير صالحة
+  USER_REQUEST = 'user_request', // طلب من المستخدم
+  BOUNCE = 'bounce', // ارتداد البريد
+  COMPLAINT = 'complaint', // شكوى spam
+  UNSUBSCRIBE = 'unsubscribe', // إلغاء الاشتراك
+  INVALID_CONTACT = 'invalid_contact', // معلومات اتصال غير صالحة
   TOO_MANY_FAILURES = 'too_many_failures', // فشل متكرر
-  ADMIN_BLOCK = 'admin_block',            // حظر إداري
+  ADMIN_BLOCK = 'admin_block', // حظر إداري
 }
 
 @Schema({ timestamps: true, collection: 'notification_suppressions' })
@@ -24,26 +24,26 @@ export class NotificationSuppression extends Document {
   @Prop({ type: Types.ObjectId, ref: 'User', required: true, index: true })
   userId: Types.ObjectId;
 
-  @ApiProperty({ 
+  @ApiProperty({
     description: 'القنوات المحظورة',
     enum: SuppressionChannel,
-    isArray: true
+    isArray: true,
   })
-  @Prop({ 
-    type: [String], 
+  @Prop({
+    type: [String],
     enum: Object.values(SuppressionChannel),
-    default: [] 
+    default: [],
   })
   suppressedChannels: SuppressionChannel[];
 
-  @ApiProperty({ 
+  @ApiProperty({
     description: 'سبب الحظر',
-    enum: SuppressionReason
+    enum: SuppressionReason,
   })
-  @Prop({ 
+  @Prop({
     type: String,
     enum: Object.values(SuppressionReason),
-    required: true
+    required: true,
   })
   reason: SuppressionReason;
 
@@ -80,7 +80,9 @@ export class NotificationSuppression extends Document {
   updatedAt?: Date;
 }
 
-export const NotificationSuppressionSchema = SchemaFactory.createForClass(NotificationSuppression);
+export const NotificationSuppressionSchema = SchemaFactory.createForClass(
+  NotificationSuppression,
+);
 
 // ==================== Indexes ====================
 // البحث السريع حسب المستخدم
@@ -96,9 +98,8 @@ NotificationSuppressionSchema.index({ userId: 1, isActive: 1 });
 NotificationSuppressionSchema.index({ expiresAt: 1 }, { sparse: true });
 
 // Compound index للأداء الأفضل
-NotificationSuppressionSchema.index({ 
-  userId: 1, 
-  isActive: 1, 
-  expiresAt: 1 
+NotificationSuppressionSchema.index({
+  userId: 1,
+  isActive: 1,
+  expiresAt: 1,
 });
-

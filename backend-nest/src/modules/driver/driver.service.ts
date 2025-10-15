@@ -4,7 +4,7 @@ import {
   ConflictException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { Driver } from './entities/driver.entity';
 import { CreateDriverDto } from './dto/create-driver.dto';
@@ -142,7 +142,11 @@ export class DriverService {
   }
 
   async updateProfile(driverId: string, updates: any) {
-    const driver = await this.driverModel.findByIdAndUpdate(driverId, updates, { new: true }).select('-password');
+    const driver = await this.driverModel
+      .findByIdAndUpdate(driverId, updates as Record<string, any>, {
+        new: true,
+      })
+      .select('-password');
     if (!driver) {
       throw new NotFoundException({
         code: 'DRIVER_NOT_FOUND',
@@ -157,22 +161,38 @@ export class DriverService {
 
   async getEarnings(driverId: string, startDate?: string, endDate?: string) {
     // TODO: Aggregate from Order model
+    void driverId;
+    void startDate;
+    void endDate;
+    await Promise.resolve();
     return { totalEarnings: 0, ordersCount: 0, averagePerOrder: 0 };
   }
 
   async getDailyEarnings(driverId: string) {
     // TODO: Today's earnings
+    void driverId;
+    await Promise.resolve();
     return { earnings: 0, ordersCount: 0 };
   }
 
   async getWeeklyEarnings(driverId: string) {
     // TODO: This week's earnings
+    void driverId;
+    await Promise.resolve();
     return { earnings: 0, ordersCount: 0 };
   }
 
   async getStatistics(driverId: string) {
     // TODO: Aggregate statistics
-    return { totalOrders: 0, completedOrders: 0, cancelledOrders: 0, totalEarnings: 0, averageRating: 0 };
+    void driverId;
+    await Promise.resolve();
+    return {
+      totalOrders: 0,
+      completedOrders: 0,
+      cancelledOrders: 0,
+      totalEarnings: 0,
+      averageRating: 0,
+    };
   }
 
   // ==================== Documents ====================
@@ -187,16 +207,19 @@ export class DriverService {
       });
     }
 
-    const documents = (driver as any).documents || [];
+    const documents =
+      (driver as unknown as { documents: any[] }).documents || [];
     documents.push({ ...docData, uploadedAt: new Date(), verified: false });
-    (driver as any).documents = documents;
+    (driver as unknown as { documents: any[] }).documents = documents;
     await driver.save();
 
     return { success: true, message: 'تم رفع المستند' };
   }
 
   async getDocuments(driverId: string) {
-    const driver = await this.driverModel.findById(driverId).select('documents');
+    const driver = await this.driverModel
+      .findById(driverId)
+      .select('documents');
     if (!driver) {
       throw new NotFoundException({
         code: 'DRIVER_NOT_FOUND',
@@ -204,49 +227,92 @@ export class DriverService {
         userMessage: 'السائق غير موجود',
       });
     }
-    return { documents: (driver as any).documents || [] };
+    return {
+      documents:
+        ((driver as unknown as { documents: any[] }).documents as unknown[]) ||
+        [],
+    };
   }
 
   // ==================== Vacations ====================
 
   async requestVacation(driverId: string, vacationData: any) {
     // TODO: Implement VacationRequest model
-    return { success: true, message: 'تم تقديم طلب الإجازة', requestId: 'vacation_' + Date.now() };
+    void driverId;
+    void vacationData;
+    await Promise.resolve();
+    return {
+      success: true,
+      message: 'تم تقديم طلب الإجازة',
+      requestId: 'vacation_' + Date.now(),
+    };
   }
 
   async getMyVacations(driverId: string) {
     // TODO: Implement
+    void driverId;
+    await Promise.resolve();
     return { data: [] };
   }
 
   async cancelVacation(vacationId: string, driverId: string) {
     // TODO: Implement
+    void vacationId;
+    void driverId;
+    await Promise.resolve();
     return { success: true, message: 'تم إلغاء طلب الإجازة' };
   }
 
   async getVacationBalance(driverId: string) {
     // TODO: Implement
+    void driverId;
+    await Promise.resolve();
     return { annual: 30, sick: 15, used: 0, remaining: 30 };
   }
 
   async getVacationPolicy() {
-    return { annualLeave: 30, sickLeave: 15, emergencyLeave: 5, rules: 'يجب التقديم قبل 7 أيام' };
+    await Promise.resolve();
+    return {
+      annualLeave: 30,
+      sickLeave: 15,
+      emergencyLeave: 5,
+      rules: 'يجب التقديم قبل 7 أيام',
+    };
   }
 
   // ==================== Withdrawals ====================
 
-  async requestWithdrawal(driverId: string, amount: number, method: string, accountInfo: any) {
+  async requestWithdrawal(
+    driverId: string,
+    amount: number,
+    method: string,
+    accountInfo: any,
+  ) {
     // TODO: Implement
-    return { success: true, message: 'تم تقديم طلب السحب', requestId: 'withdrawal_' + Date.now() };
+    void driverId;
+    void amount;
+    void method;
+    void accountInfo;
+    await Promise.resolve();
+    return {
+      success: true,
+      message: 'تم تقديم طلب السحب',
+      requestId: 'withdrawal_' + Date.now(),
+    };
   }
 
   async getMyWithdrawals(driverId: string) {
     // TODO: Implement
+    void driverId;
+    await Promise.resolve();
     return { data: [] };
   }
 
   async getWithdrawalStatus(withdrawalId: string, driverId: string) {
     // TODO: Implement
+    void withdrawalId;
+    void driverId;
+    await Promise.resolve();
     return { status: 'pending', amount: 0 };
   }
 
@@ -254,37 +320,64 @@ export class DriverService {
 
   async getAvailableOrders(driverId: string) {
     // TODO: Find orders that need drivers (nearby, unassigned)
+    void driverId;
+    await Promise.resolve();
     return { data: [] };
   }
 
   async acceptOrder(orderId: string, driverId: string) {
     // TODO: Assign order to driver
+    void orderId;
+    void driverId;
+    await Promise.resolve();
     return { success: true, message: 'تم قبول الطلب' };
   }
 
   async rejectOrder(orderId: string, driverId: string, reason: string) {
     // TODO: Implement
+    void orderId;
+    void driverId;
+    void reason;
+    await Promise.resolve();
     return { success: true, message: 'تم رفض الطلب' };
   }
 
   async startDelivery(orderId: string, driverId: string) {
     // TODO: Update order status
+    void orderId;
+    void driverId;
+    await Promise.resolve();
     return { success: true, message: 'بدأ التوصيل' };
   }
 
   async completeDelivery(orderId: string, driverId: string) {
     // TODO: Update order status to delivered
+    void orderId;
+    void driverId;
+    await Promise.resolve();
     return { success: true, message: 'تم إتمام التوصيل' };
   }
 
   async getOrdersHistory(driverId: string, pagination: any) {
     // TODO: Find driver's past orders
-    return { data: [], pagination: { nextCursor: null, hasMore: false, limit: 20 } };
+    void driverId;
+    void pagination;
+    await Promise.resolve();
+    return {
+      data: [],
+      pagination: { nextCursor: null, hasMore: false, limit: 20 },
+    };
   }
 
   async reportIssue(driverId: string, issueData: any) {
     // TODO: Create issue/support ticket
-    return { success: true, message: 'تم الإبلاغ عن المشكلة', issueId: 'issue_' + Date.now() };
+    void driverId;
+    void issueData;
+    await Promise.resolve();
+    return {
+      success: true,
+      message: 'تم الإبلاغ عن المشكلة',
+      issueId: 'issue_' + Date.now(),
+    };
   }
 }
-

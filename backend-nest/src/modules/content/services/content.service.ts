@@ -273,7 +273,7 @@ export class ContentService {
   // ==================== CMS Pages Advanced ====================
 
   async getCMSPages(type?: string) {
-    const query: any = { isActive: true };
+    const query: Record<string, any> = { isActive: true };
     if (type) query.type = type;
 
     return this.bannerModel.find(query).sort({ order: 1 }).lean();
@@ -288,11 +288,21 @@ export class ContentService {
   }
 
   async createCMSPage(pageData: any, adminId: string) {
+    void adminId;
+    void pageData;
+    await Promise.resolve();
     // TODO: Implement with CMS Page model
-    return { success: true, message: 'تم إنشاء الصفحة', page: pageData };
+    return {
+      success: true,
+      message: 'تم إنشاء الصفحة',
+      page: pageData as unknown,
+    };
   }
 
   async updateCMSPage(pageId: string, updates: any) {
+    void pageId;
+    void updates;
+    await Promise.resolve();
     // TODO: Implement with CMS Page model
     return { success: true, message: 'تم تحديث الصفحة' };
   }
@@ -300,6 +310,7 @@ export class ContentService {
   // ==================== App Settings ====================
 
   async getAppSettings() {
+    await Promise.resolve();
     // TODO: Get from AppSettings model
     return {
       maintenanceMode: false,
@@ -318,12 +329,21 @@ export class ContentService {
 
   async updateAppSettings(settings: any, adminId: string) {
     // TODO: Update AppSettings model
-    return { success: true, message: 'تم تحديث الإعدادات', settings };
+    void settings;
+    void adminId;
+    await Promise.resolve();
+    return {
+      success: true,
+      message: 'تم تحديث الإعدادات',
+      settings: settings as unknown,
+    };
   }
 
   // ==================== FAQs ====================
 
   async getFAQs(category?: string) {
+    void category;
+    await Promise.resolve();
     // TODO: Implement FAQ model
     return {
       data: [
@@ -339,15 +359,26 @@ export class ContentService {
 
   async createFAQ(faqData: any) {
     // TODO: Implement FAQ model
-    return { success: true, message: 'تم إضافة السؤال', faq: faqData };
+    void faqData;
+    await Promise.resolve();
+    return {
+      success: true,
+      message: 'تم إضافة السؤال',
+      faq: faqData as unknown,
+    };
   }
 
   async updateFAQ(faqId: string, updates: any) {
     // TODO: Implement FAQ model
+    void faqId;
+    void updates;
+    await Promise.resolve();
     return { success: true, message: 'تم تحديث السؤال' };
   }
 
   async deleteFAQ(faqId: string) {
+    void faqId;
+    await Promise.resolve();
     // TODO: Implement FAQ model
     return { success: true, message: 'تم حذف السؤال' };
   }

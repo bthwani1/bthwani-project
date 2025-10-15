@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { PrivacyPolicy } from './entities/privacy-policy.entity';
@@ -79,7 +83,10 @@ export class LegalService {
     }
 
     // تعطيل كل السياسات النشطة
-    await this.privacyPolicyModel.updateMany({ isActive: true }, { isActive: false });
+    await this.privacyPolicyModel.updateMany(
+      { isActive: true },
+      { isActive: false },
+    );
 
     // تفعيل السياسة المحددة
     policy.isActive = true;
@@ -127,10 +134,7 @@ export class LegalService {
    * الحصول على جميع شروط الخدمة (للإدارة)
    */
   async getAllTermsOfService() {
-    return await this.termsModel
-      .find()
-      .sort({ effectiveDate: -1 })
-      .exec();
+    return await this.termsModel.find().sort({ effectiveDate: -1 }).exec();
   }
 
   /**
@@ -196,7 +200,10 @@ export class LegalService {
   /**
    * التحقق من موافقة المستخدم على الإصدار الحالي
    */
-  async checkUserConsent(userId: string, consentType: 'privacy_policy' | 'terms_of_service') {
+  async checkUserConsent(
+    userId: string,
+    consentType: 'privacy_policy' | 'terms_of_service',
+  ) {
     let currentVersion: string;
 
     if (consentType === 'privacy_policy') {

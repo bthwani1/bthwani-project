@@ -87,10 +87,7 @@ export class DriverController {
   @Roles('driver')
   @Patch('profile')
   @ApiOperation({ summary: 'تحديث الملف الشخصي' })
-  async updateProfile(
-    @CurrentUser('id') driverId: string,
-    @Body() body: any,
-  ) {
+  async updateProfile(@CurrentUser('id') driverId: string, @Body() body: any) {
     return this.driverService.updateProfile(driverId, body);
   }
 
@@ -330,4 +327,3 @@ export class DriverController {
     return this.driverService.reportIssue(driverId, body);
   }
 }
-

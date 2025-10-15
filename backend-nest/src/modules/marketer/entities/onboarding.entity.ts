@@ -54,4 +54,3 @@ export class Onboarding extends Document {
 }
 
 export const OnboardingSchema = SchemaFactory.createForClass(Onboarding);
-

@@ -14,6 +14,20 @@ interface Histogram {
   count: number;
 }
 
+export interface JsonMetrics {
+  timestamp: string;
+  counters: Record<string, number>;
+  gauges: Record<string, number>;
+  histograms: Record<string, {
+    buckets: Record<number, number>;
+    sum: number;
+    count: number;
+    avg: number;
+  }>;
+  summaries: Record<string, MetricData & { avg: number }>;
+  system: Record<string, any>;
+}
+
 @Injectable()
 export class MetricsService {
   // Counters: للعد التراكمي (مثل عدد الطلبات)
@@ -185,18 +199,23 @@ export class MetricsService {
   /**
    * Get metrics as JSON
    */
-  getJsonMetrics(): any {
-    const countersObj: any = {};
+  getJsonMetrics(): JsonMetrics {
+    const countersObj: Record<string, number> = {};
     for (const [key, value] of this.counters) {
       countersObj[key] = value;
     }
 
-    const gaugesObj: any = {};
+    const gaugesObj: Record<string, number> = {};
     for (const [key, value] of this.gauges) {
       gaugesObj[key] = value;
     }
 
-    const histogramsObj: any = {};
+    const histogramsObj: Record<string, {
+      buckets: Record<number, number>;
+      sum: number;
+      count: number;
+      avg: number;
+    }> = {};
     for (const [name, histogram] of this.histograms) {
       histogramsObj[name] = {
         buckets: Object.fromEntries(histogram.buckets),
@@ -206,7 +225,7 @@ export class MetricsService {
       };
     }
 
-    const summariesObj: any = {};
+    const summariesObj: Record<string, MetricData & { avg: number }> = {};
     for (const [key, summary] of this.summaries) {
       summariesObj[key] = {
         ...summary,

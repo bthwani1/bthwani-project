@@ -12,7 +12,7 @@ import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { MarketerService } from './marketer.service';
 import { UnifiedAuthGuard } from '../../common/guards/unified-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
-import { Auth, Roles, CurrentUser } from '../../common/decorators/auth.decorator';
+import { Auth, CurrentUser } from '../../common/decorators/auth.decorator';
 import { AuthType } from '../../common/guards/unified-auth.guard';
 
 @ApiTags('Marketer')
@@ -299,4 +299,3 @@ export class MarketerController {
     return this.marketerService.getTerritoryStats(marketerId);
   }
 }
-

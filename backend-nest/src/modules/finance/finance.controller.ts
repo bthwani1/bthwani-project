@@ -298,7 +298,7 @@ export class FinanceController {
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'إضافة مشكلة للمطابقة' })
   async addReconciliationIssue(@Param('id') id: string, @Body() dto: any) {
-    return this.reconciliationService.addIssue(id, dto);
+    return this.reconciliationService.addIssue(id, dto as Record<string, any>);
   }
 
   @Patch('reconciliations/:id/issues/:issueIndex/resolve')

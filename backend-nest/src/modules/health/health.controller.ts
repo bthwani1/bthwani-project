@@ -136,15 +136,15 @@ export class HealthController {
   @ApiResponse({ status: 503, description: 'التطبيق ما زال يبدأ' })
   startup() {
     // يتحقق أن التطبيق انتهى من بدء التشغيل
-    const dbReady = this.connection.readyState === 1;
+    const dbReady = Number(this.connection.readyState) === 1;
 
     if (!dbReady) {
       throw new ServiceUnavailableException({
         started: false,
         reason: 'Application still starting up',
         database: {
-          status: this.getDatabaseStatus(this.connection.readyState),
-          readyState: this.connection.readyState,
+          status: this.getDatabaseStatus(Number(this.connection.readyState)),
+          readyState: Number(this.connection.readyState),
         },
       });
     }
@@ -155,7 +155,7 @@ export class HealthController {
       uptime: process.uptime(),
       database: {
         status: 'connected',
-        readyState: this.connection.readyState,
+        readyState: Number(this.connection.readyState),
       },
     };
   }
@@ -189,8 +189,8 @@ export class HealthController {
         pid: process.pid,
       },
       database: {
-        status: this.getDatabaseStatus(this.connection.readyState),
-        readyState: this.connection.readyState,
+        status: this.getDatabaseStatus(Number(this.connection.readyState)),
+        readyState: Number(this.connection.readyState),
         name: this.connection.name,
         host: this.connection.host,
         collections: Object.keys(this.connection.collections).length,
@@ -230,7 +230,7 @@ export class HealthController {
   @ApiResponse({ status: 200, description: 'مقاييس الصحة' })
   metrics() {
     const memUsage = process.memoryUsage();
-    const dbState = this.connection.readyState;
+    const dbState = Number(this.connection.readyState);
 
     return {
       timestamp: new Date().toISOString(),

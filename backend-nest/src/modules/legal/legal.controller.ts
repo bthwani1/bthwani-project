@@ -25,6 +25,11 @@ import { UnifiedAuthGuard } from '../../common/guards/unified-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/auth.decorator';
 import { UserRole } from '../../common/enums/user-role.enum';
+import { Request } from 'express';
+
+interface AuthRequest extends Request {
+  user: { userId?: string; id?: string };
+}
 
 @ApiTags('Legal')
 @Controller('legal')
@@ -42,7 +47,10 @@ export class LegalController {
     enum: ['ar', 'en'],
     description: 'اللغة (ar أو en)',
   })
-  @ApiResponse({ status: 200, description: 'تم الحصول على سياسة الخصوصية بنجاح' })
+  @ApiResponse({
+    status: 200,
+    description: 'تم الحصول على سياسة الخصوصية بنجاح',
+  })
   @ApiResponse({ status: 404, description: 'لا توجد سياسة خصوصية نشطة' })
   async getPrivacyPolicy(@Query('lang') lang: string = 'ar') {
     return this.legalService.getActivePrivacyPolicy(lang);
@@ -72,12 +80,14 @@ export class LegalController {
   @ApiResponse({ status: 201, description: 'تم تسجيل الموافقة بنجاح' })
   @ApiResponse({ status: 400, description: 'بيانات غير صحيحة' })
   @ApiResponse({ status: 401, description: 'غير مصرح' })
-  async recordConsent(@Req() req: any, @Body() dto: RecordConsentDto) {
-    const userId = req.user.userId || req.user.id;
+  async recordConsent(@Req() req: AuthRequest, @Body() dto: RecordConsentDto) {
+    const userId = (req.user.userId || req.user.id) as string;
     // يمكن استخراج IP و User Agent من الطلب
-    const ipAddress = dto.ipAddress || req.ip || req.connection.remoteAddress;
-    const userAgent = dto.userAgent || req.headers['user-agent'];
-    
+    const ipAddress = (dto.ipAddress ||
+      req.ip ||
+      req.connection?.remoteAddress) as string;
+    const userAgent = (dto.userAgent || req.headers['user-agent']) as string;
+
     return this.legalService.recordConsent(userId, {
       ...dto,
       ipAddress,
@@ -91,8 +101,8 @@ export class LegalController {
   @ApiOperation({ summary: 'الحصول على موافقات المستخدم الحالي' })
   @ApiResponse({ status: 200, description: 'تم الحصول على الموافقات بنجاح' })
   @ApiResponse({ status: 401, description: 'غير مصرح' })
-  async getMyConsents(@Req() req: any) {
-    const userId = req.user.userId || req.user.id;
+  async getMyConsents(@Req() req: AuthRequest) {
+    const userId = (req.user.userId || req.user.id) as string;
     return this.legalService.getUserConsents(userId);
   }
 
@@ -103,10 +113,10 @@ export class LegalController {
   @ApiResponse({ status: 200, description: 'تم التحقق بنجاح' })
   @ApiResponse({ status: 401, description: 'غير مصرح' })
   async checkConsent(
-    @Req() req: any,
+    @Req() req: AuthRequest,
     @Param('type') type: 'privacy_policy' | 'terms_of_service',
   ) {
-    const userId = req.user.userId || req.user.id;
+    const userId = (req.user.userId || req.user.id) as string;
     return this.legalService.checkUserConsent(userId, type);
   }
 
@@ -200,4 +210,3 @@ export class LegalController {
     return this.legalService.getConsentStatistics();
   }
 }
-

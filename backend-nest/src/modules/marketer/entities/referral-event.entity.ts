@@ -26,4 +26,3 @@ export class ReferralEvent extends Document {
 }
 
 export const ReferralEventSchema = SchemaFactory.createForClass(ReferralEvent);
-

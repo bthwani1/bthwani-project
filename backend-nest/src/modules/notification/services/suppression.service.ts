@@ -1,9 +1,21 @@
-import { Injectable, Logger, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { NotificationSuppression, SuppressionChannel, SuppressionReason } from '../entities/suppression.entity';
-import { CreateSuppressionDto, UpdateSuppressionDto } from '../dto/suppression.dto';
+import {
+  NotificationSuppression,
+  SuppressionChannel,
+  SuppressionReason,
+} from '../entities/suppression.entity';
+import {
+  CreateSuppressionDto,
+  UpdateSuppressionDto,
+} from '../dto/suppression.dto';
 
 @Injectable()
 export class SuppressionService {
@@ -24,7 +36,9 @@ export class SuppressionService {
     adminId?: string,
   ): Promise<NotificationSuppression> {
     try {
-      this.logger.log(`Creating suppression for user ${userId}, channels: ${dto.suppressedChannels.join(', ')}`);
+      this.logger.log(
+        `Creating suppression for user ${userId}, channels: ${dto.suppressedChannels.join(', ')}`,
+      );
 
       // التحقق من وجود حظر نشط
       const existing = await this.suppressionModel.findOne({
@@ -34,18 +48,25 @@ export class SuppressionService {
 
       if (existing) {
         // تحديث الحظر الموجود
-        existing.suppressedChannels = [...new Set([...existing.suppressedChannels, ...dto.suppressedChannels])];
+        existing.suppressedChannels = [
+          ...new Set([
+            ...existing.suppressedChannels,
+            ...dto.suppressedChannels,
+          ]),
+        ];
         existing.reason = dto.reason;
         existing.details = dto.details || existing.details;
         existing.expiresAt = dto.expiresAt || existing.expiresAt;
         existing.suppressedBy = suppressedBy;
-        
+
         if (adminId) {
           existing.suppressedByAdmin = new Types.ObjectId(adminId);
         }
 
         const updated = await existing.save();
-        this.logger.log(`Updated existing suppression: ${updated._id}`);
+        this.logger.log(
+          `Updated existing suppression: ${(updated as NotificationSuppression)._id}`,
+        );
         return updated;
       }
 
@@ -65,7 +86,10 @@ export class SuppressionService {
       this.logger.log(`Suppression created successfully: ${saved._id}`);
       return saved;
     } catch (error) {
-      this.logger.error(`Failed to create suppression: ${error.message}`, error.stack);
+      this.logger.error(
+        `Failed to create suppression: ${error.message}`,
+        error.stack,
+      );
       throw new BadRequestException('فشل في إنشاء الحظر');
     }
   }
@@ -73,10 +97,13 @@ export class SuppressionService {
   /**
    * التحقق من حظر قناة محددة لمستخدم
    */
-  async isChannelSuppressed(userId: string, channel: SuppressionChannel): Promise<boolean> {
+  async isChannelSuppressed(
+    userId: string,
+    channel: SuppressionChannel,
+  ): Promise<boolean> {
     try {
       const now = new Date();
-      
+
       const suppression = await this.suppressionModel.findOne({
         userId: new Types.ObjectId(userId),
         isActive: true,
@@ -90,7 +117,10 @@ export class SuppressionService {
 
       return !!suppression;
     } catch (error) {
-      this.logger.error(`Failed to check suppression: ${error.message}`, error.stack);
+      this.logger.error(
+        `Failed to check suppression: ${error.message}`,
+        error.stack,
+      );
       return false; // في حالة الخطأ، نسمح بالإرسال للأمان
     }
   }
@@ -101,7 +131,7 @@ export class SuppressionService {
   async getSuppressedChannels(userId: string): Promise<SuppressionChannel[]> {
     try {
       const now = new Date();
-      
+
       const suppressions = await this.suppressionModel.find({
         userId: new Types.ObjectId(userId),
         isActive: true,
@@ -113,13 +143,16 @@ export class SuppressionService {
       });
 
       const channels = new Set<SuppressionChannel>();
-      suppressions.forEach(s => {
-        s.suppressedChannels.forEach(c => channels.add(c));
+      suppressions.forEach((s) => {
+        s.suppressedChannels.forEach((c) => channels.add(c));
       });
 
       return Array.from(channels);
     } catch (error) {
-      this.logger.error(`Failed to get suppressed channels: ${error.message}`, error.stack);
+      this.logger.error(
+        `Failed to get suppressed channels: ${error.message}`,
+        error.stack,
+      );
       return [];
     }
   }
@@ -127,14 +160,19 @@ export class SuppressionService {
   /**
    * الحصول على جميع حظور مستخدم
    */
-  async getUserSuppressions(userId: string): Promise<NotificationSuppression[]> {
+  async getUserSuppressions(
+    userId: string,
+  ): Promise<NotificationSuppression[]> {
     try {
       return await this.suppressionModel
         .find({ userId: new Types.ObjectId(userId) })
         .sort({ createdAt: -1 })
         .exec();
     } catch (error) {
-      this.logger.error(`Failed to get user suppressions: ${error.message}`, error.stack);
+      this.logger.error(
+        `Failed to get user suppressions: ${error.message}`,
+        error.stack,
+      );
       throw new BadRequestException('فشل في جلب قائمة الحظر');
     }
   }
@@ -174,7 +212,10 @@ export class SuppressionService {
       return updated;
     } catch (error) {
       if (error instanceof NotFoundException) throw error;
-      this.logger.error(`Failed to update suppression: ${error.message}`, error.stack);
+      this.logger.error(
+        `Failed to update suppression: ${error.message}`,
+        error.stack,
+      );
       throw new BadRequestException('فشل في تحديث الحظر');
     }
   }
@@ -196,7 +237,10 @@ export class SuppressionService {
       this.logger.log(`Suppression removed: ${suppressionId}`);
     } catch (error) {
       if (error instanceof NotFoundException) throw error;
-      this.logger.error(`Failed to remove suppression: ${error.message}`, error.stack);
+      this.logger.error(
+        `Failed to remove suppression: ${error.message}`,
+        error.stack,
+      );
       throw new BadRequestException('فشل في إلغاء الحظر');
     }
   }
@@ -217,7 +261,7 @@ export class SuppressionService {
 
       for (const suppression of suppressions) {
         suppression.suppressedChannels = suppression.suppressedChannels.filter(
-          c => c !== channel,
+          (c) => c !== channel,
         );
 
         if (suppression.suppressedChannels.length === 0) {
@@ -227,9 +271,14 @@ export class SuppressionService {
         await suppression.save();
       }
 
-      this.logger.log(`Channel ${channel} suppression removed for user ${userId}`);
+      this.logger.log(
+        `Channel ${channel} suppression removed for user ${userId}`,
+      );
     } catch (error) {
-      this.logger.error(`Failed to remove channel suppression: ${error.message}`, error.stack);
+      this.logger.error(
+        `Failed to remove channel suppression: ${error.message}`,
+        error.stack,
+      );
       throw new BadRequestException('فشل في إلغاء حظر القناة');
     }
   }
@@ -256,8 +305,11 @@ export class SuppressionService {
         await suppression.save();
       } else {
         // إنشاء حظر تلقائي بعد 5 فشلات
-        const recentFailures = await this.getRecentFailureCount(userId, channel);
-        
+        const recentFailures = await this.getRecentFailureCount(
+          userId,
+          channel,
+        );
+
         if (recentFailures >= 5) {
           await this.createSuppression(
             userId,
@@ -271,7 +323,10 @@ export class SuppressionService {
         }
       }
     } catch (error) {
-      this.logger.error(`Failed to record failure: ${error.message}`, error.stack);
+      this.logger.error(
+        `Failed to record failure: ${error.message}`,
+        error.stack,
+      );
     }
   }
 
@@ -307,9 +362,14 @@ export class SuppressionService {
         },
       );
 
-      this.logger.log(`Cleaned up ${result.modifiedCount} expired suppressions`);
+      this.logger.log(
+        `Cleaned up ${result.modifiedCount} expired suppressions`,
+      );
     } catch (error) {
-      this.logger.error(`Failed to cleanup expired suppressions: ${error.message}`, error.stack);
+      this.logger.error(
+        `Failed to cleanup expired suppressions: ${error.message}`,
+        error.stack,
+      );
     }
   }
 
@@ -319,7 +379,9 @@ export class SuppressionService {
   async getSuppressionStats(): Promise<any> {
     try {
       const total = await this.suppressionModel.countDocuments();
-      const active = await this.suppressionModel.countDocuments({ isActive: true });
+      const active = await this.suppressionModel.countDocuments({
+        isActive: true,
+      });
 
       const byReason = await this.suppressionModel.aggregate([
         { $match: { isActive: true } },
@@ -340,9 +402,11 @@ export class SuppressionService {
         byChannel,
       };
     } catch (error) {
-      this.logger.error(`Failed to get suppression stats: ${error.message}`, error.stack);
+      this.logger.error(
+        `Failed to get suppression stats: ${error.message}`,
+        error.stack,
+      );
       throw new BadRequestException('فشل في جلب الإحصائيات');
     }
   }
 }
-

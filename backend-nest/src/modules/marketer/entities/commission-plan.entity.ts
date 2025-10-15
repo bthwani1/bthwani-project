@@ -25,5 +25,5 @@ export class CommissionPlan extends Document {
   isActive: boolean;
 }
 
-export const CommissionPlanSchema = SchemaFactory.createForClass(CommissionPlan);
-
+export const CommissionPlanSchema =
+  SchemaFactory.createForClass(CommissionPlan);

@@ -5,8 +5,14 @@ import { MarketerController } from './marketer.controller';
 import { MarketerService } from './marketer.service';
 import { Marketer, MarketerSchema } from './entities/marketer.entity';
 import { Onboarding, OnboardingSchema } from './entities/onboarding.entity';
-import { ReferralEvent, ReferralEventSchema } from './entities/referral-event.entity';
-import { CommissionPlan, CommissionPlanSchema } from './entities/commission-plan.entity';
+import {
+  ReferralEvent,
+  ReferralEventSchema,
+} from './entities/referral-event.entity';
+import {
+  CommissionPlan,
+  CommissionPlanSchema,
+} from './entities/commission-plan.entity';
 
 @Module({
   imports: [
@@ -23,4 +29,3 @@ import { CommissionPlan, CommissionPlanSchema } from './entities/commission-plan
   exports: [MarketerService],
 })
 export class MarketerModule {}
-

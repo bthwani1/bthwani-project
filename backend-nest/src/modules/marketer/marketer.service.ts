@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model, Types, FilterQuery, UpdateQuery } from 'mongoose';
 import { Marketer } from './entities/marketer.entity';
 import { Onboarding } from './entities/onboarding.entity';
 import { ReferralEvent } from './entities/referral-event.entity';
@@ -11,8 +11,10 @@ export class MarketerService {
   constructor(
     @InjectModel(Marketer.name) private marketerModel: Model<Marketer>,
     @InjectModel(Onboarding.name) private onboardingModel: Model<Onboarding>,
-    @InjectModel(ReferralEvent.name) private referralEventModel: Model<ReferralEvent>,
-    @InjectModel(CommissionPlan.name) private commissionPlanModel: Model<CommissionPlan>,
+    @InjectModel(ReferralEvent.name)
+    private referralEventModel: Model<ReferralEvent>,
+    @InjectModel(CommissionPlan.name)
+    private commissionPlanModel: Model<CommissionPlan>,
   ) {}
 
   // ==================== Marketers ====================
@@ -30,22 +32,41 @@ export class MarketerService {
   async getById(marketerId: string) {
     const marketer = await this.marketerModel.findById(marketerId);
     if (!marketer) {
-      throw new NotFoundException({ code: 'MARKETER_NOT_FOUND', userMessage: 'المسوق غير موجود' });
+      throw new NotFoundException({
+        code: 'MARKETER_NOT_FOUND',
+        userMessage: 'المسوق غير موجود',
+      });
     }
     return marketer;
   }
 
-  async update(marketerId: string, updates: any) {
-    const marketer = await this.marketerModel.findByIdAndUpdate(marketerId, updates, { new: true });
+  async update(marketerId: string, updates: UpdateQuery<Marketer>) {
+    const marketer = await this.marketerModel.findByIdAndUpdate(
+      marketerId,
+      updates,
+      { new: true },
+    );
+
     if (!marketer) {
-      throw new NotFoundException({ code: 'MARKETER_NOT_FOUND', userMessage: 'المسوق غير موجود' });
+      throw new NotFoundException({
+        code: 'MARKETER_NOT_FOUND',
+        userMessage: 'المسوق غير موجود',
+      });
     }
     return marketer;
   }
 
   // ==================== Performance ====================
 
-  async getPerformance(marketerId: string, startDate?: string, endDate?: string) {
+  async getPerformance(
+    marketerId: string,
+    startDate?: string,
+    endDate?: string,
+  ) {
+    void startDate;
+    void endDate;
+    void marketerId;
+    await Promise.resolve();
     // TODO: Aggregate from orders/onboardings
     return { onboardings: 0, activeStores: 0, revenue: 0, commissions: 0 };
   }
@@ -67,6 +88,8 @@ export class MarketerService {
 
   async getStoreDetails(storeId: string) {
     // TODO: Get from Store model
+    void storeId;
+    await Promise.resolve();
     return { store: {} };
   }
 
@@ -86,6 +109,8 @@ export class MarketerService {
 
   async getVendorDetails(vendorId: string) {
     // TODO: Get from Vendor model
+    void vendorId;
+    await Promise.resolve();
     return { vendor: {} };
   }
 
@@ -93,11 +118,15 @@ export class MarketerService {
 
   async getCommissions(marketerId: string) {
     // TODO: Get from commission transactions
+    void marketerId;
+    await Promise.resolve();
     return { data: [], total: 0, totalAmount: 0 };
   }
 
   async getCommissionDetails(commissionId: string) {
     // TODO: Implement
+    void commissionId;
+    await Promise.resolve();
     return { commission: {} };
   }
 
@@ -106,12 +135,19 @@ export class MarketerService {
   async activate(marketerId: string, adminId: string) {
     const marketer = await this.marketerModel.findByIdAndUpdate(
       marketerId,
-      { isActive: true, activatedBy: new Types.ObjectId(adminId), activatedAt: new Date() },
+      {
+        isActive: true,
+        activatedBy: new Types.ObjectId(adminId),
+        activatedAt: new Date(),
+      },
       { new: true },
     );
 
     if (!marketer) {
-      throw new NotFoundException({ code: 'MARKETER_NOT_FOUND', userMessage: 'المسوق غير موجود' });
+      throw new NotFoundException({
+        code: 'MARKETER_NOT_FOUND',
+        userMessage: 'المسوق غير موجود',
+      });
     }
 
     return { success: true, message: 'تم تفعيل المسوق', marketer };
@@ -120,19 +156,34 @@ export class MarketerService {
   async deactivate(marketerId: string, adminId: string) {
     const marketer = await this.marketerModel.findByIdAndUpdate(
       marketerId,
-      { isActive: false, deactivatedBy: new Types.ObjectId(adminId), deactivatedAt: new Date() },
+      {
+        isActive: false,
+        deactivatedBy: new Types.ObjectId(adminId),
+        deactivatedAt: new Date(),
+      },
       { new: true },
     );
 
     if (!marketer) {
-      throw new NotFoundException({ code: 'MARKETER_NOT_FOUND', userMessage: 'المسوق غير موجود' });
+      throw new NotFoundException({
+        code: 'MARKETER_NOT_FOUND',
+        userMessage: 'المسوق غير موجود',
+      });
     }
 
     return { success: true, message: 'تم إلغاء تفعيل المسوق', marketer };
   }
 
-  async adjustCommission(marketerId: string, adjustmentData: any, adminId: string) {
+  async adjustCommission(
+    marketerId: string,
+    adjustmentData: any,
+    adminId: string,
+  ) {
     // TODO: Implement commission adjustment
+    void marketerId;
+    void adjustmentData;
+    void adminId;
+    await Promise.resolve();
     return { success: true, message: 'تم تعديل العمولة' };
   }
 
@@ -151,17 +202,26 @@ export class MarketerService {
   // ==================== Onboarding ====================
 
   async getApplications(marketerId?: string) {
-    const query: any = {};
+    const query: FilterQuery<Onboarding> = {};
     if (marketerId) query.marketer = new Types.ObjectId(marketerId);
+    void marketerId;
+    await Promise.resolve();
 
-    const applications = await this.onboardingModel.find(query).sort({ createdAt: -1 });
+    const applications = await this.onboardingModel
+      .find(query)
+      .sort({ createdAt: -1 });
     return { data: applications, total: applications.length };
   }
 
   async getApplicationDetails(applicationId: string) {
-    const application = await this.onboardingModel.findById(applicationId).populate('marketer');
+    const application = await this.onboardingModel
+      .findById(applicationId)
+      .populate('marketer');
     if (!application) {
-      throw new NotFoundException({ code: 'APPLICATION_NOT_FOUND', userMessage: 'الطلب غير موجود' });
+      throw new NotFoundException({
+        code: 'APPLICATION_NOT_FOUND',
+        userMessage: 'الطلب غير موجود',
+      });
     }
     return application;
   }
@@ -169,19 +229,30 @@ export class MarketerService {
   async approveApplication(applicationId: string, adminId: string) {
     const application = await this.onboardingModel.findByIdAndUpdate(
       applicationId,
-      { status: 'approved', approvedBy: new Types.ObjectId(adminId), approvedAt: new Date() },
+      {
+        status: 'approved',
+        approvedBy: new Types.ObjectId(adminId),
+        approvedAt: new Date(),
+      },
       { new: true },
     );
 
     if (!application) {
-      throw new NotFoundException({ code: 'APPLICATION_NOT_FOUND', userMessage: 'الطلب غير موجود' });
+      throw new NotFoundException({
+        code: 'APPLICATION_NOT_FOUND',
+        userMessage: 'الطلب غير موجود',
+      });
     }
 
     // TODO: Create actual store/vendor entity
     return { success: true, message: 'تم قبول الطلب', application };
   }
 
-  async rejectApplication(applicationId: string, reason: string, adminId: string) {
+  async rejectApplication(
+    applicationId: string,
+    reason: string,
+    adminId: string,
+  ) {
     const application = await this.onboardingModel.findByIdAndUpdate(
       applicationId,
       {
@@ -194,7 +265,10 @@ export class MarketerService {
     );
 
     if (!application) {
-      throw new NotFoundException({ code: 'APPLICATION_NOT_FOUND', userMessage: 'الطلب غير موجود' });
+      throw new NotFoundException({
+        code: 'APPLICATION_NOT_FOUND',
+        userMessage: 'الطلب غير موجود',
+      });
     }
 
     return { success: true, message: 'تم رفض الطلب', application };
@@ -211,12 +285,17 @@ export class MarketerService {
   // ==================== Files ====================
 
   async uploadFile(marketerId: string, fileData: any) {
+    void marketerId;
+    void fileData;
+    await Promise.resolve();
     // TODO: Implement file storage
     return { success: true, fileId: 'file_' + Date.now() };
   }
 
   async getFiles(marketerId: string) {
     // TODO: Implement
+    void marketerId;
+    await Promise.resolve();
     return { data: [] };
   }
 
@@ -224,6 +303,8 @@ export class MarketerService {
 
   async getNotifications(marketerId: string) {
     // TODO: Get from Notification model
+    void marketerId;
+    await Promise.resolve();
     return { data: [] };
   }
 
@@ -231,18 +312,38 @@ export class MarketerService {
 
   async exportMarketers(format: string) {
     // TODO: Export to CSV/Excel
+    void format;
+    await Promise.resolve();
     return { success: true, url: '' };
   }
 
   // ==================== Additional Methods ====================
 
-  async getMarketerEarnings(marketerId: string, startDate?: string, endDate?: string) {
+  async getMarketerEarnings(
+    marketerId: string,
+    startDate?: string,
+    endDate?: string,
+  ) {
     // TODO: Aggregate earnings from commission and bonus
+    void marketerId;
+    void startDate;
+    void endDate;
+    await Promise.resolve();
     return { totalEarnings: 0, totalCommissions: 0, bonuses: 0, breakdown: [] };
   }
 
-  async addBonus(marketerId: string, amount: number, reason: string, adminId: string) {
+  async addBonus(
+    marketerId: string,
+    amount: number,
+    reason: string,
+    adminId: string,
+  ) {
     // TODO: Add bonus to marketer wallet
+    void marketerId;
+    void amount;
+    void reason;
+    void adminId;
+    await Promise.resolve();
     return { success: true, message: 'تم إضافة المكافأة', amount, reason };
   }
 
@@ -252,11 +353,15 @@ export class MarketerService {
       .sort({ createdAt: -1 })
       .limit(100);
 
+    void marketerId;
+    await Promise.resolve();
     return { data: referrals, total: referrals.length };
   }
 
   async getLeaderboard(period: string) {
     // TODO: Aggregate top marketers by period
+    void period;
+    await Promise.resolve();
     return { data: [], period };
   }
 
@@ -264,7 +369,10 @@ export class MarketerService {
     return this.getById(marketerId);
   }
 
-  async updateProfile(marketerId: string, updates: any) {
+  async updateProfile(marketerId: string, updates: UpdateQuery<Marketer>) {
+    void marketerId;
+    void updates;
+    await Promise.resolve();
     return this.update(marketerId, updates);
   }
 
@@ -274,14 +382,24 @@ export class MarketerService {
       marketer: new Types.ObjectId(marketerId),
       status: 'pending',
     });
+    void marketerId;
+    void onboardingData;
+    await Promise.resolve();
     return onboarding;
   }
 
   async getMyOnboardings(marketerId: string, status?: string) {
-    const query: any = { marketer: new Types.ObjectId(marketerId) };
+    const query: FilterQuery<Onboarding> = {
+      marketer: new Types.ObjectId(marketerId),
+    };
     if (status) query.status = status;
-    
-    const onboardings = await this.onboardingModel.find(query).sort({ createdAt: -1 });
+
+    const onboardings = await this.onboardingModel
+      .find(query)
+      .sort({ createdAt: -1 });
+    void marketerId;
+    void status;
+    await Promise.resolve();
     return { data: onboardings, total: onboardings.length };
   }
 
@@ -295,7 +413,9 @@ export class MarketerService {
 
   async generateReferralCode(marketerId: string) {
     const code = 'REF' + Math.random().toString(36).substr(2, 8).toUpperCase();
-    await this.marketerModel.findByIdAndUpdate(marketerId, { referralCode: code });
+    await this.marketerModel.findByIdAndUpdate(marketerId, {
+      referralCode: code,
+    });
     return { code };
   }
 
@@ -305,20 +425,35 @@ export class MarketerService {
 
   async getReferralStatistics(marketerId: string) {
     // TODO: Aggregate referral stats
+    void marketerId;
+    await Promise.resolve();
     return { total: 0, successful: 0, pending: 0 };
   }
 
-  async getStorePerformance(storeId: string, startDate?: string, endDate?: string) {
+  async getStorePerformance(
+    storeId: string,
+    startDate?: string,
+    endDate?: string,
+  ) {
     // TODO: Aggregate store performance
+    void storeId;
+    void startDate;
+    void endDate;
+    await Promise.resolve();
     return { orders: 0, revenue: 0, rating: 0 };
   }
 
   async getMyCommissions(marketerId: string, status?: string) {
+    void marketerId;
+    void status;
+    await Promise.resolve();
     return this.getCommissions(marketerId);
   }
 
   async getCommissionStatistics(marketerId: string) {
     // TODO: Aggregate commission stats
+    void marketerId;
+    await Promise.resolve();
     return { total: 0, pending: 0, paid: 0 };
   }
 
@@ -329,8 +464,12 @@ export class MarketerService {
   async getOverview(marketerId: string) {
     const [marketer, onboardings, referrals] = await Promise.all([
       this.getById(marketerId),
-      this.onboardingModel.countDocuments({ marketer: new Types.ObjectId(marketerId) }),
-      this.referralEventModel.countDocuments({ marketer: new Types.ObjectId(marketerId) }),
+      this.onboardingModel.countDocuments({
+        marketer: new Types.ObjectId(marketerId),
+      }),
+      this.referralEventModel.countDocuments({
+        marketer: new Types.ObjectId(marketerId),
+      }),
     ]);
 
     return {
@@ -373,18 +512,28 @@ export class MarketerService {
   }
 
   async getEarningsBreakdown(marketerId: string) {
+    void marketerId;
+    await Promise.resolve();
     // TODO: Aggregate earnings by type
     return { byType: [], byMonth: [] };
   }
 
   async markNotificationRead(notificationId: string) {
     // TODO: Mark notification as read
+    void notificationId;
+    await Promise.resolve();
     return { success: true };
   }
 
   async getTerritoryStats(marketerId: string) {
     const marketer = await this.getById(marketerId);
     // TODO: Aggregate territory stats
-    return { territory: (marketer as any).territory, stores: 0, earnings: 0 };
+    void marketerId;
+    await Promise.resolve();
+    return {
+      territory: (marketer as Marketer).territory,
+      stores: 0,
+      earnings: 0,
+    };
   }
 }

@@ -41,4 +41,3 @@ export class Marketer extends Document {
 }
 
 export const MarketerSchema = SchemaFactory.createForClass(Marketer);
-

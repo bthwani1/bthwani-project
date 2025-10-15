@@ -1,38 +1,48 @@
-import { IsEnum, IsString, IsOptional, IsDate, IsBoolean, IsArray } from 'class-validator';
+import {
+  IsEnum,
+  IsString,
+  IsOptional,
+  IsDate,
+  IsBoolean,
+  IsArray,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { SuppressionChannel, SuppressionReason } from '../entities/suppression.entity';
+import {
+  SuppressionChannel,
+  SuppressionReason,
+} from '../entities/suppression.entity';
 
 export class CreateSuppressionDto {
-  @ApiProperty({ 
+  @ApiProperty({
     description: 'القنوات المراد حظرها',
     enum: SuppressionChannel,
     isArray: true,
-    example: ['email', 'push']
+    example: ['email', 'push'],
   })
   @IsArray()
   @IsEnum(SuppressionChannel, { each: true })
   suppressedChannels: SuppressionChannel[];
 
-  @ApiProperty({ 
+  @ApiProperty({
     description: 'سبب الحظر',
     enum: SuppressionReason,
-    example: SuppressionReason.USER_REQUEST
+    example: SuppressionReason.USER_REQUEST,
   })
   @IsEnum(SuppressionReason)
   reason: SuppressionReason;
 
-  @ApiPropertyOptional({ 
+  @ApiPropertyOptional({
     description: 'تفاصيل إضافية',
-    example: 'المستخدم طلب إيقاف الإشعارات'
+    example: 'المستخدم طلب إيقاف الإشعارات',
   })
   @IsString()
   @IsOptional()
   details?: string;
 
-  @ApiPropertyOptional({ 
+  @ApiPropertyOptional({
     description: 'تاريخ انتهاء الحظر',
-    example: '2025-12-31T23:59:59Z'
+    example: '2025-12-31T23:59:59Z',
   })
   @IsDate()
   @Type(() => Date)
@@ -41,10 +51,10 @@ export class CreateSuppressionDto {
 }
 
 export class UpdateSuppressionDto {
-  @ApiPropertyOptional({ 
+  @ApiPropertyOptional({
     description: 'القنوات المحظورة',
     enum: SuppressionChannel,
-    isArray: true
+    isArray: true,
   })
   @IsArray()
   @IsEnum(SuppressionChannel, { each: true })
@@ -75,7 +85,11 @@ export class SuppressionResponseDto {
   @ApiProperty({ description: 'معرف المستخدم' })
   userId: string;
 
-  @ApiProperty({ description: 'القنوات المحظورة', enum: SuppressionChannel, isArray: true })
+  @ApiProperty({
+    description: 'القنوات المحظورة',
+    enum: SuppressionChannel,
+    isArray: true,
+  })
   suppressedChannels: SuppressionChannel[];
 
   @ApiProperty({ description: 'سبب الحظر', enum: SuppressionReason })
@@ -99,4 +113,3 @@ export class SuppressionResponseDto {
   @ApiProperty({ description: 'تاريخ التحديث' })
   updatedAt: Date;
 }
-

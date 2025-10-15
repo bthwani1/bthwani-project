@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsString, IsEnum, IsOptional, IsMongoId } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsEnum,
+  IsOptional,
+  IsMongoId,
+} from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateChartAccountDto {

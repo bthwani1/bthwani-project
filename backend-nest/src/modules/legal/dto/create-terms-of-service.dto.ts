@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsOptional, IsBoolean, IsDateString } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  IsBoolean,
+  IsDateString,
+} from 'class-validator';
 
 export class CreateTermsOfServiceDto {
   @ApiProperty({ description: 'إصدار الشروط', example: '1.0.0' })
@@ -22,9 +28,12 @@ export class CreateTermsOfServiceDto {
   @IsDateString()
   effectiveDate?: Date;
 
-  @ApiProperty({ description: 'هل الشروط نشطة', default: true, required: false })
+  @ApiProperty({
+    description: 'هل الشروط نشطة',
+    default: true,
+    required: false,
+  })
   @IsOptional()
   @IsBoolean()
   isActive?: boolean;
 }
-

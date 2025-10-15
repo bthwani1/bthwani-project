@@ -17,12 +17,18 @@ export class CreateBannerDto {
   @IsString({ message: 'العنوان يجب أن يكون نصاً' })
   title?: string;
 
-  @ApiPropertyOptional({ description: 'الوصف', example: 'خصم 50% على جميع المنتجات' })
+  @ApiPropertyOptional({
+    description: 'الوصف',
+    example: 'خصم 50% على جميع المنتجات',
+  })
   @IsOptional()
   @IsString({ message: 'الوصف يجب أن يكون نصاً' })
   description?: string;
 
-  @ApiProperty({ description: 'الصورة', example: 'https://example.com/banner.jpg' })
+  @ApiProperty({
+    description: 'الصورة',
+    example: 'https://example.com/banner.jpg',
+  })
   @IsString({ message: 'الصورة مطلوبة' })
   image: string;
 

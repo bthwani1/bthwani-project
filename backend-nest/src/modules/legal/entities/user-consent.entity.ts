@@ -8,8 +8,14 @@ export class UserConsent extends Document {
   @Prop({ required: true, type: Types.ObjectId, ref: 'User' })
   userId: Types.ObjectId;
 
-  @ApiProperty({ description: 'نوع الموافقة (privacy_policy, terms_of_service)' })
-  @Prop({ required: true, type: String, enum: ['privacy_policy', 'terms_of_service'] })
+  @ApiProperty({
+    description: 'نوع الموافقة (privacy_policy, terms_of_service)',
+  })
+  @Prop({
+    required: true,
+    type: String,
+    enum: ['privacy_policy', 'terms_of_service'],
+  })
   consentType: string;
 
   @ApiProperty({ description: 'إصدار المستند المقبول' })

@@ -1,11 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsBoolean, IsOptional, IsIn } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsBoolean,
+  IsOptional,
+  IsIn,
+} from 'class-validator';
 
 export class RecordConsentDto {
-  @ApiProperty({ 
-    description: 'نوع الموافقة', 
+  @ApiProperty({
+    description: 'نوع الموافقة',
     enum: ['privacy_policy', 'terms_of_service'],
-    example: 'privacy_policy'
+    example: 'privacy_policy',
   })
   @IsString()
   @IsNotEmpty()
@@ -32,4 +38,3 @@ export class RecordConsentDto {
   @IsString()
   userAgent?: string;
 }
-

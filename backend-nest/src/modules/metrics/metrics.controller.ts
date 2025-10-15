@@ -1,6 +1,7 @@
 import { Controller, Get, Header } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { MetricsService } from '../../common/services/metrics.service';
+import type { JsonMetrics } from '../../common/services/metrics.service';
 import { Public } from '../../common/decorators/auth.decorator';
 
 @ApiTags('Metrics')
@@ -21,7 +22,7 @@ export class MetricsController {
   @Public()
   @ApiOperation({ summary: 'Metrics in JSON format' })
   @ApiResponse({ status: 200, description: 'Metrics in JSON format' })
-  getJsonMetrics() {
+  getJsonMetrics(): JsonMetrics {
     return this.metricsService.getJsonMetrics();
   }
 }

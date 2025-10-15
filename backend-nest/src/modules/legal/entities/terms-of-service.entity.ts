@@ -31,4 +31,5 @@ export class TermsOfService extends Document {
   updatedAt: Date;
 }
 
-export const TermsOfServiceSchema = SchemaFactory.createForClass(TermsOfService);
+export const TermsOfServiceSchema =
+  SchemaFactory.createForClass(TermsOfService);
