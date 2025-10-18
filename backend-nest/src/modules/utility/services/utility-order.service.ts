@@ -106,8 +106,7 @@ export class UtilityOrderService {
       .find({ user: new Types.ObjectId(userId) })
       .sort({ createdAt: -1 })
       .populate('driver', 'fullName phone profileImage')
-      .lean()
-      .exec();
+      .exec() as Promise<UtilityOrder[]>;
   }
 
   /**

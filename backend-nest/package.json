@@ -18,6 +18,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:contract": "jest --config ./test/jest-contract.json",
     "docs:endpoints": "node scripts/extract-admin-endpoints.js",
     "audit:inventory": "ts-node tools/audit/inventory.ts",
     "audit:openapi": "ts-node tools/audit/openapi-export.ts",
@@ -34,7 +35,14 @@
     "audit:throttling": "ts-node tools/audit/throttling-check.ts",
     "audit:dto-schema": "ts-node tools/audit/dto_schema_diff.ts",
     "audit:store-map": "ts-node tools/audit/store_backend_map.ts",
-    "audit:executive": "ts-node tools/audit/executive_snapshot.ts"
+    "audit:executive": "ts-node tools/audit/executive_snapshot.ts",
+    "security:secrets": "ts-node tools/security/secrets-scan.ts",
+    "security:sbom": "ts-node tools/security/generate-sbom.ts",
+    "security:all": "npm run security:secrets && npm run security:sbom",
+    "audit:routes": "node scripts/check-route-uniqueness.js",
+    "fix:fe-orphans": "ts-node scripts/fix-fe-orphans.ts",
+    "fix:be-docs": "ts-node scripts/document-be-endpoints.ts",
+    "observability:setup": "ts-node tools/observability/setup-observability.ts"
   },
   "dependencies": {
     "@nestjs/bull": "^11.0.4",

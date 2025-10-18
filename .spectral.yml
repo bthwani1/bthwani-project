@@ -1,0 +1,69 @@
+# Spectral OpenAPI Linting Rules - BTW-AUD-001
+# https://stoplight.io/p/docs/gh/stoplightio/spectral
+
+extends: [[spectral:oas, all]]
+
+rules:
+  # Require operation IDs
+  operation-operationId: error
+  
+  # Require descriptions
+  operation-description: warn
+  info-description: error
+  
+  # Require examples
+  operation-success-response: warn
+  
+  # Require tags
+  operation-tags: warn
+  
+  # Security
+  oas3-valid-media-example: error
+  oas3-valid-schema-example: error
+  
+  # Custom BThwani rules
+  bthwani-no-trailing-slash:
+    description: Paths should not have trailing slashes
+    message: "{{property}} should not have a trailing slash"
+    severity: error
+    given: $.paths[*]~
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "/$"
+  
+  bthwani-kebab-case-paths:
+    description: Paths should use kebab-case
+    message: "{{property}} should use kebab-case"
+    severity: warn
+    given: $.paths[*]~
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(/[a-z0-9-{}]+)+$"
+  
+  bthwani-version-in-info:
+    description: API version must be present
+    message: info.version is required
+    severity: error
+    given: $.info
+    then:
+      field: version
+      function: truthy
+  
+  bthwani-error-responses:
+    description: Operations should document error responses
+    message: "{{property}} should document 400, 401, 403, 404, 500 responses"
+    severity: warn
+    given: $.paths[*][*].responses
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          anyOf:
+            - required: ["400"]
+            - required: ["401"]
+            - required: ["404"]
+            - required: ["500"]
+

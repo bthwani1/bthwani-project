@@ -1,6 +1,6 @@
 # API Documentation Parity Report
 
-**Generated:** ١٥‏/١٠‏/٢٠٢٥، ١٢:٣٦:٥٧ ص
+**Generated:** ١٨‏/١٠‏/٢٠٢٥، ٦:٠٠:٢١ م
 
 ---
 
