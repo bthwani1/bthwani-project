@@ -1,0 +1,80 @@
+{
+  "acceptable_orphans": [
+    {
+      "method": "GET",
+      "path": "/groceries/catalog",
+      "reason": "Legacy endpoint - being migrated to /products",
+      "planned_removal": "2025-Q1",
+      "frontend_usage": ["admin-dashboard"],
+      "status": "deprecated"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/order/vendor/orders",
+      "reason": "Vendor-specific endpoint - part of vendor app integration",
+      "planned_removal": null,
+      "frontend_usage": ["vendor-app"],
+      "status": "vendor_only",
+      "backend_implementation": "Planned for vendor module expansion"
+    },
+    {
+      "method": "POST",
+      "path": "/delivery/order/{id}/vendor-accept",
+      "reason": "Vendor order acceptance - vendor app specific",
+      "planned_removal": null,
+      "frontend_usage": ["vendor-app"],
+      "status": "vendor_only",
+      "backend_implementation": "Planned for Q4 2025"
+    },
+    {
+      "method": "POST",
+      "path": "/delivery/order/{id}/vendor-cancel",
+      "reason": "Vendor order cancellation - vendor app specific",
+      "planned_removal": null,
+      "frontend_usage": ["vendor-app"],
+      "status": "vendor_only",
+      "backend_implementation": "Planned for Q4 2025"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/stores/{id}",
+      "reason": "Store detail endpoint - being replaced by /vendors/{id}/store",
+      "planned_removal": "2025-Q2",
+      "frontend_usage": ["admin-dashboard", "vendor-app"],
+      "status": "deprecated"
+    },
+    {
+      "method": "PUT",
+      "path": "/delivery/stores/{id}",
+      "reason": "Store update endpoint - being replaced by /vendors/{id}/store",
+      "planned_removal": "2025-Q2",
+      "frontend_usage": ["admin-dashboard", "vendor-app"],
+      "status": "deprecated"
+    }
+  ],
+  "metadata": {
+    "last_updated": "2025-10-19",
+    "total_acceptable": 6,
+    "review_frequency": "quarterly",
+    "next_review": "2025-12-31"
+  },
+  "status_definitions": {
+    "deprecated": "Old endpoint, being phased out",
+    "vendor_only": "Vendor-specific endpoint not yet in main backend",
+    "planned": "Planned for future implementation",
+    "experimental": "Experimental feature not yet stable"
+  },
+  "migration_plan": {
+    "groceries_catalog": {
+      "old": "GET /groceries/catalog",
+      "new": "GET /products?category=groceries",
+      "migration_deadline": "2025-03-31"
+    },
+    "delivery_stores": {
+      "old": "GET /delivery/stores/{id}",
+      "new": "GET /vendors/{id}/store",
+      "migration_deadline": "2025-06-30"
+    }
+  }
+}
+
