@@ -7,7 +7,7 @@ import {
   Param,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth , ApiResponse, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { UnifiedAuthGuard } from '../../common/guards/unified-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import {
@@ -27,6 +27,8 @@ export class ShiftController {
 
   @Roles('admin', 'superadmin')
   @Get()
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'جلب كل الورديات' })
   async getAllShifts() {
     return {
@@ -38,6 +40,9 @@ export class ShiftController {
 
   @Roles('admin', 'superadmin')
   @Post()
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إنشاء وردية جديدة' })
   async createShift(
     @Body()
@@ -58,6 +63,11 @@ export class ShiftController {
 
   @Roles('admin', 'superadmin')
   @Patch(':id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تحديث وردية' })
   async updateShift(@Param('id') shiftId: string, @Body() body: any) {
     return {
@@ -69,6 +79,11 @@ export class ShiftController {
 
   @Roles('admin', 'superadmin')
   @Post(':shiftId/assign/:driverId')
+  @ApiParam({ name: 'shiftId', type: String })
+  @ApiParam({ name: 'driverId', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تعيين وردية لسائق' })
   async assignShiftToDriver(
     @Param('shiftId') shiftId: string,
@@ -84,6 +99,10 @@ export class ShiftController {
 
   @Roles('admin', 'superadmin', 'driver')
   @Get('driver/:driverId')
+  @ApiParam({ name: 'driverId', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'ورديات السائق' })
   async getDriverShifts(@Param('driverId') driverId: string) {
     return {
@@ -96,6 +115,8 @@ export class ShiftController {
 
   @Roles('driver')
   @Get('my-shifts')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'وردياتي' })
   async getMyShifts(@CurrentUser('id') driverId: string) {
     return {

@@ -9,7 +9,7 @@ import {
   Query,
   SetMetadata,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags, ApiOperation , ApiResponse, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { PromotionService } from './services/promotion.service';
 import {
   CreatePromotionDto,
@@ -29,12 +29,21 @@ export class PromotionController {
   // ==================== Public Endpoints ====================
 
   @Get('by-placement')
+  @ApiQuery({ name: 'placement', required: true, type: String, enum: ['home_hero', 'home_strip', 'category_header', 'category_feed', 'store_header', 'search_banner', 'cart', 'checkout'] })
+  @ApiQuery({ name: 'city', required: false, type: String })
+  @ApiQuery({ name: 'channel', required: false, type: String, enum: ['app', 'web'] })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'الحصول على عروض حسب الموضع (public)' })
   async getPromotionsByPlacement(@Query() dto: GetPromotionsByPlacementDto) {
     return this.promotionService.getByPlacement(dto);
   }
 
   @Post(':id/click')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تسجيل نقرة على عرض' })
   async recordClick(@Param('id') id: string) {
     await this.promotionService.recordClick(id);
@@ -42,6 +51,10 @@ export class PromotionController {
   }
 
   @Post(':id/conversion')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تسجيل تحويل (طلب من العرض)' })
   async recordConversion(@Param('id') id: string) {
     await this.promotionService.recordConversion(id);
@@ -51,6 +64,9 @@ export class PromotionController {
   // ==================== Admin Endpoints ====================
 
   @Post()
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -63,6 +79,8 @@ export class PromotionController {
   }
 
   @Get()
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -72,6 +90,10 @@ export class PromotionController {
   }
 
   @Get(':id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -81,6 +103,11 @@ export class PromotionController {
   }
 
   @Patch(':id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -93,6 +120,10 @@ export class PromotionController {
   }
 
   @Delete(':id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -103,6 +134,8 @@ export class PromotionController {
   }
 
   @Get('stats/overview')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()

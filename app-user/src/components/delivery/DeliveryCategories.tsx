@@ -14,7 +14,7 @@ import {
   View,
 } from "react-native";
 import { RootStackParamList } from "../../types/navigation";
-import { API_URL } from "../../utils/api/config";
+import axiosInstance from "../../utils/api/axiosInstance";
 
 const NUM_COLUMNS = 4;
 const H_MARGIN = 5; // نفس marginHorizontal في gridCard
@@ -62,8 +62,8 @@ const DeliveryCategories: React.FC<Props> = ({}) => {
           parent: "null",
         }).toString();
 
-        const res = await fetch(`${API_URL}/delivery/categories?${qs}`);
-        let data = await res.json();
+        const { data: rawData } = await axiosInstance.get(`/delivery/categories?${qs}`);
+        let data = rawData;
 
         data = Array.isArray(data)
           ? data
@@ -88,10 +88,9 @@ const DeliveryCategories: React.FC<Props> = ({}) => {
 
   const fetchSubCategories = async (parentId: string) => {
     try {
-      const res = await fetch(
-        `${API_URL}/delivery/categories/children/${parentId}?withNumbers=1`
+      const { data } = await axiosInstance.get(
+        `/delivery/categories/children/${parentId}?withNumbers=1`
       );
-      const data = await res.json();
       return Array.isArray(data)
         ? data.sort(
             (a: any, b: any) =>

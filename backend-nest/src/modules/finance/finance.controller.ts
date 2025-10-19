@@ -8,7 +8,7 @@ import {
   Query,
   SetMetadata,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags, ApiOperation, ApiResponse, ApiParam, ApiQuery, ApiBody } from '@nestjs/swagger';
 import { CommissionService } from './services/commission.service';
 import { PayoutService } from './services/payout.service';
 import { SettlementService } from './services/settlement.service';
@@ -51,6 +51,9 @@ export class FinanceController {
   // ==================== Commission Endpoints ====================
 
   @Post('commissions')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'إنشاء عمولة جديدة' })
@@ -59,6 +62,8 @@ export class FinanceController {
   }
 
   @Get('commissions/my')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.FIREBASE)
   @ApiOperation({ summary: 'الحصول على عمولاتي' })
   async getMyCommissions(
@@ -69,6 +74,8 @@ export class FinanceController {
   }
 
   @Get('commissions/stats/my')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.FIREBASE)
   @ApiOperation({ summary: 'إحصائيات عمولاتي' })
   async getMyCommissionStats(@CurrentUser('id') userId: string) {
@@ -76,6 +83,11 @@ export class FinanceController {
   }
 
   @Patch('commissions/:id/approve')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'الموافقة على عمولة' })
@@ -84,6 +96,11 @@ export class FinanceController {
   }
 
   @Patch('commissions/:id/cancel')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'إلغاء عمولة' })
@@ -94,6 +111,10 @@ export class FinanceController {
   // ==================== Payout Endpoints ====================
 
   @Post('payouts/batches')
+  @ApiBody({ schema: { type: 'object', properties: { commissionIds: { type: 'array', items: { type: 'string' } }, batch: { type: 'object' } } } })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'إنشاء دفعة من العمولات' })
@@ -109,6 +130,8 @@ export class FinanceController {
   }
 
   @Get('payouts/batches')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'الحصول على كل الدفعات' })
@@ -121,6 +144,10 @@ export class FinanceController {
   }
 
   @Get('payouts/batches/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'الحصول على دفعة' })
@@ -129,6 +156,10 @@ export class FinanceController {
   }
 
   @Get('payouts/batches/:id/items')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'الحصول على عناصر دفعة' })
@@ -137,6 +168,11 @@ export class FinanceController {
   }
 
   @Patch('payouts/batches/:id/approve')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'الموافقة على دفعة' })
@@ -149,6 +185,11 @@ export class FinanceController {
   }
 
   @Patch('payouts/batches/:id/complete')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'إكمال دفعة' })
@@ -162,6 +203,9 @@ export class FinanceController {
   // ==================== Settlement Endpoints ====================
 
   @Post('settlements')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'إنشاء تسوية' })
@@ -170,6 +214,10 @@ export class FinanceController {
   }
 
   @Get('settlements/entity/:entityId')
+  @ApiParam({ name: 'entityId', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin', 'vendor', 'driver')
   @ApiOperation({ summary: 'الحصول على تسويات كيان' })
@@ -182,6 +230,10 @@ export class FinanceController {
   }
 
   @Get('settlements/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin', 'vendor', 'driver')
   @ApiOperation({ summary: 'الحصول على تسوية' })
@@ -190,6 +242,11 @@ export class FinanceController {
   }
 
   @Patch('settlements/:id/approve')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'الموافقة على تسوية' })
@@ -204,6 +261,9 @@ export class FinanceController {
   // ==================== Coupon Endpoints ====================
 
   @Post('coupons')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'إنشاء كوبون' })
@@ -215,6 +275,9 @@ export class FinanceController {
   }
 
   @Post('coupons/validate')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.FIREBASE)
   @ApiOperation({ summary: 'التحقق من كوبون' })
   async validateCoupon(
@@ -225,6 +288,8 @@ export class FinanceController {
   }
 
   @Get('coupons')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'الحصول على كل الكوبونات' })
@@ -233,6 +298,11 @@ export class FinanceController {
   }
 
   @Patch('coupons/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'تحديث كوبون' })
@@ -246,6 +316,10 @@ export class FinanceController {
   // ==================== Reconciliation Endpoints ====================
 
   @Post('reconciliations')
+  @ApiBody({ schema: { type: 'object', properties: { startDate: { type: 'string' }, endDate: { type: 'string' }, periodType: { type: 'string' } } } })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'إنشاء مطابقة مالية' })
@@ -262,6 +336,8 @@ export class FinanceController {
   }
 
   @Get('reconciliations')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'الحصول على كل المطابقات' })
@@ -270,6 +346,10 @@ export class FinanceController {
   }
 
   @Get('reconciliations/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'الحصول على مطابقة' })
@@ -278,6 +358,11 @@ export class FinanceController {
   }
 
   @Patch('reconciliations/:id/actual-totals')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'إضافة الإجماليات الفعلية' })
@@ -294,6 +379,10 @@ export class FinanceController {
   }
 
   @Post('reconciliations/:id/issues')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'إضافة مشكلة للمطابقة' })
@@ -312,6 +401,12 @@ export class FinanceController {
   }
 
   @Patch('reconciliations/:id/issues/:issueIndex/resolve')
+  @ApiParam({ name: 'id', type: String })
+  @ApiParam({ name: 'issueIndex', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'حل مشكلة في المطابقة' })
@@ -332,6 +427,10 @@ export class FinanceController {
   // ==================== Reports Endpoints ====================
 
   @Post('reports/daily')
+  @ApiBody({ schema: { type: 'object', properties: { date: { type: 'string', format: 'date' } } } })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'إنشاء تقرير يومي' })
@@ -340,6 +439,10 @@ export class FinanceController {
   }
 
   @Get('reports/daily/:date')
+  @ApiParam({ name: 'date', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'الحصول على تقرير يومي' })
@@ -348,6 +451,8 @@ export class FinanceController {
   }
 
   @Get('reports')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'الحصول على التقارير' })
@@ -362,6 +467,11 @@ export class FinanceController {
   }
 
   @Patch('reports/:id/finalize')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'تثبيت تقرير' })
@@ -372,6 +482,8 @@ export class FinanceController {
   // ==================== Commission Plans Endpoints ====================
 
   @Get('commission-plans')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'خطط العمولات' })
@@ -384,6 +496,10 @@ export class FinanceController {
   }
 
   @Post('commission-plans')
+  @ApiBody({ schema: { type: 'object', properties: { name: { type: 'string' }, percentage: { type: 'number' }, minAmount: { type: 'number' } } } })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'إنشاء خطة عمولة' })
@@ -406,6 +522,11 @@ export class FinanceController {
   }
 
   @Patch('commission-plans/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiOperation({ summary: 'تحديث خطة عمولة' })

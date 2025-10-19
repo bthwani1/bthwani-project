@@ -15,7 +15,7 @@ import DeliveryBannerSlider from "@/components/delivery/DeliveryBannerSlider";
 import DeliveryHeader from "@/components/delivery/DeliveryHeader";
 import { RootStackParamList } from "@/types/navigation";
 import { DeliveryStore } from "@/types/types";
-import { API_URL } from "@/utils/api/config";
+import axiosInstance from "@/utils/api/axiosInstance";
 import {
   RouteProp,
   useFocusEffect,
@@ -96,10 +96,8 @@ const CategoryDetailsScreen = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const res = await fetch(
-          `${API_URL}/delivery/stores?categoryId=${categoryId}`
-        );
-        const data = await res.json();
+        const res = await axiosInstance.get(`/delivery/stores?categoryId=${categoryId}`);
+        // data already available from axiosInstance
         const arr: DeliveryStore[] = Array.isArray(data) ? data : [];
 
         const unique = new Map<string, DeliveryStore>();
@@ -124,9 +122,7 @@ const CategoryDetailsScreen = () => {
             final.map((s) => s._id).join(",")
           );
           // مرّر القناة/المدينة لو متوفرة عندك
-          const promosRes = await fetch(
-            `${API_URL}/delivery/promotions/by-stores?ids=${idsParam}&channel=app`
-          );
+          const promosRes = await axiosInstance.get(`/delivery/promotions/by-stores?ids=${idsParam}&channel=app`);
           const promoMap: Record<string, any[]> = await promosRes.json();
 
           // دمج أفضل عرض في بيانات المتاجر

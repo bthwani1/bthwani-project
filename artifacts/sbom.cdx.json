@@ -1,0 +1,31 @@
+﻿{
+    "bomFormat":  "CycloneDX",
+    "components":  [
+
+                   ],
+    "specVersion":  "1.4",
+    "version":  1,
+    "metadata":  {
+                     "properties":  [
+                                        {
+                                            "value":  "backend-nest,admin-dashboard,bthwani-web,app-user,vendor-app,rider-app,field-marketers",
+                                            "name":  "projects"
+                                        },
+                                        {
+                                            "value":  "PowerShell SBOM Script",
+                                            "name":  "generated-by"
+                                        },
+                                        {
+                                            "value":  "2025-10-19 17:40:29",
+                                            "name":  "scan-date"
+                                        }
+                                    ],
+                     "timestamp":  "2025-10-19T17:40:29.9510138+03:00",
+                     "component":  {
+                                       "description":  "BThwani Multi-Project Monorepo",
+                                       "name":  "bthwani",
+                                       "version":  "1.0.0",
+                                       "type":  "application"
+                                   }
+                 }
+}

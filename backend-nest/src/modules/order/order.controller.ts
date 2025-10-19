@@ -8,30 +8,51 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import {
-  ApiTags,
+import { ApiTags,
   ApiOperation,
   ApiResponse,
   ApiParam,
   ApiBody,
   ApiQuery,
+  ApiBearerAuth,
+  ApiSecurity,
 } from '@nestjs/swagger';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { CursorPaginationDto } from '../../common/dto/pagination.dto';
 import { UnifiedAuthGuard } from '../../common/guards/unified-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
-import { Auth, CurrentUser } from '../../common/decorators/auth.decorator';
+import { Auth, CurrentUser, Public } from '../../common/decorators/auth.decorator';
 import { AuthType } from '../../common/guards/unified-auth.guard';
 
 @ApiTags('Order')
-@Controller('delivery/order')
+@Controller({ path: 'delivery/order', version: ['1', '2'] })
 @UseGuards(UnifiedAuthGuard, RolesGuard)
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
+  @Get()
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiOperation({
+    summary: 'جلب طلبات المستخدم الحالي',
+    description: 'جلب جميع طلبات المستخدم الحالي',
+  })
+  async getMyOrdersShort(
+    @CurrentUser('id') userId: string,
+    @Query() pagination: CursorPaginationDto,
+  ) {
+    return this.orderService.findUserOrders(userId, pagination);
+  }
+
+  @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
   @Post()
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'إنشاء طلب جديد',
     description: 'إنشاء طلب جديد مع العناصر والعنوان',
@@ -48,11 +69,20 @@ export class OrderController {
   }
 
   @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
   @Get('user/:userId')
+  @ApiParam({ name: 'userId', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'جلب طلبات مستخدم محدد',
     description: 'جلب جميع طلبات مستخدم معين',
   })
+  @ApiParam({ name: 'userId', description: 'معرّف المستخدم', type: String })
+  @ApiResponse({ status: 200, description: 'قائمة طلبات المستخدم' })
+  @ApiResponse({ status: 404, description: 'المستخدم غير موجود' })
+  @ApiResponse({ status: 401, description: 'غير مصرح' })
   async getUserOrders(
     @Param('userId') userId: string,
     @Query() pagination: CursorPaginationDto,
@@ -61,7 +91,10 @@ export class OrderController {
   }
 
   @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
   @Get('my-orders')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'جلب طلبات المستخدم الحالي',
     description: 'جلب جميع طلبات المستخدم الحالي مع pagination',
@@ -86,8 +119,13 @@ export class OrderController {
   }
 
   @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
   @Get(':id')
   @ApiOperation({ summary: 'تفاصيل الطلب' })
+  @ApiParam({ name: 'id', description: 'معرّف الطلب', type: String })
+  @ApiResponse({ status: 200, description: 'تفاصيل الطلب الكاملة' })
+  @ApiResponse({ status: 404, description: 'الطلب غير موجود' })
+  @ApiResponse({ status: 401, description: 'غير مصرح' })
   async getOrder(@Param('id') id: string) {
     return this.orderService.findOne(id);
   }
@@ -95,7 +133,12 @@ export class OrderController {
   // ==================== Driver Assignment ====================
 
   @Auth(AuthType.JWT)
+  @ApiBearerAuth()
   @Post(':id/assign-driver')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'تعيين سائق للطلب',
     description: 'تعيين سائق متاح للطلب (Admin/Dispatcher)',
@@ -121,7 +164,12 @@ export class OrderController {
   // ==================== Order Notes ====================
 
   @Auth(AuthType.JWT)
+  @ApiBearerAuth()
   @Post(':id/notes')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'إضافة ملاحظة للطلب',
     description: 'إضافة ملاحظة عامة أو خاصة للطلب',
@@ -148,7 +196,12 @@ export class OrderController {
   }
 
   @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
   @Get(':id/notes')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'جلب الملاحظات' })
   async getNotes(@Param('id') orderId: string) {
     return this.orderService.getNotes(orderId);
@@ -157,7 +210,10 @@ export class OrderController {
   // ==================== Vendor Operations ====================
 
   @Auth(AuthType.VENDOR_JWT)
+  @ApiBearerAuth()
   @Get('vendor/orders')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'جلب طلبات التاجر' })
   async getVendorOrders(
     @CurrentUser('id') vendorId: string,
@@ -167,7 +223,12 @@ export class OrderController {
   }
 
   @Auth(AuthType.VENDOR_JWT)
+  @ApiBearerAuth()
   @Post(':id/vendor-accept')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'قبول الطلب من قبل التاجر',
     description: 'قبول الطلب والبدء في التحضير',
@@ -182,7 +243,12 @@ export class OrderController {
   }
 
   @Auth(AuthType.VENDOR_JWT)
+  @ApiBearerAuth()
   @Post(':id/vendor-cancel')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'إلغاء الطلب من قبل التاجر',
     description: 'إلغاء الطلب مع تحديد السبب',
@@ -208,7 +274,12 @@ export class OrderController {
   // ==================== Proof of Delivery ====================
 
   @Auth(AuthType.JWT)
+  @ApiBearerAuth()
   @Post(':id/pod')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'إضافة إثبات التسليم (POD)',
     description: 'إضافة صورة وتوقيع كإثبات على التسليم',
@@ -237,7 +308,12 @@ export class OrderController {
   }
 
   @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
   @Get(':id/pod')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'جلب إثبات التسليم' })
   async getProofOfDelivery(@Param('id') orderId: string) {
     return this.orderService.getProofOfDelivery(orderId);
@@ -246,7 +322,12 @@ export class OrderController {
   // ==================== Cancel & Return ====================
 
   @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
   @Post(':id/cancel')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'إلغاء الطلب',
     description: 'إلغاء الطلب من قبل العميل مع ذكر السبب',
@@ -271,7 +352,12 @@ export class OrderController {
   }
 
   @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
   @Post(':id/return')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'طلب إرجاع المنتج',
     description: 'إرجاع المنتج بعد التسليم مع ذكر السبب',
@@ -298,7 +384,12 @@ export class OrderController {
   // ==================== Rating ====================
 
   @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
   @Post(':id/rate')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'تقييم الطلب',
     description: 'تقييم الطلب والخدمة بعد التسليم',
@@ -333,7 +424,12 @@ export class OrderController {
   // ==================== Repeat Order ====================
 
   @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
   @Post(':id/repeat')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'إعادة طلب سابق',
     description: 'إعادة نفس الطلب بنفس العناصر',
@@ -352,7 +448,13 @@ export class OrderController {
   // ==================== Admin Operations ====================
 
   @Auth(AuthType.JWT)
+  @ApiBearerAuth()
   @Patch(':id/admin-status')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تغيير حالة الطلب (admin)' })
   async adminChangeStatus(
     @Param('id') orderId: string,
@@ -366,7 +468,10 @@ export class OrderController {
   }
 
   @Auth(AuthType.JWT)
+  @ApiBearerAuth()
   @Get('export')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'تصدير الطلبات إلى Excel/CSV',
     description: 'تصدير قائمة الطلبات بصيغة CSV أو Excel',
@@ -399,14 +504,24 @@ export class OrderController {
   // ==================== Tracking ====================
 
   @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
   @Get(':id/tracking')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تتبع الطلب' })
   async trackOrder(@Param('id') orderId: string) {
     return this.orderService.trackOrder(orderId);
   }
 
   @Auth(AuthType.JWT)
+  @ApiBearerAuth()
   @Post(':id/schedule')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'جدولة طلب للتوصيل لاحقاً',
     description: 'تحديد موعد محدد لتوصيل الطلب',
@@ -436,6 +551,11 @@ export class OrderController {
   }
 
   @Get('public/:id/status')
+  @Public()
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'حالة الطلب (عام بدون مصادقة)',
     description: 'الحصول على حالة الطلب للمشاركة العامة',
@@ -450,21 +570,36 @@ export class OrderController {
   // ==================== Real-time Tracking Extensions ====================
 
   @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
   @Get(':id/live-tracking')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'التتبع المباشر' })
   async getLiveTracking(@Param('id') orderId: string) {
     return this.orderService.getLiveTracking(orderId);
   }
 
   @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
   @Get(':id/driver-eta')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'الوقت المتوقع للوصول' })
   async getDriverETA(@Param('id') orderId: string) {
     return this.orderService.getDriverETA(orderId);
   }
 
   @Auth(AuthType.JWT)
+  @ApiBearerAuth()
   @Post(':id/update-location')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'تحديث موقع السائق',
     description: 'تحديث موقع السائق أثناء التوصيل (GPS tracking)',
@@ -491,16 +626,27 @@ export class OrderController {
   }
 
   @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
   @Get(':id/route-history')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'سجل المسار' })
   async getRouteHistory(@Param('id') orderId: string) {
     return this.orderService.getRouteHistory(orderId);
   }
 
   @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
   @Get(':id/delivery-timeline')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'خط زمني للتوصيل' })
   async getDeliveryTimeline(@Param('id') orderId: string) {
     return this.orderService.getDeliveryTimeline(orderId);
   }
 }
+

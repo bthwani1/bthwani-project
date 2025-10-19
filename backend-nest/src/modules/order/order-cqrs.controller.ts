@@ -9,7 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth , ApiResponse, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { UnifiedAuthGuard } from '../../common/guards/unified-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import {
@@ -50,6 +50,9 @@ export class OrderCqrsController {
 
   @Auth(AuthType.FIREBASE)
   @Post()
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'إنشاء طلب جديد (CQRS)',
     description: 'ينشئ طلب جديد باستخدام CQRS Pattern',
@@ -83,6 +86,11 @@ export class OrderCqrsController {
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @Patch(':id/status')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تحديث حالة طلب (CQRS)' })
   async updateStatus(
     @Param('id') orderId: string,
@@ -107,6 +115,10 @@ export class OrderCqrsController {
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @Post(':id/assign-driver')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تعيين سائق للطلب (CQRS)' })
   async assignDriver(
     @Param('id') orderId: string,
@@ -125,6 +137,10 @@ export class OrderCqrsController {
 
   @Auth(AuthType.FIREBASE)
   @Post(':id/cancel')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إلغاء طلب (CQRS)' })
   async cancel(
     @Param('id') orderId: string,
@@ -151,6 +167,10 @@ export class OrderCqrsController {
 
   @Auth(AuthType.FIREBASE)
   @Get(':id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'جلب طلب محدد (CQRS)' })
   async findOne(
     @Param('id') orderId: string,
@@ -166,6 +186,8 @@ export class OrderCqrsController {
 
   @Auth(AuthType.FIREBASE)
   @Get()
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'جلب طلبات المستخدم (CQRS)' })
   async findUserOrders(
     @CurrentUser('id') userId: string,

@@ -9,7 +9,7 @@ import {
   Query,
   SetMetadata,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags, ApiOperation, ApiResponse, ApiParam, ApiQuery, ApiBody } from '@nestjs/swagger';
 import { ContentService } from './services/content.service';
 import { CreateBannerDto, UpdateBannerDto } from './dto/create-banner.dto';
 import {
@@ -33,12 +33,18 @@ export class ContentController {
   // ==================== Banner Endpoints ====================
 
   @Get('banners')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'الحصول على البانرات النشطة (public)' })
   async getActiveBanners(@Query('placement') placement?: string) {
     return this.contentService.findActiveBanners(placement);
   }
 
   @Post('banners/:id/click')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تسجيل نقرة على بانر' })
   async recordBannerClick(@Param('id') id: string) {
     await this.contentService.recordBannerClick(id);
@@ -46,6 +52,9 @@ export class ContentController {
   }
 
   @Post('banners')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -58,6 +67,8 @@ export class ContentController {
   }
 
   @Get('admin/banners')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -67,6 +78,11 @@ export class ContentController {
   }
 
   @Patch('banners/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -76,6 +92,10 @@ export class ContentController {
   }
 
   @Delete('banners/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -88,12 +108,19 @@ export class ContentController {
   // ==================== Store Section Endpoints ====================
 
   @Get('stores/:storeId/sections')
+  @ApiParam({ name: 'storeId', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'الحصول على أقسام المتجر (public)' })
   async getStoreSections(@Param('storeId') storeId: string) {
     return this.contentService.findStoreSections(storeId);
   }
 
   @Post('sections')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.VENDOR_JWT)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'إنشاء قسم متجر' })
@@ -102,6 +129,11 @@ export class ContentController {
   }
 
   @Patch('sections/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.VENDOR_JWT)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'تحديث قسم' })
@@ -113,6 +145,10 @@ export class ContentController {
   }
 
   @Delete('sections/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.VENDOR_JWT)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'حذف قسم' })
@@ -124,12 +160,17 @@ export class ContentController {
   // ==================== Subscription Endpoints ====================
 
   @Get('subscription-plans')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'الحصول على خطط الاشتراك (public)' })
   async getSubscriptionPlans() {
     return this.contentService.findAllSubscriptionPlans();
   }
 
   @Post('subscription-plans')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -139,6 +180,9 @@ export class ContentController {
   }
 
   @Post('subscribe')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.FIREBASE)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'الاشتراك في خطة' })
@@ -150,6 +194,8 @@ export class ContentController {
   }
 
   @Get('my-subscription')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.FIREBASE)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'الحصول على اشتراكي' })
@@ -158,6 +204,11 @@ export class ContentController {
   }
 
   @Patch('my-subscription/cancel')
+  @ApiBody({ schema: { type: 'object', properties: { reason: { type: 'string' } } } })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.FIREBASE)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'إلغاء الاشتراك' })
@@ -171,18 +222,28 @@ export class ContentController {
   // ==================== CMS Pages ====================
 
   @Get('pages')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'الحصول على صفحات CMS (public)' })
   async getCMSPages(@Query('type') type?: string) {
     return this.contentService.getCMSPages(type);
   }
 
   @Get('pages/:slug')
+  @ApiParam({ name: 'slug', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'الحصول على صفحة CMS بالـ slug' })
   async getCMSPageBySlug(@Param('slug') slug: string) {
     return this.contentService.getCMSPageBySlug(slug);
   }
 
   @Post('admin/pages')
+  @ApiBody({ schema: { type: 'object', properties: { title: { type: 'string' }, slug: { type: 'string' }, content: { type: 'string' } } } })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -192,6 +253,11 @@ export class ContentController {
   }
 
   @Patch('admin/pages/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -203,12 +269,19 @@ export class ContentController {
   // ==================== App Settings ====================
 
   @Get('app-settings')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إعدادات التطبيق (public)' })
   async getAppSettings() {
     return this.contentService.getAppSettings();
   }
 
   @Patch('admin/app-settings')
+  @ApiBody({ schema: { type: 'object', properties: { minAppVersion: { type: 'string' }, maintenanceMode: { type: 'boolean' }, supportEmail: { type: 'string' } } } })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -223,12 +296,18 @@ export class ContentController {
   // ==================== FAQs ====================
 
   @Get('faqs')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'الأسئلة الشائعة (public)' })
   async getFAQs(@Query('category') category?: string) {
     return this.contentService.getFAQs(category);
   }
 
   @Post('admin/faqs')
+  @ApiBody({ schema: { type: 'object', properties: { question: { type: 'string' }, answer: { type: 'string' }, category: { type: 'string' } } } })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -238,6 +317,11 @@ export class ContentController {
   }
 
   @Patch('admin/faqs/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -247,6 +331,10 @@ export class ContentController {
   }
 
   @Delete('admin/faqs/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()

@@ -1,0 +1,307 @@
+{
+  "timestamp": "2025-10-19T13:10:03.239Z",
+  "total": 57,
+  "categories": {
+    "duplicates": [
+      {
+        "method": "GET",
+        "path": "/delivery/stores{id}"
+      }
+    ],
+    "admin": [
+      {
+        "method": "PUT",
+        "path": "/admin/onboarding-slides/{id}"
+      },
+      {
+        "method": "POST",
+        "path": "/admin/onboarding-slides"
+      },
+      {
+        "method": "DELETE",
+        "path": "/admin/onboarding-slides/{id}"
+      },
+      {
+        "method": "PUT",
+        "path": "/admin/pages/{id}"
+      },
+      {
+        "method": "DELETE",
+        "path": "/admin/pages/{id}"
+      },
+      {
+        "method": "PUT",
+        "path": "/admin/strings/{id}"
+      },
+      {
+        "method": "POST",
+        "path": "/admin/strings"
+      },
+      {
+        "method": "DELETE",
+        "path": "/admin/strings/{id}"
+      },
+      {
+        "method": "PUT",
+        "path": "/admin/home-layouts/{id}"
+      },
+      {
+        "method": "POST",
+        "path": "/admin/home-layouts"
+      },
+      {
+        "method": "DELETE",
+        "path": "/admin/home-layouts/{id}"
+      },
+      {
+        "method": "DELETE",
+        "path": "/admin/wallet/coupons/{id}"
+      },
+      {
+        "method": "DELETE",
+        "path": "/admin/drivers/leave-requests/{id}"
+      },
+      {
+        "method": "DELETE",
+        "path": "/admin/drivers/{id}"
+      },
+      {
+        "method": "DELETE",
+        "path": "/admin/drivers/shifts/{id}"
+      },
+      {
+        "method": "DELETE",
+        "path": "/admin/drivers/assets/{id}"
+      },
+      {
+        "method": "POST",
+        "path": "/admin/reports/generate"
+      },
+      {
+        "method": "POST",
+        "path": "/admin/reports/export/{id}/{id}"
+      },
+      {
+        "method": "GET",
+        "path": "/admin/reports/realtime"
+      },
+      {
+        "method": "GET",
+        "path": "/admin/wallet/settlements/export"
+      },
+      {
+        "method": "DELETE",
+        "path": "/admin/wallet/subscriptions/{id}"
+      }
+    ],
+    "er": [
+      {
+        "method": "DELETE",
+        "path": "/er/assets/{id}"
+      },
+      {
+        "method": "DELETE",
+        "path": "/er/accounts/chart/{id}"
+      },
+      {
+        "method": "DELETE",
+        "path": "/er/documents/{id}"
+      },
+      {
+        "method": "GET",
+        "path": "/er/documents/{id}/download"
+      },
+      {
+        "method": "DELETE",
+        "path": "/er/documents/bulk"
+      },
+      {
+        "method": "GET",
+        "path": "/er/documents/export"
+      },
+      {
+        "method": "DELETE",
+        "path": "/er/payroll/{id}"
+      }
+    ],
+    "merchant": [
+      {
+        "method": "DELETE",
+        "path": "/merchant/categories/{id}"
+      },
+      {
+        "method": "DELETE",
+        "path": "/merchant/attributes/{id}"
+      }
+    ],
+    "auth": [
+      {
+        "method": "POST",
+        "path": "/auth/forgot"
+      },
+      {
+        "method": "POST",
+        "path": "/auth/reset/verify"
+      },
+      {
+        "method": "POST",
+        "path": "/auth/reset"
+      },
+      {
+        "method": "POST",
+        "path": "/auth/verify-otp"
+      }
+    ],
+    "users": [
+      {
+        "method": "PATCH",
+        "path": "/users/address/{id}"
+      },
+      {
+        "method": "DELETE",
+        "path": "/users/address/{id}"
+      },
+      {
+        "method": "PATCH",
+        "path": "/users/default-address"
+      }
+    ],
+    "wallet": [
+      {
+        "method": "POST",
+        "path": "/v2/wallet/coupons/apply"
+      },
+      {
+        "method": "GET",
+        "path": "/v2/wallet/coupons/my"
+      },
+      {
+        "method": "GET",
+        "path": "/v2/wallet/coupons/history"
+      },
+      {
+        "method": "GET",
+        "path": "/v2/wallet/subscriptions/my"
+      }
+    ],
+    "delivery": [
+      {
+        "method": "GET",
+        "path": "/delivery/order"
+      },
+      {
+        "method": "DELETE",
+        "path": "/delivery/cart/{id}"
+      },
+      {
+        "method": "GET",
+        "path": "/delivery/order/user/{id}"
+      },
+      {
+        "method": "GET",
+        "path": "/delivery/categories"
+      },
+      {
+        "method": "GET",
+        "path": "/delivery/cart/{id}"
+      },
+      {
+        "method": "GET",
+        "path": "/delivery/promotions/by-stores"
+      },
+      {
+        "method": "PUT",
+        "path": "/delivery/stores/{id}"
+      }
+    ],
+    "errands": [
+      {
+        "method": "POST",
+        "path": "/errands/order"
+      },
+      {
+        "method": "GET",
+        "path": "/errands/user/{id}"
+      },
+      {
+        "method": "GET",
+        "path": "/errands/{id}"
+      },
+      {
+        "method": "GET",
+        "path": "/errands/categories"
+      },
+      {
+        "method": "GET",
+        "path": "/errands/drivers/available"
+      }
+    ],
+    "vendors": [],
+    "other": [
+      {
+        "method": "DELETE",
+        "path": "/employees/{id}"
+      },
+      {
+        "method": "POST",
+        "path": "/events"
+      },
+      {
+        "method": "GET",
+        "path": "/groceries/catalog"
+      }
+    ]
+  },
+  "priority": [
+    {
+      "name": "Duplicates/Malformed",
+      "count": 1,
+      "action": "Fix extraction logic"
+    },
+    {
+      "name": "Auth endpoints",
+      "count": 4,
+      "action": "Add OpenAPI decorators"
+    },
+    {
+      "name": "User endpoints",
+      "count": 3,
+      "action": "Add OpenAPI decorators"
+    },
+    {
+      "name": "Delivery endpoints",
+      "count": 7,
+      "action": "Add OpenAPI decorators"
+    },
+    {
+      "name": "Admin endpoints",
+      "count": 21,
+      "action": "Add OpenAPI decorators"
+    },
+    {
+      "name": "Wallet V2",
+      "count": 4,
+      "action": "Add OpenAPI decorators or remove if unused"
+    },
+    {
+      "name": "Merchant",
+      "count": 2,
+      "action": "Add OpenAPI decorators or remove if unused"
+    },
+    {
+      "name": "ER/HR",
+      "count": 7,
+      "action": "Add OpenAPI decorators"
+    },
+    {
+      "name": "Errands",
+      "count": 5,
+      "action": "Add OpenAPI decorators or remove if unused"
+    },
+    {
+      "name": "Other",
+      "count": 3,
+      "action": "Review individually"
+    }
+  ]
+}

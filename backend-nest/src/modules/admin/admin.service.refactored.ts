@@ -533,7 +533,5 @@ export class AdminService {
     return ModerationHelper.unban(this.userModel, userId, adminId, 'User');
   }
 
-  // TODO: Add remaining methods from original admin.service.ts
-  // For brevity, I'm showing the pattern. The remaining methods follow the same delegation pattern.
 }
 

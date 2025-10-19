@@ -1,0 +1,53 @@
+{
+  "aliases": {
+    "/merchant": "/merchants",
+    "/users/profile": "/v2/users/me",
+    "/user/profile": "/v2/users/me",
+    "/users/me": "/v2/users/me",
+    "/users/address": "/v2/users/addresses",
+    "/users/addresses": "/v2/users/addresses",
+    "/users/default-address": "/v2/users/addresses/{id}/set-default",
+    "/delivery/order/user/{id}": "/delivery/orders/user/{id}",
+    "/delivery/order/user/{id}": "/delivery/order/user/{id}",
+    "/delivery/order/user": "/delivery/order/user",
+    "/delivery/order": "/delivery/order",
+    "/delivery/cart/user/{id}": "/delivery/cart/user/{id}",
+    "/delivery/cart/user": "/delivery/cart/user",
+    "/delivery/cart/{id}": "/delivery/cart/{id}",
+    "/delivery/stores{id}": "/delivery/stores/{id}",
+    "/admin/reports/export/{id}/{id}": "/admin/reports/export/{id}/{id}",
+    "/admin/pages": "/content/admin/pages",
+    "/admin/strings": "/content/admin/strings",
+    "/admin/home-layouts": "/content/admin/home-layouts",
+    "/admin/onboarding-slides": "/content/admin/slides",
+    "/auth/forgot": "/auth/password/forgot",
+    "/auth/reset/verify": "/auth/password/reset/verify",
+    "/auth/reset": "/auth/password/reset",
+    "/auth/verify-otp": "/users/otp/verify",
+    "/coupons/validate": "/finance/coupons/validate",
+    "/v2/wallet/coupons/validate": "/finance/coupons/validate",
+    "/v2/wallet/coupons/apply": "/finance/coupons/apply",
+    "/vendors": "/vendors/search",
+    "/vendors/sales": "/vendors/sales",
+    "/events": "/analytics/events",
+    "/groceries/catalog": "/delivery/categories",
+    "/users/address/{id}": "/v2/users/addresses/{id}",
+    "/users/default-address": "/v2/users/addresses/{id}/set-default"
+  },
+  "prefixAliases": {
+    "/merchant/": "/merchants/",
+    "/v2/wallet/": "/wallet/",
+    "/v2/wallet/coupons/": "/finance/coupons/",
+    "/errands/": "/errands/",
+    "/user/": "/users/",
+    "/users/address": "/v2/users/addresses"
+  },
+  "ignoreQueryParams": true,
+  "normalizePlural": {
+    "address": "addresses",
+    "category": "categories",
+    "product": "products",
+    "order": "orders"
+  }
+}
+

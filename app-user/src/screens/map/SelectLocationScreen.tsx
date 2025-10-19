@@ -175,7 +175,7 @@ export default function SelectLocationScreen() {
           },
           sessionToken,
         };
-        const res = await fetch(
+        const { data: res } = await axiosInstance.get(
           "https://places.googleapis.com/v1/places:autocomplete",
           {
             method: "POST",
@@ -199,7 +199,7 @@ export default function SelectLocationScreen() {
           return;
         }
 
-        const data = await res.json();
+        // data already available from axiosInstance
         const list = (data?.suggestions || [])
           .slice(0, 5)
           .map((s: any) => ({
@@ -220,7 +220,7 @@ export default function SelectLocationScreen() {
   // 4) Place Details — مرّة عند اختيار نتيجة فقط
   const fetchPlaceDetails = async (pid: string) => {
     try {
-      const res = await fetch(
+      const { data: res } = await axiosInstance.get(
         `https://places.googleapis.com/v1/places/${pid}?languageCode=ar`,
         {
           headers: {
@@ -233,7 +233,7 @@ export default function SelectLocationScreen() {
         console.warn("[Places] Details error:", res.status, await res.text());
         return null;
       }
-      const d = await res.json();
+      const d = res;
       const lat = d?.location?.latitude,
         lng = d?.location?.longitude;
       const addr = d?.formattedAddress || "";
@@ -246,7 +246,7 @@ export default function SelectLocationScreen() {
   const reverseGeocode = async (lat: number, lng: number) => {
     if (!PLACES_KEY) return;
     try {
-      const res = await fetch(
+      const { data: res } = await axiosInstance.get(
         "https://places.googleapis.com/v1/geocode:reverse",
         {
           method: "POST",
@@ -263,7 +263,7 @@ export default function SelectLocationScreen() {
         }
       );
       if (!res.ok) return;
-      const d = await res.json();
+      const d = res;
       setAddress(d?.formattedAddress || d?.plusCode?.globalCode || "");
     } catch {}
   };

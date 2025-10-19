@@ -13,6 +13,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { LocationUpdateDto } from './dto/location-update.dto';
 import { DriverStatusDto } from './dto/driver-status.dto';
+import { DriverService } from '../modules/driver/driver.service';
 
 // Rate Limiter - حماية من الـ Spam والـ DDoS
 interface RateLimiterStore {
@@ -27,15 +28,13 @@ interface RateLimiterStore {
   },
   namespace: '/drivers',
 })
-export class DriverGateway
-  implements OnGatewayConnection, OnGatewayDisconnect
-{
+export class DriverGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
 
   private logger = new Logger('DriverGateway');
   private activeDrivers = new Map<string, string>(); // driverId -> socketId
-  
+
   // Rate Limiter Configuration
   private rateLimitStore = new Map<string, RateLimiterStore>();
   private readonly MAX_POINTS = 20; // عدد الرسائل المسموح بها
@@ -46,6 +45,7 @@ export class DriverGateway
   constructor(
     private jwtService: JwtService,
     private configService: ConfigService,
+    private driverService: DriverService,
   ) {
     // تنظيف الـ rate limiter كل دقيقة
     setInterval(() => this.cleanupRateLimiter(), 60000);
@@ -193,7 +193,7 @@ export class DriverGateway
       this.LOCATION_MAX_POINTS,
       this.LOCATION_DURATION,
     );
-    
+
     if (!canProceed) {
       this.logger.warn(
         `Location rate limit exceeded for driver ${client.data.driverId}`,
@@ -220,9 +220,23 @@ export class DriverGateway
       timestamp: new Date(),
     });
 
-    // TODO: Update driver location in database
+    // Update driver location in database
+    try {
+      await this.driverService.updateLocation(driverId, {
+        lat: data.lat,
+        lng: data.lng,
+      });
+    } catch (error) {
+      this.logger.error(
+        `Failed to update driver ${driverId} location in database:`,
+        error instanceof Error ? error.message : String(error),
+      );
+      // لا نوقف العملية، فقط نسجل الخطأ
+    }
 
-    this.logger.debug(`Driver ${driverId} location updated: ${data.lat}, ${data.lng}`);
+    this.logger.debug(
+      `Driver ${driverId} location updated: ${data.lat}, ${data.lng}`,
+    );
     return { success: true };
   }
 
@@ -259,9 +273,20 @@ export class DriverGateway
       timestamp: new Date(),
     });
 
-    // TODO: Update driver status in database
+    // Update driver status in database
+    try {
+      await this.driverService.updateAvailability(driverId, data.isAvailable);
+    } catch (error) {
+      this.logger.error(
+        `Failed to update driver ${driverId} availability in database:`,
+        error instanceof Error ? error.message : String(error),
+      );
+      // لا نوقف العملية، فقط نسجل الخطأ
+    }
 
-    this.logger.log(`Driver ${driverId} availability changed: ${data.isAvailable}`);
+    this.logger.log(
+      `Driver ${driverId} availability changed: ${data.isAvailable}`,
+    );
     return { success: true };
   }
 
@@ -310,7 +335,10 @@ export class DriverGateway
   /**
    * تحديث موقع السائق لحظياً
    */
-  broadcastDriverLocation(driverId: string, location: { lat: number; lng: number }) {
+  broadcastDriverLocation(
+    driverId: string,
+    location: { lat: number; lng: number },
+  ) {
     // إرسال لغرفة السائق (للعملاء الذين يتتبعون)
     this.server.emit('driver:location', {
       driverId,
@@ -329,7 +357,11 @@ export class DriverGateway
   /**
    * إشعار السائق بإلغاء الطلب
    */
-  notifyDriverOrderCancelled(driverId: string, orderId: string, reason: string) {
+  notifyDriverOrderCancelled(
+    driverId: string,
+    orderId: string,
+    reason: string,
+  ) {
     this.server.to(`driver_${driverId}`).emit('order:cancelled', {
       orderId,
       reason,
@@ -353,4 +385,3 @@ export class DriverGateway
     return Array.from(this.activeDrivers.keys());
   }
 }
-

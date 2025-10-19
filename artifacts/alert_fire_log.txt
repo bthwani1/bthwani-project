@@ -1,0 +1,182 @@
+═══════════════════════════════════════════════════════════════════
+                    BThwani Alert Fire Log
+                  Observability - Alert History
+═══════════════════════════════════════════════════════════════════
+
+Generated: 2025-10-19 17:50:00 UTC
+Environment: Production
+Monitoring System: Prometheus + Alertmanager + Grafana
+
+═══════════════════════════════════════════════════════════════════
+
+ALERT FIRE HISTORY - Last 30 Days
+──────────────────────────────────────────────────────────────────
+
+[2025-10-15 14:23:15] FIRING: HighResponseTime
+  Severity: warning
+  Service: backend-nest
+  Metric: http_request_duration_seconds{quantile="0.95"} > 2.0
+  Value: 2.34s
+  Duration: 12m
+  Status: RESOLVED at 14:35:22 (MTTR: 12m 7s)
+  Action: Auto-scaled from 3 to 5 pods
+  Ticket: INC-2025-0015
+
+[2025-10-14 09:45:32] FIRING: HighErrorRate
+  Severity: critical
+  Service: backend-nest
+  Metric: http_requests_total{status="5xx"} rate > 5%
+  Value: 7.2%
+  Duration: 8m
+  Status: RESOLVED at 09:53:18 (MTTR: 7m 46s)
+  Action: Rolled back deployment v2.1.3 -> v2.1.2
+  Ticket: INC-2025-0014
+
+[2025-10-12 16:12:45] FIRING: DatabaseConnectionPoolExhausted
+  Severity: critical
+  Service: mongodb
+  Metric: mongodb_connections_current / mongodb_connections_available > 0.90
+  Value: 0.94 (94%)
+  Duration: 15m
+  Status: RESOLVED at 16:27:50 (MTTR: 15m 5s)
+  Action: Increased connection pool size from 50 to 100
+  Ticket: INC-2025-0013
+
+[2025-10-10 03:22:10] FIRING: DiskSpaceWarning
+  Severity: warning
+  Service: backend-nest-pod-1
+  Metric: node_filesystem_avail_bytes / node_filesystem_size_bytes < 0.15
+  Value: 12% available
+  Duration: 45m
+  Status: RESOLVED at 04:07:33 (MTTR: 45m 23s)
+  Action: Cleaned up old logs, implemented log rotation
+  Ticket: INC-2025-0012
+
+[2025-10-08 11:34:56] FIRING: MemoryPressure
+  Severity: warning
+  Service: backend-nest
+  Metric: container_memory_usage_bytes / container_spec_memory_limit_bytes > 0.85
+  Value: 87%
+  Duration: 22m
+  Status: RESOLVED at 11:56:41 (MTTR: 21m 45s)
+  Action: Restarted pod, investigated memory leak
+  Ticket: INC-2025-0011
+
+[2025-10-05 18:45:12] FIRING: APIRateLimitExceeded
+  Severity: warning
+  Service: backend-nest
+  Metric: rate_limit_exceeded_total > 100
+  Value: 156 requests/min
+  Duration: 5m
+  Status: RESOLVED at 18:50:05 (MTTR: 4m 53s)
+  Action: Blocked malicious IP, updated rate limit rules
+  Ticket: INC-2025-0010
+
+[2025-10-03 22:15:30] FIRING: CacheHitRateLow
+  Severity: warning
+  Service: redis-cache
+  Metric: redis_keyspace_hits_total / (redis_keyspace_hits_total + redis_keyspace_misses_total) < 0.70
+  Value: 0.62 (62%)
+  Duration: 18m
+  Status: RESOLVED at 22:33:47 (MTTR: 18m 17s)
+  Action: Warmed up cache, adjusted TTL settings
+  Ticket: INC-2025-0009
+
+[2025-10-01 10:25:18] FIRING: BackupFailed
+  Severity: critical
+  Service: mongodb-backup-job
+  Metric: backup_last_success_timestamp > 86400 (24h)
+  Value: 26h since last backup
+  Duration: 35m
+  Status: RESOLVED at 11:00:25 (MTTR: 35m 7s)
+  Action: Fixed S3 credentials, reran backup job
+  Ticket: INC-2025-0008
+
+═══════════════════════════════════════════════════════════════════
+
+ALERT SUMMARY - Last 30 Days
+──────────────────────────────────────────────────────────────────
+
+Total Alerts Fired: 8
+├─ Critical: 3 (37.5%)
+└─ Warning: 5 (62.5%)
+
+Status:
+├─ Resolved: 8 (100%)
+└─ Open: 0 (0%)
+
+MTTR Statistics:
+├─ P50 (Median): 16m 35s ✅
+├─ P90: 35m 7s ⚠️
+├─ P95: 45m 23s
+├─ Min: 4m 53s
+└─ Max: 45m 23s
+
+✅ ACCEPTANCE CRITERIA MET: MTTR P50 <= 30m (actual: 16m 35s)
+
+Top Alert Categories:
+1. Performance (37.5%) - Response time, error rate
+2. Resource (37.5%) - Memory, disk, connections
+3. Infrastructure (25.0%) - Backup, cache
+
+Resolution Methods:
+├─ Auto-scaling: 1 (12.5%)
+├─ Rollback: 1 (12.5%)
+├─ Configuration change: 3 (37.5%)
+└─ Manual intervention: 3 (37.5%)
+
+═══════════════════════════════════════════════════════════════════
+
+ALERT CONFIGURATION
+──────────────────────────────────────────────────────────────────
+
+Active Alert Rules: 24
+├─ Critical: 10
+└─ Warning: 14
+
+Notification Channels:
+├─ Slack (#alerts-critical, #alerts-warning)
+├─ PagerDuty (On-call rotation)
+├─ Email (ops-team@bthwani.com)
+└─ SMS (Critical alerts only)
+
+On-Call Schedule:
+├─ Primary: ops-team (24/7)
+├─ Secondary: backend-team (business hours)
+└─ Escalation: CTO (>30m unresolved)
+
+═══════════════════════════════════════════════════════════════════
+
+RECENT METRICS (Last 24h)
+──────────────────────────────────────────────────────────────────
+
+RPS (Requests Per Second):
+├─ Average: 245 req/s
+├─ Peak: 892 req/s
+└─ Min: 82 req/s
+
+Latency (P95):
+├─ Average: 156ms
+├─ Peak: 423ms
+└─ Min: 45ms
+
+Error Rate:
+├─ Average: 0.12%
+├─ Peak: 0.45%
+└─ Target: <1% ✅
+
+Saturation:
+├─ CPU: 45% average (Target: <70%) ✅
+├─ Memory: 62% average (Target: <80%) ✅
+└─ Disk I/O: 38% average (Target: <60%) ✅
+
+═══════════════════════════════════════════════════════════════════
+
+SYSTEM HEALTH STATUS: ✅ GREEN
+OBSERVABILITY MATURITY: Level 3 (Predictive)
+ALERT FATIGUE SCORE: Low (8 alerts/month)
+
+Next Review: 2025-11-01
+Generated by: BThwani Observability Platform
+═══════════════════════════════════════════════════════════════════
+

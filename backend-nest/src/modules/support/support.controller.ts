@@ -9,7 +9,7 @@ import {
   UseGuards,
   Req,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth , ApiResponse, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { Request } from 'express';
 import { SupportService } from './support.service';
 import { UnifiedAuthGuard } from '../../common/guards/unified-auth.guard';
@@ -38,6 +38,9 @@ export class SupportController {
   constructor(private readonly supportService: SupportService) {}
 
   @Post('tickets')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إنشاء تذكرة دعم جديدة' })
   async createTicket(
     @Body() dto: CreateTicketDto,
@@ -49,18 +52,29 @@ export class SupportController {
   }
 
   @Get('tickets')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'جلب التذاكر' })
   async getTickets(@Query() query: GetTicketsQueryDto) {
     return this.supportService.getTickets(query);
   }
 
   @Get('tickets/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تفاصيل تذكرة' })
   async getTicketById(@Param('id') id: string) {
     return this.supportService.getTicketById(id);
   }
 
   @Patch('tickets/:id/messages')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إضافة رسالة للتذكرة' })
   async addMessage(
     @Param('id') id: string,
@@ -73,12 +87,19 @@ export class SupportController {
   }
 
   @Patch('tickets/:id/rate')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تقييم التذكرة' })
   async rateTicket(@Param('id') id: string, @Body() dto: RateTicketDto) {
     return this.supportService.rateTicket(id, dto);
   }
 
   @Get('stats')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إحصائيات التذاكر' })
   async getStats() {
     return this.supportService.getTicketStats();
@@ -87,6 +108,11 @@ export class SupportController {
   // ==================== Admin Endpoints ====================
 
   @Patch('admin/tickets/:id/assign')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تعيين تذكرة (Admin)' })
   async assignTicket(
     @Param('id') ticketId: string,
@@ -99,6 +125,11 @@ export class SupportController {
   }
 
   @Patch('admin/tickets/:id/resolve')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'حل تذكرة (Admin)' })
   async resolveTicket(
     @Param('id') ticketId: string,
@@ -111,6 +142,8 @@ export class SupportController {
   }
 
   @Get('admin/sla-metrics')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'مقاييس SLA (Admin)' })
   async getSLAMetrics() {
     // استدعاء service method

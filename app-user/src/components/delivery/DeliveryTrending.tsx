@@ -12,7 +12,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { RootStackParamList } from "../../types/navigation";
-import { API_URL } from "../../utils/api/config";
+import axiosInstance from "../../utils/api/axiosInstance";
 import {
   DeliveryStoreWithDistance,
   enrichStoresWithDistance,
@@ -67,8 +67,7 @@ const DeliveryTrending: React.FC<Props> = ({
         setLoading(true);
 
         // 1) اجلب المتاجر الرائجة
-        const res = await fetch(`${API_URL}/delivery/stores`);
-        const data = await res.json();
+        const { data } = await axiosInstance.get(`/delivery/stores`);
 
         const trending = Array.isArray(data)
           ? data.filter((s: any) => s?.isTrending === true)
@@ -87,12 +86,11 @@ const DeliveryTrending: React.FC<Props> = ({
         // 2) اجلب العروض وادمجها (لا نفلتر شيئًا)
         if (enriched.length) {
           const idsCsv = enriched.map((s) => s._id).join(",");
-          const promosRes = await fetch(
-            `${API_URL}/delivery/promotions/by-stores?ids=${encodeURIComponent(
+          const { data: promoMap } = await axiosInstance.get(
+            `/delivery/promotions/by-stores?ids=${encodeURIComponent(
               idsCsv
             )}&channel=app`
           );
-          const promoMap = await promosRes.json();
 
           const getStorePromos = (sid: string) =>
             Array.isArray(promoMap)

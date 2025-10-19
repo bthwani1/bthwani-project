@@ -1,10 +1,9 @@
 import { refreshIdToken } from "@/api/authService";
 import { IntentManager } from "@/context/intent";
 import { useVerificationState } from "@/context/verify";
-import { API_URL } from "@/utils/api/config";
+import axiosInstance from "@/utils/api/axiosInstance";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import axios from "axios";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -51,8 +50,8 @@ export default function OTPVerificationScreen() {
       const idToken = await refreshIdToken();
       const sendChannel = selectedChannel || channel;
 
-      await axios.post(
-        `${API_URL}/users/otp/send`,
+      await axiosInstance.post(
+        `/users/otp/send`,
         { purpose: OTP_PURPOSE, channel: sendChannel },
         { headers: { Authorization: `Bearer ${idToken}` }, timeout: 10000 }
       );
@@ -208,8 +207,8 @@ export default function OTPVerificationScreen() {
     try {
       const idToken = await refreshIdToken(); // يأخذ المخزن ويجدده لو لزم
 
-      const { data } = await axios.post(
-        `${API_URL}/users/otp/verify`,
+      const { data } = await axiosInstance.post(
+        `/users/otp/verify`,
         { code: otpCode, purpose: OTP_PURPOSE },
         { headers: { Authorization: `Bearer ${idToken}` }, timeout: 10000 }
       );

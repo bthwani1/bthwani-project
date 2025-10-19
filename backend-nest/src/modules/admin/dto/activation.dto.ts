@@ -1,4 +1,4 @@
-import { IsOptional, IsString, IsNumber } from 'class-validator';
+import { IsOptional, IsString, IsNumber, IsEnum } from 'class-validator';
 
 export class GenerateActivationCodesDto {
   @IsNumber()
@@ -25,11 +25,31 @@ export class GenerateActivationCodesResponseDto {
 
 export class GetActivationCodesQueryDto {
   @IsOptional()
-  @IsString()
-  status?: string;
+  @IsEnum(['unused', 'used', 'expired'])
+  status?: 'unused' | 'used' | 'expired';
+
+  @IsOptional()
+  @IsEnum(['driver', 'vendor', 'any'])
+  userType?: 'driver' | 'vendor' | 'any';
+}
+
+/**
+ * DTO لبيانات كود التفعيل
+ */
+export class ActivationCodeDto {
+  code: string;
+  userType: 'driver' | 'vendor' | 'any';
+  status: 'unused' | 'used' | 'expired';
+  expiresAt?: string;
+  usedBy?: string;
+  usedAt?: string;
+  generatedBy: string;
+  metadata?: Record<string, unknown>;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export class GetActivationCodesResponseDto {
-  data: any[]; // TODO: Create ActivationCode DTO
+  data: ActivationCodeDto[];
   total: number;
 }

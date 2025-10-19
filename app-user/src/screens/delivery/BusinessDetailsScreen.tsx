@@ -29,7 +29,7 @@ import {
 } from "@/api/favorites";
 import { useCart } from "@/context/CartContext";
 import { RootStackParamList } from "@/types/navigation";
-import { API_URL } from "@/utils/api/config";
+import axiosInstance from "@/utils/api/axiosInstance";
 
 // Enhanced color palette for web compatibility
 const COLORS = {
@@ -188,7 +188,7 @@ export default function BusinessDetailsScreen() {
           `${API_URL}/delivery/stores/${businessId}`
         );
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const store = await res.json();
+        const store = res;
         setBusiness(store);
       } catch (e) {
         console.warn("Failed to load store", e);

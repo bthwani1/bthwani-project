@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { AdminController } from './admin.controller';
+import { AdminCMSController } from './admin-cms.controller';
 import { AdminService } from './admin.service';
 import {
   WithdrawalService,
@@ -92,7 +93,7 @@ import {
     ]),
     JwtModule.register({}),
   ],
-  controllers: [AdminController],
+  controllers: [AdminController, AdminCMSController],
   providers: [
     AdminService,
     WithdrawalService,

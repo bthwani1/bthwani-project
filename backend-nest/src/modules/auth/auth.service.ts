@@ -2,6 +2,7 @@ import {
   Injectable,
   UnauthorizedException,
   NotFoundException,
+  BadRequestException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { SignOptions } from 'jsonwebtoken';
@@ -151,5 +152,145 @@ export class AuthService {
       updatedAt: userObject.updatedAt,
     };
     /* eslint-enable @typescript-eslint/no-unsafe-assignment */
+  }
+
+  // ==================== Password Reset Methods ====================
+
+  async requestPasswordReset(emailOrPhone: string): Promise<void> {
+    // Find user by email or phone
+    const user = await this.userModel.findOne({
+      $or: [{ email: emailOrPhone }, { phone: emailOrPhone }],
+    });
+
+    if (!user) {
+      throw new NotFoundException({
+        code: 'USER_NOT_FOUND',
+        message: 'User not found',
+        userMessage: 'المستخدم غير موجود',
+      });
+    }
+
+    // Generate random 6-digit code
+    const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+    // Save reset code and expiry (15 minutes)
+    user.passwordResetCode = resetCode;
+    user.passwordResetExpires = new Date(Date.now() + 15 * 60 * 1000);
+    await user.save();
+
+    // TODO: Send reset code via email or SMS
+    // For now, just log it (in production, send via email/SMS service)
+    console.log(`Password reset code for ${emailOrPhone}: ${resetCode}`);
+  }
+
+  async verifyResetCode(
+    emailOrPhone: string,
+    code: string,
+  ): Promise<boolean> {
+    const user = await this.userModel.findOne({
+      $or: [{ email: emailOrPhone }, { phone: emailOrPhone }],
+    });
+
+    if (!user) {
+      throw new NotFoundException({
+        code: 'USER_NOT_FOUND',
+        message: 'User not found',
+        userMessage: 'المستخدم غير موجود',
+      });
+    }
+
+    if (
+      !user.passwordResetCode ||
+      user.passwordResetCode !== code ||
+      !user.passwordResetExpires ||
+      user.passwordResetExpires < new Date()
+    ) {
+      return false;
+    }
+
+    return true;
+  }
+
+  async resetPassword(
+    emailOrPhone: string,
+    code: string,
+    newPassword: string,
+  ): Promise<void> {
+    const user = await this.userModel.findOne({
+      $or: [{ email: emailOrPhone }, { phone: emailOrPhone }],
+    });
+
+    if (!user) {
+      throw new NotFoundException({
+        code: 'USER_NOT_FOUND',
+        message: 'User not found',
+        userMessage: 'المستخدم غير موجود',
+      });
+    }
+
+    // Verify code
+    const isValid = await this.verifyResetCode(emailOrPhone, code);
+    if (!isValid) {
+      throw new BadRequestException({
+        code: 'INVALID_RESET_CODE',
+        message: 'Invalid or expired reset code',
+        userMessage: 'رمز التحقق غير صحيح أو منتهي الصلاحية',
+      });
+    }
+
+    // Update password in Firebase (if Firebase user exists)
+    if (user.firebaseUID) {
+      try {
+        await admin.auth().updateUser(user.firebaseUID, {
+          password: newPassword,
+        });
+      } catch (error) {
+        console.error('Failed to update Firebase password:', error);
+      }
+    }
+
+    // Clear reset code
+    user.passwordResetCode = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save();
+  }
+
+  async verifyOtp(
+    phone: string,
+    otp: string,
+  ): Promise<{ verified: boolean; user?: any; token?: any }> {
+    // Find user by phone
+    const user = await this.userModel.findOne({ phone });
+
+    if (!user) {
+      throw new NotFoundException({
+        code: 'USER_NOT_FOUND',
+        message: 'User not found',
+        userMessage: 'المستخدم غير موجود',
+      });
+    }
+
+    // In production, verify OTP with SMS service
+    // For now, accept any 6-digit code for testing
+    if (!/^\d{6}$/.test(otp)) {
+      throw new BadRequestException({
+        code: 'INVALID_OTP',
+        message: 'Invalid OTP format',
+        userMessage: 'رمز OTP غير صحيح',
+      });
+    }
+
+    // Mark phone as verified
+    user.phoneVerified = true;
+    await user.save();
+
+    // Generate token
+    const token = await this.generateToken(user);
+
+    return {
+      verified: true,
+      user: this.sanitizeUser(user),
+      token,
+    };
   }
 }

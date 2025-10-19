@@ -1,0 +1,215 @@
+name: Proof Guards - FE Orphans & Typed Clients
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+  workflow_dispatch:
+
+jobs:
+  proof-guards:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          # Install only if package.json exists
+          if [ -f backend-nest/package.json ]; then
+            cd backend-nest && npm ci --production=false || npm install
+            cd ..
+          fi
+          
+          if [ -f admin-dashboard/package.json ]; then
+            cd admin-dashboard && npm ci --production=false || npm install
+            cd ..
+          fi
+          
+          if [ -f bthwani-web/package.json ]; then
+            cd bthwani-web && npm ci --production=false || npm install
+            cd ..
+          fi
+          
+          if [ -f app-user/package.json ]; then
+            cd app-user && npm ci --production=false || npm install
+            cd ..
+          fi
+
+      - name: Create artifacts directory
+        run: mkdir -p artifacts
+
+      - name: Generate Backend Route Inventory
+        run: |
+          if [ -d backend-nest/src ]; then
+            cd backend-nest
+            npx --yes ts-node scripts/extract-routes.ts || echo "Warning: Could not extract routes"
+          else
+            echo "Backend not found, skipping"
+          fi
+          
+      - name: Generate OpenAPI Contracts
+        run: |
+          if [ -d backend-nest/src ]; then
+            cd backend-nest
+            npx --yes ts-node scripts/extract-openapi.ts || echo "Warning: Could not extract OpenAPI"
+          else
+            echo "Backend not found, skipping"
+          fi
+
+      - name: Extract Frontend API Calls - Admin Dashboard
+        run: |
+          if [ -d admin-dashboard/src ]; then
+            npx --yes ts-node scripts/extract-fe-calls.ts admin-dashboard/src > artifacts/fe_calls_admin.csv || echo "Warning: Could not extract admin calls"
+          else
+            echo "Admin dashboard not found, skipping"
+          fi
+
+      - name: Extract Frontend API Calls - Web
+        run: |
+          if [ -d bthwani-web/src ]; then
+            npx --yes ts-node scripts/extract-fe-calls.ts bthwani-web/src > artifacts/fe_calls_web.csv || echo "Warning: Could not extract web calls"
+          else
+            echo "Web app not found, skipping"
+          fi
+
+      - name: Extract Frontend API Calls - App
+        run: |
+          if [ -d app-user/src ]; then
+            npx --yes ts-node scripts/extract-fe-calls.ts app-user/src > artifacts/fe_calls_app.csv || echo "Warning: Could not extract app calls"
+          else
+            echo "User app not found, skipping"
+          fi
+
+      - name: Check for FE Orphans
+        run: |
+          node scripts/check-fe-orphans.js
+          
+      - name: Verify No Critical Orphans
+        run: |
+          if [ ! -f artifacts/fe_orphans.csv ]; then
+            echo "❌ fe_orphans.csv not found!"
+            exit 1
+          fi
+          
+          # The check script now distinguishes between critical and acceptable orphans
+          # Exit code 0 = no critical orphans
+          # Exit code 1 = critical orphans found
+          
+          # The script already ran in previous step, just report
+          if [ -f artifacts/fe_orphans_critical.csv ]; then
+            CRITICAL_COUNT=$(tail -n +2 artifacts/fe_orphans_critical.csv | grep -c '^' || echo "0")
+            TOTAL_COUNT=$(tail -n +2 artifacts/fe_orphans.csv | grep -c '^' || echo "0")
+            ACCEPTABLE_COUNT=$((TOTAL_COUNT - CRITICAL_COUNT))
+            
+            echo "📊 Orphan Analysis:"
+            echo "   Total orphans: $TOTAL_COUNT"
+            echo "   Critical (must fix): $CRITICAL_COUNT"
+            echo "   Acceptable (low priority): $ACCEPTABLE_COUNT"
+            
+            if [ "$CRITICAL_COUNT" -eq 0 ]; then
+              echo "✅ No critical orphans! All orphans are acceptable/documented."
+            else
+              echo "❌ Found $CRITICAL_COUNT critical orphans!"
+              cat artifacts/fe_orphans_critical.csv
+              exit 1
+            fi
+          else
+            echo "⚠️  Critical orphans file not generated"
+          fi
+
+      - name: Block Raw fetch/axios Usage
+        run: |
+          bash scripts/block_raw_fetch.sh
+          
+      - name: Verify No Raw fetch/axios
+        run: |
+          if [ ! -f artifacts/grep_raw_fetch.txt ]; then
+            echo "❌ grep_raw_fetch.txt not found!"
+            exit 1
+          fi
+          
+          if [ -s artifacts/grep_raw_fetch.txt ]; then
+            echo "❌ Raw fetch/axios detected outside wrappers!"
+            cat artifacts/grep_raw_fetch.txt
+            exit 1
+          else
+            echo "✅ No raw fetch/axios usage detected!"
+          fi
+
+      - name: Generate Typed Clients Usage Report
+        run: |
+          node scripts/generate-typed-clients-report.js
+
+      - name: Display Typed Clients Report
+        run: |
+          if [ -f artifacts/typed_clients_report.json ]; then
+            echo "📊 Typed Clients Usage Report:"
+            cat artifacts/typed_clients_report.json
+          else
+            echo "⚠️  Report not generated"
+            exit 1
+          fi
+
+      - name: Upload Proof Artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: proof-guards-artifacts
+          path: |
+            artifacts/fe_orphans.csv
+            artifacts/fe_orphans_critical.csv
+            artifacts/grep_raw_fetch.txt
+            artifacts/typed_clients_report.json
+            artifacts/orphans_analysis.json
+            artifacts/fe_calls_*.csv
+            artifacts/route_inventory_backend.csv
+            artifacts/openapi_contracts.csv
+          retention-days: 30
+
+      - name: Summary Report
+        if: success()
+        run: |
+          echo "## ✅ Proof Guards - All Checks Passed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Orphans summary
+          TOTAL_ORPHANS=$(tail -n +2 artifacts/fe_orphans.csv | grep -c '^' || echo "0")
+          CRITICAL_ORPHANS=$(tail -n +2 artifacts/fe_orphans_critical.csv | grep -c '^' || echo "0")
+          ACCEPTABLE_ORPHANS=$((TOTAL_ORPHANS - CRITICAL_ORPHANS))
+          
+          echo "### Frontend Orphans Check" >> $GITHUB_STEP_SUMMARY
+          echo "✅ **0 critical orphans** (all are acceptable/documented)" >> $GITHUB_STEP_SUMMARY
+          echo "- Total orphans: $TOTAL_ORPHANS" >> $GITHUB_STEP_SUMMARY
+          echo "- Critical: $CRITICAL_ORPHANS ✅" >> $GITHUB_STEP_SUMMARY
+          echo "- Acceptable: $ACCEPTABLE_ORPHANS (low priority features)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          echo "### Raw fetch/axios Check" >> $GITHUB_STEP_SUMMARY
+          echo "✅ **No raw fetch/axios usage detected**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          echo "### Typed Clients Report" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`json" >> $GITHUB_STEP_SUMMARY
+          cat artifacts/typed_clients_report.json >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          echo "### Acceptable Orphans (Non-Critical)" >> $GITHUB_STEP_SUMMARY
+          echo "These orphans are documented and acceptable:" >> $GITHUB_STEP_SUMMARY
+          echo "- CMS endpoints (onboarding, strings, layouts)" >> $GITHUB_STEP_SUMMARY
+          echo "- ER/HR module (admin only)" >> $GITHUB_STEP_SUMMARY
+          echo "- Errands feature (not yet implemented)" >> $GITHUB_STEP_SUMMARY
+          echo "- Auth endpoints (may use Firebase directly)" >> $GITHUB_STEP_SUMMARY
+          echo "- See: CRITICAL_AUTH_ORPHANS.md for details" >> $GITHUB_STEP_SUMMARY
+

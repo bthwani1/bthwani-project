@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Query, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth, ApiResponse, ApiParam, ApiQuery, ApiBody } from '@nestjs/swagger';
 import { AnalyticsService } from './analytics.service';
 import { UnifiedAuthGuard } from '../../common/guards/unified-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
@@ -18,6 +18,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('roas/daily')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'ROAS اليومي' })
   async getDailyRoas(
     @Query('startDate') startDate?: string,
@@ -31,6 +33,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('roas/summary')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'ملخص ROAS' })
   async getRoasSummary(
     @Query('startDate') startDate?: string,
@@ -43,6 +47,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('roas/by-platform')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'ROAS حسب المنصة' })
   async getRoasByPlatform(
     @Query('startDate') startDate?: string,
@@ -55,6 +61,10 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Post('roas/calculate')
+  @ApiBody({ schema: { type: 'object', properties: { date: { type: 'string', format: 'date' } } } })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'حساب ROAS' })
   async calculateRoas(@Body() body: { date: string }) {
     return this.analyticsService.calculateRoas(body.date);
@@ -66,6 +76,10 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Post('adspend')
+  @ApiBody({ schema: { type: 'object', properties: { date: { type: 'string' }, platform: { type: 'string' }, amount: { type: 'number' }, campaign: { type: 'string' } } } })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تسجيل إنفاق إعلاني' })
   async recordAdSpend(
     @Body()
@@ -86,6 +100,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('adspend')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'الإنفاق الإعلاني' })
   async getAdSpend(
     @Query('startDate') startDate?: string,
@@ -99,6 +115,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('adspend/summary')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'ملخص الإنفاق الإعلاني' })
   async getAdSpendSummary(
     @Query('startDate') startDate?: string,
@@ -113,6 +131,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('kpis')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'مؤشرات الأداء الرئيسية' })
   async getKPIs(
     @Query('startDate') startDate?: string,
@@ -125,6 +145,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('kpis/real-time')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'مؤشرات الأداء الحية' })
   async getRealTimeKPIs() {
     return this.analyticsService.getRealTimeKPIs();
@@ -134,6 +156,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('kpis/trends')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'اتجاهات الأداء' })
   async getKPITrends(
     @Query('metric') metric: string,
@@ -144,7 +168,14 @@ export class AnalyticsController {
 
   // ==================== Marketing Events ====================
 
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @ApiBearerAuth()
   @Post('events/track')
+  @ApiBody({ schema: { type: 'object', properties: { eventType: { type: 'string' }, eventData: { type: 'object' }, userId: { type: 'string' } } } })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تتبع حدث تسويقي' })
   async trackEvent(
     @Body()
@@ -164,6 +195,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('events')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'الأحداث التسويقية' })
   async getEvents(
     @Query('eventType') eventType?: string,
@@ -177,6 +210,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('events/summary')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'ملخص الأحداث' })
   async getEventsSummary(
     @Query('startDate') startDate?: string,
@@ -191,6 +226,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('funnel/conversion')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'قمع التحويل' })
   async getConversionFunnel(
     @Query('startDate') startDate?: string,
@@ -203,6 +240,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('funnel/drop-off')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'نقاط الانسحاب' })
   async getDropOffPoints() {
     return this.analyticsService.getDropOffPoints();
@@ -214,6 +253,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('users/growth')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'نمو المستخدمين' })
   async getUserGrowth(@Query('period') period: 'daily' | 'weekly' | 'monthly') {
     return this.analyticsService.getUserGrowth(period);
@@ -223,6 +264,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('users/retention')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'معدل الاحتفاظ' })
   async getUserRetention() {
     return this.analyticsService.getUserRetention();
@@ -232,6 +275,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('users/cohort')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تحليل الأفواج' })
   async getCohortAnalysis(@Query('cohortDate') cohortDate: string) {
     return this.analyticsService.getCohortAnalysis(cohortDate);
@@ -243,6 +288,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('revenue/forecast')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'توقعات الإيرادات' })
   async getRevenueForecast() {
     return this.analyticsService.getRevenueForecast();
@@ -252,6 +299,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('revenue/breakdown')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تفصيل الإيرادات' })
   async getRevenueBreakdown(
     @Query('startDate') startDate?: string,
@@ -266,6 +315,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('advanced/dashboard-overview')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'نظرة عامة متقدمة' })
   async getDashboardOverview(
     @Query('startDate') startDate?: string,
@@ -278,6 +329,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('advanced/cohort-analysis-advanced')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تحليل المجموعات المتقدم' })
   async getCohortAnalysisAdvanced(@Query('type') type: string = 'monthly') {
     return this.analyticsService.getCohortAnalysisAdvanced(type);
@@ -287,6 +340,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('advanced/funnel-analysis')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تحليل القمع' })
   async getFunnelAnalysis(@Query('funnelType') funnelType: string) {
     return this.analyticsService.getFunnelAnalysis(funnelType);
@@ -296,6 +351,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('advanced/retention')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'معدل الاحتفاظ' })
   async getRetentionRate(@Query('period') period: string = 'monthly') {
     return this.analyticsService.getRetentionRate(period);
@@ -305,6 +362,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('advanced/ltv')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'القيمة الدائمة للعميل' })
   async getCustomerLTV() {
     return this.analyticsService.getCustomerLTV();
@@ -314,6 +373,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('advanced/churn-rate')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'معدل التراجع' })
   async getChurnRate(@Query('period') period: string = 'monthly') {
     return this.analyticsService.getChurnRate(period);
@@ -323,6 +384,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('advanced/geographic-distribution')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'التوزيع الجغرافي' })
   async getGeographicDistribution(@Query('metric') metric: string = 'orders') {
     return this.analyticsService.getGeographicDistribution(metric);
@@ -332,6 +395,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('advanced/peak-hours')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'ساعات الذروة' })
   async getPeakHours() {
     return this.analyticsService.getPeakHours();
@@ -341,6 +406,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('advanced/product-performance')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'أداء المنتجات' })
   async getProductPerformance(
     @Query('startDate') startDate?: string,
@@ -353,6 +420,8 @@ export class AnalyticsController {
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
   @Get('advanced/driver-performance')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'أداء السائقين' })
   async getDriverPerformance(
     @Query('startDate') startDate?: string,

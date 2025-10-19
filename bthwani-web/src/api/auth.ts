@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosInstance from "./axios-instance";
 import { storage } from "../utils/storage";
 import type { AuthResponse } from "../types";
 
@@ -125,14 +126,14 @@ export const logout = (): void => {
   storage.clearAll();
 };
 export async function forgotPassword(payload: { emailOrPhone: string }) {
-  return axios.post("/auth/forgot", payload);
+  return axiosInstance.post("/auth/forgot", payload);
 }
 
 export async function verifyResetCode(payload: {
   emailOrPhone: string;
   code: string;
 }) {
-  return axios.post("/auth/reset/verify", payload);
+  return axiosInstance.post("/auth/reset/verify", payload);
 }
 
 export async function resetPassword(payload: {
@@ -140,11 +141,11 @@ export async function resetPassword(payload: {
   code: string;
   newPassword: string;
 }) {
-  return axios.post("/auth/reset", payload);
+  return axiosInstance.post("/auth/reset", payload);
 }
 
 export async function verifyOTP(payload: { code: string }) {
-  return axios.post("/auth/verify-otp", payload);
+  return axiosInstance.post("/auth/verify-otp", payload);
 }
 
 export default {

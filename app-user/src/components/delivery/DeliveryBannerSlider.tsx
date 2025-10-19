@@ -13,7 +13,7 @@ import {
   View,
   useWindowDimensions,
 } from "react-native";
-import { API_URL } from "../../utils/api/config";
+import axiosInstance from "../../utils/api/axiosInstance";
 
 const COLORS = { primary: "#D84315", background: "#FFFFFF" };
 
@@ -77,9 +77,7 @@ const DeliveryBannerSlider: React.FC<Props> = ({
     let mounted = true;
     (async () => {
       try {
-        const res = await fetch(`${API_URL}/delivery/promotions`);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data: PromotionBanner[] = await res.json();
+        const { data } = await axiosInstance.get<PromotionBanner[]>("/delivery/promotions");
 
         const filtered = data.filter((p) => {
           const okPlacement =

@@ -6,6 +6,7 @@ import { OrderGateway } from './order.gateway';
 import { DriverGateway } from './driver.gateway';
 import { NotificationGateway } from './notification.gateway';
 import { Order, OrderSchema } from '../modules/order/entities/order.entity';
+import { DriverModule } from '../modules/driver/driver.module';
 
 @Module({
   imports: [
@@ -22,6 +23,8 @@ import { Order, OrderSchema } from '../modules/order/entities/order.entity';
     }),
     // Mongoose Module للوصول للـ Order model
     MongooseModule.forFeature([{ name: Order.name, schema: OrderSchema }]),
+    // Driver Module للوصول لـ DriverService
+    DriverModule,
   ],
   providers: [OrderGateway, DriverGateway, NotificationGateway],
   exports: [OrderGateway, DriverGateway, NotificationGateway],

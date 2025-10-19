@@ -29,8 +29,7 @@ import {
 import CategoryFiltersBar from "../../components/category/CategoryFiltersBar";
 import DeliveryBannerSlider from "../../components/delivery/BannerSlider";
 import ErrorBoundary from "../../components/common/ErrorBoundary";
-// API URL (مؤقتًا معطل للويب)
-const API_URL = "http://localhost:3001";
+import axiosInstance from "../../api/axios-instance";
 
 // ⭐ جديد: API المفضلة + محدد النوع (مؤقتًا معطل للويب)
 const addFavorite = async (id: string, type: string, data?: Record<string, unknown>) => {
@@ -102,10 +101,9 @@ const CategoryDetailsScreen = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const res = await fetch(
-          `${API_URL}/delivery/stores?categoryId=${categoryId}`
+        const { data } = await axiosInstance.get(
+          `/delivery/stores?categoryId=${categoryId}`
         );
-        const data = await res.json();
         const arr: DeliveryStore[] = Array.isArray(data) ? data : [];
 
         // Remove duplicates and normalize data

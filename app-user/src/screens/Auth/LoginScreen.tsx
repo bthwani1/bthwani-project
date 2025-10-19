@@ -4,12 +4,11 @@ import { useAuth } from "@/auth/AuthContext";
 import { useCart } from "@/context/CartContext";
 import { registerPushToken } from "@/notify";
 import { saveUserProfile } from "@/storage/userStorage";
-import { API_URL } from "@/utils/api/config";
+import axiosInstance from "@/utils/api/axiosInstance";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
@@ -197,8 +196,8 @@ const LoginScreen = () => {
       // ✅ مزامنة ملف المستخدم على السيرفر (idempotent)
       const headers = { Authorization: `Bearer ${token}` };
       try {
-        await axios.post(
-          `${API_URL}/users/init`,
+        await axiosInstance.post(
+          `/users/init`,
           {},
           { headers, timeout: 10000 }
         );
@@ -213,7 +212,7 @@ const LoginScreen = () => {
       // اجلب الملف لمعرفة حالة التفعيل واحصل على Mongo _id
       let me: any | undefined;
       try {
-        const meRes = await axios.get(`${API_URL}/users/me`, {
+        const meRes = await axiosInstance.get(`/users/me`, {
           headers,
           timeout: 10000,
         });
@@ -236,8 +235,8 @@ const LoginScreen = () => {
       // لو غير مفعّل ابعت OTP ووجّه إلى شاشة التحقق
       if (me && me.email && me.emailVerified === false) {
         try {
-          await axios.post(
-            `${API_URL}/users/otp/send`,
+          await axiosInstance.post(
+            `/users/otp/send`,
             {},
             { headers, timeout: 10000 }
           );

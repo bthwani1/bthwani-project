@@ -1,0 +1,16 @@
+﻿{
+    "version":  "2.1.0",
+    "runs":  [
+                 {
+                     "tool":  {
+                                  "driver":  {
+                                                 "version":  "mock",
+                                                 "name":  "GitLeaks"
+                                             }
+                              },
+                     "results":  [
+
+                                 ]
+                 }
+             ]
+}

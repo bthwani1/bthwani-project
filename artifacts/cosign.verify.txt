@@ -1,0 +1,16 @@
+﻿Cosign Verification Status
+==========================
+Date: 2025-10-19 17:40:44
+Status: Pending - Cosign not installed locally
+Note: Artifact signing and verification will be performed in the CI/CD pipeline
+
+Expected workflow:
+1. Build container images
+2. Push to container registry (ghcr.io)
+3. Sign images with Cosign using keyless signing (OIDC)
+4. Verify signatures on deployment
+
+For manual verification:
+  cosign verify --certificate-identity-regexp='.*' --certificate-oidc-issuer='https://token.actions.githubusercontent.com' ghcr.io/bthwani/app:latest
+
+Security Status:  CONFIGURED (pending deployment)

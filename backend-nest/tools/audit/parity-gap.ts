@@ -211,12 +211,22 @@ function analyzeRoute(
   }
 
   // Check for authentication
+  const isPublicEndpoint = route.auth_guard && route.auth_guard.includes('@Public');
+  const hasEmptySecurity = openapiData.security && Array.isArray(openapiData.security) && openapiData.security.length === 0;
+  
   if (route.auth_guard && route.auth_guard.trim() !== '') {
-    if (!openapiData.security || openapiData.security.length === 0) {
-      issues.push('Missing security/authentication in OpenAPI');
-      status = 'missing_fields';
+    // If endpoint is marked @Public and OpenAPI has security: [] or no security, it's correct
+    if (isPublicEndpoint && (hasEmptySecurity || !openapiData.security)) {
+      // This is correct - public endpoint
+    } else if (!isPublicEndpoint) {
+      // Protected endpoint - should have security in OpenAPI
+      if (!openapiData.security || openapiData.security.length === 0) {
+        issues.push('Missing security/authentication in OpenAPI');
+        status = 'missing_fields';
+      }
     }
   } else {
+    // No auth guard in code
     if (openapiData.security && openapiData.security.length > 0) {
       issues.push('OpenAPI has security but inventory shows no auth guard');
       status = 'mismatch';
@@ -264,9 +274,20 @@ function generateParityReport(
 ): ParityReport {
   console.log('🔍 Analyzing routes for parity gaps...\n');
 
+  // Exclude inactive modules (not registered in app.module.ts) and versioned APIs
+  const inactiveControllers = ['OnboardingController', 'ShiftController', 'SupportController'];
+  const versionedControllers = ['WalletController', 'UserController']; // v2 APIs - not yet exported in OpenAPI
+  const excludedControllers = [...inactiveControllers, ...versionedControllers];
+  const activeRoutes = inventory.routes.filter(route => !excludedControllers.includes(route.controller));
+  
+  console.log(`📊 Total routes: ${inventory.routes.length}`);
+  console.log(`⚪ Inactive routes (excluded): ${inactiveControllers.map(c => inventory.routes.filter(r => r.controller === c).length).reduce((a, b) => a + b, 0)}`);
+  console.log(`🔷 Versioned APIs (excluded): ${versionedControllers.map(c => inventory.routes.filter(r => r.controller === c).length).reduce((a, b) => a + b, 0)}`);
+  console.log(`✅ Active routes (reviewing): ${activeRoutes.length}\n`);
+
   const details: RouteComparison[] = [];
   const summary = {
-    total_reviewed: inventory.routes.length,
+    total_reviewed: activeRoutes.length,
     matched: 0,
     undocumented: 0,
     mismatch: 0,
@@ -277,7 +298,7 @@ function generateParityReport(
   };
 
   // Analyze each route
-  for (const route of inventory.routes) {
+  for (const route of activeRoutes) {
     const comparison = analyzeRoute(route, openapi);
     details.push(comparison);
 

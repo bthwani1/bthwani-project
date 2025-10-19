@@ -3,12 +3,13 @@ import {
   Get,
   Post,
   Patch,
+  Delete,
   Body,
   Param,
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth, ApiResponse, ApiQuery, ApiParam, ApiBody } from '@nestjs/swagger';
 import { AdminService } from './admin.service';
 import { UnifiedAuthGuard } from '../../common/guards/unified-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
@@ -112,6 +113,16 @@ export class AdminController {
       startDate,
       endDate,
     });
+  }
+
+  @Delete('drivers/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiOperation({ summary: 'حذف سائق' })
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  async deleteDriver(@Param('id') driverId: string) {
+    return this.adminService.deleteDriver(driverId);
   }
 
   @Get('drivers/:id/financials')
@@ -306,9 +317,27 @@ export class AdminController {
     return this.adminService.getDailyReport({ date });
   }
 
+  @Post('reports/export/:type/:format')
+  @ApiOperation({ summary: 'تصدير تقارير' })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'تصدير التقارير بصيغة Excel أو PDF',
+    content: {
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': {},
+      'application/pdf': {}
+    }
+  })
+  async exportReport(
+    @Param('type') type: string,
+    @Param('format') format: string,
+    @Body() filters?: any,
+  ) {
+    // TODO: Implement report export logic
+    return { success: true, message: 'Export endpoint - not yet implemented', type, format };
+  }
+
   // TODO: Implement getWeeklyReport
   // TODO: Implement getMonthlyReport
-  // TODO: Implement exportReport
 
   // ==================== Notifications ====================
   // ✅ تم نقل الإشعارات إلى NotificationController - استخدم /notifications
@@ -360,6 +389,28 @@ export class AdminController {
   // ==================== Driver Shifts ====================
   // ✅ تم نقل إدارة الورديات إلى ShiftController - استخدم /shifts
 
+  @Delete('drivers/shifts/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiOperation({ summary: 'حذف وردية' })
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  async deleteShift(@Param('id') shiftId: string) {
+    return this.adminService.deleteShift(shiftId);
+  }
+
+  // ==================== Driver Assets ====================
+
+  @Delete('drivers/assets/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiOperation({ summary: 'حذف أصل سائق' })
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  async deleteDriverAsset(@Param('id') assetId: string) {
+    return this.adminService.deleteDriverAsset(assetId);
+  }
+
   // ==================== Driver Leave & Vacations ====================
 
   @Get('drivers/leave-requests')
@@ -393,6 +444,16 @@ export class AdminController {
       body.reason,
       adminId,
     );
+  }
+
+  @Delete('drivers/leave-requests/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiOperation({ summary: 'حذف طلب إجازة' })
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  async deleteLeaveRequest(@Param('id') requestId: string) {
+    return this.adminService.deleteLeaveRequest(requestId);
   }
 
   @Get('drivers/:id/leave-balance')
@@ -434,6 +495,17 @@ export class AdminController {
   }
 
   @Patch('settings')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        maintenanceMode: { type: 'boolean' },
+        allowRegistration: { type: 'boolean' },
+        minAppVersion: { type: 'string' },
+        maxOrderRadius: { type: 'number' },
+      },
+    },
+  })
   @ApiOperation({ summary: 'تحديث الإعدادات' })
   async updateSettings(@Body() body: any, @CurrentUser('id') adminId: string) {
     return this.adminService.updateSettings(body, adminId);
@@ -458,6 +530,15 @@ export class AdminController {
   // ==================== Backup System ====================
 
   @Post('backup/create')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        collections: { type: 'array', items: { type: 'string' } },
+        description: { type: 'string', example: 'نسخة احتياطية يومية' },
+      },
+    },
+  })
   @ApiOperation({ summary: 'إنشاء نسخة احتياطية' })
   async createBackup(
     @Body() body: { collections?: string[]; description?: string },
@@ -578,6 +659,18 @@ export class AdminController {
   }
 
   @Post('marketers')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      required: ['fullName', 'phone'],
+      properties: {
+        fullName: { type: 'string', example: 'أحمد محمد' },
+        phone: { type: 'string', example: '+966501234567' },
+        email: { type: 'string', example: 'marketer@bthwani.com' },
+        territory: { type: 'string', example: 'الرياض' },
+      },
+    },
+  })
   @ApiOperation({ summary: 'إضافة مسوق جديد' })
   async createMarketer(
     @Body()
@@ -822,6 +915,17 @@ export class AdminController {
   }
 
   @Post('roles')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      required: ['name'],
+      properties: {
+        name: { type: 'string', example: 'manager' },
+        permissions: { type: 'array', items: { type: 'string' }, example: ['users.read', 'orders.manage'] },
+        description: { type: 'string' },
+      },
+    },
+  })
   @ApiOperation({ summary: 'إنشاء دور' })
   createRole(@Body() _body: { name: string; permissions: string[] }) {
     return this.adminService.createRole(_body);

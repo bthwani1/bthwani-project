@@ -10,7 +10,7 @@ import {
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection } from 'mongoose';
 import { ServiceUnavailableException } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiExcludeEndpoint, ApiSecurity } from '@nestjs/swagger';
 import { Public } from '../../common/decorators/auth.decorator';
 import { RedisHealthIndicator } from './indicators/redis.health';
 import { QueueHealthIndicator } from './indicators/queue.health';
@@ -293,3 +293,4 @@ export class HealthController {
     return parts.join(' ');
   }
 }
+

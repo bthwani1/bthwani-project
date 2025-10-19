@@ -9,7 +9,7 @@ import {
   Query,
   SetMetadata,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags, ApiOperation, ApiResponse, ApiParam, ApiQuery, ApiBody } from '@nestjs/swagger';
 import { UtilityService } from './services/utility.service';
 import { UtilityOrderService } from './services/utility-order.service';
 import {
@@ -35,12 +35,17 @@ export class UtilityController {
   // ==================== Public Endpoints ====================
 
   @Get('options')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'الحصول على خيارات الغاز والماء (public)' })
   async getUtilityOptions(@Query('city') city?: string) {
     return this.utilityService.getOptions(city);
   }
 
   @Post('calculate-price')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'حساب سعر خدمة الغاز أو الماء' })
   async calculatePrice(@Body() dto: CalculateUtilityPriceDto) {
     return this.utilityService.calculatePrice(dto);
@@ -49,6 +54,9 @@ export class UtilityController {
   // ==================== Admin Endpoints ====================
 
   @Post('pricing')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -58,6 +66,8 @@ export class UtilityController {
   }
 
   @Get('pricing')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -67,6 +77,10 @@ export class UtilityController {
   }
 
   @Get('pricing/:city')
+  @ApiParam({ name: 'city', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -76,6 +90,11 @@ export class UtilityController {
   }
 
   @Patch('pricing/:city')
+  @ApiParam({ name: 'city', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -88,6 +107,10 @@ export class UtilityController {
   }
 
   @Delete('pricing/:city')
+  @ApiParam({ name: 'city', type: String })
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -100,6 +123,11 @@ export class UtilityController {
   // ==================== Admin Dashboard Compatibility Endpoints ====================
 
   @Patch('options/gas')
+  @ApiBody({ schema: { type: 'object', properties: { price: { type: 'number' }, unit: { type: 'string' }, provider: { type: 'string' } } } })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -119,6 +147,11 @@ export class UtilityController {
   }
 
   @Patch('options/water')
+  @ApiBody({ schema: { type: 'object', properties: { price: { type: 'number' }, unit: { type: 'string' }, provider: { type: 'string' } } } })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -139,6 +172,8 @@ export class UtilityController {
   // ==================== Daily Pricing Endpoints ====================
 
   @Get('daily')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -151,6 +186,9 @@ export class UtilityController {
   }
 
   @Post('daily')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -160,6 +198,10 @@ export class UtilityController {
   }
 
   @Delete('daily/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -170,6 +212,9 @@ export class UtilityController {
   }
 
   @Delete('daily')
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -187,7 +232,11 @@ export class UtilityController {
   // ==================== Utility Orders Endpoints ====================
 
   @Post('order')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'إنشاء طلب غاز أو ماء' })
   async createOrder(
     @Body() dto: CreateUtilityOrderDto,
@@ -197,20 +246,33 @@ export class UtilityController {
   }
 
   @Get('orders')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'جلب طلبات المستخدم' })
   async getUserOrders(@CurrentUser('id') userId: string) {
     return this.utilityOrderService.findUserOrders(userId);
   }
 
   @Get('order/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'جلب تفاصيل طلب' })
   async getOrder(@Param('id') orderId: string) {
     return this.utilityOrderService.findOne(orderId);
   }
 
   @Patch('order/:id/status')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin', 'driver')
   @ApiBearerAuth()
@@ -224,7 +286,13 @@ export class UtilityController {
   }
 
   @Patch('order/:id/cancel')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'إلغاء الطلب' })
   async cancelOrder(
     @Param('id') orderId: string,
@@ -234,7 +302,12 @@ export class UtilityController {
   }
 
   @Post('order/:id/rate')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.FIREBASE)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'تقييم الطلب' })
   async rateOrder(
     @Param('id') orderId: string,
@@ -244,6 +317,10 @@ export class UtilityController {
   }
 
   @Post('order/:id/assign-driver')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -256,6 +333,10 @@ export class UtilityController {
   }
 
   @Get('admin/orders')
+  @ApiQuery({ name: 'cursor', required: false, type: String })
+  @ApiQuery({ name: 'limit', required: false, type: Number })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()

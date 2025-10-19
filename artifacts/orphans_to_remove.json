@@ -1,0 +1,110 @@
+{
+  "total": 26,
+  "orphans": [
+    {
+      "method": "DELETE",
+      "path": "/er/assets/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/er/accounts/chart/{id}"
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/onboarding-slides/{id}"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/onboarding-slides"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/onboarding-slides/{id}"
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/strings/{id}"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/strings"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/strings/{id}"
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/home-layouts/{id}"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/home-layouts"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/home-layouts/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/er/documents/{id}"
+    },
+    {
+      "method": "GET",
+      "path": "/er/documents/{id}/download"
+    },
+    {
+      "method": "DELETE",
+      "path": "/er/documents/bulk"
+    },
+    {
+      "method": "GET",
+      "path": "/er/documents/export"
+    },
+    {
+      "method": "DELETE",
+      "path": "/employees/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/merchant/categories/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/merchant/attributes/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/er/payroll/{id}"
+    },
+    {
+      "method": "POST",
+      "path": "/errands/order"
+    },
+    {
+      "method": "GET",
+      "path": "/errands/user/{id}"
+    },
+    {
+      "method": "GET",
+      "path": "/errands/{id}"
+    },
+    {
+      "method": "GET",
+      "path": "/errands/categories"
+    },
+    {
+      "method": "GET",
+      "path": "/errands/drivers/available"
+    },
+    {
+      "method": "POST",
+      "path": "/events"
+    },
+    {
+      "method": "GET",
+      "path": "/groceries/catalog"
+    }
+  ],
+  "remaining": 31
+}

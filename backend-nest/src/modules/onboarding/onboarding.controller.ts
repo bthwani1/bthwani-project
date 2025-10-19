@@ -8,7 +8,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth , ApiResponse, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { UnifiedAuthGuard } from '../../common/guards/unified-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import {
@@ -27,6 +27,9 @@ export class OnboardingController {
 
   @Auth(AuthType.MARKETER_JWT)
   @Post()
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تسجيل متجر/تاجر جديد' })
   async createOnboarding(
     @CurrentUser('id') marketerId: string,
@@ -49,6 +52,8 @@ export class OnboardingController {
 
   @Auth(AuthType.MARKETER_JWT)
   @Get('my')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'طلبات التسجيل الخاصة بي' })
   async getMyOnboardings(
     @CurrentUser('id') marketerId: string,
@@ -65,6 +70,9 @@ export class OnboardingController {
 
   @Auth(AuthType.MARKETER_JWT)
   @Post('quick-onboard')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تسجيل سريع' })
   async quickOnboard(
     @CurrentUser('id') marketerId: string,
@@ -82,6 +90,8 @@ export class OnboardingController {
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @Get('applications')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'طلبات الانضمام (Admin)' })
   async getOnboardingApplications(
     @Query('status') status?: string,
@@ -103,6 +113,10 @@ export class OnboardingController {
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @Get(':id/details')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تفاصيل طلب انضمام' })
   async getOnboardingDetails(@Param('id') applicationId: string) {
     return {
@@ -115,6 +129,11 @@ export class OnboardingController {
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @Patch(':id/approve')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'الموافقة على طلب انضمام' })
   async approveOnboarding(
     @Param('id') applicationId: string,
@@ -130,6 +149,11 @@ export class OnboardingController {
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @Patch(':id/reject')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'رفض طلب انضمام' })
   async rejectOnboarding(
     @Param('id') applicationId: string,
@@ -146,6 +170,8 @@ export class OnboardingController {
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @Get('statistics')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إحصائيات الانضمام' })
   async getOnboardingStatistics() {
     return {

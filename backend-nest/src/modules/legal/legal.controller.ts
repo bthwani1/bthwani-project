@@ -15,6 +15,8 @@ import {
   ApiResponse,
   ApiBearerAuth,
   ApiQuery,
+  ApiParam,
+  ApiSecurity,
 } from '@nestjs/swagger';
 import { LegalService } from './legal.service';
 import { CreatePrivacyPolicyDto } from './dto/create-privacy-policy.dto';
@@ -39,6 +41,8 @@ export class LegalController {
   // ========== Public Endpoints ==========
 
   @Get('privacy-policy')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Public()
   @ApiOperation({ summary: 'الحصول على سياسة الخصوصية النشطة' })
   @ApiQuery({
@@ -57,6 +61,8 @@ export class LegalController {
   }
 
   @Get('terms-of-service')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Public()
   @ApiOperation({ summary: 'الحصول على شروط الخدمة النشطة' })
   @ApiQuery({
@@ -123,6 +129,8 @@ export class LegalController {
   // ========== Admin Endpoints ==========
 
   @Get('admin/privacy-policies')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @UseGuards(UnifiedAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPERADMIN)
   @ApiBearerAuth()
@@ -135,6 +143,9 @@ export class LegalController {
   }
 
   @Post('admin/privacy-policy')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @UseGuards(UnifiedAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPERADMIN)
   @ApiBearerAuth()
@@ -148,6 +159,11 @@ export class LegalController {
   }
 
   @Patch('admin/privacy-policy/:id/activate')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @UseGuards(UnifiedAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPERADMIN)
   @ApiBearerAuth()
@@ -161,6 +177,8 @@ export class LegalController {
   }
 
   @Get('admin/terms-of-service')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @UseGuards(UnifiedAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPERADMIN)
   @ApiBearerAuth()
@@ -173,6 +191,9 @@ export class LegalController {
   }
 
   @Post('admin/terms-of-service')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @UseGuards(UnifiedAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPERADMIN)
   @ApiBearerAuth()
@@ -186,6 +207,11 @@ export class LegalController {
   }
 
   @Patch('admin/terms-of-service/:id/activate')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @UseGuards(UnifiedAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPERADMIN)
   @ApiBearerAuth()
@@ -199,6 +225,8 @@ export class LegalController {
   }
 
   @Get('admin/consent/statistics')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @UseGuards(UnifiedAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPERADMIN)
   @ApiBearerAuth()
@@ -210,3 +238,4 @@ export class LegalController {
     return this.legalService.getConsentStatistics();
   }
 }
+

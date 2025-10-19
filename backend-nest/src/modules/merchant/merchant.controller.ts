@@ -9,7 +9,7 @@ import {
   Query,
   SetMetadata,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags, ApiOperation , ApiResponse, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { MerchantService } from './services/merchant.service';
 import {
   CreateMerchantDto,
@@ -37,13 +37,16 @@ import { AuthType } from '../../common/guards/unified-auth.guard';
 const Roles = (...roles: string[]) => SetMetadata('roles', roles);
 
 @ApiTags('Merchant')
-@Controller('merchant')
+@Controller('merchants')
 export class MerchantController {
   constructor(private readonly merchantService: MerchantService) {}
 
   // ==================== Merchant Endpoints ====================
 
   @Post()
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -53,6 +56,8 @@ export class MerchantController {
   }
 
   @Get()
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -62,6 +67,10 @@ export class MerchantController {
   }
 
   @Get(':id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin', 'vendor')
   @ApiBearerAuth()
@@ -71,6 +80,11 @@ export class MerchantController {
   }
 
   @Patch(':id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin', 'vendor')
   @ApiBearerAuth()
@@ -83,6 +97,10 @@ export class MerchantController {
   }
 
   @Delete(':id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -95,6 +113,9 @@ export class MerchantController {
   // ==================== Product Catalog Endpoints ====================
 
   @Post('catalog/products')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -104,18 +125,29 @@ export class MerchantController {
   }
 
   @Get('catalog/products')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'الحصول على منتجات الكتالوج (public)' })
   async getAllProductCatalogs(@Query('usageType') usageType?: string) {
     return this.merchantService.findAllProductCatalogs(usageType);
   }
 
   @Get('catalog/products/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'الحصول على منتج من الكتالوج (public)' })
   async getProductCatalog(@Param('id') id: string) {
     return this.merchantService.findProductCatalogById(id);
   }
 
   @Patch('catalog/products/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -130,6 +162,8 @@ export class MerchantController {
   // ==================== Merchant Product Endpoints ====================
 
   @Get('products')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -147,6 +181,9 @@ export class MerchantController {
   }
 
   @Post('products')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.VENDOR_JWT)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'إضافة منتج لمتجر التاجر' })
@@ -155,12 +192,20 @@ export class MerchantController {
   }
 
   @Get('products/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'الحصول على منتج تاجر محدد' })
   async getMerchantProduct(@Param('id') id: string) {
     return this.merchantService.findMerchantProductById(id);
   }
 
   @Get(':merchantId/products')
+  @ApiParam({ name: 'merchantId', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'منتجات التاجر (public)' })
   async getMerchantProducts(
     @Param('merchantId') merchantId: string,
@@ -175,6 +220,10 @@ export class MerchantController {
   }
 
   @Get('stores/:storeId/products')
+  @ApiParam({ name: 'storeId', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'منتجات المتجر (public)' })
   async getStoreProducts(
     @Param('storeId') storeId: string,
@@ -184,6 +233,11 @@ export class MerchantController {
   }
 
   @Patch('products/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.VENDOR_JWT)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'تحديث منتج التاجر' })
@@ -195,6 +249,11 @@ export class MerchantController {
   }
 
   @Patch('products/:id/stock')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.VENDOR_JWT)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'تحديث مخزون منتج' })
@@ -206,6 +265,10 @@ export class MerchantController {
   }
 
   @Delete('products/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.VENDOR_JWT)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'حذف منتج تاجر' })
@@ -217,6 +280,9 @@ export class MerchantController {
   // ==================== Category Endpoints ====================
 
   @Post('categories')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -226,12 +292,19 @@ export class MerchantController {
   }
 
   @Get('categories')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'الحصول على الفئات (public)' })
   async getCategories(@Query('parent') parent?: string) {
     return this.merchantService.findAllCategories(parent);
   }
 
   @Patch('categories/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -243,9 +316,26 @@ export class MerchantController {
     return this.merchantService.updateCategory(id, dto);
   }
 
+  @Delete('categories/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'حذف فئة' })
+  async deleteCategory(@Param('id') id: string) {
+    await this.merchantService.deleteCategory(id);
+    return { message: 'تم حذف الفئة بنجاح' };
+  }
+
   // ==================== Attribute Endpoints ====================
 
   @Post('attributes')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -255,12 +345,19 @@ export class MerchantController {
   }
 
   @Get('attributes')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'الحصول على الخصائص (public)' })
   async getAttributes() {
     return this.merchantService.findAllAttributes();
   }
 
   @Patch('attributes/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @ApiBearerAuth()
@@ -270,5 +367,19 @@ export class MerchantController {
     @Body() dto: UpdateAttributeDto,
   ) {
     return this.merchantService.updateAttribute(id, dto);
+  }
+
+  @Delete('attributes/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @Auth(AuthType.JWT)
+  @Roles('admin', 'superadmin')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'حذف خاصية' })
+  async deleteAttribute(@Param('id') id: string) {
+    await this.merchantService.deleteAttribute(id);
+    return { message: 'تم حذف الخاصية بنجاح' };
   }
 }

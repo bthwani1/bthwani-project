@@ -1,6 +1,6 @@
 import RatingModal from "@/components/RatingModal";
 import COLORS from "@/constants/colors";
-import { API_URL } from "@/utils/api/config";
+import axiosInstance from "@/utils/api/axiosInstance";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import axios from "axios";
@@ -249,7 +249,7 @@ const OrderDetailsScreen = () => {
     setLoadingStoreRating(true);
     try {
       const url = `${API_URL}/api/v1/delivery-stores/${order.storeId}/rating-live`;
-      const { data } = await axios.get(url);
+      const { data } = await axiosInstance.get(url);
       const avg = Number(data?.rating ?? 0);
       const count = Number(data?.ratingsCount ?? 0);
       const percent = Math.round((avg / 5) * 100);
@@ -341,7 +341,7 @@ const OrderDetailsScreen = () => {
         comments: comment,
       };
       const url = `${API_URL}/api/v1/orders/${order.id}/rate`;
-      await axios.post(url, payload);
+      await axiosInstance.post(url, payload);
       setRated(true);
       setShowRatingModal(false);
       Alert.alert("تم", "تم حفظ تقييمك بنجاح ✅");

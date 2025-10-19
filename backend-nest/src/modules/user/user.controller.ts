@@ -34,13 +34,15 @@ import { AuthType } from '../../common/guards/unified-auth.guard';
 
 @ApiTags('User')
 @ApiBearerAuth()
-@Controller({ path: 'users', version: '2' })
+@Controller({ path: 'users', version: ['1', '2'] })
 @UseGuards(UnifiedAuthGuard, RolesGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Auth(AuthType.FIREBASE)
   @Get('me')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'جلب بيانات المستخدم الحالي',
     description: 'الحصول على جميع بيانات المستخدم الحالي',
@@ -52,8 +54,14 @@ export class UserController {
     return this.userService.getCurrentUser(userId);
   }
 
+  // Note: /user/profile route is handled by a separate controller if needed
+
   @Auth(AuthType.FIREBASE)
   @Patch('me')
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'تحديث الملف الشخصي',
     description: 'تحديث بيانات المستخدم الحالي',
@@ -69,8 +77,21 @@ export class UserController {
     return this.userService.updateProfile(userId, updateUserDto);
   }
 
+  // Compatibility route: /users/profile
+  @Auth(AuthType.FIREBASE)
+  @Patch('profile')
+  @ApiOperation({ summary: 'تحديث الملف الشخصي (alias)' })
+  async updateUserProfile(
+    @CurrentUser('id') userId: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    return this.userService.updateProfile(userId, updateUserDto);
+  }
+
   @Auth(AuthType.FIREBASE)
   @Get('addresses')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'جلب جميع عناوين المستخدم',
     description: 'الحصول على قائمة عناوين التوصيل المحفوظة',
@@ -81,8 +102,19 @@ export class UserController {
     return this.userService.getAddresses(userId);
   }
 
+  // Compatibility route: /users/address (singular)
+  @Auth(AuthType.FIREBASE)
+  @Get('address')
+  @ApiOperation({ summary: 'جلب عناوين المستخدم (alias)' })
+  async getUserAddress(@CurrentUser('id') userId: string) {
+    return this.userService.getAddresses(userId);
+  }
+
   @Auth(AuthType.FIREBASE)
   @Post('addresses')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'إضافة عنوان توصيل جديد',
     description: 'إضافة عنوان توصيل مع الإحداثيات والتفاصيل',
@@ -98,8 +130,24 @@ export class UserController {
     return this.userService.addAddress(userId, addAddressDto);
   }
 
+  // Compatibility route: /users/address (singular)
+  @Auth(AuthType.FIREBASE)
+  @Post('address')
+  @ApiOperation({ summary: 'إضافة عنوان توصيل (alias)' })
+  async addUserAddress(
+    @CurrentUser('id') userId: string,
+    @Body() addAddressDto: AddAddressDto,
+  ) {
+    return this.userService.addAddress(userId, addAddressDto);
+  }
+
   @Auth(AuthType.FIREBASE)
   @Patch('addresses/:addressId')
+  @ApiParam({ name: 'addressId', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'تحديث عنوان موجود',
     description: 'تعديل بيانات عنوان توصيل محفوظ',
@@ -119,6 +167,10 @@ export class UserController {
 
   @Auth(AuthType.FIREBASE)
   @Delete('addresses/:addressId')
+  @ApiParam({ name: 'addressId', type: String })
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'حذف عنوان',
     description: 'حذف عنوان توصيل من القائمة',
@@ -136,6 +188,10 @@ export class UserController {
 
   @Auth(AuthType.FIREBASE)
   @Post('addresses/:addressId/set-default')
+  @ApiParam({ name: 'addressId', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'تعيين العنوان الافتراضي',
     description: 'جعل عنوان معين هو العنوان الافتراضي للتوصيل',
@@ -151,8 +207,47 @@ export class UserController {
     return this.userService.setDefaultAddress(userId, addressId);
   }
 
+  // ==================== Address Aliases (for frontend compatibility) ====================
+
+  @Auth(AuthType.FIREBASE)
+  @Patch('address/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiOperation({ summary: 'تحديث عنوان موجود (alias)' })
+  async updateAddressAlias(
+    @CurrentUser('id') userId: string,
+    @Param('id') addressId: string,
+    @Body() updateData: Partial<AddAddressDto>,
+  ) {
+    return this.userService.updateAddress(userId, addressId, updateData);
+  }
+
+  @Auth(AuthType.FIREBASE)
+  @Delete('address/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiOperation({ summary: 'حذف عنوان (alias)' })
+  async deleteAddressAlias(
+    @CurrentUser('id') userId: string,
+    @Param('id') addressId: string,
+  ) {
+    return this.userService.deleteAddress(userId, addressId);
+  }
+
+  @Auth(AuthType.FIREBASE)
+  @Patch('default-address')
+  @ApiBody({ schema: { type: 'object', properties: { addressId: { type: 'string' } } } })
+  @ApiOperation({ summary: 'تعيين العنوان الافتراضي (alias)' })
+  async setDefaultAddressAlias(
+    @CurrentUser('id') userId: string,
+    @Body('addressId') addressId: string,
+  ) {
+    return this.userService.setDefaultAddress(userId, addressId);
+  }
+
   @Auth(AuthType.FIREBASE)
   @Delete('deactivate')
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'إلغاء تفعيل الحساب',
     description: 'تعطيل حساب المستخدم بشكل مؤقت أو دائم',
@@ -166,6 +261,8 @@ export class UserController {
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @Get('search')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'البحث عن مستخدمين',
     description: 'البحث في قاعدة بيانات المستخدمين (admin only)',
@@ -191,6 +288,9 @@ export class UserController {
 
   @Auth(AuthType.FIREBASE)
   @Post('pin/set')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'تعيين رمز PIN مشفر',
     description: 'تعيين رمز PIN من 4-6 أرقام مع تشفير bcrypt',
@@ -213,6 +313,9 @@ export class UserController {
 
   @Auth(AuthType.FIREBASE)
   @Post('pin/verify')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'التحقق من رمز PIN',
     description: 'التحقق من صحة رمز PIN مع حماية من Brute Force',
@@ -235,6 +338,9 @@ export class UserController {
 
   @Auth(AuthType.FIREBASE)
   @Post('pin/change')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'تغيير رمز PIN',
     description: 'تغيير PIN الحالي (يتطلب PIN القديم)',
@@ -265,6 +371,8 @@ export class UserController {
 
   @Auth(AuthType.FIREBASE)
   @Get('pin/status')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'حالة رمز PIN',
     description: 'التحقق من وجود PIN وحالة القفل',
@@ -278,6 +386,10 @@ export class UserController {
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @Delete('pin/reset/:userId')
+  @ApiParam({ name: 'userId', type: String })
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'إعادة تعيين PIN (للمسؤولين)',
     description: 'إعادة تعيين PIN لمستخدم معين (admin only)',

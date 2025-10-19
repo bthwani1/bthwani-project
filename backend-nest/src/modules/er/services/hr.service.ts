@@ -304,4 +304,15 @@ export class HRService {
 
     return payroll.save();
   }
+
+  async deleteEmployee(id: string): Promise<void> {
+    const employee = await this.employeeModel.findById(id);
+    if (!employee) {
+      throw new NotFoundException('الموظف غير موجود');
+    }
+
+    // تحديث حالة الموظف بدلاً من الحذف الفعلي
+    employee.status = 'terminated';
+    await employee.save();
+  }
 }

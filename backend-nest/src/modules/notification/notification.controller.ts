@@ -13,6 +13,9 @@ import {
   ApiOperation,
   ApiBearerAuth,
   ApiParam,
+  ApiResponse,
+  ApiQuery,
+  ApiBody,
 } from '@nestjs/swagger';
 import { NotificationService } from './notification.service';
 import { SuppressionService } from './services/suppression.service';
@@ -42,6 +45,9 @@ export class NotificationController {
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @Post()
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إنشاء إشعار (للإدارة)' })
   async create(@Body() createNotificationDto: CreateNotificationDto) {
     return this.notificationService.create(createNotificationDto);
@@ -49,6 +55,8 @@ export class NotificationController {
 
   @Auth(AuthType.FIREBASE)
   @Get('my')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'جلب إشعارات المستخدم' })
   async getMyNotifications(
     @CurrentUser('id') userId: string,
@@ -59,6 +67,10 @@ export class NotificationController {
 
   @Auth(AuthType.FIREBASE)
   @Post(':id/read')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تحديد الإشعار كمقروء' })
   async markAsRead(@Param('id') id: string) {
     return this.notificationService.markAsRead(id);
@@ -66,6 +78,8 @@ export class NotificationController {
 
   @Auth(AuthType.FIREBASE)
   @Get('unread/count')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'عدد الإشعارات غير المقروءة' })
   async getUnreadCount(@CurrentUser('id') userId: string) {
     return this.notificationService.getUnreadCount(userId);
@@ -73,6 +87,9 @@ export class NotificationController {
 
   @Auth(AuthType.FIREBASE)
   @Post('read-all')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تحديد جميع الإشعارات كمقروءة' })
   async markAllAsRead(@CurrentUser('id') userId: string) {
     return this.notificationService.markAllAsRead(userId);
@@ -80,6 +97,10 @@ export class NotificationController {
 
   @Auth(AuthType.FIREBASE)
   @Delete(':id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'حذف إشعار' })
   async delete(@Param('id') id: string) {
     return this.notificationService.delete(id);
@@ -89,6 +110,9 @@ export class NotificationController {
 
   @Auth(AuthType.FIREBASE)
   @Post('suppression')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'حظر قنوات إشعارات محددة' })
   async createSuppression(
     @CurrentUser('id') userId: string,
@@ -109,6 +133,8 @@ export class NotificationController {
 
   @Auth(AuthType.FIREBASE)
   @Get('suppression')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'جلب قائمة الحظر للمستخدم' })
   async getUserSuppressions(@CurrentUser('id') userId: string) {
     const suppressions =
@@ -123,6 +149,8 @@ export class NotificationController {
 
   @Auth(AuthType.FIREBASE)
   @Get('suppression/channels')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'جلب القنوات المحظورة' })
   async getSuppressedChannels(@CurrentUser('id') userId: string) {
     const channels =
@@ -141,6 +169,10 @@ export class NotificationController {
 
   @Auth(AuthType.FIREBASE)
   @Delete('suppression/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إلغاء حظر' })
   @ApiParam({ name: 'id', description: 'معرف الحظر' })
   async removeSuppression(
@@ -158,6 +190,10 @@ export class NotificationController {
 
   @Auth(AuthType.FIREBASE)
   @Delete('suppression/channel/:channel')
+  @ApiParam({ name: 'channel', type: String })
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إلغاء حظر قناة محددة' })
   @ApiParam({ name: 'channel', enum: SuppressionChannel })
   async removeChannelSuppression(
@@ -177,6 +213,8 @@ export class NotificationController {
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @Get('suppression/stats')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إحصائيات الحظر (للإدارة)' })
   async getSuppressionStats() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -192,6 +230,10 @@ export class NotificationController {
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @Post('send-bulk')
+  @ApiBody({ schema: { type: 'object', properties: { title: { type: 'string' }, body: { type: 'string' }, userIds: { type: 'array', items: { type: 'string' } } } } })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إرسال إشعار جماعي (Admin)' })
   async sendBulkNotification(
     @Body()

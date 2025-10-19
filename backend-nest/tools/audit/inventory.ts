@@ -162,8 +162,11 @@ class BackendInventoryAuditor {
     // Construct full path
     const fullPath = this.constructFullPath(controllerPath, routePath);
 
-    // Extract auth guards
-    const authGuard = this.extractAuthGuards(method);
+    // Get the class declaration for checking class-level decorators
+    const classDecl = method.getParent() as ClassDeclaration;
+
+    // Extract auth guards (both method-level and class-level)
+    const authGuard = this.extractAuthGuards(method, classDecl);
 
     // Extract DTOs
     const dtoIn = this.extractInputDto(method);
@@ -235,6 +238,21 @@ class BackendInventoryAuditor {
       return firstArg.getText().replace(/`/g, '');
     }
 
+    // Handle object literal: @Controller({ path: 'akhdimni', version: ['1', '2'] })
+    if (firstArg.getKind() === SyntaxKind.ObjectLiteralExpression) {
+      const objLiteral = firstArg.asKindOrThrow(SyntaxKind.ObjectLiteralExpression);
+      const pathProperty = objLiteral.getProperty('path');
+      
+      if (pathProperty && pathProperty.getKind() === SyntaxKind.PropertyAssignment) {
+        const propAssignment = pathProperty.asKindOrThrow(SyntaxKind.PropertyAssignment);
+        const initializer = propAssignment.getInitializer();
+        
+        if (initializer && initializer.getKind() === SyntaxKind.StringLiteral) {
+          return initializer.getText().replace(/['"]/g, '');
+        }
+      }
+    }
+
     return '';
   }
 
@@ -256,11 +274,51 @@ class BackendInventoryAuditor {
   }
 
   /**
-   * Extract auth guards from method
+   * Extract auth guards from method and class
    */
-  private extractAuthGuards(method: MethodDeclaration): string {
+  private extractAuthGuards(method: MethodDeclaration, classDecl?: ClassDeclaration): string {
     const guards: string[] = [];
 
+    // First, check class-level decorators (controller-wide auth)
+    if (classDecl) {
+      // Check for @UseGuards at class level
+      const classUseGuards = this.findDecorator(classDecl, 'UseGuards');
+      if (classUseGuards) {
+        const args = classUseGuards.getArguments();
+        for (const arg of args) {
+          const text = arg.getText();
+          guards.push(`[Class] ${text}`);
+        }
+      }
+
+      // Check for @Auth at class level
+      const classAuth = this.findDecorator(classDecl, 'Auth');
+      if (classAuth) {
+        const args = classAuth.getArguments();
+        if (args.length > 0) {
+          guards.push(`[Class] @Auth(${args.map(a => a.getText()).join(', ')})`);
+        } else {
+          guards.push('[Class] @Auth');
+        }
+      }
+
+      // Check for @Roles at class level
+      const classRoles = this.findDecorator(classDecl, 'Roles');
+      if (classRoles) {
+        const args = classRoles.getArguments();
+        if (args.length > 0) {
+          guards.push(`[Class] @Roles(${args.map(a => a.getText()).join(', ')})`);
+        }
+      }
+
+      // Check for @ApiBearerAuth at class level (indicates protected)
+      const classBearerAuth = this.findDecorator(classDecl, 'ApiBearerAuth');
+      if (classBearerAuth) {
+        guards.push('[Class] @ApiBearerAuth');
+      }
+    }
+
+    // Then, check method-level decorators (can override class)
     // Check for @UseGuards decorator
     const useGuardsDecorator = this.findDecorator(method, 'UseGuards');
     if (useGuardsDecorator) {

@@ -14,7 +14,7 @@ import {
 
 import COLORS from "@/constants/colors";
 import { RootStackParamList } from "@/types/navigation";
-import { API_URL } from "@/utils/api/config";
+import axiosInstance from "@/utils/api/axiosInstance";
 import {
   DeliveryStoreWithDistance,
   enrichStoresWithDistance,
@@ -71,8 +71,7 @@ const DeliveryDeals: React.FC<Props> = ({
         const params = categoryId
           ? `?categoryId=${encodeURIComponent(categoryId)}`
           : "";
-        const res = await fetch(`${API_URL}/delivery/stores${params}`);
-        const data = await res.json();
+        const { data } = await axiosInstance.get(`/delivery/stores${params}`);
         const arr: any[] = Array.isArray(data) ? data : [];
 
         // إزالة تكرارات
@@ -91,12 +90,11 @@ const DeliveryDeals: React.FC<Props> = ({
 
         // 2) اجلب العروض لكل المتاجر
         const idsCsv = base.map((s) => s._id).join(",");
-        const promosRes = await fetch(
-          `${API_URL}/delivery/promotions/by-stores?ids=${encodeURIComponent(
+        const { data: promoMap } = await axiosInstance.get(
+          `/delivery/promotions/by-stores?ids=${encodeURIComponent(
             idsCsv
           )}&channel=app`
         );
-        const promoMap = await promosRes.json();
         const getStorePromos = (sid: string) =>
           Array.isArray(promoMap)
             ? promoMap.filter((p: any) => p.store === sid)

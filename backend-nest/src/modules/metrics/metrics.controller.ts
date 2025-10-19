@@ -1,5 +1,5 @@
 import { Controller, Get, Header } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiSecurity } from '@nestjs/swagger';
 import { MetricsService } from '../../common/services/metrics.service';
 import type { JsonMetrics } from '../../common/services/metrics.service';
 import { Public } from '../../common/decorators/auth.decorator';
@@ -26,3 +26,4 @@ export class MetricsController {
     return this.metricsService.getJsonMetrics();
   }
 }
+

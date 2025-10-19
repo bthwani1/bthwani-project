@@ -8,7 +8,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth, ApiResponse, ApiParam, ApiQuery, ApiBody } from '@nestjs/swagger';
 import { MarketerService } from './marketer.service';
 import { UnifiedAuthGuard } from '../../common/guards/unified-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
@@ -26,6 +26,8 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Get('profile')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'ملفي الشخصي' })
   async getProfile(@CurrentUser('id') marketerId: string) {
     return this.marketerService.getProfile(marketerId);
@@ -34,6 +36,11 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Patch('profile')
+  @ApiBody({ schema: { type: 'object', properties: { name: { type: 'string' }, phone: { type: 'string' }, email: { type: 'string' } } } })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تحديث الملف الشخصي' })
   async updateProfile(
     @CurrentUser('id') marketerId: string,
@@ -50,6 +57,9 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Post('referrals/generate-code')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إنشاء كود إحالة' })
   async generateReferralCode(@CurrentUser('id') marketerId: string) {
     return this.marketerService.generateReferralCode(marketerId);
@@ -58,6 +68,8 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Get('referrals/my')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إحالاتي' })
   async getMyReferrals(@CurrentUser('id') marketerId: string) {
     return this.marketerService.getMyReferrals(marketerId);
@@ -66,6 +78,8 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Get('referrals/statistics')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إحصائيات الإحالات' })
   async getReferralStatistics(@CurrentUser('id') marketerId: string) {
     return this.marketerService.getReferralStatistics(marketerId);
@@ -76,6 +90,8 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Get('stores/my')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'متاجري' })
   async getMyStores(@CurrentUser('id') marketerId: string) {
     return this.marketerService.getMyStores(marketerId);
@@ -84,6 +100,10 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Get('stores/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تفاصيل متجر' })
   async getStoreDetails(@Param('id') storeId: string) {
     return this.marketerService.getStoreDetails(storeId);
@@ -92,6 +112,10 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Get('stores/:id/performance')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'أداء المتجر' })
   async getStorePerformance(
     @Param('id') storeId: string,
@@ -110,6 +134,8 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Get('vendors/my')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تجاري' })
   async getMyVendors(@CurrentUser('id') marketerId: string) {
     return this.marketerService.getMyVendors(marketerId);
@@ -118,6 +144,10 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Get('vendors/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تفاصيل تاجر' })
   async getVendorDetails(@Param('id') vendorId: string) {
     return this.marketerService.getVendorDetails(vendorId);
@@ -128,6 +158,8 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Get('commissions/my')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'عمولاتي' })
   async getMyCommissions(
     @CurrentUser('id') marketerId: string,
@@ -139,6 +171,8 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Get('commissions/statistics')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إحصائيات العمولات' })
   async getCommissionStatistics(@CurrentUser('id') marketerId: string) {
     return this.marketerService.getCommissionStatistics(marketerId);
@@ -147,6 +181,8 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Get('commissions/pending')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'العمولات المعلقة' })
   async getPendingCommissions(@CurrentUser('id') marketerId: string) {
     return this.marketerService.getPendingCommissions(marketerId);
@@ -157,6 +193,8 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Get('overview')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'نظرة عامة' })
   async getOverview(@CurrentUser('id') marketerId: string) {
     return this.marketerService.getOverview(marketerId);
@@ -165,6 +203,8 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Get('statistics/today')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إحصائيات اليوم' })
   async getTodayStatistics(@CurrentUser('id') marketerId: string) {
     return this.marketerService.getTodayStatistics(marketerId);
@@ -173,6 +213,8 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Get('statistics/month')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إحصائيات الشهر' })
   async getMonthStatistics(@CurrentUser('id') marketerId: string) {
     return this.marketerService.getMonthStatistics(marketerId);
@@ -183,6 +225,8 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Get('earnings')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'أرباحي' })
   async getEarnings(
     @CurrentUser('id') marketerId: string,
@@ -195,6 +239,8 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Get('earnings/breakdown')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تفصيل الأرباح' })
   async getEarningsBreakdown(@CurrentUser('id') marketerId: string) {
     return this.marketerService.getEarningsBreakdown(marketerId);
@@ -205,6 +251,10 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Post('files/upload')
+  @ApiBody({ schema: { type: 'object', properties: { fileUrl: { type: 'string' }, type: { type: 'string' }, relatedTo: { type: 'string' } } } })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'رفع ملف' })
   async uploadFile(
     @CurrentUser('id') marketerId: string,
@@ -216,6 +266,8 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Get('files')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'ملفاتي' })
   async getFiles(@CurrentUser('id') marketerId: string) {
     return this.marketerService.getFiles(marketerId);
@@ -226,6 +278,8 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Get('notifications')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إشعاراتي' })
   async getNotifications(@CurrentUser('id') marketerId: string) {
     return this.marketerService.getNotifications(marketerId);
@@ -234,6 +288,11 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Patch('notifications/:id/read')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تحديد إشعار كمقروء' })
   async markNotificationRead(@Param('id') notificationId: string) {
     return this.marketerService.markNotificationRead(notificationId);
@@ -244,6 +303,8 @@ export class MarketerController {
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()
   @Get('territory/stats')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إحصائيات المنطقة' })
   async getTerritoryStats(@CurrentUser('id') marketerId: string) {
     return this.marketerService.getTerritoryStats(marketerId);

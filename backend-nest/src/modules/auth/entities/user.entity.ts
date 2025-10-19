@@ -138,6 +138,15 @@ export class User extends Document {
   @Prop({ default: false })
   emailVerified: boolean;
 
+  @Prop({ default: false })
+  phoneVerified: boolean;
+
+  @Prop({ select: false })
+  passwordResetCode?: string;
+
+  @Prop({ type: Date, select: false })
+  passwordResetExpires?: Date;
+
   @Prop({
     type: String,
     enum: ['regular', 'bronze', 'silver', 'gold', 'vip'],

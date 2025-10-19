@@ -8,7 +8,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth, ApiResponse, ApiParam, ApiQuery, ApiBody } from '@nestjs/swagger';
 import { DriverService } from './driver.service';
 import { CreateDriverDto } from './dto/create-driver.dto';
 import { UpdateLocationDto } from './dto/update-location.dto';
@@ -32,6 +32,9 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @Post()
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إنشاء سائق جديد (للإدارة)' })
   async create(@Body() createDriverDto: CreateDriverDto) {
     return this.driverService.create(createDriverDto);
@@ -39,6 +42,8 @@ export class DriverController {
 
   @Auth(AuthType.JWT)
   @Get('available')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'جلب السائقين المتاحين' })
   async findAvailable(@Query() pagination: CursorPaginationDto) {
     return this.driverService.findAvailable(pagination);
@@ -46,6 +51,10 @@ export class DriverController {
 
   @Auth(AuthType.JWT)
   @Get(':id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'جلب سائق محدد' })
   async findOne(@Param('id') id: string) {
     return this.driverService.findOne(id);
@@ -54,6 +63,10 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Patch('location')
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تحديث موقع السائق' })
   async updateLocation(
     @CurrentUser('id') driverId: string,
@@ -65,6 +78,11 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Patch('availability')
+  @ApiBody({ schema: { type: 'object', properties: { isAvailable: { type: 'boolean' } } } })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تحديث حالة التوفر' })
   async updateAvailability(
     @CurrentUser('id') driverId: string,
@@ -78,6 +96,8 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Get('profile')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'ملفي الشخصي' })
   async getProfile(@CurrentUser('id') driverId: string) {
     return this.driverService.getProfile(driverId);
@@ -86,6 +106,11 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Patch('profile')
+  @ApiBody({ schema: { type: 'object', properties: { name: { type: 'string' }, phone: { type: 'string' }, vehicle: { type: 'object' } } } })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تحديث الملف الشخصي' })
   async updateProfile(@CurrentUser('id') driverId: string, @Body() body: any) {
     return this.driverService.updateProfile(driverId, body);
@@ -96,6 +121,8 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Get('earnings')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'أرباحي' })
   async getEarnings(
     @CurrentUser('id') driverId: string,
@@ -108,6 +135,8 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Get('earnings/daily')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'أرباح اليوم' })
   async getDailyEarnings(@CurrentUser('id') driverId: string) {
     return this.driverService.getDailyEarnings(driverId);
@@ -116,6 +145,8 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Get('earnings/weekly')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'أرباح الأسبوع' })
   async getWeeklyEarnings(@CurrentUser('id') driverId: string) {
     return this.driverService.getWeeklyEarnings(driverId);
@@ -126,6 +157,8 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Get('statistics')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إحصائياتي' })
   async getStatistics(@CurrentUser('id') driverId: string) {
     return this.driverService.getStatistics(driverId);
@@ -136,6 +169,10 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Post('documents/upload')
+  @ApiBody({ schema: { type: 'object', properties: { type: { type: 'string' }, file: { type: 'string' }, number: { type: 'string' } } } })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'رفع مستند' })
   async uploadDocument(
     @CurrentUser('id') driverId: string,
@@ -152,6 +189,8 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Get('documents')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'مستنداتي' })
   async getDocuments(@CurrentUser('id') driverId: string) {
     return this.driverService.getDocuments(driverId);
@@ -160,6 +199,10 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @Get(':driverId/documents')
+  @ApiParam({ name: 'driverId', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'مستندات سائق (Admin)' })
   async getDriverDocumentsAdmin(@Param('driverId') driverId: string) {
     return this.driverService.getDocuments(driverId);
@@ -168,6 +211,11 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @Post(':driverId/documents/:docId/verify')
+  @ApiParam({ name: 'driverId', type: String })
+  @ApiParam({ name: 'docId', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'التحقق من مستند (Admin)' })
   async verifyDocument(
     @Param('driverId') driverId: string,
@@ -184,6 +232,10 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Post('vacations/request')
+  @ApiBody({ schema: { type: 'object', properties: { startDate: { type: 'string' }, endDate: { type: 'string' }, reason: { type: 'string' } } } })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'طلب إجازة' })
   async requestVacation(
     @CurrentUser('id') driverId: string,
@@ -201,6 +253,8 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Get('vacations/my')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إجازاتي' })
   async getMyVacations(@CurrentUser('id') driverId: string) {
     return this.driverService.getMyVacations(driverId);
@@ -209,6 +263,11 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Patch('vacations/:id/cancel')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إلغاء طلب إجازة' })
   async cancelVacation(
     @Param('id') vacationId: string,
@@ -220,6 +279,8 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Get('vacations/balance')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'رصيد الإجازات' })
   async getVacationBalance(@CurrentUser('id') driverId: string) {
     return this.driverService.getVacationBalance(driverId);
@@ -228,6 +289,8 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Get('vacations/policy')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'سياسة الإجازات' })
   async getVacationPolicy() {
     return this.driverService.getVacationPolicy();
@@ -241,6 +304,8 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Get('orders/available')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'الطلبات المتاحة للاستلام' })
   async getAvailableOrders(@CurrentUser('id') driverId: string) {
     return this.driverService.getAvailableOrders(driverId);
@@ -249,6 +314,10 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Post('orders/:id/accept')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'قبول طلب' })
   async acceptOrder(
     @Param('id') orderId: string,
@@ -260,6 +329,10 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Post('orders/:id/reject')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'رفض طلب' })
   async rejectOrder(
     @Param('id') orderId: string,
@@ -272,6 +345,10 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Post('orders/:id/start-delivery')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'بدء التوصيل' })
   async startDelivery(
     @Param('id') orderId: string,
@@ -283,6 +360,10 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Post('orders/:id/complete')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'إتمام التوصيل' })
   async completeDelivery(
     @Param('id') orderId: string,
@@ -294,6 +375,8 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Get('orders/history')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'سجل الطلبات' })
   async getOrdersHistory(
     @CurrentUser('id') driverId: string,
@@ -307,6 +390,10 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Post('issues/report')
+  @ApiBody({ schema: { type: 'object', properties: { type: { type: 'string' }, description: { type: 'string' }, orderId: { type: 'string' } } } })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'الإبلاغ عن مشكلة' })
   async reportIssue(
     @CurrentUser('id') driverId: string,
@@ -318,6 +405,10 @@ export class DriverController {
   @Auth(AuthType.JWT)
   @Roles('driver')
   @Post('change-password')
+  @ApiBody({ schema: { type: 'object', properties: { oldPassword: { type: 'string' }, newPassword: { type: 'string' } } } })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تغيير كلمة المرور' })
   async changePassword(
     @CurrentUser('id') driverId: string,

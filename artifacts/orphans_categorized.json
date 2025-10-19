@@ -1,0 +1,330 @@
+{
+  "likelyUnused": [
+    {
+      "method": "DELETE",
+      "path": "/er/assets/{id}",
+      "reason": "ER/HR endpoints - admin only"
+    },
+    {
+      "method": "DELETE",
+      "path": "/er/accounts/chart/{id}",
+      "reason": "ER/HR endpoints - admin only"
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/onboarding-slides/{id}",
+      "reason": "CMS endpoints - rarely used"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/onboarding-slides",
+      "reason": "CMS endpoints - rarely used"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/onboarding-slides/{id}",
+      "reason": "CMS endpoints - rarely used"
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/strings/{id}",
+      "reason": "CMS endpoints - rarely used"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/strings",
+      "reason": "CMS endpoints - rarely used"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/strings/{id}",
+      "reason": "CMS endpoints - rarely used"
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/home-layouts/{id}",
+      "reason": "CMS endpoints - rarely used"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/home-layouts",
+      "reason": "CMS endpoints - rarely used"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/home-layouts/{id}",
+      "reason": "CMS endpoints - rarely used"
+    },
+    {
+      "method": "DELETE",
+      "path": "/er/documents/{id}",
+      "reason": "ER/HR endpoints - admin only"
+    },
+    {
+      "method": "GET",
+      "path": "/er/documents/{id}/download",
+      "reason": "ER/HR endpoints - admin only"
+    },
+    {
+      "method": "DELETE",
+      "path": "/er/documents/bulk",
+      "reason": "ER/HR endpoints - admin only"
+    },
+    {
+      "method": "GET",
+      "path": "/er/documents/export",
+      "reason": "ER/HR endpoints - admin only"
+    },
+    {
+      "method": "DELETE",
+      "path": "/merchant/categories/{id}",
+      "reason": "Merchant management - may not be implemented"
+    },
+    {
+      "method": "DELETE",
+      "path": "/merchant/attributes/{id}",
+      "reason": "Merchant management - may not be implemented"
+    },
+    {
+      "method": "DELETE",
+      "path": "/er/payroll/{id}",
+      "reason": "ER/HR endpoints - admin only"
+    },
+    {
+      "method": "POST",
+      "path": "/errands/order",
+      "reason": "Errands feature - may not be active"
+    },
+    {
+      "method": "GET",
+      "path": "/errands/user/{id}",
+      "reason": "Errands feature - may not be active"
+    },
+    {
+      "method": "GET",
+      "path": "/errands/{id}",
+      "reason": "Errands feature - may not be active"
+    },
+    {
+      "method": "GET",
+      "path": "/errands/categories",
+      "reason": "Errands feature - may not be active"
+    },
+    {
+      "method": "GET",
+      "path": "/errands/drivers/available",
+      "reason": "Errands feature - may not be active"
+    },
+    {
+      "method": "GET",
+      "path": "/groceries/catalog",
+      "reason": "Groceries - may be deprecated"
+    }
+  ],
+  "needsDecorators": [],
+  "pathMismatch": [],
+  "critical": [
+    {
+      "method": "DELETE",
+      "path": "/admin/wallet/coupons/{id}",
+      "reason": "Core feature - must exist or add"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/order",
+      "reason": "Core feature - must exist or add"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/wallet/settlements/export",
+      "reason": "Core feature - must exist or add"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/wallet/subscriptions/{id}",
+      "reason": "Core feature - must exist or add"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/forgot",
+      "reason": "Core feature - must exist or add"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/reset/verify",
+      "reason": "Core feature - must exist or add"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/reset",
+      "reason": "Core feature - must exist or add"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/verify-otp",
+      "reason": "Core feature - must exist or add"
+    },
+    {
+      "method": "DELETE",
+      "path": "/delivery/cart/{id}",
+      "reason": "Core feature - must exist or add"
+    },
+    {
+      "method": "DELETE",
+      "path": "/delivery/cart",
+      "reason": "Core feature - must exist or add"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/order/user/{id}",
+      "reason": "Core feature - must exist or add"
+    },
+    {
+      "method": "PATCH",
+      "path": "/users/address/{id}",
+      "reason": "Core feature - must exist or add"
+    },
+    {
+      "method": "DELETE",
+      "path": "/users/address/{id}",
+      "reason": "Core feature - must exist or add"
+    },
+    {
+      "method": "PATCH",
+      "path": "/users/default-address",
+      "reason": "Core feature - must exist or add"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/wallet/coupons/apply",
+      "reason": "Core feature - must exist or add"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/wallet/coupons/my",
+      "reason": "Core feature - must exist or add"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/wallet/coupons/history",
+      "reason": "Core feature - must exist or add"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/wallet/subscriptions/my",
+      "reason": "Core feature - must exist or add"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/cart/user/{id}",
+      "reason": "Core feature - must exist or add"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/cart/{id}",
+      "reason": "Core feature - must exist or add"
+    },
+    {
+      "method": "POST",
+      "path": "/delivery/order",
+      "reason": "Core feature - must exist or add"
+    }
+  ],
+  "canRemove": [
+    {
+      "method": "PUT",
+      "path": "/admin/pages/{id}",
+      "reason": "Secondary feature"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/pages/{id}",
+      "reason": "Secondary feature"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/drivers/leave-requests/{id}",
+      "reason": "Secondary feature"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/drivers/{id}",
+      "reason": "Secondary feature"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/drivers/shifts/{id}",
+      "reason": "Secondary feature"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/drivers/assets/{id}",
+      "reason": "Secondary feature"
+    },
+    {
+      "method": "DELETE",
+      "path": "/employees/{id}",
+      "reason": "Secondary feature"
+    },
+    {
+      "method": "GET",
+      "path": "/merchant",
+      "reason": "Secondary feature"
+    },
+    {
+      "method": "POST",
+      "path": "/merchant",
+      "reason": "Secondary feature"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/reports/generate",
+      "reason": "Secondary feature"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/reports/export/{id}/{id}",
+      "reason": "Secondary feature"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/reports/realtime",
+      "reason": "Secondary feature"
+    },
+    {
+      "method": "GET",
+      "path": "/vendors",
+      "reason": "Secondary feature"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/categories",
+      "reason": "Secondary feature"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/stores{id}",
+      "reason": "Secondary feature"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/stores",
+      "reason": "Secondary feature"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/promotions/by-stores",
+      "reason": "Secondary feature"
+    },
+    {
+      "method": "POST",
+      "path": "/events",
+      "reason": "Secondary feature"
+    },
+    {
+      "method": "PUT",
+      "path": "/delivery/stores/{id}",
+      "reason": "Secondary feature"
+    }
+  ]
+}

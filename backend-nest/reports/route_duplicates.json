@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-18T14:57:20.757Z",
+  "timestamp": "2025-10-18T18:59:13.215Z",
   "totalRoutes": 473,
   "uniqueRoutes": 439,
   "duplicates": [
@@ -10,22 +10,22 @@
       "occurrences": [
         {
           "file": ".\\src\\modules\\merchant\\merchant.controller.ts",
-          "line": 85,
+          "line": 99,
           "originalPath": ":id"
         },
         {
           "file": ".\\src\\modules\\notification\\notification.controller.ts",
-          "line": 82,
+          "line": 98,
           "originalPath": ":id"
         },
         {
           "file": ".\\src\\modules\\promotion\\promotion.controller.ts",
-          "line": 95,
+          "line": 119,
           "originalPath": ":id"
         },
         {
           "file": ".\\src\\modules\\store\\store.controller.ts",
-          "line": 167,
+          "line": 225,
           "originalPath": ":id"
         }
       ]
@@ -37,42 +37,42 @@
       "occurrences": [
         {
           "file": ".\\src\\modules\\driver\\driver.controller.ts",
-          "line": 48,
+          "line": 53,
           "originalPath": ":id"
         },
         {
           "file": ".\\src\\modules\\merchant\\merchant.controller.ts",
-          "line": 64,
+          "line": 69,
           "originalPath": ":id"
         },
         {
           "file": ".\\src\\modules\\order\\order-cqrs.controller.ts",
-          "line": 153,
+          "line": 169,
           "originalPath": ":id"
         },
         {
           "file": ".\\src\\modules\\order\\order.controller.ts",
-          "line": 89,
+          "line": 102,
           "originalPath": ":id"
         },
         {
           "file": ".\\src\\modules\\promotion\\promotion.controller.ts",
-          "line": 74,
+          "line": 89,
           "originalPath": ":id"
         },
         {
           "file": ".\\src\\modules\\store\\delivery-store.controller.ts",
-          "line": 46,
+          "line": 50,
           "originalPath": ":id"
         },
         {
           "file": ".\\src\\modules\\store\\store.controller.ts",
-          "line": 51,
+          "line": 56,
           "originalPath": ":id"
         },
         {
           "file": ".\\src\\modules\\vendor\\vendor.controller.ts",
-          "line": 56,
+          "line": 63,
           "originalPath": ":id"
         }
       ]
@@ -84,12 +84,12 @@
       "occurrences": [
         {
           "file": ".\\src\\modules\\store\\delivery-store.controller.ts",
-          "line": 53,
+          "line": 61,
           "originalPath": ":id/products"
         },
         {
           "file": ".\\src\\modules\\store\\store.controller.ts",
-          "line": 67,
+          "line": 79,
           "originalPath": ":id/products"
         }
       ]
@@ -101,7 +101,7 @@
       "occurrences": [
         {
           "file": ".\\src\\modules\\finance\\finance.controller.ts",
-          "line": 61,
+          "line": 65,
           "originalPath": "commissions/my"
         },
         {
@@ -118,12 +118,12 @@
       "occurrences": [
         {
           "file": ".\\src\\modules\\auth\\auth.controller.ts",
-          "line": 168,
+          "line": 186,
           "originalPath": "consent/check/:type"
         },
         {
           "file": ".\\src\\modules\\legal\\legal.controller.ts",
-          "line": 109,
+          "line": 114,
           "originalPath": "consent/check/:type"
         }
       ]
@@ -135,7 +135,7 @@
       "occurrences": [
         {
           "file": ".\\src\\modules\\driver\\driver.controller.ts",
-          "line": 98,
+          "line": 121,
           "originalPath": "earnings"
         },
         {
@@ -157,7 +157,7 @@
         },
         {
           "file": ".\\src\\modules\\vendor\\vendor.controller.ts",
-          "line": 49,
+          "line": 54,
           "originalPath": "me"
         }
       ]
@@ -169,12 +169,12 @@
       "occurrences": [
         {
           "file": ".\\src\\modules\\notification\\notification.controller.ts",
-          "line": 51,
+          "line": 56,
           "originalPath": "my"
         },
         {
           "file": ".\\src\\modules\\onboarding\\onboarding.controller.ts",
-          "line": 51,
+          "line": 54,
           "originalPath": "my"
         }
       ]
@@ -186,7 +186,7 @@
       "occurrences": [
         {
           "file": ".\\src\\modules\\driver\\driver.controller.ts",
-          "line": 80,
+          "line": 97,
           "originalPath": "profile"
         },
         {
@@ -203,12 +203,12 @@
       "occurrences": [
         {
           "file": ".\\src\\modules\\store\\delivery-store.controller.ts",
-          "line": 36,
+          "line": 38,
           "originalPath": "search"
         },
         {
           "file": ".\\src\\modules\\user\\user.controller.ts",
-          "line": 168,
+          "line": 195,
           "originalPath": "search"
         }
       ]
@@ -220,12 +220,12 @@
       "occurrences": [
         {
           "file": ".\\src\\modules\\driver\\driver.controller.ts",
-          "line": 128,
+          "line": 157,
           "originalPath": "statistics"
         },
         {
           "file": ".\\src\\modules\\onboarding\\onboarding.controller.ts",
-          "line": 148,
+          "line": 172,
           "originalPath": "statistics"
         }
       ]
@@ -237,12 +237,12 @@
       "occurrences": [
         {
           "file": ".\\src\\modules\\cart\\cart.controller.ts",
-          "line": 45,
+          "line": 47,
           "originalPath": "user/:userId"
         },
         {
           "file": ".\\src\\modules\\order\\order.controller.ts",
-          "line": 51,
+          "line": 54,
           "originalPath": "user/:userId"
         }
       ]
@@ -254,27 +254,27 @@
       "occurrences": [
         {
           "file": ".\\src\\modules\\merchant\\merchant.controller.ts",
-          "line": 73,
+          "line": 82,
           "originalPath": ":id"
         },
         {
           "file": ".\\src\\modules\\promotion\\promotion.controller.ts",
-          "line": 83,
+          "line": 102,
           "originalPath": ":id"
         },
         {
           "file": ".\\src\\modules\\shift\\shift.controller.ts",
-          "line": 60,
+          "line": 65,
           "originalPath": ":id"
         },
         {
           "file": ".\\src\\modules\\store\\store.controller.ts",
-          "line": 78,
+          "line": 94,
           "originalPath": ":id"
         },
         {
           "file": ".\\src\\modules\\vendor\\vendor.controller.ts",
-          "line": 74,
+          "line": 89,
           "originalPath": ":id"
         }
       ]
@@ -286,12 +286,12 @@
       "occurrences": [
         {
           "file": ".\\src\\modules\\order\\order-cqrs.controller.ts",
-          "line": 85,
+          "line": 88,
           "originalPath": ":id/status"
         },
         {
           "file": ".\\src\\modules\\vendor\\vendor.controller.ts",
-          "line": 85,
+          "line": 105,
           "originalPath": ":id/status"
         }
       ]
@@ -303,12 +303,12 @@
       "occurrences": [
         {
           "file": ".\\src\\modules\\user\\user.controller.ts",
-          "line": 56,
+          "line": 58,
           "originalPath": "me"
         },
         {
           "file": ".\\src\\modules\\vendor\\vendor.controller.ts",
-          "line": 63,
+          "line": 74,
           "originalPath": "me"
         }
       ]
@@ -320,12 +320,12 @@
       "occurrences": [
         {
           "file": ".\\src\\modules\\merchant\\merchant.controller.ts",
-          "line": 186,
+          "line": 235,
           "originalPath": "products/:id"
         },
         {
           "file": ".\\src\\modules\\store\\store.controller.ts",
-          "line": 118,
+          "line": 155,
           "originalPath": "products/:id"
         }
       ]
@@ -337,7 +337,7 @@
       "occurrences": [
         {
           "file": ".\\src\\modules\\driver\\driver.controller.ts",
-          "line": 88,
+          "line": 107,
           "originalPath": "profile"
         },
         {
@@ -354,12 +354,12 @@
       "occurrences": [
         {
           "file": ".\\src\\modules\\order\\order-cqrs.controller.ts",
-          "line": 109,
+          "line": 117,
           "originalPath": ":id/assign-driver"
         },
         {
           "file": ".\\src\\modules\\order\\order.controller.ts",
-          "line": 98,
+          "line": 115,
           "originalPath": ":id/assign-driver"
         }
       ]
@@ -371,12 +371,12 @@
       "occurrences": [
         {
           "file": ".\\src\\modules\\order\\order-cqrs.controller.ts",
-          "line": 127,
+          "line": 139,
           "originalPath": ":id/cancel"
         },
         {
           "file": ".\\src\\modules\\order\\order.controller.ts",
-          "line": 249,
+          "line": 296,
           "originalPath": ":id/cancel"
         }
       ]
@@ -388,12 +388,12 @@
       "occurrences": [
         {
           "file": ".\\src\\modules\\auth\\auth.controller.ts",
-          "line": 57,
+          "line": 61,
           "originalPath": "consent"
         },
         {
           "file": ".\\src\\modules\\legal\\legal.controller.ts",
-          "line": 76,
+          "line": 81,
           "originalPath": "consent"
         }
       ]
@@ -405,12 +405,12 @@
       "occurrences": [
         {
           "file": ".\\src\\modules\\merchant\\merchant.controller.ts",
-          "line": 149,
+          "line": 183,
           "originalPath": "products"
         },
         {
           "file": ".\\src\\modules\\store\\store.controller.ts",
-          "line": 59,
+          "line": 68,
           "originalPath": "products"
         }
       ]
@@ -422,12 +422,12 @@
       "occurrences": [
         {
           "file": ".\\src\\modules\\finance\\finance.controller.ts",
-          "line": 164,
+          "line": 239,
           "originalPath": "settlements"
         },
         {
           "file": ".\\src\\modules\\vendor\\vendor.controller.ts",
-          "line": 127,
+          "line": 162,
           "originalPath": "settlements"
         }
       ]

@@ -1,0 +1,2167 @@
+{
+  "existsButMissingDecorators": [],
+  "pathMismatch": [
+    {
+      "method": "POST",
+      "path": "/admin/pages",
+      "possibleMatches": [
+        "POST /content/admin/pages"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/er/documents/{id}/download",
+      "possibleMatches": [
+        "GET /admin/backup/:id/download",
+        "GET /drivers/documents",
+        "GET /drivers/:driverid/documents",
+        "GET /me",
+        "GET /vendors/me"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/er/documents/export",
+      "possibleMatches": [
+        "GET /admin/marketers/export",
+        "GET /drivers/documents",
+        "GET /drivers/:driverid/documents",
+        "GET /delivery/order/export",
+        "GET /me",
+        "GET /vendors/me"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/merchant/catalog/products",
+      "possibleMatches": [
+        "GET /merchants/catalog/products",
+        "GET /merchants/catalog/products/:id",
+        "GET /merchants/products",
+        "GET /merchants/products/:id",
+        "GET /merchants/:merchantid/products",
+        "GET /merchants/stores/:storeid/products",
+        "GET /delivery/stores/:id/products",
+        "GET /admin/stores/:id/products",
+        "GET /admin/stores/products/:id/variants",
+        "GET /me",
+        "GET /vendors/me"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/merchant/catalog/products/{id}",
+      "possibleMatches": [
+        "GET /merchants/catalog/products",
+        "GET /merchants/products",
+        "GET /merchants/:merchantid/products",
+        "GET /merchants/stores/:storeid/products",
+        "GET /delivery/stores/:id/products",
+        "GET /admin/stores/:id/products",
+        "GET /me",
+        "GET /vendors/me"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/merchant/catalog/products",
+      "possibleMatches": [
+        "POST /merchants/catalog/products",
+        "POST /merchants/products",
+        "POST /admin/stores/products",
+        "POST /admin/stores/products/:id/variants"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/merchant/catalog/products/{id}",
+      "possibleMatches": [
+        "PATCH /me",
+        "PATCH /vendors/me"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/merchant/categories",
+      "possibleMatches": [
+        "GET /merchants/categories",
+        "GET /me",
+        "GET /vendors/me"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/merchant/categories",
+      "possibleMatches": [
+        "POST /merchants/categories"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/merchant/categories/{id}",
+      "possibleMatches": [
+        "PATCH /me",
+        "PATCH /vendors/me"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/merchant/attributes",
+      "possibleMatches": [
+        "GET /merchants/attributes",
+        "GET /me",
+        "GET /vendors/me"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/merchant/attributes",
+      "possibleMatches": [
+        "POST /merchants/attributes"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/merchant/attributes/{id}",
+      "possibleMatches": [
+        "PATCH /me",
+        "PATCH /vendors/me"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/merchant/products",
+      "possibleMatches": [
+        "GET /merchants/catalog/products",
+        "GET /merchants/catalog/products/:id",
+        "GET /merchants/products",
+        "GET /merchants/products/:id",
+        "GET /merchants/:merchantid/products",
+        "GET /merchants/stores/:storeid/products",
+        "GET /delivery/stores/:id/products",
+        "GET /admin/stores/:id/products",
+        "GET /admin/stores/products/:id/variants",
+        "GET /me",
+        "GET /vendors/me"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/merchant/products/{id}",
+      "possibleMatches": [
+        "GET /merchants/catalog/products",
+        "GET /merchants/products",
+        "GET /merchants/:merchantid/products",
+        "GET /merchants/stores/:storeid/products",
+        "GET /delivery/stores/:id/products",
+        "GET /admin/stores/:id/products",
+        "GET /me",
+        "GET /vendors/me"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/merchant/products",
+      "possibleMatches": [
+        "POST /merchants/catalog/products",
+        "POST /merchants/products",
+        "POST /admin/stores/products",
+        "POST /admin/stores/products/:id/variants"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/merchant/products/{id}",
+      "possibleMatches": [
+        "PATCH /me",
+        "PATCH /vendors/me"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/merchant/products/{id}/stock",
+      "possibleMatches": [
+        "PATCH /merchants/products/:id/stock",
+        "PATCH /me",
+        "PATCH /vendors/me"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/merchant",
+      "possibleMatches": [
+        "GET /merchants/:id",
+        "GET /merchants/catalog/products",
+        "GET /merchants/catalog/products/:id",
+        "GET /merchants/products",
+        "GET /merchants/products/:id",
+        "GET /merchants/:merchantid/products",
+        "GET /merchants/stores/:storeid/products",
+        "GET /merchants/categories",
+        "GET /merchants/attributes",
+        "GET /me",
+        "GET /vendors/me"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/merchant/{id}",
+      "possibleMatches": [
+        "GET /me",
+        "GET /vendors/me"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/merchant",
+      "possibleMatches": [
+        "POST /merchants/catalog/products",
+        "POST /merchants/products",
+        "POST /merchants/categories",
+        "POST /merchants/attributes"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/merchant/{id}",
+      "possibleMatches": [
+        "PATCH /me",
+        "PATCH /vendors/me"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/order",
+      "possibleMatches": [
+        "GET /admin/dashboard/orders-by-status",
+        "GET /admin/orders/stats/by-city",
+        "GET /admin/orders/stats/by-payment-method",
+        "GET /admin/users/:id/orders-history",
+        "GET /drivers/orders/available",
+        "GET /drivers/orders/history",
+        "GET /orders-cqrs/:id",
+        "GET /delivery/order/user/:userid",
+        "GET /delivery/order/my-orders",
+        "GET /delivery/order/:id",
+        "GET /delivery/order/:id/notes",
+        "GET /delivery/order/vendor/orders",
+        "GET /delivery/order/:id/pod",
+        "GET /delivery/order/export",
+        "GET /delivery/order/:id/tracking",
+        "GET /delivery/order/public/:id/status",
+        "GET /delivery/order/:id/live-tracking",
+        "GET /delivery/order/:id/driver-eta",
+        "GET /delivery/order/:id/route-history",
+        "GET /delivery/order/:id/delivery-timeline",
+        "GET /utility/orders",
+        "GET /utility/order/:id",
+        "GET /utility/admin/orders"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/admin/reports/generate",
+      "possibleMatches": [
+        "POST /akhdimni/errands/:id/rate",
+        "POST /drivers/issues/report",
+        "POST /er/payroll/generate",
+        "POST /marketer/referrals/generate-code",
+        "POST /delivery/order/:id/rate",
+        "POST /utility/order/:id/rate"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/admin/reports/export/{id}/{id}",
+      "possibleMatches": [
+        "POST /drivers/issues/report"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/admin/reports/realtime",
+      "possibleMatches": [
+        "GET /finance/reports",
+        "GET /me",
+        "GET /vendors/me"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/admin/wallet/settlements/export",
+      "possibleMatches": [
+        "GET /admin/marketers/export",
+        "GET /delivery/order/export",
+        "GET /me",
+        "GET /vendors/me",
+        "GET /vendors/settlements"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/vendors",
+      "possibleMatches": [
+        "GET /admin/vendors/pending",
+        "GET /marketer/vendors/my",
+        "GET /marketer/vendors/:id",
+        "GET /vendors/me",
+        "GET /vendors/:id",
+        "GET /vendors/dashboard/overview",
+        "GET /vendors/account/statement",
+        "GET /vendors/settlements",
+        "GET /vendors/sales"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/auth/reset/verify",
+      "possibleMatches": [
+        "POST /drivers/:driverid/documents/:docid/verify",
+        "POST /pin/set",
+        "POST /pin/verify",
+        "POST /topup/verify"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/auth/reset",
+      "possibleMatches": [
+        "POST /admin/security/reset-password/:userid",
+        "POST /pin/set",
+        "POST /vendors/:id/reset-password"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/auth/verify-otp",
+      "possibleMatches": [
+        "POST /drivers/:driverid/documents/:docid/verify",
+        "POST /pin/verify",
+        "POST /topup/verify"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/delivery/cart",
+      "possibleMatches": [
+        "DELETE /delivery/cart/items/:productid",
+        "DELETE /delivery/cart/:productid",
+        "DELETE /delivery/cart/shein/items/:sheinproductid",
+        "DELETE /delivery/cart/shein",
+        "DELETE /delivery/cart/combined/clear-all",
+        "DELETE /delivery/cart/:cartid/items/:productid"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/errands/order",
+      "possibleMatches": [
+        "POST /akhdimni/errands",
+        "POST /drivers/orders/:id/accept",
+        "POST /drivers/orders/:id/reject",
+        "POST /drivers/orders/:id/start-delivery",
+        "POST /drivers/orders/:id/complete",
+        "POST /orders-cqrs/:id/assign-driver",
+        "POST /orders-cqrs/:id/cancel",
+        "POST /delivery/order/:id/assign-driver",
+        "POST /delivery/order/:id/notes",
+        "POST /delivery/order/:id/vendor-accept",
+        "POST /delivery/order/:id/vendor-cancel",
+        "POST /delivery/order/:id/pod",
+        "POST /delivery/order/:id/cancel",
+        "POST /delivery/order/:id/return",
+        "POST /delivery/order/:id/rate",
+        "POST /delivery/order/:id/repeat",
+        "POST /delivery/order/:id/schedule",
+        "POST /delivery/order/:id/update-location",
+        "POST /utility/order",
+        "POST /utility/order/:id/rate",
+        "POST /utility/order/:id/assign-driver"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/errands/user/{id}",
+      "possibleMatches": [
+        "GET /akhdimni/admin/errands"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/errands/{id}",
+      "possibleMatches": [
+        "GET /akhdimni/admin/errands"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/errands/categories",
+      "possibleMatches": [
+        "GET /akhdimni/admin/errands",
+        "GET /merchants/categories"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/errands/drivers/available",
+      "possibleMatches": [
+        "GET /admin/drivers",
+        "GET /akhdimni/admin/errands",
+        "GET /drivers/available",
+        "GET /drivers/orders/available"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/user/profile",
+      "possibleMatches": [
+        "GET /drivers/profile",
+        "GET /marketer/profile"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/users/me",
+      "possibleMatches": [
+        "GET /admin/dashboard/live-metrics",
+        "GET /admin/users",
+        "GET /admin/quality/metrics",
+        "GET /admin/system/metrics",
+        "GET /admin/orders/stats/by-payment-method",
+        "GET /analytics/kpis/real-time",
+        "GET /drivers/documents",
+        "GET /drivers/:driverid/documents",
+        "GET /finance/settlements/entity/:entityid",
+        "GET /finance/settlements/:id",
+        "GET /health/metrics",
+        "GET /merchants/:id",
+        "GET /merchants/catalog/products",
+        "GET /merchants/catalog/products/:id",
+        "GET /merchants/products",
+        "GET /merchants/products/:id",
+        "GET /merchants/:merchantid/products",
+        "GET /merchants/stores/:storeid/products",
+        "GET /merchants/categories",
+        "GET /merchants/attributes",
+        "GET /metrics/json",
+        "GET /delivery/order/:id/delivery-timeline",
+        "GET /promotions/by-placement",
+        "GET /support/admin/sla-metrics",
+        "GET /me",
+        "GET /vendors/me",
+        "GET /vendors/account/statement",
+        "GET /vendors/settlements",
+        "GET /topup/methods",
+        "GET /withdraw/methods"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/users/profile",
+      "possibleMatches": [
+        "PATCH /drivers/profile",
+        "PATCH /marketer/profile"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/users/address",
+      "possibleMatches": [
+        "POST /delivery/cart/add",
+        "POST /addresses",
+        "POST /addresses/:addressid/set-default"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v2/wallet/balance",
+      "possibleMatches": [
+        "GET /admin/drivers/:id/leave-balance",
+        "GET /drivers/vacations/balance",
+        "GET /er/reports/trial-balance",
+        "GET /balance"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v2/wallet/transactions",
+      "possibleMatches": [
+        "GET /transactions"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v2/wallet/topup/methods",
+      "possibleMatches": [
+        "GET /me",
+        "GET /vendors/me",
+        "GET /topup/methods",
+        "GET /withdraw/methods"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/wallet/topup/kuraimi",
+      "possibleMatches": [
+        "POST /topup/kuraimi"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/wallet/topup/verify",
+      "possibleMatches": [
+        "POST /drivers/:driverid/documents/:docid/verify",
+        "POST /pin/verify",
+        "POST /topup/verify"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v2/wallet/topup/history",
+      "possibleMatches": [
+        "GET /admin/users/:id/orders-history",
+        "GET /auth/consent/history",
+        "GET /drivers/orders/history",
+        "GET /delivery/order/:id/route-history",
+        "GET /topup/history"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v2/wallet/withdraw/methods",
+      "possibleMatches": [
+        "GET /me",
+        "GET /vendors/me",
+        "GET /topup/methods",
+        "GET /withdraw/methods"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/wallet/withdraw/request",
+      "possibleMatches": [
+        "POST /drivers/vacations/request",
+        "POST /er/leave-requests",
+        "POST /vendors/account/delete-request",
+        "POST /withdraw/request",
+        "POST /refund/request"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v2/wallet/withdraw/my",
+      "possibleMatches": [
+        "GET /akhdimni/my-errands",
+        "GET /akhdimni/driver/my-errands",
+        "GET /content/my-subscription",
+        "GET /drivers/vacations/my",
+        "GET /finance/commissions/my",
+        "GET /finance/commissions/stats/my",
+        "GET /legal/consent/my",
+        "GET /marketer/referrals/my",
+        "GET /marketer/stores/my",
+        "GET /marketer/vendors/my",
+        "GET /marketer/commissions/my",
+        "GET /notifications/my",
+        "GET /onboarding/my",
+        "GET /delivery/order/my-orders",
+        "GET /shifts/my-shifts",
+        "GET /withdraw/my"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/wallet/coupons/apply",
+      "possibleMatches": [
+        "POST /finance/coupons"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/wallet/coupons/validate",
+      "possibleMatches": [
+        "POST /finance/coupons",
+        "POST /finance/coupons/validate"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v2/wallet/coupons/my",
+      "possibleMatches": [
+        "GET /akhdimni/my-errands",
+        "GET /akhdimni/driver/my-errands",
+        "GET /content/my-subscription",
+        "GET /drivers/vacations/my",
+        "GET /finance/commissions/my",
+        "GET /finance/commissions/stats/my",
+        "GET /finance/coupons",
+        "GET /legal/consent/my",
+        "GET /marketer/referrals/my",
+        "GET /marketer/stores/my",
+        "GET /marketer/vendors/my",
+        "GET /marketer/commissions/my",
+        "GET /notifications/my",
+        "GET /onboarding/my",
+        "GET /delivery/order/my-orders",
+        "GET /shifts/my-shifts",
+        "GET /withdraw/my"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v2/wallet/coupons/history",
+      "possibleMatches": [
+        "GET /admin/users/:id/orders-history",
+        "GET /auth/consent/history",
+        "GET /drivers/orders/history",
+        "GET /finance/coupons",
+        "GET /delivery/order/:id/route-history",
+        "GET /topup/history"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v2/wallet/subscriptions/my",
+      "possibleMatches": [
+        "GET /akhdimni/my-errands",
+        "GET /akhdimni/driver/my-errands",
+        "GET /content/my-subscription",
+        "GET /drivers/vacations/my",
+        "GET /finance/commissions/my",
+        "GET /finance/commissions/stats/my",
+        "GET /legal/consent/my",
+        "GET /marketer/referrals/my",
+        "GET /marketer/stores/my",
+        "GET /marketer/vendors/my",
+        "GET /marketer/commissions/my",
+        "GET /notifications/my",
+        "GET /onboarding/my",
+        "GET /delivery/order/my-orders",
+        "GET /shifts/my-shifts",
+        "GET /withdraw/my"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/wallet/pay-bill",
+      "possibleMatches": [
+        "POST /pay-bill"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v2/wallet/bills",
+      "possibleMatches": [
+        "GET /bills"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/wallet/transfer",
+      "possibleMatches": [
+        "POST /transfer"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v2/wallet/transfers",
+      "possibleMatches": [
+        "GET /transfers"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/wallet/refund/request",
+      "possibleMatches": [
+        "POST /drivers/vacations/request",
+        "POST /er/leave-requests",
+        "POST /vendors/account/delete-request",
+        "POST /refund",
+        "POST /withdraw/request",
+        "POST /refund/request"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/categories",
+      "possibleMatches": [
+        "GET /merchants/categories"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/categories?{id}",
+      "possibleMatches": [
+        "GET /merchants/categories"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/stores{id}",
+      "possibleMatches": [
+        "GET /admin/marketers/:id/stores"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/stores",
+      "possibleMatches": [
+        "GET /admin/marketers/:id/stores",
+        "GET /content/stores/:storeid/sections",
+        "GET /marketer/stores/my",
+        "GET /marketer/stores/:id",
+        "GET /marketer/stores/:id/performance",
+        "GET /merchants/stores/:storeid/products",
+        "GET /delivery/stores/search",
+        "GET /delivery/stores/:id",
+        "GET /delivery/stores/:id/products",
+        "GET /delivery/stores/:id/statistics",
+        "GET /delivery/stores/:id/reviews",
+        "GET /admin/stores/:id",
+        "GET /admin/stores/:id/products",
+        "GET /admin/stores/:id/analytics",
+        "GET /admin/stores/products/:id/variants",
+        "GET /admin/stores/:id/inventory",
+        "GET /admin/stores/pending"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/stores?categoryId={id}",
+      "possibleMatches": [
+        "GET /admin/marketers/:id/stores"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/promotions/by-stores?ids={id}&channel=app",
+      "possibleMatches": [
+        "GET /admin/marketers/:id/stores"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/users/address",
+      "possibleMatches": [
+        "GET /admin/users",
+        "GET /addresses"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/coupons/validate",
+      "possibleMatches": [
+        "POST /finance/coupons",
+        "POST /finance/coupons/validate"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/delivery/order",
+      "possibleMatches": [
+        "POST /drivers/orders/:id/accept",
+        "POST /drivers/orders/:id/reject",
+        "POST /drivers/orders/:id/start-delivery",
+        "POST /drivers/orders/:id/complete",
+        "POST /orders-cqrs/:id/assign-driver",
+        "POST /orders-cqrs/:id/cancel",
+        "POST /delivery/order/:id/assign-driver",
+        "POST /delivery/order/:id/notes",
+        "POST /delivery/order/:id/vendor-accept",
+        "POST /delivery/order/:id/vendor-cancel",
+        "POST /delivery/order/:id/pod",
+        "POST /delivery/order/:id/cancel",
+        "POST /delivery/order/:id/return",
+        "POST /delivery/order/:id/rate",
+        "POST /delivery/order/:id/repeat",
+        "POST /delivery/order/:id/schedule",
+        "POST /delivery/order/:id/update-location",
+        "POST /utility/order",
+        "POST /utility/order/:id/rate",
+        "POST /utility/order/:id/assign-driver"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/events",
+      "possibleMatches": [
+        "POST /analytics/events/track"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/groceries/catalog",
+      "possibleMatches": [
+        "GET /merchants/catalog/products",
+        "GET /merchants/catalog/products/:id"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/vendors/sales?limit=100",
+      "possibleMatches": [
+        "GET /vendors/sales"
+      ]
+    }
+  ],
+  "doesNotExist": [
+    {
+      "method": "DELETE",
+      "path": "/er/assets/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/er/accounts/chart/{id}"
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/onboarding-slides/{id}"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/onboarding-slides"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/onboarding-slides/{id}"
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/pages/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/pages/{id}"
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/strings/{id}"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/strings"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/strings/{id}"
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/home-layouts/{id}"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/home-layouts"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/home-layouts/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/wallet/coupons/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/er/documents/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/er/documents/bulk"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/drivers/leave-requests/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/drivers/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/drivers/shifts/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/drivers/assets/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/employees/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/merchant/categories/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/merchant/attributes/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/merchant/products/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/merchant/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/er/payroll/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/wallet/subscriptions/{id}"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/forgot"
+    },
+    {
+      "method": "DELETE",
+      "path": "/delivery/cart/{id}"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/order/user/{id}"
+    },
+    {
+      "method": "PATCH",
+      "path": "/users/address/{id}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/users/address/{id}"
+    },
+    {
+      "method": "PATCH",
+      "path": "/users/default-address"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/cart/user/{id}"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/cart/{id}"
+    },
+    {
+      "method": "PUT",
+      "path": "/delivery/stores/{id}"
+    }
+  ],
+  "inBackendNotInOpenApi": [
+    {
+      "method": "GET",
+      "path": "/admin/drivers/:id",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/drivers/:id/performance",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/drivers/:id/financials",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/drivers/:id/ban",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/drivers/:id/unban",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/drivers/:id/adjust-balance",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/withdrawals/:id/approve",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/withdrawals/:id/reject",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/vendors/:id/approve",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/vendors/:id/reject",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/vendors/:id/suspend",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/users/:id",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/users/:id/ban",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/users/:id/unban",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/drivers/:id/attendance",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/drivers/:id/attendance/adjust",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/drivers/leave-requests/:id/approve",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/drivers/leave-requests/:id/reject",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/drivers/:id/leave-balance",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/drivers/:id/leave-balance/adjust",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/settings/feature-flags/:flag",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/backup/:id/restore",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/backup/:id/download",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/data-deletion/:id/approve",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/data-deletion/:id/reject",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/security/reset-password/:userid",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/security/unlock-account/:userid",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/marketers/:id",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/marketers/:id",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/marketers/:id/performance",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/marketers/:id/stores",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/marketers/:id/activate",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/marketers/:id/deactivate",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/audit-logs/:id",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/users/:id/orders-history",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/roles/:id",
+      "controller": "AdminController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "GET",
+      "path": "/akhdimni/errands/:id",
+      "controller": "AkhdimniController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/akhdimni/errands/:id/cancel",
+      "controller": "AkhdimniController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/akhdimni/errands/:id/rate",
+      "controller": "AkhdimniController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/akhdimni/errands/:id/status",
+      "controller": "AkhdimniController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/akhdimni/admin/errands/:id/assign-driver",
+      "controller": "AkhdimniController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "DELETE",
+      "path": "/auth/consent/:type",
+      "controller": "AuthController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/auth/consent/check/:type",
+      "controller": "AuthController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/cart/user/:userid",
+      "controller": "CartController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/cart/:cartid",
+      "controller": "CartController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/delivery/cart/items/:productid",
+      "controller": "CartController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/delivery/cart/:productid",
+      "controller": "CartController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "DELETE",
+      "path": "/delivery/cart/items/:productid",
+      "controller": "CartController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "DELETE",
+      "path": "/delivery/cart/:productid",
+      "controller": "CartController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/delivery/cart/shein/items/:sheinproductid",
+      "controller": "CartController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "DELETE",
+      "path": "/delivery/cart/shein/items/:sheinproductid",
+      "controller": "CartController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "DELETE",
+      "path": "/delivery/cart/:cartid/items/:productid",
+      "controller": "CartController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/delivery/cart/:cartid/retarget/push",
+      "controller": "CartController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/content/banners/:id/click",
+      "controller": "ContentController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/content/banners/:id",
+      "controller": "ContentController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "DELETE",
+      "path": "/content/banners/:id",
+      "controller": "ContentController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/content/stores/:storeid/sections",
+      "controller": "ContentController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/content/sections/:id",
+      "controller": "ContentController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "DELETE",
+      "path": "/content/sections/:id",
+      "controller": "ContentController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/content/pages/:slug",
+      "controller": "ContentController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/content/admin/pages/:id",
+      "controller": "ContentController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/content/admin/faqs/:id",
+      "controller": "ContentController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "DELETE",
+      "path": "/content/admin/faqs/:id",
+      "controller": "ContentController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/drivers/:id",
+      "controller": "DriverController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/drivers/:driverid/documents",
+      "controller": "DriverController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/drivers/:driverid/documents/:docid/verify",
+      "controller": "DriverController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/drivers/vacations/:id/cancel",
+      "controller": "DriverController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/drivers/orders/:id/accept",
+      "controller": "DriverController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/drivers/orders/:id/reject",
+      "controller": "DriverController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/drivers/orders/:id/start-delivery",
+      "controller": "DriverController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/drivers/orders/:id/complete",
+      "controller": "DriverController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/er/employees/:id",
+      "controller": "ERController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/er/employees/:id",
+      "controller": "ERController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/er/attendance/:employeeid",
+      "controller": "ERController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/er/leave-requests/:id/approve",
+      "controller": "ERController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/er/leave-requests/:id/reject",
+      "controller": "ERController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/er/payroll/:id/approve",
+      "controller": "ERController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/er/payroll/:id/mark-paid",
+      "controller": "ERController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/er/accounts/:id",
+      "controller": "ERController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/er/journal-entries/:id/post",
+      "controller": "ERController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/finance/commissions/:id/approve",
+      "controller": "FinanceController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/finance/commissions/:id/cancel",
+      "controller": "FinanceController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/finance/payouts/batches/:id",
+      "controller": "FinanceController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/finance/payouts/batches/:id/items",
+      "controller": "FinanceController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/finance/payouts/batches/:id/approve",
+      "controller": "FinanceController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/finance/payouts/batches/:id/complete",
+      "controller": "FinanceController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/finance/settlements/entity/:entityid",
+      "controller": "FinanceController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/finance/settlements/:id",
+      "controller": "FinanceController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/finance/settlements/:id/approve",
+      "controller": "FinanceController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/finance/coupons/:id",
+      "controller": "FinanceController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/finance/reconciliations/:id",
+      "controller": "FinanceController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/finance/reconciliations/:id/actual-totals",
+      "controller": "FinanceController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/finance/reconciliations/:id/issues",
+      "controller": "FinanceController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/finance/reconciliations/:id/issues/:issueindex/resolve",
+      "controller": "FinanceController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/finance/reports/daily/:date",
+      "controller": "FinanceController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/finance/reports/:id/finalize",
+      "controller": "FinanceController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/finance/commission-plans/:id",
+      "controller": "FinanceController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/legal/consent/check/:type",
+      "controller": "LegalController",
+      "handler": "UseGuards"
+    },
+    {
+      "method": "PATCH",
+      "path": "/legal/admin/privacy-policy/:id/activate",
+      "controller": "LegalController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/legal/admin/terms-of-service/:id/activate",
+      "controller": "LegalController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/marketer/stores/:id",
+      "controller": "MarketerController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/marketer/stores/:id/performance",
+      "controller": "MarketerController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/marketer/vendors/:id",
+      "controller": "MarketerController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/marketer/notifications/:id/read",
+      "controller": "MarketerController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/merchants/:id",
+      "controller": "MerchantController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/merchants/:id",
+      "controller": "MerchantController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "DELETE",
+      "path": "/merchants/:id",
+      "controller": "MerchantController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/merchants/catalog/products/:id",
+      "controller": "MerchantController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/merchants/catalog/products/:id",
+      "controller": "MerchantController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/merchants/products/:id",
+      "controller": "MerchantController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/merchants/:merchantid/products",
+      "controller": "MerchantController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/merchants/stores/:storeid/products",
+      "controller": "MerchantController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/merchants/products/:id",
+      "controller": "MerchantController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/merchants/products/:id/stock",
+      "controller": "MerchantController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "DELETE",
+      "path": "/merchants/products/:id",
+      "controller": "MerchantController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/merchants/categories/:id",
+      "controller": "MerchantController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/merchants/attributes/:id",
+      "controller": "MerchantController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/notifications/:id/read",
+      "controller": "NotificationController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "DELETE",
+      "path": "/notifications/:id",
+      "controller": "NotificationController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "DELETE",
+      "path": "/notifications/suppression/:id",
+      "controller": "NotificationController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "DELETE",
+      "path": "/notifications/suppression/channel/:channel",
+      "controller": "NotificationController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/onboarding/:id/details",
+      "controller": "OnboardingController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/onboarding/:id/approve",
+      "controller": "OnboardingController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/onboarding/:id/reject",
+      "controller": "OnboardingController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/orders-cqrs/:id/status",
+      "controller": "OrderCqrsController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/orders-cqrs/:id/assign-driver",
+      "controller": "OrderCqrsController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/orders-cqrs/:id/cancel",
+      "controller": "OrderCqrsController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/orders-cqrs/:id",
+      "controller": "OrderCqrsController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/order/user/:userid",
+      "controller": "OrderController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/order/:id",
+      "controller": "OrderController",
+      "handler": "ApiOperation"
+    },
+    {
+      "method": "POST",
+      "path": "/delivery/order/:id/assign-driver",
+      "controller": "OrderController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/delivery/order/:id/notes",
+      "controller": "OrderController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/order/:id/notes",
+      "controller": "OrderController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/delivery/order/:id/vendor-accept",
+      "controller": "OrderController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/delivery/order/:id/vendor-cancel",
+      "controller": "OrderController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/delivery/order/:id/pod",
+      "controller": "OrderController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/order/:id/pod",
+      "controller": "OrderController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/delivery/order/:id/cancel",
+      "controller": "OrderController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/delivery/order/:id/return",
+      "controller": "OrderController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/delivery/order/:id/rate",
+      "controller": "OrderController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/delivery/order/:id/repeat",
+      "controller": "OrderController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/delivery/order/:id/admin-status",
+      "controller": "OrderController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/order/:id/tracking",
+      "controller": "OrderController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/delivery/order/:id/schedule",
+      "controller": "OrderController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/order/public/:id/status",
+      "controller": "OrderController",
+      "handler": "Public"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/order/:id/live-tracking",
+      "controller": "OrderController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/order/:id/driver-eta",
+      "controller": "OrderController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/delivery/order/:id/update-location",
+      "controller": "OrderController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/order/:id/route-history",
+      "controller": "OrderController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/order/:id/delivery-timeline",
+      "controller": "OrderController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/promotions/:id/click",
+      "controller": "PromotionController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/promotions/:id/conversion",
+      "controller": "PromotionController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/promotions/:id",
+      "controller": "PromotionController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/promotions/:id",
+      "controller": "PromotionController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "DELETE",
+      "path": "/promotions/:id",
+      "controller": "PromotionController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/shifts/:id",
+      "controller": "ShiftController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/shifts/:shiftid/assign/:driverid",
+      "controller": "ShiftController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/shifts/driver/:driverid",
+      "controller": "ShiftController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/stores/:id",
+      "controller": "DeliveryStoreController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/stores/:id/products",
+      "controller": "DeliveryStoreController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/stores/:id/statistics",
+      "controller": "DeliveryStoreController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/delivery/stores/:id/reviews",
+      "controller": "DeliveryStoreController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/stores/:id",
+      "controller": "StoreController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/stores/:id/products",
+      "controller": "StoreController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/stores/:id",
+      "controller": "StoreController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/stores/:id/activate",
+      "controller": "StoreController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/stores/:id/deactivate",
+      "controller": "StoreController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/stores/:id/force-close",
+      "controller": "StoreController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/stores/:id/force-open",
+      "controller": "StoreController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/admin/stores/products/:id",
+      "controller": "StoreController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/stores/:id/analytics",
+      "controller": "StoreController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/stores/products/:id/variants",
+      "controller": "StoreController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/stores/products/:id/variants",
+      "controller": "StoreController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/stores/:id/inventory",
+      "controller": "StoreController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/stores/:id",
+      "controller": "StoreController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/stores/:id/approve",
+      "controller": "StoreController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/stores/:id/reject",
+      "controller": "StoreController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/stores/:id/suspend",
+      "controller": "StoreController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/support/tickets/:id",
+      "controller": "SupportController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/support/tickets/:id/messages",
+      "controller": "SupportController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/support/tickets/:id/rate",
+      "controller": "SupportController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/support/admin/tickets/:id/assign",
+      "controller": "SupportController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/support/admin/tickets/:id/resolve",
+      "controller": "SupportController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/addresses/:addressid",
+      "controller": "UserController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "DELETE",
+      "path": "/addresses/:addressid",
+      "controller": "UserController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/addresses/:addressid/set-default",
+      "controller": "UserController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "DELETE",
+      "path": "/pin/reset/:userid",
+      "controller": "UserController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/utility/pricing/:city",
+      "controller": "UtilityController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/utility/pricing/:city",
+      "controller": "UtilityController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "DELETE",
+      "path": "/utility/pricing/:city",
+      "controller": "UtilityController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "DELETE",
+      "path": "/utility/daily/:id",
+      "controller": "UtilityController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/utility/order/:id",
+      "controller": "UtilityController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/utility/order/:id/status",
+      "controller": "UtilityController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/utility/order/:id/cancel",
+      "controller": "UtilityController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/utility/order/:id/rate",
+      "controller": "UtilityController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/utility/order/:id/assign-driver",
+      "controller": "UtilityController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/vendors/:id",
+      "controller": "VendorController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/vendors/:id",
+      "controller": "VendorController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/vendors/:id/status",
+      "controller": "VendorController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "POST",
+      "path": "/vendors/:id/reset-password",
+      "controller": "VendorController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "PATCH",
+      "path": "/withdraw/:id/cancel",
+      "controller": "WalletController",
+      "handler": "ApiParam"
+    },
+    {
+      "method": "GET",
+      "path": "/transaction/:id",
+      "controller": "WalletController",
+      "handler": "ApiParam"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 import { addFavorite, isFavorite, removeFavorite } from "@/api/favorites";
 import COLORS from "@/constants/colors";
 import { useCart } from "@/context/CartContext";
-import { API_URL } from "@/utils/api/config";
+import axiosInstance from "@/utils/api/axiosInstance";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -111,21 +111,17 @@ const CommonProductDetailsScreen = () => {
     (async () => {
       try {
         // 1) عروض المنتج
-        const prodRes = await fetch(
-          `${API_URL}/delivery/promotions/by-products?ids=${encodeURIComponent(
+        const prodRes = await axiosInstance.get(`/delivery/promotions/by-products?ids=${encodeURIComponent(
             product.id
-          )}&channel=app`
-        );
+          )}&channel=app`);
         const prodMap: Record<string, Promo[]> = prodRes.ok
           ? await prodRes.json()
           : {};
 
         // 2) عروض المتجر
-        const storeRes = await fetch(
-          `${API_URL}/delivery/promotions/by-stores?ids=${encodeURIComponent(
+        const storeRes = await axiosInstance.get(`/delivery/promotions/by-stores?ids=${encodeURIComponent(
             storeId
-          )}&channel=app`
-        );
+          )}&channel=app`);
         const storeMap: Record<string, Promo[]> = storeRes.ok
           ? await storeRes.json()
           : {};

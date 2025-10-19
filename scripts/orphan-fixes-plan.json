@@ -1,0 +1,142 @@
+{
+  "problem": "Frontend calls /api/v1/... but backend uses /api/v2/... as default",
+  "solution_strategy": "Add missing endpoints and ensure v1 support",
+  "orphans_analysis": {
+    "auth_endpoints": {
+      "missing": [
+        "POST /auth/forgot",
+        "POST /auth/reset/verify",
+        "POST /auth/reset",
+        "POST /auth/verify-otp"
+      ],
+      "status": "Need to add traditional password reset flow",
+      "action": "Add to auth.controller.ts with v1 support"
+    },
+    "user_endpoints": {
+      "missing": [
+        "PATCH /users/address/:id",
+        "DELETE /users/address/:id",
+        "PATCH /users/default-address"
+      ],
+      "status": "Controller uses 'addresses' but frontend calls 'address'",
+      "action": "Add route aliases or new endpoints"
+    },
+    "cart_endpoints": {
+      "missing": [
+        "DELETE /delivery/cart/:id"
+      ],
+      "status": "Partial - cart controller exists but missing DELETE :id",
+      "action": "Add DELETE endpoint to cart.controller.ts"
+    },
+    "delivery_order_endpoints": {
+      "missing": [
+        "GET /delivery/order",
+        "GET /delivery/order/user/:id"
+      ],
+      "status": "Order controller exists but may need route fixes",
+      "action": "Verify and add if missing"
+    },
+    "errands_endpoints": {
+      "missing": [
+        "POST /errands/order",
+        "GET /errands/user/:id",
+        "GET /errands/:id",
+        "GET /errands/categories",
+        "GET /errands/drivers/available"
+      ],
+      "status": "No errands controller found, only akhdimni",
+      "action": "Add errands controller or alias to akhdimni"
+    },
+    "admin_endpoints": {
+      "missing": [
+        "PUT /admin/onboarding-slides/:id",
+        "POST /admin/onboarding-slides",
+        "DELETE /admin/onboarding-slides/:id",
+        "PUT /admin/pages/:id",
+        "DELETE /admin/pages/:id",
+        "PUT /admin/strings/:id",
+        "POST /admin/strings",
+        "DELETE /admin/strings/:id",
+        "PUT /admin/home-layouts/:id",
+        "POST /admin/home-layouts",
+        "DELETE /admin/home-layouts/:id",
+        "DELETE /admin/wallet/coupons/:id",
+        "DELETE /admin/wallet/subscriptions/:id",
+        "POST /admin/reports/generate",
+        "POST /admin/reports/export/:id/:id",
+        "GET /admin/reports/realtime",
+        "GET /admin/wallet/settlements/export"
+      ],
+      "status": "CMS-related endpoints missing",
+      "action": "Add content management endpoints"
+    },
+    "er_endpoints": {
+      "missing": [
+        "DELETE /er/assets/:id",
+        "DELETE /er/accounts/chart/:id",
+        "DELETE /er/documents/:id",
+        "GET /er/documents/:id/download",
+        "DELETE /er/documents/bulk",
+        "GET /er/documents/export",
+        "DELETE /er/payroll/:id"
+      ],
+      "status": "ER controller exists but missing some CRUD operations",
+      "action": "Add missing CRUD endpoints to er.controller.ts"
+    },
+    "driver_endpoints": {
+      "missing": [
+        "DELETE /admin/drivers/leave-requests/:id",
+        "DELETE /admin/drivers/:id",
+        "DELETE /admin/drivers/shifts/:id",
+        "DELETE /admin/drivers/assets/:id"
+      ],
+      "status": "Admin has PATCH but missing DELETE operations",
+      "action": "Add DELETE endpoints"
+    },
+    "employee_endpoints": {
+      "missing": [
+        "DELETE /employees/:id"
+      ],
+      "status": "No employees controller found",
+      "action": "Add employees module or check if it's under different name"
+    },
+    "merchant_endpoints": {
+      "missing": [
+        "DELETE /merchant/categories/:id",
+        "DELETE /merchant/attributes/:id"
+      ],
+      "status": "Merchant controller exists but missing DELETE operations",
+      "action": "Add DELETE endpoints to merchant.controller.ts"
+    },
+    "wallet_v2_endpoints": {
+      "missing": [
+        "POST /v2/wallet/coupons/apply",
+        "GET /v2/wallet/coupons/my",
+        "GET /v2/wallet/coupons/history",
+        "GET /v2/wallet/subscriptions/my"
+      ],
+      "status": "Wallet controller exists but may not support v2 routes",
+      "action": "Ensure wallet controller supports v2 version"
+    },
+    "other_endpoints": {
+      "missing": [
+        "GET /delivery/categories",
+        "GET /delivery/promotions/by-stores",
+        "POST /events",
+        "GET /groceries/catalog",
+        "PUT /delivery/stores/:id"
+      ],
+      "status": "Various missing endpoints",
+      "action": "Add to respective controllers"
+    }
+  },
+  "priority": [
+    "1. Add version 1 support to all controllers (change version: '2' to ['1', '2'])",
+    "2. Add auth password reset endpoints (critical for user experience)",
+    "3. Add user address aliases (address vs addresses)",
+    "4. Add missing CRUD operations in existing controllers",
+    "5. Add errands/akhdimni routes",
+    "6. Add CMS/admin content management endpoints"
+  ]
+}
+

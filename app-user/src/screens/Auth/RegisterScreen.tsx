@@ -6,13 +6,16 @@ import {
 } from "@/api/authService";
 import { useAuth } from "@/auth/AuthContext";
 import { registerPushToken } from "@/notify";
+import axiosInstance from "@/utils/api/axiosInstance";
 import { API_URL } from "@/utils/api/config";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
+
+
+
 import {
   ActivityIndicator,
   Alert,
@@ -27,6 +30,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+
 
 type AuthStackParamList = {
   Login: undefined;
@@ -249,7 +253,7 @@ const RegisterScreen = () => {
 
       // 3) إنشاء/تهيئة ملف المستخدم على API (idempotent)
       try {
-        await axios.post(
+        await axiosInstance.post(
           `${API_URL}/users/init`,
           { fullName: name.trim(), email: email.trim(), phone: phone.trim() },
           {
@@ -263,7 +267,7 @@ const RegisterScreen = () => {
 
       // 4) إرسال OTP
       try {
-        await axios.post(
+        await axiosInstance.post(
           `${API_URL}/users/otp/send`,
           {},
           {
@@ -279,7 +283,7 @@ const RegisterScreen = () => {
       }
 
       // 5) جلب userId ثم الانتقال لشاشة OTP
-      const userRes = await axios.get(`${API_URL}/users/me`, {
+      const userRes = await axiosInstance.get(`/users/me`, {
         headers: { Authorization: `Bearer ${result.idToken}` },
         timeout: 10000,
       });
@@ -306,7 +310,7 @@ const RegisterScreen = () => {
           const loginData = await loginWithEmail(email.trim(), password);
 
           // جلب المستخدم
-          const userRes = await axios.get(`${API_URL}/users/me`, {
+          const userRes = await axiosInstance.get(`/users/me`, {
             headers: { Authorization: `Bearer ${loginData.idToken}` },
             timeout: 10000,
           });
@@ -315,7 +319,7 @@ const RegisterScreen = () => {
           if (!user.emailVerified) {
             // إرسال OTP للمستخدم الحالي
             try {
-              await axios.post(
+              await axiosInstance.post(
                 `${API_URL}/users/otp/send`,
                 {},
                 {
@@ -356,7 +360,7 @@ const RegisterScreen = () => {
           );
 
           try {
-            await axios.post(
+            await axiosInstance.post(
               `${API_URL}/users/init`,
               {
                 fullName: name.trim(),

@@ -217,4 +217,22 @@ export class LeaveService {
       newBalance: leaveBalance.annual,
     };
   }
+
+  async deleteLeaveRequest(requestId: string) {
+    const request = await this.leaveRequestModel.findById(requestId);
+    if (!request) {
+      throw new NotFoundException({
+        code: 'LEAVE_REQUEST_NOT_FOUND',
+        userMessage: 'طلب الإجازة غير موجود',
+      });
+    }
+
+    // حذف الطلب أو تحديث حالته
+    await this.leaveRequestModel.findByIdAndDelete(requestId);
+
+    return {
+      success: true,
+      message: 'تم حذف طلب الإجازة بنجاح',
+    };
+  }
 }

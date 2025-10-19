@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { ERController } from './er.controller';
+import { EmployeesCompatController } from './employees-compat.controller';
 import { HRService } from './services/hr.service';
 import { AccountingService } from './services/accounting.service';
 import { Employee, EmployeeSchema } from './entities/employee.entity';
@@ -39,7 +40,7 @@ import { Task, TaskSchema } from './entities/task.entity';
     ]),
     JwtModule.register({}),
   ],
-  controllers: [ERController],
+  controllers: [ERController, EmployeesCompatController],
   providers: [HRService, AccountingService],
   exports: [HRService, AccountingService],
 })

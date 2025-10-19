@@ -334,4 +334,33 @@ export class MerchantService {
     Object.assign(attribute, dto);
     return attribute.save();
   }
+
+  async deleteCategory(id: string): Promise<void> {
+    const category = await this.categoryModel.findById(id);
+    if (!category) {
+      throw new NotFoundException('الفئة غير موجودة');
+    }
+
+    // التحقق من عدم وجود منتجات مرتبطة بهذه الفئة
+    const productsCount = await this.merchantProductModel.countDocuments({
+      category: id,
+    });
+
+    if (productsCount > 0) {
+      throw new BadRequestException(
+        'لا يمكن حذف الفئة لأن هناك منتجات مرتبطة بها',
+      );
+    }
+
+    await this.categoryModel.findByIdAndDelete(id);
+  }
+
+  async deleteAttribute(id: string): Promise<void> {
+    const attribute = await this.attributeModel.findById(id);
+    if (!attribute) {
+      throw new NotFoundException('الخاصية غير موجودة');
+    }
+
+    await this.attributeModel.findByIdAndDelete(id);
+  }
 }

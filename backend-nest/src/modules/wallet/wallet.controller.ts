@@ -32,7 +32,7 @@ import { AuthType } from '../../common/guards/unified-auth.guard';
 
 @ApiTags('Wallet')
 @ApiBearerAuth()
-@Controller({ path: 'wallet', version: '2' })
+@Controller({ path: 'wallet', version: ['1', '2'] })
 @UseGuards(UnifiedAuthGuard, RolesGuard)
 export class WalletController {
   constructor(private readonly walletService: WalletService) {}
@@ -40,6 +40,8 @@ export class WalletController {
   @Auth(AuthType.FIREBASE)
   @SkipThrottle() // ✅ لا rate limiting على القراءة
   @Get('balance')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'جلب رصيد المحفظة',
     description: 'الحصول على الرصيد الحالي والرصيد المحجوز',
@@ -52,6 +54,8 @@ export class WalletController {
 
   @Auth(AuthType.FIREBASE)
   @Get('transactions')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'جلب سجل المعاملات',
     description: 'الحصول على جميع معاملات المحفظة مع pagination',
@@ -71,6 +75,9 @@ export class WalletController {
   @Roles('admin', 'superadmin')
   @Throttle({ strict: { ttl: 60000, limit: 10 } }) // ✅ 10 معاملات في الدقيقة (admin)
   @Post('transaction')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'إنشاء معاملة جديدة (للإدارة)',
     description: 'إنشاء معاملة credit/debit يدوياً (admin only)',
@@ -86,6 +93,9 @@ export class WalletController {
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @Post('hold')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'حجز مبلغ (Escrow)',
     description: 'حجز مبلغ من المحفظة لضمان الدفع',
@@ -113,6 +123,9 @@ export class WalletController {
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @Post('release')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'إطلاق المبلغ المحجوز',
     description: 'إطلاق المبلغ المحجوز بعد تأكيد الطلب',
@@ -144,6 +157,9 @@ export class WalletController {
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin')
   @Post('refund')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'إرجاع المبلغ المحجوز',
     description: 'إرجاع المبلغ إلى المحفظة عند إلغاء الطلب',
@@ -177,6 +193,9 @@ export class WalletController {
 
   @Auth(AuthType.FIREBASE)
   @Post('topup/kuraimi')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'شحن المحفظة عبر كريمي',
     description: 'شحن المحفظة باستخدام بطاقة كريمي',
@@ -214,6 +233,9 @@ export class WalletController {
 
   @Auth(AuthType.FIREBASE)
   @Post('topup/verify')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'التحقق من عملية الشحن',
     description: 'التحقق من نجاح عملية الشحن عبر معرّف المعاملة',
@@ -239,6 +261,8 @@ export class WalletController {
 
   @Auth(AuthType.FIREBASE)
   @Get('topup/history')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'سجل عمليات الشحن',
     description: 'الحصول على سجل جميع عمليات الشحن السابقة',
@@ -256,6 +280,8 @@ export class WalletController {
 
   @Auth(AuthType.FIREBASE)
   @Get('topup/methods')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'طرق الشحن المتاحة',
     description: 'الحصول على قائمة طرق الشحن المدعومة (كريمي، بطاقة، وكيل)',
@@ -271,6 +297,9 @@ export class WalletController {
   @Auth(AuthType.FIREBASE)
   @Throttle({ strict: { ttl: 60000, limit: 10 } }) // ✅ 10 طلبات سحب في الدقيقة
   @Post('withdraw/request')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'طلب سحب من المحفظة',
     description: 'إنشاء طلب سحب مبلغ إلى الحساب البنكي',
@@ -315,6 +344,8 @@ export class WalletController {
 
   @Auth(AuthType.FIREBASE)
   @Get('withdraw/my')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'طلبات السحب الخاصة بي',
     description: 'الحصول على قائمة طلبات السحب مع حالاتها',
@@ -332,6 +363,11 @@ export class WalletController {
 
   @Auth(AuthType.FIREBASE)
   @Patch('withdraw/:id/cancel')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'إلغاء طلب سحب',
     description: 'إلغاء طلب سحب قيد المعالجة',
@@ -349,6 +385,8 @@ export class WalletController {
 
   @Auth(AuthType.FIREBASE)
   @Get('withdraw/methods')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'طرق السحب المتاحة',
     description: 'الحصول على قائمة طرق السحب المدعومة',
@@ -369,6 +407,9 @@ export class WalletController {
 
   @Auth(AuthType.FIREBASE)
   @Post('pay-bill')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'دفع فاتورة (كهرباء، ماء، إنترنت)',
     description: 'دفع الفواتير من المحفظة',
@@ -411,6 +452,8 @@ export class WalletController {
 
   @Auth(AuthType.FIREBASE)
   @Get('bills')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({
     summary: 'سجل الفواتير المدفوعة',
     description: 'الحصول على سجل جميع الفواتير المدفوعة',
@@ -431,6 +474,9 @@ export class WalletController {
   @Auth(AuthType.FIREBASE)
   @Throttle({ strict: { ttl: 60000, limit: 5 } }) // ✅ 5 تحويلات كحد أقصى في الدقيقة
   @Post('transfer')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تحويل رصيد' })
   async transferFunds(
     @CurrentUser('id') userId: string,
@@ -451,6 +497,8 @@ export class WalletController {
 
   @Auth(AuthType.FIREBASE)
   @Get('transfers')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'سجل التحويلات' })
   async getTransfers(
     @CurrentUser('id') userId: string,
@@ -463,6 +511,10 @@ export class WalletController {
 
   @Auth(AuthType.FIREBASE)
   @Get('transaction/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'تفاصيل معاملة' })
   async getTransactionDetails(
     @Param('id') transactionId: string,
@@ -473,6 +525,9 @@ export class WalletController {
 
   @Auth(AuthType.FIREBASE)
   @Post('refund/request')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiOperation({ summary: 'طلب استرجاع' })
   async requestRefund(
     @CurrentUser('id') userId: string,
