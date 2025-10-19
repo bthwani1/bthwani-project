@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "generated_at": "2025-10-19 15:04:16",
+    "timezone": "Asia/Aden"
+  },
+  "required_evidence": [
+    {
+      "id": "contracts",
+      "files": [
+        "artifacts/contract_tests.junit.xml",
+        "artifacts/openapi_contracts.csv",
+        "artifacts/route_inventory_backend.csv"
+      ]
+    },
+    {
+      "id": "routes",
+      "files": [
+        "artifacts/route_duplicates.csv"
+      ]
+    },
+    {
+      "id": "frontend",
+      "files": [
+        "artifacts/grep_raw_fetch.txt",
+        "artifacts/fe_orphans.csv",
+        "artifacts/typed_clients_report.json"
+      ]
+    },
+    {
+      "id": "supply_chain",
+      "files": [
+        "artifacts/gitleaks.sarif",
+        "artifacts/sbom.cdx.json",
+        "artifacts/cosign.verify.txt"
+      ]
+    },
+    {
+      "id": "observability",
+      "files": [
+        "artifacts/incidents.csv",
+        "artifacts/alert_fire_log.txt",
+        "artifacts/dash_screenshots/rps_dashboard.png",
+        "artifacts/dash_screenshots/latency_dashboard.png",
+        "artifacts/dash_screenshots/error_rate_dashboard.png",
+        "artifacts/dash_screenshots/saturation_dashboard.png"
+      ]
+    },
+    {
+      "id": "dr",
+      "files": [
+        "artifacts/dr_report.md",
+        "artifacts/backup_restore_logs.txt"
+      ]
+    },
+    {
+      "id": "taxonomy",
+      "files": [
+        "artifacts/error_taxonomy_report.json"
+      ]
+    },
+    {
+      "id": "performance",
+      "files": [
+        "artifacts/web_vitals.json",
+        "artifacts/api_perf_report.json"
+      ]
+    },
+    {
+      "id": "compliance",
+      "files": [
+        "artifacts/privacy_evidence.md",
+        "artifacts/dsr_test_log.txt"
+      ]
+    }
+  ]
+}

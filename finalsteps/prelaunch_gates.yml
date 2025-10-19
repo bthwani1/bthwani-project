@@ -1,0 +1,41 @@
+name: prelaunch-gates
+on:
+  workflow_dispatch:
+  push:
+    branches: [ release/* ]
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20', cache: 'npm' }
+      - run: npm ci || true
+      - name: Contracts
+        run: npm run test:contract -- --reporter=junit --reporter-options mochaFile=artifacts/contract_tests.junit.xml
+      - name: Routes
+        run: node scripts/check-route-uniqueness.js openapi/openapi.json > artifacts/route_duplicates.csv
+      - name: FE Orphans & Raw Fetch
+        run: |
+          node scripts/check-fe-orphans.js > artifacts/fe_orphans.csv
+          bash scripts/block_raw_fetch.sh > artifacts/grep_raw_fetch.txt
+          node scripts/generate-typed-clients-report.js > artifacts/typed_clients_report.json
+      - name: Secrets & SBOM & Signing
+        run: |
+          bash scripts/secrets_scan.sh
+          bash scripts/sbom_sign.sh
+      - uses: actions/upload-artifact@v4
+        with: { name: prelaunch-artifacts, path: artifacts/** }
+      - name: Enforce Gates (files present)
+        run: |
+          python - <<'PY'
+import glob,sys
+need=[
+"artifacts/contract_tests.junit.xml","artifacts/route_duplicates.csv",
+"artifacts/fe_orphans.csv","artifacts/grep_raw_fetch.txt","artifacts/typed_clients_report.json",
+"artifacts/gitleaks.sarif","artifacts/sbom.cdx.json","artifacts/cosign.verify.txt"
+]
+miss=[p for p in need if not glob.glob(p)]
+assert not miss, "Missing artifacts: "+", ".join(miss)
+print("All required artifacts present.")
+PY

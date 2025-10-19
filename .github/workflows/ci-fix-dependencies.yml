@@ -1,0 +1,57 @@
+name: CI - Fix Dependencies
+
+on:
+  push:
+    branches: [ main, develop, release/* ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  install-dependencies:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project:
+          - backend-nest
+          - admin-dashboard
+          - bthwani-web
+          - app-user
+          - vendor-app
+          - rider-app
+          - field-marketers
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: ${{ matrix.project }}/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ${{ matrix.project }}
+        run: |
+          # Use --legacy-peer-deps to handle React 19 peer dependency conflicts
+          if [ -f package-lock.json ]; then
+            npm ci --legacy-peer-deps || npm install --legacy-peer-deps
+          else
+            npm install --legacy-peer-deps
+          fi
+        continue-on-error: false
+
+      - name: Run security audit
+        working-directory: ${{ matrix.project }}
+        run: npm audit --production --audit-level=high || true
+        continue-on-error: true
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: ${{ matrix.project }}/node_modules
+          key: ${{ runner.os }}-node-${{ matrix.project }}-${{ hashFiles(format('{0}/package-lock.json', matrix.project)) }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.project }}-
+

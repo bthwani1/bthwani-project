@@ -1,0 +1,156 @@
+[
+  {
+    "id": "PL-API",
+    "title": "Contracts Green + Parity Check",
+    "owners": [
+      "@BE"
+    ],
+    "due": "+2d",
+    "acceptance": [
+      "failures=0",
+      "parity_active=100%"
+    ],
+    "artifacts": [
+      "artifacts/contract_tests.junit.xml",
+      "artifacts/openapi_contracts.csv",
+      "artifacts/route_inventory_backend.csv"
+    ]
+  },
+  {
+    "id": "PL-ROUTE",
+    "title": "Route Uniqueness = 0",
+    "owners": [
+      "@BE",
+      "@DevOps"
+    ],
+    "due": "+1d",
+    "acceptance": [
+      "duplicates=0"
+    ],
+    "artifacts": [
+      "artifacts/route_duplicates.csv"
+    ]
+  },
+  {
+    "id": "PL-FE",
+    "title": "FE Typed Clients & Orphans = 0",
+    "owners": [
+      "@FE"
+    ],
+    "due": "+2d",
+    "acceptance": [
+      "raw_fetch=0",
+      "fe_orphans=0",
+      "typed_clients=OK"
+    ],
+    "artifacts": [
+      "artifacts/grep_raw_fetch.txt",
+      "artifacts/fe_orphans.csv",
+      "artifacts/typed_clients_report.json"
+    ]
+  },
+  {
+    "id": "PL-SEC",
+    "title": "Secrets=0 + SBOM + Signing",
+    "owners": [
+      "@Sec",
+      "@DevOps"
+    ],
+    "due": "+2d",
+    "acceptance": [
+      "gitleaks=0",
+      "sbom_present",
+      "cosign_verified"
+    ],
+    "artifacts": [
+      "artifacts/gitleaks.sarif",
+      "artifacts/sbom.cdx.json",
+      "artifacts/cosign.verify.txt"
+    ]
+  },
+  {
+    "id": "PL-OBS",
+    "title": "Observability Ready + MTTR≤30m",
+    "owners": [
+      "@Ops"
+    ],
+    "due": "+2d",
+    "acceptance": [
+      "mttr_p50<=30m",
+      "alerts_fired",
+      "dashboards_screenshots_present"
+    ],
+    "artifacts": [
+      "artifacts/incidents.csv",
+      "artifacts/alert_fire_log.txt",
+      "artifacts/dash_screenshots/*.png"
+    ]
+  },
+  {
+    "id": "PL-DR",
+    "title": "DR Proof (RPO≤15m,RTO≤30m)",
+    "owners": [
+      "@Ops"
+    ],
+    "due": "+3d",
+    "acceptance": [
+      "rpo<=15m",
+      "rto<=30m"
+    ],
+    "artifacts": [
+      "artifacts/dr_report.md",
+      "artifacts/backup_restore_logs.txt"
+    ]
+  },
+  {
+    "id": "PL-ERR",
+    "title": "Error Taxonomy ≥95% + UX mapping",
+    "owners": [
+      "@BE",
+      "@FE"
+    ],
+    "due": "+2d",
+    "acceptance": [
+      "coverage>=95%"
+    ],
+    "artifacts": [
+      "artifacts/error_taxonomy_report.json"
+    ]
+  },
+  {
+    "id": "PL-PERF",
+    "title": "Performance Budgets (Web+API)",
+    "owners": [
+      "@Perf",
+      "@FE",
+      "@BE"
+    ],
+    "due": "+3d",
+    "acceptance": [
+      "LCP_p75<=2.5s",
+      "INP<=200ms",
+      "API_p95<=target"
+    ],
+    "artifacts": [
+      "artifacts/web_vitals.json",
+      "artifacts/api_perf_report.json"
+    ]
+  },
+  {
+    "id": "PL-COMP",
+    "title": "Compliance & Privacy Evidence",
+    "owners": [
+      "@Legal",
+      "@Ops"
+    ],
+    "due": "+3d",
+    "acceptance": [
+      "DSR_test<=30d",
+      "Privacy_URL_valid"
+    ],
+    "artifacts": [
+      "artifacts/privacy_evidence.md",
+      "artifacts/dsr_test_log.txt"
+    ]
+  }
+]
