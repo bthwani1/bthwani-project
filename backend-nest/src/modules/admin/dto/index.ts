@@ -110,3 +110,18 @@ export * from './cache.dto';
 
 // Roles DTOs
 export * from './roles.dto';
+
+// Kawader DTOs
+export * from './kawader.dto';
+
+// Kenz DTOs
+export * from './kenz.dto';
+
+// Maarouf DTOs
+export * from './maarouf.dto';
+
+// Sanad DTOs
+export * from './sanad.dto';
+
+// Payments DTOs
+export * from './payments.dto';

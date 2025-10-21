@@ -37,6 +37,11 @@ import { LegalModule } from './modules/legal/legal.module';
 import { HealthModule } from './modules/health/health.module';
 import { MetricsModule } from './modules/metrics/metrics.module';
 import { QueuesModule } from './queues/queues.module';
+import { KawaderModule } from './modules/kawader/kawader.module';
+import { KenzModule } from './modules/kenz/kenz.module';
+import { MaaroufModule } from './modules/maarouf/maarouf.module';
+import { SanadModule } from './modules/sanad/sanad.module';
+import { PaymentsModule } from './modules/payments/payments.module';
 
 // Import configurations
 import databaseConfig from './config/database.config';
@@ -135,6 +140,16 @@ import { envValidationSchema } from './config/env.validation';
     AnalyticsModule,
 
     LegalModule,
+
+    KawaderModule,
+
+    KenzModule,
+
+    MaaroufModule,
+
+    SanadModule,
+
+    PaymentsModule,
 
     // Health Check & Metrics
     HealthModule,

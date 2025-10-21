@@ -16,6 +16,13 @@ import {
   ShoppingCart as ShoppingCartIcon,
   LocalFireDepartment as FireIcon,
   WaterDrop as WaterIcon,
+  Search as SearchIcon,
+  Payments as PaymentsIcon,
+  Work as WorkIcon,
+  Store as StoreIcon,
+  LocalHospital as HospitalIcon,
+  DirectionsCar as CarIcon,
+  Support as SupportIcon,
 } from "@mui/icons-material";
 
 const BottomNav: React.FC = () => {
@@ -30,6 +37,13 @@ const BottomNav: React.FC = () => {
     { path: "/gas", icon: <FireIcon />, label: "الغاز", auth: true },
     { path: "/water", icon: <WaterIcon />, label: "الماء", auth: true },
     { path: "/akhdimni", icon: <InventoryIcon />, label: "أخدمني", auth: true },
+    { path: "/maarouf", icon: <SearchIcon />, label: "معروف", auth: true },
+    { path: "/arabon", icon: <PaymentsIcon />, label: "عربون", auth: true },
+    { path: "/kawader", icon: <WorkIcon />, label: "كوادر", auth: true },
+    { path: "/kenz", icon: <StoreIcon />, label: "كنز", auth: true },
+    { path: "/es3afni", icon: <HospitalIcon />, label: "اسعفني", auth: true },
+    { path: "/amani", icon: <CarIcon />, label: "الأماني", auth: true },
+    { path: "/sanad", icon: <SupportIcon />, label: "السند", auth: true },
     { path: "/favorites", icon: <FavoriteIcon />, label: t("nav.favorites"), auth: true },
     { path: "/profile", icon: <PersonIcon />, label: t("nav.profile") },
   ];

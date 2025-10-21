@@ -52,6 +52,8 @@ interface Sanad {
 | `GET` | `/api/v2/sanad/:id` | تفاصيل طلب |
 | `PATCH` | `/api/v2/sanad/:id` | تحديث طلب |
 | `DELETE` | `/api/v2/sanad/:id` | حذف طلب |
+| `GET` | `/api/v2/sanad/my` | طلباتي (cursor) |
+| `GET` | `/api/v2/sanad/search` | البحث في الطلبات |
 
 ### أمثلة سريعة
 

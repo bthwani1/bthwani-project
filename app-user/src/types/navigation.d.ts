@@ -36,6 +36,42 @@ export type RootStackParamList = {
     | { business: any };
   GroceryMainScreen: { categoryId: string };
 
+  // المعروف (المفقودات والموجودات)
+  MaaroufList: undefined;
+  MaaroufCreate: undefined;
+  MaaroufDetails: { itemId: string };
+  MaaroufEdit: { itemId: string };
+
+  // السند (خدمات متخصصة + فزعة + خيري)
+  SanadList: undefined;
+  SanadCreate: undefined;
+  SanadDetails: { itemId: string };
+  SanadEdit: { itemId: string };
+
+  // الأماني (النقل النسائي للعائلات)
+  AmaniList: undefined;
+  AmaniCreate: undefined;
+  AmaniDetails: { itemId: string };
+  AmaniEdit: { itemId: string };
+
+  // العربون (العروض والحجوزات بعربون)
+  ArabonList: undefined;
+  ArabonCreate: undefined;
+  ArabonDetails: { itemId: string };
+  ArabonEdit: { itemId: string };
+
+  // كنز (السوق المفتوح)
+  KenzList: undefined;
+  KenzCreate: undefined;
+  KenzDetails: { itemId: string };
+  KenzEdit: { itemId: string };
+
+  // اسعفني (تبرع بالدم عاجل)
+  Es3afniList: undefined;
+  Es3afniCreate: undefined;
+  Es3afniDetails: { itemId: string };
+  Es3afniEdit: { itemId: string };
+
   // أخرى
   Login: undefined;
   Register: undefined;

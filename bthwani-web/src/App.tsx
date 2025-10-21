@@ -45,6 +45,13 @@ import UtilityGasScreen from './pages/utility/UtilityGasScreen';
 import UtilityWaterScreen from './pages/utility/UtilityWaterScreen';
 import ProtectedRoute from './ProtectedRoute';
 import GroceryScreen from './pages/delivery/GroceryScreen';
+import Maarouf from './pages/maarouf/Maarouf';
+import Arabon from './pages/arabon/Arabon';
+import Kawader from './pages/kawader/Kawader';
+import Kenz from './pages/kenz/Kenz';
+import Es3afni from './pages/es3afni/Es3afni';
+import Amani from './pages/amani/Amani';
+import Sanad from './pages/sanad/Sanad';
 
 
 
@@ -205,6 +212,244 @@ const AppContent: React.FC = () => {
         element={
           <AppLayout>
             <Akhdimni />
+          </AppLayout>
+        }
+      />
+
+      {/* معروف - المفقودات والموجودات */}
+      <Route
+        path="/maarouf"
+        element={
+          <AppLayout>
+            <Maarouf />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/maarouf/new"
+        element={
+          <AppLayout>
+            <Maarouf />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/maarouf/:id"
+        element={
+          <AppLayout>
+            <Maarouf />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/maarouf/:id/:action"
+        element={
+          <AppLayout>
+            <Maarouf />
+          </AppLayout>
+        }
+      />
+
+      {/* عربون - العروض والحجوزات بعربون */}
+      <Route
+        path="/arabon"
+        element={
+          <AppLayout>
+            <Arabon />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/arabon/new"
+        element={
+          <AppLayout>
+            <Arabon />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/arabon/:id"
+        element={
+          <AppLayout>
+            <Arabon />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/arabon/:id/:action"
+        element={
+          <AppLayout>
+            <Arabon />
+          </AppLayout>
+        }
+      />
+
+      {/* كوادر - العروض الوظيفية والخدمات المهنية */}
+      <Route
+        path="/kawader"
+        element={
+          <AppLayout>
+            <Kawader />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/kawader/new"
+        element={
+          <AppLayout>
+            <Kawader />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/kawader/:id"
+        element={
+          <AppLayout>
+            <Kawader />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/kawader/:id/:action"
+        element={
+          <AppLayout>
+            <Kawader />
+          </AppLayout>
+        }
+      />
+
+      {/* كنز - السوق المفتوح */}
+      <Route
+        path="/kenz"
+        element={
+          <AppLayout>
+            <Kenz />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/kenz/new"
+        element={
+          <AppLayout>
+            <Kenz />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/kenz/:id"
+        element={
+          <AppLayout>
+            <Kenz />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/kenz/:id/:action"
+        element={
+          <AppLayout>
+            <Kenz />
+          </AppLayout>
+        }
+      />
+
+      {/* اسعفني - شبكة تبرع بالدم عاجلة */}
+      <Route
+        path="/es3afni"
+        element={
+          <AppLayout>
+            <Es3afni />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/es3afni/new"
+        element={
+          <AppLayout>
+            <Es3afni />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/es3afni/:id"
+        element={
+          <AppLayout>
+            <Es3afni />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/es3afni/:id/:action"
+        element={
+          <AppLayout>
+            <Es3afni />
+          </AppLayout>
+        }
+      />
+
+      {/* الأماني - النقل النسائي للعائلات */}
+      <Route
+        path="/amani"
+        element={
+          <AppLayout>
+            <Amani />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/amani/new"
+        element={
+          <AppLayout>
+            <Amani />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/amani/:id"
+        element={
+          <AppLayout>
+            <Amani />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/amani/:id/:action"
+        element={
+          <AppLayout>
+            <Amani />
+          </AppLayout>
+        }
+      />
+
+      {/* السند - خدمات متخصصة + فزعة + خيري */}
+      <Route
+        path="/sanad"
+        element={
+          <AppLayout>
+            <Sanad />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/sanad/new"
+        element={
+          <AppLayout>
+            <Sanad />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/sanad/:id"
+        element={
+          <AppLayout>
+            <Sanad />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/sanad/:id/:action"
+        element={
+          <AppLayout>
+            <Sanad />
           </AppLayout>
         }
       />

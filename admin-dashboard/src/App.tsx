@@ -172,6 +172,38 @@ import TestOtpPage from "./pages/admin/TestOtpPage";
 import ErrandsListPage from "./pages/akhdimni/ErrandsListPage";
 import ErrandDetailsPage from "./pages/akhdimni/ErrandDetailsPage";
 
+// ==================== AMANI ====================
+import AmaniListPage from "./pages/admin/amani/AmaniListPage";
+import AmaniDetailsPage from "./pages/admin/amani/AmaniDetailsPage";
+
+// ==================== ARABON ====================
+import ArabonListPage from "./pages/admin/arabon/ArabonListPage";
+import ArabonDetailsPage from "./pages/admin/arabon/ArabonDetailsPage";
+
+// ==================== ES3AFNI ====================
+import Es3afniListPage from "./pages/admin/es3afni/Es3afniListPage";
+import Es3afniDetailsPage from "./pages/admin/es3afni/Es3afniDetailsPage";
+
+// ==================== KAWADER ====================
+import KawaderListPage from "./pages/admin/kawader/KawaderListPage";
+import KawaderDetailsPage from "./pages/admin/kawader/KawaderDetailsPage";
+
+// ==================== KENZ ====================
+import KenzListPage from "./pages/admin/kenz/KenzListPage";
+import KenzDetailsPage from "./pages/admin/kenz/KenzDetailsPage";
+
+// ==================== MAAROUF ====================
+import MaaroufListPage from "./pages/admin/maarouf/MaaroufListPage";
+import MaaroufDetailsPage from "./pages/admin/maarouf/MaaroufDetailsPage";
+
+// ==================== SANAD ====================
+import SanadListPage from "./pages/admin/sanad/SanadListPage";
+import SanadDetailsPage from "./pages/admin/sanad/SanadDetailsPage";
+
+// ==================== PAYMENTS ====================
+import PaymentsListPage from "./pages/admin/payments/PaymentsListPage";
+import PaymentsDetailsPage from "./pages/admin/payments/PaymentsDetailsPage";
+
 // ==================== CMS SYSTEM ====================
 const CmsOnboardingPage = React.lazy(() => import("./pages/cms/CmsOnboardingPage"));
 const CmsPagesPage = React.lazy(() => import("./pages/cms/CmsPagesPage"));
@@ -399,6 +431,38 @@ export default function App() {
         {/* ==================== AKHDIMNI ==================== */}
         <Route path="akhdimni" element={<ErrandsListPage />} />
         <Route path="akhdimni/:id" element={<ErrandDetailsPage />} />
+
+        {/* ==================== AMANI ==================== */}
+        <Route path="amani" element={<AmaniListPage />} />
+        <Route path="amani/:id" element={<AmaniDetailsPage />} />
+
+        {/* ==================== ARABON ==================== */}
+        <Route path="arabon" element={<ArabonListPage />} />
+        <Route path="arabon/:id" element={<ArabonDetailsPage />} />
+
+        {/* ==================== ES3AFNI ==================== */}
+        <Route path="es3afni" element={<Es3afniListPage />} />
+        <Route path="es3afni/:id" element={<Es3afniDetailsPage />} />
+
+        {/* ==================== KAWADER ==================== */}
+        <Route path="kawader" element={<KawaderListPage />} />
+        <Route path="kawader/:id" element={<KawaderDetailsPage />} />
+
+        {/* ==================== KENZ ==================== */}
+        <Route path="kenz" element={<KenzListPage />} />
+        <Route path="kenz/:id" element={<KenzDetailsPage />} />
+
+        {/* ==================== MAAROUF ==================== */}
+        <Route path="maarouf" element={<MaaroufListPage />} />
+        <Route path="maarouf/:id" element={<MaaroufDetailsPage />} />
+
+        {/* ==================== SANAD ==================== */}
+        <Route path="sanad" element={<SanadListPage />} />
+        <Route path="sanad/:id" element={<SanadDetailsPage />} />
+
+        {/* ==================== PAYMENTS ==================== */}
+        <Route path="payments" element={<PaymentsListPage />} />
+        <Route path="payments/:id" element={<PaymentsDetailsPage />} />
 
         {/* ==================== CMS SYSTEM ==================== */}
         <Route path="cms/onboarding" element={

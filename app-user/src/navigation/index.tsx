@@ -62,6 +62,48 @@ import CommonProductDetailsScreen from "@/screens/delivery/ProductDetailsScreen"
 import UtilityGasScreen from "@/screens/delivery/UtilityGasScreen";
 import UtilityWaterScreen from "@/screens/delivery/UtilityWaterScreen";
 
+// المعروف (Lost & Found)
+import MaaroufListScreen from "@/screens/maarouf/MaaroufListScreen";
+import MaaroufCreateScreen from "@/screens/maarouf/MaaroufCreateScreen";
+import MaaroufDetailsScreen from "@/screens/maarouf/MaaroufDetailsScreen";
+import MaaroufEditScreen from "@/screens/maarouf/MaaroufEditScreen";
+
+// السند (Services + Emergency + Charity)
+import SanadListScreen from "@/screens/sanad/SanadListScreen";
+import SanadCreateScreen from "@/screens/sanad/SanadCreateScreen";
+import SanadDetailsScreen from "@/screens/sanad/SanadDetailsScreen";
+import SanadEditScreen from "@/screens/sanad/SanadEditScreen";
+
+// الأماني (Women's Transportation)
+import AmaniListScreen from "@/screens/amani/AmaniListScreen";
+import AmaniCreateScreen from "@/screens/amani/AmaniCreateScreen";
+import AmaniDetailsScreen from "@/screens/amani/AmaniDetailsScreen";
+import AmaniEditScreen from "@/screens/amani/AmaniEditScreen";
+
+// العربون (Deposits)
+import ArabonListScreen from "@/screens/arabon/ArabonListScreen";
+import ArabonCreateScreen from "@/screens/arabon/ArabonCreateScreen";
+import ArabonDetailsScreen from "@/screens/arabon/ArabonDetailsScreen";
+import ArabonEditScreen from "@/screens/arabon/ArabonEditScreen";
+
+// الكوادر (Professional Services)
+import KawaderListScreen from "@/screens/kawader/KawaderListScreen";
+import KawaderCreateScreen from "@/screens/kawader/KawaderCreateScreen";
+import KawaderDetailsScreen from "@/screens/kawader/KawaderDetailsScreen";
+import KawaderEditScreen from "@/screens/kawader/KawaderEditScreen";
+
+// كنز (Marketplace)
+import KenzListScreen from "@/screens/kenz/KenzListScreen";
+import KenzCreateScreen from "@/screens/kenz/KenzCreateScreen";
+import KenzDetailsScreen from "@/screens/kenz/KenzDetailsScreen";
+import KenzEditScreen from "@/screens/kenz/KenzEditScreen";
+
+// اسعفني (Emergency Blood Donation)
+import Es3afniListScreen from "@/screens/es3afni/Es3afniListScreen";
+import Es3afniCreateScreen from "@/screens/es3afni/Es3afniCreateScreen";
+import Es3afniDetailsScreen from "@/screens/es3afni/Es3afniDetailsScreen";
+import Es3afniEditScreen from "@/screens/es3afni/Es3afniEditScreen";
+
 import { AuthProvider, useAuth } from "@/auth/AuthContext";
 import MyFavoritesScreen from "@/screens/FavoritesScreen";
 import HowToUseScreen from "@/screens/help/HowToUseScreen";
@@ -205,6 +247,73 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         )}
       </View>
       <DrawerItemList {...props} />
+
+      {/* قسم الخدمات المجتمعية */}
+      <View style={{ marginTop: 20, paddingHorizontal: 16 }}>
+        <Text style={{
+          fontSize: 14,
+          fontFamily: "Cairo-Bold",
+          color: "#666",
+          marginBottom: 12,
+          textAlign: "right"
+        }}>
+          الخدمات المجتمعية
+        </Text>
+
+        {/* زر السند */}
+        <TouchableOpacity
+          style={{
+            flexDirection: "row-reverse",
+            alignItems: "center",
+            paddingVertical: 12,
+            paddingHorizontal: 16,
+            marginBottom: 8,
+            borderRadius: 8,
+            backgroundColor: "rgba(255, 80, 13, 0.1)",
+          }}
+          onPress={() => navigation.navigate("SanadList" as never)}
+        >
+          <Ionicons name="briefcase-outline" size={20} color={BRAND.primary} />
+          <Text style={{
+            fontSize: 16,
+            fontFamily: "Cairo-SemiBold",
+            color: BRAND.primary,
+            marginRight: 12,
+            textAlign: "right",
+            flex: 1
+          }}>
+            سند
+          </Text>
+          <Ionicons name="chevron-left" size={16} color={BRAND.primary} />
+        </TouchableOpacity>
+
+        {/* زر الأماني */}
+        <TouchableOpacity
+          style={{
+            flexDirection: "row-reverse",
+            alignItems: "center",
+            paddingVertical: 12,
+            paddingHorizontal: 16,
+            marginBottom: 8,
+            borderRadius: 8,
+            backgroundColor: "rgba(255, 80, 13, 0.1)",
+          }}
+          onPress={() => navigation.navigate("AmaniList" as never)}
+        >
+          <Ionicons name="car-outline" size={20} color={BRAND.primary} />
+          <Text style={{
+            fontSize: 16,
+            fontFamily: "Cairo-SemiBold",
+            color: BRAND.primary,
+            marginRight: 12,
+            textAlign: "right",
+            flex: 1
+          }}>
+            أماني
+          </Text>
+          <Ionicons name="chevron-left" size={16} color={BRAND.primary} />
+        </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 };
@@ -536,6 +645,49 @@ function AppStackNavigator() {
       <AppStack.Screen name="Subscriptions" component={SubscriptionsScreen} />
       <AppStack.Screen name="HowToUse" component={HowToUseScreen} />
       <AppStack.Screen name="Support" component={SupportScreen} />
+
+      {/* المعروف (Lost & Found) */}
+      <AppStack.Screen name="MaaroufList" component={MaaroufListScreen} />
+      <AppStack.Screen name="MaaroufCreate" component={MaaroufCreateScreen} />
+      <AppStack.Screen name="MaaroufDetails" component={MaaroufDetailsScreen} />
+      <AppStack.Screen name="MaaroufEdit" component={MaaroufEditScreen} />
+
+      {/* السند (Services + Emergency + Charity) */}
+      <AppStack.Screen name="SanadList" component={SanadListScreen} />
+      <AppStack.Screen name="SanadCreate" component={SanadCreateScreen} />
+      <AppStack.Screen name="SanadDetails" component={SanadDetailsScreen} />
+      <AppStack.Screen name="SanadEdit" component={SanadEditScreen} />
+
+      {/* الأماني (Women's Transportation) */}
+      <AppStack.Screen name="AmaniList" component={AmaniListScreen} />
+      <AppStack.Screen name="AmaniCreate" component={AmaniCreateScreen} />
+      <AppStack.Screen name="AmaniDetails" component={AmaniDetailsScreen} />
+      <AppStack.Screen name="AmaniEdit" component={AmaniEditScreen} />
+
+      {/* العربون (Deposits) */}
+      <AppStack.Screen name="ArabonList" component={ArabonListScreen} />
+      <AppStack.Screen name="ArabonCreate" component={ArabonCreateScreen} />
+      <AppStack.Screen name="ArabonDetails" component={ArabonDetailsScreen} />
+      <AppStack.Screen name="ArabonEdit" component={ArabonEditScreen} />
+
+      {/* كنز (Marketplace) */}
+      <AppStack.Screen name="KenzList" component={KenzListScreen} />
+      <AppStack.Screen name="KenzCreate" component={KenzCreateScreen} />
+      <AppStack.Screen name="KenzDetails" component={KenzDetailsScreen} />
+      <AppStack.Screen name="KenzEdit" component={KenzEditScreen} />
+
+      {/* الكوادر (Professional Services) */}
+      <AppStack.Screen name="KawaderList" component={KawaderListScreen} />
+      <AppStack.Screen name="KawaderCreate" component={KawaderCreateScreen} />
+      <AppStack.Screen name="KawaderDetails" component={KawaderDetailsScreen} />
+      <AppStack.Screen name="KawaderEdit" component={KawaderEditScreen} />
+
+      {/* اسعفني (Emergency Blood Donation) */}
+      <AppStack.Screen name="Es3afniList" component={Es3afniListScreen} />
+      <AppStack.Screen name="Es3afniCreate" component={Es3afniCreateScreen} />
+      <AppStack.Screen name="Es3afniDetails" component={Es3afniDetailsScreen} />
+      <AppStack.Screen name="Es3afniEdit" component={Es3afniEditScreen} />
+
       <AppStack.Screen name="Login" component={LoginScreen} />
     </AppStack.Navigator>
   );

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Query, Patch, Delete, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, Patch, Delete, HttpStatus, Req } from '@nestjs/common';
 import { 
   ApiTags,
   ApiOperation,
@@ -97,5 +97,30 @@ export class SanadController {
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'غير مخول' })
   remove(@Param('id') id: string) {
     return this.service.remove(id);
+  }
+
+  @Get('my')
+  @ApiOperation({ summary: 'طلباتي', description: 'استرجاع طلبات المستخدم الحالي' })
+  @ApiQuery({ name: 'cursor', required: false, description: 'مؤشر الصفحة التالية', example: '507f1f77bcf86cd799439012' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'تم الاسترجاع بنجاح' })
+  @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'غير مخول' })
+  getMy(@Query('cursor') cursor?: string, @Req() req?: any) {
+    const userId = req?.user?.id || 'test-user'; // يجب استخراج من JWT
+    return this.service.findByOwner(userId, { cursor });
+  }
+
+  @Get('search')
+  @ApiOperation({ summary: 'البحث في الطلبات', description: 'البحث في الطلبات بالعنوان أو الوصف' })
+  @ApiQuery({ name: 'q', required: true, description: 'كلمة البحث', example: 'إسعاف' })
+  @ApiQuery({ name: 'kind', required: false, description: 'نوع الطلب', enum: ['specialist','emergency','charity'] })
+  @ApiQuery({ name: 'cursor', required: false, description: 'مؤشر الصفحة التالية', example: '507f1f77bcf86cd799439012' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'تم البحث بنجاح' })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'بيانات غير صحيحة' })
+  search(
+    @Query('q') query: string,
+    @Query('kind') kind?: string,
+    @Query('cursor') cursor?: string
+  ) {
+    return this.service.search(query, kind as any, { cursor });
   }
 }

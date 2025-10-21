@@ -2,7 +2,7 @@
  * Admin Navigation - قائمة تنقل محدثة بجميع الـ endpoints
  */
 
-import { 
+import {
   Dashboard,
   DirectionsCar,
   Store,
@@ -13,6 +13,14 @@ import {
   Settings,
   AttachMoney,
   WorkOutline,
+  Star,
+  Payments,
+  Bloodtype,
+  Work,
+  ShoppingCart,
+  Search,
+  Help,
+  Payment,
 } from '@mui/icons-material';
 import { ADMIN_ENDPOINTS_BY_MODULE, ENDPOINTS_STATS } from '@/config/admin-endpoints';
 
@@ -92,6 +100,46 @@ export const adminNavigation: NavItem[] = [
     title: 'خدمة أخدمني',
     path: '/admin/akhdimni',
     icon: <WorkOutline />,
+  },
+  {
+    title: 'الأماني',
+    path: '/admin/amani',
+    icon: <Star />,
+  },
+  {
+    title: 'العربون',
+    path: '/admin/arabon',
+    icon: <Payments />,
+  },
+  {
+    title: 'إسعفني',
+    path: '/admin/es3afni',
+    icon: <Bloodtype />,
+  },
+  {
+    title: 'الكوادر',
+    path: '/admin/kawader',
+    icon: <Work />,
+  },
+  {
+    title: 'الكنز',
+    path: '/admin/kenz',
+    icon: <ShoppingCart />,
+  },
+  {
+    title: 'معروف',
+    path: '/admin/maarouf',
+    icon: <Search />,
+  },
+  {
+    title: 'الصناد',
+    path: '/admin/sanad',
+    icon: <Help />,
+  },
+  {
+    title: 'المدفوعات',
+    path: '/admin/payments',
+    icon: <Payment />,
   },
   {
     title: 'الإعدادات',
