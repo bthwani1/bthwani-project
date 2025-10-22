@@ -70,7 +70,11 @@ jobs:
       - name: Extract Frontend API Calls - Admin Dashboard
         run: |
           if [ -d admin-dashboard/src ]; then
-            npx --yes ts-node scripts/extract-fe-calls.ts admin-dashboard/src > artifacts/fe_calls_admin.csv || echo "Warning: Could not extract admin calls"
+            npx --yes ts-node scripts/extract-fe-calls.ts admin-dashboard/src > artifacts/fe_calls_admin.csv
+            if [ ! -s artifacts/fe_calls_admin.csv ]; then
+              echo "❌ Admin calls extraction failed - empty file generated"
+              exit 1
+            fi
           else
             echo "Admin dashboard not found, skipping"
           fi
@@ -78,7 +82,11 @@ jobs:
       - name: Extract Frontend API Calls - Web
         run: |
           if [ -d bthwani-web/src ]; then
-            npx --yes ts-node scripts/extract-fe-calls.ts bthwani-web/src > artifacts/fe_calls_web.csv || echo "Warning: Could not extract web calls"
+            npx --yes ts-node scripts/extract-fe-calls.ts bthwani-web/src > artifacts/fe_calls_web.csv
+            if [ ! -s artifacts/fe_calls_web.csv ]; then
+              echo "❌ Web calls extraction failed - empty file generated"
+              exit 1
+            fi
           else
             echo "Web app not found, skipping"
           fi
@@ -86,9 +94,37 @@ jobs:
       - name: Extract Frontend API Calls - App
         run: |
           if [ -d app-user/src ]; then
-            npx --yes ts-node scripts/extract-fe-calls.ts app-user/src > artifacts/fe_calls_app.csv || echo "Warning: Could not extract app calls"
+            npx --yes ts-node scripts/extract-fe-calls.ts app-user/src > artifacts/fe_calls_app.csv
+            if [ ! -s artifacts/fe_calls_app.csv ]; then
+              echo "❌ App calls extraction failed - empty file generated"
+              exit 1
+            fi
           else
             echo "User app not found, skipping"
+          fi
+
+      - name: Extract Frontend API Calls - Vendor
+        run: |
+          if [ -d vendor-app/src ]; then
+            npx --yes ts-node scripts/extract-fe-calls.ts vendor-app/src > artifacts/fe_calls_vendor.csv
+            if [ ! -s artifacts/fe_calls_vendor.csv ]; then
+              echo "❌ Vendor calls extraction failed - empty file generated"
+              exit 1
+            fi
+          else
+            echo "Vendor app not found, skipping"
+          fi
+
+      - name: Extract Frontend API Calls - Rider
+        run: |
+          if [ -d rider-app/src ]; then
+            npx --yes ts-node scripts/extract-fe-calls.ts rider-app/src > artifacts/fe_calls_rider.csv
+            if [ ! -s artifacts/fe_calls_rider.csv ]; then
+              echo "❌ Rider calls extraction failed - empty file generated"
+              exit 1
+            fi
+          else
+            echo "Rider app not found, skipping"
           fi
 
       - name: Check for FE Orphans

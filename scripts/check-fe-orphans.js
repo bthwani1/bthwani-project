@@ -7,16 +7,16 @@ function csv(p) {
     console.warn(`⚠️  File not found: ${p}`);
     return [];
   }
-  
+
   const content = fs.readFileSync(p, 'utf-8').trim();
   if (!content) {
     console.warn(`⚠️  File is empty: ${p}`);
     return [];
   }
-  
+
   const lines = content.split('\n');
   const headers = lines.shift().split(',');
-  
+
   return lines.map(line => {
     const values = line.split(',');
     const obj = {};
