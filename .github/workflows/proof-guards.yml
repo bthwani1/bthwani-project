@@ -50,14 +50,13 @@ jobs:
         run: mkdir -p artifacts
 
       - name: Install root TS tooling
-        run: npm i -D ts-node typescript @types/node fast-glob
+        run: npm i -D tsx typescript @types/node fast-glob
 
       - name: Generate Backend Route Inventory
         run: |
           if [ -d backend-nest/src ]; then
             cd backend-nest
-            npx ts-node --esm --project ../scripts/tsconfig.json --transpile-only \
-              scripts/extract-routes.ts || echo "Warning: Could not extract routes"
+            npx tsx scripts/extract-routes.ts
           else
             echo "Backend not found, skipping"
           fi
@@ -66,8 +65,7 @@ jobs:
         run: |
           if [ -d backend-nest/src ]; then
             cd backend-nest
-            npx ts-node --esm --project ../scripts/tsconfig.json --transpile-only \
-              scripts/extract-openapi.ts || echo "Warning: Could not extract OpenAPI"
+            npx tsx scripts/extract-openapi.ts
           else
             echo "Backend not found, skipping"
           fi
@@ -75,32 +73,27 @@ jobs:
       - name: Extract Frontend API Calls - Admin
         run: |
           mkdir -p artifacts
-          npx ts-node --esm --project scripts/tsconfig.json --transpile-only \
-            scripts/extract-fe-calls.ts admin-dashboard/src > artifacts/fe_calls_admin.csv
+          npx tsx scripts/extract-fe-calls.ts admin-dashboard/src > artifacts/fe_calls_admin.csv
           test -s artifacts/fe_calls_admin.csv
 
       - name: Extract Frontend API Calls - Web
         run: |
-          npx ts-node --esm --project scripts/tsconfig.json --transpile-only \
-            scripts/extract-fe-calls.ts bthwani-web/src > artifacts/fe_calls_web.csv
+          npx tsx scripts/extract-fe-calls.ts bthwani-web/src > artifacts/fe_calls_web.csv
           test -s artifacts/fe_calls_web.csv
 
       - name: Extract Frontend API Calls - App
         run: |
-          npx ts-node --esm --project scripts/tsconfig.json --transpile-only \
-            scripts/extract-fe-calls.ts app-user/src > artifacts/fe_calls_app.csv
+          npx tsx scripts/extract-fe-calls.ts app-user/src > artifacts/fe_calls_app.csv
           test -s artifacts/fe_calls_app.csv
 
       - name: Extract Frontend API Calls - Vendor
         run: |
-          npx ts-node --esm --project scripts/tsconfig.json --transpile-only \
-            scripts/extract-fe-calls.ts vendor-app/src > artifacts/fe_calls_vendor.csv
+          npx tsx scripts/extract-fe-calls.ts vendor-app/src > artifacts/fe_calls_vendor.csv
           test -s artifacts/fe_calls_vendor.csv
 
       - name: Extract Frontend API Calls - Rider
         run: |
-          npx ts-node --esm --project scripts/tsconfig.json --transpile-only \
-            scripts/extract-fe-calls.ts rider-app/src > artifacts/fe_calls_rider.csv
+          npx tsx scripts/extract-fe-calls.ts rider-app/src > artifacts/fe_calls_rider.csv
           test -s artifacts/fe_calls_rider.csv
 
       - name: Check for FE Orphans
