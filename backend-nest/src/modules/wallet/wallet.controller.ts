@@ -387,14 +387,75 @@ export class WalletController {
   @Get('withdraw/methods')
   @ApiResponse({ status: 200, description: 'Success' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @ApiOperation({
-    summary: 'طرق السحب المتاحة',
-    description: 'الحصول على قائمة طرق السحب المدعومة',
-  })
-  @ApiResponse({ status: 200, description: 'قائمة طرق السحب' })
-  @ApiResponse({ status: 401, description: 'غير مصرّح' })
-  async getWithdrawMethods() {
-    return this.walletService.getWithdrawMethods();
+  async getWithdrawalMethods() {
+    return this.walletService.getWithdrawalMethods();
+  }
+
+  // ==================== Admin Withdrawal Management ====================
+
+  @Auth(AuthType.FIREBASE)
+  @Roles('admin', 'superadmin')
+  @Get('admin/withdrawals')
+  @ApiOperation({ summary: 'جلب طلبات السحب (Admin)' })
+  @ApiQuery({ name: 'status', required: false })
+  @ApiQuery({ name: 'userModel', required: false })
+  @ApiQuery({ name: 'page', required: false })
+  @ApiQuery({ name: 'limit', required: false })
+  async getAllWithdrawals(
+    @Query('status') status?: string,
+    @Query('userModel') userModel?: string,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 20,
+  ) {
+    return this.walletService.getAllWithdrawals({
+      status,
+      userModel,
+      page,
+      limit,
+    });
+  }
+
+  @Auth(AuthType.FIREBASE)
+  @Roles('admin', 'superadmin')
+  @Get('admin/withdrawals/pending')
+  @ApiOperation({ summary: 'طلبات السحب المعلقة (Admin)' })
+  async getPendingWithdrawals() {
+    return this.walletService.getPendingWithdrawals();
+  }
+
+  @Auth(AuthType.FIREBASE)
+  @Roles('admin', 'superadmin')
+  @Patch('admin/withdrawals/:id/approve')
+  @ApiOperation({ summary: 'الموافقة على طلب سحب (Admin)' })
+  @ApiParam({ name: 'id', description: 'معرّف طلب السحب' })
+  async approveWithdrawal(
+    @Param('id') withdrawalId: string,
+    @Body() body: { transactionRef?: string; notes?: string },
+    @CurrentUser('id') adminId: string,
+  ) {
+    return await this.walletService.approveWithdrawal({
+      withdrawalId,
+      adminId,
+      transactionRef: body.transactionRef,
+      notes: body.notes,
+    });
+  }
+
+  @Auth(AuthType.FIREBASE)
+  @Roles('admin', 'superadmin')
+  @Patch('admin/withdrawals/:id/reject')
+  @ApiOperation({ summary: 'رفض طلب سحب (Admin)' })
+  @ApiParam({ name: 'id', description: 'معرّف طلب السحب' })
+  async rejectWithdrawal(
+    @Param('id') withdrawalId: string,
+    @Body() body: { reason: string },
+    @CurrentUser('id') adminId: string,
+  ) {
+    return await this.walletService.rejectWithdrawal({
+      withdrawalId,
+      adminId,
+      reason: body.reason,
+    });
   }
 
   // ==================== Coupons ====================

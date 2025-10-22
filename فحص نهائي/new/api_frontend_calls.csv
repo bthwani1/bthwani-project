@@ -1,0 +1,477 @@
+surface,file,client,method,path,normalized_path
+ADMIN-DASH,bthwani-project-main/admin-dashboard/public/sw.js,fetch,GET,/api/content/latest,/API/CONTENT/LATEST
+ADMIN-DASH,bthwani-project-main/admin-dashboard/public/sw.js,headers,GET,accept,/ACCEPT
+ADMIN-DASH,bthwani-project-main/admin-dashboard/public/sw.js,cache,PUT,/api/content/latest,/API/CONTENT/LATEST
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/adminNotifications.ts,api,GET,/admin/notifications/campaigns,/ADMIN/NOTIFICATIONS/CAMPAIGNS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/adminNotifications.ts,api,POST,/admin/notifications/campaigns,/ADMIN/NOTIFICATIONS/CAMPAIGNS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/adminNotifications.ts,api,GET,/admin/notifications/templates,/ADMIN/NOTIFICATIONS/TEMPLATES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/adminNotifications.ts,api,POST,/admin/notifications/templates,/ADMIN/NOTIFICATIONS/TEMPLATES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/adminOverview.ts,axios,GET,/admin/dashboard/summary,/ADMIN/DASHBOARD/SUMMARY
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/adminOverview.ts,axios,GET,/admin/dashboard/timeseries,/ADMIN/DASHBOARD/TIMESERIES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/adminOverview.ts,axios,GET,/admin/dashboard/top,/ADMIN/DASHBOARD/TOP
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/adminOverview.ts,axios,GET,/admin/dashboard/alerts,/ADMIN/DASHBOARD/ALERTS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/adminUsers.ts,api,GET,/admin/users,/ADMIN/USERS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/adminUsers.ts,api,POST,/admin/users,/ADMIN/USERS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/adminUsers.ts,api,GET,/admin/modules,/ADMIN/MODULES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/akhdimni.ts,axiosInstance,GET,/akhdimni/admin/errands,/AKHDIMNI/ADMIN/ERRANDS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/amani.ts,api,GET,/admin/amani,/ADMIN/AMANI
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/arabon.ts,api,GET,/admin/arabon,/ADMIN/ARABON
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/cmsApi.ts,axiosInstance,POST,/admin/onboarding-slides,/ADMIN/ONBOARDING-SLIDES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/cmsApi.ts,axiosInstance,POST,/admin/pages,/ADMIN/PAGES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/documents.ts,axiosInstance,DELETE,/er/documents/bulk,/ER/DOCUMENTS/BULK
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/documents.ts,axiosInstance,GET,/er/documents/export,/ER/DOCUMENTS/EXPORT
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/driverFinance.ts,api,GET,/admin/drivers/finance,/ADMIN/DRIVERS/FINANCE
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/driverFinance.ts,api,POST,/admin/drivers/finance/run,/ADMIN/DRIVERS/FINANCE/RUN
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/es3afni.ts,api,GET,/admin/es3afni,/ADMIN/ES3AFNI
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/kawader.ts,api,GET,/admin/kawader,/ADMIN/KAWADER
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/kawader.ts,api,GET,/admin/kawader/stats/overview,/ADMIN/KAWADER/STATS/OVERVIEW
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/kenz.ts,api,GET,/admin/kenz,/ADMIN/KENZ
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/kenz.ts,api,GET,/admin/kenz/stats/overview,/ADMIN/KENZ/STATS/OVERVIEW
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/maarouf.ts,api,GET,/admin/maarouf,/ADMIN/MAAROUF
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/maarouf.ts,api,GET,/admin/maarouf/stats/overview,/ADMIN/MAAROUF/STATS/OVERVIEW
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/merchant.ts,axiosInstance,GET,/merchant/catalog/products,/MERCHANT/CATALOG/PRODUCTS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/merchant.ts,axiosInstance,POST,/merchant/catalog/products,/MERCHANT/CATALOG/PRODUCTS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/merchant.ts,axiosInstance,GET,/merchant/categories,/MERCHANT/CATEGORIES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/merchant.ts,axiosInstance,POST,/merchant/categories,/MERCHANT/CATEGORIES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/merchant.ts,axiosInstance,GET,/merchant/attributes,/MERCHANT/ATTRIBUTES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/merchant.ts,axiosInstance,POST,/merchant/attributes,/MERCHANT/ATTRIBUTES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/merchant.ts,axiosInstance,GET,/merchant/products,/MERCHANT/PRODUCTS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/merchant.ts,axiosInstance,POST,/merchant/products,/MERCHANT/PRODUCTS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/merchant.ts,axiosInstance,GET,/merchant,/MERCHANT
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/merchant.ts,axiosInstance,POST,/merchant,/MERCHANT
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/orders.ts,axiosInstance,GET,/delivery/order,/DELIVERY/ORDER
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/orders.ts,axiosInstance,GET,/delivery/order/export,/DELIVERY/ORDER/EXPORT
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/payments.ts,api,GET,/admin/payments,/ADMIN/PAYMENTS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/payments.ts,api,GET,/admin/payments/stats/overview,/ADMIN/PAYMENTS/STATS/OVERVIEW
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/promotions.ts,axiosInstance,GET,/promotions/stats/overview,/PROMOTIONS/STATS/OVERVIEW
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/reports.ts,axiosInstance,POST,/admin/reports/generate,/ADMIN/REPORTS/GENERATE
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/reports.ts,axiosInstance,GET,/admin/reports/realtime,/ADMIN/REPORTS/REALTIME
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/sanad.ts,api,GET,/admin/sanad,/ADMIN/SANAD
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/sanad.ts,api,GET,/admin/sanad/stats/overview,/ADMIN/SANAD/STATS/OVERVIEW
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/settlements.ts,axiosInstance,GET,/admin/wallet/settlements/export,/ADMIN/WALLET/SETTLEMENTS/EXPORT
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/vendors.ts,axiosInstance,GET,/vendors,/VENDORS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/wallet.ts,axiosInstance,POST,/v2/wallet/hold,/V2/WALLET/HOLD
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/wallet.ts,axiosInstance,POST,/v2/wallet/release,/V2/WALLET/RELEASE
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/api/wallet.ts,axiosInstance,POST,/v2/wallet/refund,/V2/WALLET/REFUND
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/hook/useAdminUser.ts,axios,GET,/admin/me,/ADMIN/ME
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/hook/useFeatures.ts,axios,GET,/features,/FEATURES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/landing/pages/BecomeCaptainPage.tsx,axios,POST,/api/leads/captain,/API/LEADS/CAPTAIN
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/landing/pages/ContactPage.tsx,axios,POST,/api/support/contact,/API/SUPPORT/CONTACT
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/landing/pages/ForMerchantsPage.tsx,axios,POST,/api/leads/merchant,/API/LEADS/MERCHANT
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/AdminCampaignsPanel.tsx,v,DELETE,user,/USER
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/AdminCampaignsPanel.tsx,v,DELETE,driver,/DRIVER
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/AdminCampaignsPanel.tsx,v,DELETE,vendor,/VENDOR
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/AdminDriversPage.tsx,axios,GET,/admin/drivers,/ADMIN/DRIVERS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/AdminDriversPage.tsx,axios,POST,/admin/drivers,/ADMIN/DRIVERS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/AdminVendorCreatePage.tsx,axios,GET,/admin/vendors,/ADMIN/VENDORS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/AdminVendorCreatePage.tsx,axios,GET,/delivery/stores,/DELIVERY/STORES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/AdminVendorCreatePage.tsx,axios,POST,/vendor,/VENDOR
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/AppearanceSettingsPage.tsx,axios,GET,/admin/settings/appearance,/ADMIN/SETTINGS/APPEARANCE
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/AppearanceSettingsPage.tsx,axios,PUT,/admin/settings/appearance,/ADMIN/SETTINGS/APPEARANCE
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/OverviewPage.tsx,axios,GET,/admin/dashboard/summary,/ADMIN/DASHBOARD/SUMMARY
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/OverviewPage.tsx,axios,GET,/admin/dashboard/timeseries,/ADMIN/DASHBOARD/TIMESERIES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/OverviewPage.tsx,axios,GET,/admin/dashboard/top,/ADMIN/DASHBOARD/TOP
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/OverviewPage.tsx,axios,GET,/admin/dashboard/alerts,/ADMIN/DASHBOARD/ALERTS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/UserManagement.tsx,axios,GET,/admin/users/list,/ADMIN/USERS/LIST
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/UserManagement.tsx,axios,POST,/admin/users,/ADMIN/USERS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/UsersListPage.tsx,axios,GET,/admin/users/list,/ADMIN/USERS/LIST
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/admins/api.ts,axios,GET,/admin/modules,/ADMIN/MODULES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/admins/api.ts,axios,GET,/admin/list,/ADMIN/LIST
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/admins/api.ts,axios,POST,/admin/create,/ADMIN/CREATE
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/commission/useCommissionPlans.ts,api,POST,/admin/commission-plans,/ADMIN/COMMISSION-PLANS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/finance/CommissionSettingsPage.tsx,axios,GET,/finance/commissions/settings,/FINANCE/COMMISSIONS/SETTINGS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/finance/CommissionSettingsPage.tsx,axios,GET,/finance/commissions/audit-log,/FINANCE/COMMISSIONS/AUDIT-LOG
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/finance/CommissionSettingsPage.tsx,axios,POST,/finance/commissions/settings,/FINANCE/COMMISSIONS/SETTINGS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/groceries/MerchantProductsPage.tsx,axios,GET,/delivery/stores,/DELIVERY/STORES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/marketing/AdminCouponsPage.tsx,api,GET,admin/wallet/coupons,/ADMIN/WALLET/COUPONS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/marketing/AdminCouponsPage.tsx,api,POST,/wallet/coupons,/WALLET/COUPONS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/onboarding/usePendingActivations.ts,api,GET,/admin/pending-activations,/ADMIN/PENDING-ACTIVATIONS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/onboarding/usePendingActivations.ts,api,GET,/delivery/stores,/DELIVERY/STORES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/onboarding/usePendingActivations.ts,api,GET,/admin/vendors,/ADMIN/VENDORS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/ops/OpsDriversDashboard.tsx,axios,GET,/admin/ops/drivers/realtime,/ADMIN/OPS/DRIVERS/REALTIME
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/ops/OpsDriversDashboard.tsx,axios,GET,/admin/ops/heatmap,/ADMIN/OPS/HEATMAP
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/pricing/PricingStrategiesPage.tsx,axios,GET,/pricing-strategies,/PRICING-STRATEGIES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/pricing/PricingStrategiesPage.tsx,axios,POST,/pricing-strategies,/PRICING-STRATEGIES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/reports/useMarketerReports.ts,api,GET,/reports/marketers/overview,/REPORTS/MARKETERS/OVERVIEW
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/support/SupportTicketsPage.tsx,axios,GET,/admin/support/stats,/ADMIN/SUPPORT/STATS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/support/SupportTicketsPage.tsx,axios,POST,/admin/support/tickets,/ADMIN/SUPPORT/TICKETS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/system/AuditLogPage.tsx,axios,GET,/admin/audit-logs/stats,/ADMIN/AUDIT-LOGS/STATS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/system/AuditLogPage.tsx,axios,GET,/admin/audit-logs/my-actions?limit=3,/ADMIN/AUDIT-LOGS/MY-ACTIONS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/vendors/VendorsManagement.tsx,axios,GET,/admin/vendors,/ADMIN/VENDORS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/admin/vendors/VendorsManagement.tsx,axios,POST,/admin/vendors,/ADMIN/VENDORS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/delivery/DeliveryBannersPage.tsx,axios,GET,/delivery/banners/admin,/DELIVERY/BANNERS/ADMIN
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/delivery/DeliveryBannersPage.tsx,axios,GET,/delivery/stores,/DELIVERY/STORES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/delivery/DeliveryBannersPage.tsx,axios,GET,/delivery/categories,/DELIVERY/CATEGORIES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/delivery/DeliveryCategoriesPage.tsx,axios,POST,/delivery/categories/bulk-reorder,/DELIVERY/CATEGORIES/BULK-REORDER
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/delivery/DeliveryPromotionsPage.tsx,axios,POST,/promotions,/PROMOTIONS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/drivers/DriversList.tsx,axios,GET,/admin/drivers/attendance,/ADMIN/DRIVERS/ATTENDANCE
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/drivers/tabs/Assets.tsx,axios,GET,/admin/driver-assets,/ADMIN/DRIVER-ASSETS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/drivers/tabs/Documents.tsx,axios,GET,/admin/drivers/docs,/ADMIN/DRIVERS/DOCS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/drivers/tabs/Finance.tsx,axios,GET,/admin/driver-payouts,/ADMIN/DRIVER-PAYOUTS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/drivers/tabs/Shifts.tsx,axios,GET,/admin/driver-shifts,/ADMIN/DRIVER-SHIFTS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/drivers/tabs/Vacations.tsx,api,GET,/admin/drivers/vacations/stats,/ADMIN/DRIVERS/VACATIONS/STATS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/marketing/AdSpendUpload.tsx,axios,POST,/marketing/adspend/upload,/MARKETING/ADSPEND/UPLOAD
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/marketing/Segments.tsx,axios,POST,/segments/preview,/SEGMENTS/PREVIEW
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/marketing/Segments.tsx,axios,POST,/segments/sync,/SEGMENTS/SYNC
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/money/GeneralLedger.tsx,http,GET,/accounts,/ACCOUNTS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/money/GeneralLedger.tsx,http,GET,/opening-balance,/OPENING-BALANCE
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/money/GeneralLedger.tsx,http,GET,/journals,/JOURNALS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/money/JournalEntries.tsx,axios,GET,/journal-entries,/JOURNAL-ENTRIES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/money/JournalEntries.tsx,axios,GET,/accounts/chart?onlyLeaf=1,/ACCOUNTS/CHART
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/money/JournalEntries.tsx,axios,POST,/journal-entries,/JOURNAL-ENTRIES
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/money/OpeningBalanceModal.tsx,http,POST,/opening-balance,/OPENING-BALANCE
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/parteners/PartnerDetails.tsx,axios,GET,/partners,/PARTNERS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/parteners/PartnerDetails.tsx,axios,POST,/partners/upsert,/PARTNERS/UPSERT
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/parteners/PartnersList.tsx,axios,GET,/partners,/PARTNERS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/support/Inbox.tsx,axios,GET,/admin/dashboard/support-tickets,/ADMIN/DASHBOARD/SUPPORT-TICKETS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/support/Reports.tsx,axios,GET,/support/reports/summary,/SUPPORT/REPORTS/SUMMARY
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/pages/support/TicketView.tsx,axios,GET,/admin/dashboard/support-tickets,/ADMIN/DASHBOARD/SUPPORT-TICKETS
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/services/chartAccount.api.ts,axios,GET,/accounts/chart,/ACCOUNTS/CHART
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/services/chartAccount.api.ts,axios,GET,/accounts/chart/tree,/ACCOUNTS/CHART/TREE
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/services/chartAccount.api.ts,axios,POST,/accounts/chart,/ACCOUNTS/CHART
+ADMIN-DASH,bthwani-project-main/admin-dashboard/src/services/uploadService.ts,axios,POST,/media/sign-upload,/MEDIA/SIGN-UPLOAD
+UNKNOWN,bthwani-project-main/app-user/src/api/akhdimniApi.ts,axiosInstance,POST,/akhdimni/errands/calculate-fee,/AKHDIMNI/ERRANDS/CALCULATE-FEE
+UNKNOWN,bthwani-project-main/app-user/src/api/akhdimniApi.ts,axiosInstance,POST,/akhdimni/errands,/AKHDIMNI/ERRANDS
+UNKNOWN,bthwani-project-main/app-user/src/api/akhdimniApi.ts,axiosInstance,GET,/akhdimni/my-errands,/AKHDIMNI/MY-ERRANDS
+UNKNOWN,bthwani-project-main/app-user/src/api/amaniApi.ts,axiosInstance,POST,/amani,/AMANI
+UNKNOWN,bthwani-project-main/app-user/src/api/amaniApi.ts,axiosInstance,GET,/amani,/AMANI
+UNKNOWN,bthwani-project-main/app-user/src/api/amaniApi.ts,axiosInstance,GET,/amani/my,/AMANI/MY
+UNKNOWN,bthwani-project-main/app-user/src/api/amaniApi.ts,axiosInstance,GET,/amani/search,/AMANI/SEARCH
+UNKNOWN,bthwani-project-main/app-user/src/api/arabonApi.ts,axiosInstance,POST,/arabon,/ARABON
+UNKNOWN,bthwani-project-main/app-user/src/api/arabonApi.ts,axiosInstance,GET,/arabon,/ARABON
+UNKNOWN,bthwani-project-main/app-user/src/api/arabonApi.ts,axiosInstance,GET,/arabon/my,/ARABON/MY
+UNKNOWN,bthwani-project-main/app-user/src/api/arabonApi.ts,axiosInstance,GET,/arabon/search,/ARABON/SEARCH
+UNKNOWN,bthwani-project-main/app-user/src/api/es3afniApi.ts,axiosInstance,POST,/es3afni,/ES3AFNI
+UNKNOWN,bthwani-project-main/app-user/src/api/es3afniApi.ts,axiosInstance,GET,/es3afni,/ES3AFNI
+UNKNOWN,bthwani-project-main/app-user/src/api/es3afniApi.ts,axiosInstance,GET,/es3afni/my,/ES3AFNI/MY
+UNKNOWN,bthwani-project-main/app-user/src/api/es3afniApi.ts,axiosInstance,GET,/es3afni/search,/ES3AFNI/SEARCH
+UNKNOWN,bthwani-project-main/app-user/src/api/es3afniApi.ts,axiosInstance,GET,/es3afni/stats,/ES3AFNI/STATS
+UNKNOWN,bthwani-project-main/app-user/src/api/kawaderApi.ts,axiosInstance,POST,/kawader,/KAWADER
+UNKNOWN,bthwani-project-main/app-user/src/api/kawaderApi.ts,axiosInstance,GET,/kawader,/KAWADER
+UNKNOWN,bthwani-project-main/app-user/src/api/kawaderApi.ts,axiosInstance,GET,/kawader/my,/KAWADER/MY
+UNKNOWN,bthwani-project-main/app-user/src/api/kawaderApi.ts,axiosInstance,GET,/kawader/search,/KAWADER/SEARCH
+UNKNOWN,bthwani-project-main/app-user/src/api/kenzApi.ts,axiosInstance,POST,/kenz,/KENZ
+UNKNOWN,bthwani-project-main/app-user/src/api/kenzApi.ts,axiosInstance,GET,/kenz,/KENZ
+UNKNOWN,bthwani-project-main/app-user/src/api/kenzApi.ts,axiosInstance,GET,/kenz/my,/KENZ/MY
+UNKNOWN,bthwani-project-main/app-user/src/api/kenzApi.ts,axiosInstance,GET,/kenz/search,/KENZ/SEARCH
+UNKNOWN,bthwani-project-main/app-user/src/api/kenzApi.ts,axiosInstance,GET,/kenz/stats,/KENZ/STATS
+UNKNOWN,bthwani-project-main/app-user/src/api/kenzApi.ts,axiosInstance,GET,/kenz/category,/KENZ/CATEGORY
+UNKNOWN,bthwani-project-main/app-user/src/api/maaroufApi.ts,axiosInstance,POST,/maarouf,/MAAROUF
+UNKNOWN,bthwani-project-main/app-user/src/api/maaroufApi.ts,axiosInstance,GET,/maarouf,/MAAROUF
+UNKNOWN,bthwani-project-main/app-user/src/api/maaroufApi.ts,axiosInstance,GET,/maarouf/my,/MAAROUF/MY
+UNKNOWN,bthwani-project-main/app-user/src/api/maaroufApi.ts,axiosInstance,GET,/maarouf/search,/MAAROUF/SEARCH
+UNKNOWN,bthwani-project-main/app-user/src/api/orders.ts,axiosInstance,GET,/delivery/order/my-orders,/DELIVERY/ORDER/MY-ORDERS
+UNKNOWN,bthwani-project-main/app-user/src/api/paymentsApi.ts,axiosInstance,POST,/api/v2/payments/holds,/API/V2/PAYMENTS/HOLDS
+UNKNOWN,bthwani-project-main/app-user/src/api/paymentsApi.ts,axiosInstance,GET,/api/v2/payments/holds/my,/API/V2/PAYMENTS/HOLDS/MY
+UNKNOWN,bthwani-project-main/app-user/src/api/sanadApi.ts,axiosInstance,POST,/api/v2/sanad,/API/V2/SANAD
+UNKNOWN,bthwani-project-main/app-user/src/api/sanadApi.ts,axiosInstance,GET,/api/v2/sanad,/API/V2/SANAD
+UNKNOWN,bthwani-project-main/app-user/src/api/sanadApi.ts,axiosInstance,GET,/api/v2/sanad/my,/API/V2/SANAD/MY
+UNKNOWN,bthwani-project-main/app-user/src/api/sanadApi.ts,axiosInstance,GET,/api/v2/sanad/search,/API/V2/SANAD/SEARCH
+UNKNOWN,bthwani-project-main/app-user/src/api/support.ts,axiosInstance,POST,/support/tickets,/SUPPORT/TICKETS
+UNKNOWN,bthwani-project-main/app-user/src/api/support.ts,axiosInstance,GET,/support/tickets,/SUPPORT/TICKETS
+UNKNOWN,bthwani-project-main/app-user/src/api/support.ts,axiosInstance,GET,/support/stats,/SUPPORT/STATS
+UNKNOWN,bthwani-project-main/app-user/src/api/walletApi.ts,axiosInstance,GET,/v2/wallet/balance,/V2/WALLET/BALANCE
+UNKNOWN,bthwani-project-main/app-user/src/api/walletApi.ts,axiosInstance,GET,/v2/wallet/transactions,/V2/WALLET/TRANSACTIONS
+UNKNOWN,bthwani-project-main/app-user/src/api/walletApi.ts,axiosInstance,GET,/v2/wallet/topup/methods,/V2/WALLET/TOPUP/METHODS
+UNKNOWN,bthwani-project-main/app-user/src/api/walletApi.ts,axiosInstance,POST,/v2/wallet/topup/kuraimi,/V2/WALLET/TOPUP/KURAIMI
+UNKNOWN,bthwani-project-main/app-user/src/api/walletApi.ts,axiosInstance,POST,/v2/wallet/topup/verify,/V2/WALLET/TOPUP/VERIFY
+UNKNOWN,bthwani-project-main/app-user/src/api/walletApi.ts,axiosInstance,GET,/v2/wallet/topup/history,/V2/WALLET/TOPUP/HISTORY
+UNKNOWN,bthwani-project-main/app-user/src/api/walletApi.ts,axiosInstance,GET,/v2/wallet/withdraw/methods,/V2/WALLET/WITHDRAW/METHODS
+UNKNOWN,bthwani-project-main/app-user/src/api/walletApi.ts,axiosInstance,POST,/v2/wallet/withdraw/request,/V2/WALLET/WITHDRAW/REQUEST
+UNKNOWN,bthwani-project-main/app-user/src/api/walletApi.ts,axiosInstance,GET,/v2/wallet/withdraw/my,/V2/WALLET/WITHDRAW/MY
+UNKNOWN,bthwani-project-main/app-user/src/api/walletApi.ts,axiosInstance,POST,/v2/wallet/coupons/apply,/V2/WALLET/COUPONS/APPLY
+UNKNOWN,bthwani-project-main/app-user/src/api/walletApi.ts,axiosInstance,POST,/v2/wallet/coupons/validate,/V2/WALLET/COUPONS/VALIDATE
+UNKNOWN,bthwani-project-main/app-user/src/api/walletApi.ts,axiosInstance,GET,/v2/wallet/coupons/my,/V2/WALLET/COUPONS/MY
+UNKNOWN,bthwani-project-main/app-user/src/api/walletApi.ts,axiosInstance,GET,/v2/wallet/coupons/history,/V2/WALLET/COUPONS/HISTORY
+UNKNOWN,bthwani-project-main/app-user/src/api/walletApi.ts,axiosInstance,POST,/v2/wallet/subscriptions/subscribe,/V2/WALLET/SUBSCRIPTIONS/SUBSCRIBE
+UNKNOWN,bthwani-project-main/app-user/src/api/walletApi.ts,axiosInstance,GET,/v2/wallet/subscriptions/my,/V2/WALLET/SUBSCRIPTIONS/MY
+UNKNOWN,bthwani-project-main/app-user/src/api/walletApi.ts,axiosInstance,POST,/v2/wallet/pay-bill,/V2/WALLET/PAY-BILL
+UNKNOWN,bthwani-project-main/app-user/src/api/walletApi.ts,axiosInstance,GET,/v2/wallet/bills,/V2/WALLET/BILLS
+UNKNOWN,bthwani-project-main/app-user/src/api/walletApi.ts,axiosInstance,POST,/v2/wallet/transfer,/V2/WALLET/TRANSFER
+UNKNOWN,bthwani-project-main/app-user/src/api/walletApi.ts,axiosInstance,GET,/v2/wallet/transfers,/V2/WALLET/TRANSFERS
+UNKNOWN,bthwani-project-main/app-user/src/api/walletApi.ts,axiosInstance,POST,/v2/wallet/refund/request,/V2/WALLET/REFUND/REQUEST
+UNKNOWN,bthwani-project-main/app-user/src/auth/AuthContext.tsx,axiosInstance,GET,/users/me,/USERS/ME
+UNKNOWN,bthwani-project-main/app-user/src/components/CategoriesChips.tsx,axiosInstance,GET,/delivery/categories,/DELIVERY/CATEGORIES
+UNKNOWN,bthwani-project-main/app-user/src/components/business/BusinessProductList.tsx,Dimensions,GET,window,/WINDOW
+UNKNOWN,bthwani-project-main/app-user/src/components/delivery/DeliveryCategories.tsx,Dimensions,GET,window,/WINDOW
+UNKNOWN,bthwani-project-main/app-user/src/context/CartContext.tsx,axiosInstance,POST,/delivery/cart/add,/DELIVERY/CART/ADD
+UNKNOWN,bthwani-project-main/app-user/src/context/CartContext.tsx,axiosInstance,POST,/delivery/cart/merge,/DELIVERY/CART/MERGE
+UNKNOWN,bthwani-project-main/app-user/src/context/verify.ts,api,GET,/users/me,/USERS/ME
+UNKNOWN,bthwani-project-main/app-user/src/hooks/useNotifications.ts,axiosInstance,GET,/notifications/my,/NOTIFICATIONS/MY
+UNKNOWN,bthwani-project-main/app-user/src/hooks/useNotifications.ts,axiosInstance,GET,/notifications/unread/count,/NOTIFICATIONS/UNREAD/COUNT
+UNKNOWN,bthwani-project-main/app-user/src/hooks/useNotifications.ts,axiosInstance,POST,/notifications/read-all,/NOTIFICATIONS/READ-ALL
+UNKNOWN,bthwani-project-main/app-user/src/navigation/index.tsx,Dimensions,GET,window,/WINDOW
+UNKNOWN,bthwani-project-main/app-user/src/screens/OnboardingScreen.tsx,Dimensions,GET,window,/WINDOW
+UNKNOWN,bthwani-project-main/app-user/src/screens/Auth/OTPVerificationScreen.tsx,Dimensions,GET,window,/WINDOW
+UNKNOWN,bthwani-project-main/app-user/src/screens/delivery/DeliverySearch.tsx,axiosInstance,GET,/delivery/stores/search,/DELIVERY/STORES/SEARCH
+UNKNOWN,bthwani-project-main/app-user/src/screens/delivery/GroceryScreen.tsx,Dimensions,GET,window,/WINDOW
+UNKNOWN,bthwani-project-main/app-user/src/screens/delivery/GroceryScreen.tsx,axiosInstance,GET,/delivery/promotions/by-stores,/DELIVERY/PROMOTIONS/BY-STORES
+UNKNOWN,bthwani-project-main/app-user/src/screens/delivery/InvoiceScreen.tsx,Dimensions,GET,window,/WINDOW
+UNKNOWN,bthwani-project-main/app-user/src/screens/delivery/InvoiceScreen.tsx,axiosInstance,GET,/delivery/cart/fee,/DELIVERY/CART/FEE
+UNKNOWN,bthwani-project-main/app-user/src/screens/delivery/InvoiceScreen.tsx,axiosInstance,GET,/users/address,/USERS/ADDRESS
+UNKNOWN,bthwani-project-main/app-user/src/screens/delivery/InvoiceScreen.tsx,axiosInstance,POST,/coupons/validate,/COUPONS/VALIDATE
+UNKNOWN,bthwani-project-main/app-user/src/screens/delivery/InvoiceScreen.tsx,axiosInstance,POST,/delivery/cart/add,/DELIVERY/CART/ADD
+UNKNOWN,bthwani-project-main/app-user/src/screens/delivery/InvoiceScreen.tsx,axiosInstance,POST,/delivery/order,/DELIVERY/ORDER
+UNKNOWN,bthwani-project-main/app-user/src/screens/delivery/ProductDetailsScreen.tsx,Dimensions,GET,window,/WINDOW
+UNKNOWN,bthwani-project-main/app-user/src/screens/delivery/UtilityGasScreen.tsx,axiosInstance,POST,/utility/order,/UTILITY/ORDER
+UNKNOWN,bthwani-project-main/app-user/src/screens/delivery/UtilityWaterScreen.tsx,axiosInstance,POST,/utility/order,/UTILITY/ORDER
+UNKNOWN,bthwani-project-main/app-user/src/screens/map/SelectLocationScreen.tsx,Dimensions,GET,window,/WINDOW
+UNKNOWN,bthwani-project-main/app-user/src/screens/map/SelectLocationScreen.tsx,axiosInstance,GET,https://places.googleapis.com/v1/places:autocomplete,/V1/PLACES{PARAM}
+UNKNOWN,bthwani-project-main/app-user/src/screens/map/SelectLocationScreen.tsx,axiosInstance,GET,https://places.googleapis.com/v1/geocode:reverse,/V1/GEOCODE{PARAM}
+UNKNOWN,bthwani-project-main/app-user/src/screens/profile/UserProfileScreen.tsx,api,DELETE,/users/me,/USERS/ME
+UNKNOWN,bthwani-project-main/app-user/src/utils/lib/track.ts,axiosInstance,POST,/events,/EVENTS
+UNKNOWN,bthwani-project-main/app-user/src/utils/lib/utm.ts,q,GET,utm_source,/UTM_SOURCE
+UNKNOWN,bthwani-project-main/app-user/src/utils/lib/utm.ts,q,GET,utm_medium,/UTM_MEDIUM
+UNKNOWN,bthwani-project-main/app-user/src/utils/lib/utm.ts,q,GET,utm_campaign,/UTM_CAMPAIGN
+UNKNOWN,bthwani-project-main/app-user/src/utils/lib/utm.ts,q,GET,utm_term,/UTM_TERM
+UNKNOWN,bthwani-project-main/app-user/src/utils/lib/utm.ts,q,GET,utm_content,/UTM_CONTENT
+UNKNOWN,bthwani-project-main/backend-nest/src/common/middleware/tracing.middleware.ts,req,GET,user-agent,/USER-AGENT
+UNKNOWN,bthwani-project-main/backend-nest/src/common/middleware/tracing.middleware.ts,res,GET,content-length,/CONTENT-LENGTH
+UNKNOWN,bthwani-project-main/backend-nest/src/queues/queues.module.ts,configService,GET,REDIS_HOST,/REDIS_HOST
+UNKNOWN,bthwani-project-main/backend-nest/src/queues/queues.module.ts,configService,GET,REDIS_PORT,/REDIS_PORT
+UNKNOWN,bthwani-project-main/backend-nest/src/queues/queues.module.ts,configService,GET,REDIS_PASSWORD,/REDIS_PASSWORD
+UNKNOWN,bthwani-project-main/bthwani-web/public/service-worker.js,headers,GET,accept,/ACCEPT
+UNKNOWN,bthwani-project-main/bthwani-web/src/api/akhdimni.ts,axiosInstance,POST,/akhdimni/errands/calculate-fee,/AKHDIMNI/ERRANDS/CALCULATE-FEE
+UNKNOWN,bthwani-project-main/bthwani-web/src/api/akhdimni.ts,axiosInstance,POST,/akhdimni/errands,/AKHDIMNI/ERRANDS
+UNKNOWN,bthwani-project-main/bthwani-web/src/api/akhdimni.ts,axiosInstance,GET,/akhdimni/my-errands,/AKHDIMNI/MY-ERRANDS
+UNKNOWN,bthwani-project-main/bthwani-web/src/api/auth.ts,axiosInstance,POST,/auth/forgot,/AUTH/FORGOT
+UNKNOWN,bthwani-project-main/bthwani-web/src/api/auth.ts,axiosInstance,POST,/auth/reset/verify,/AUTH/RESET/VERIFY
+UNKNOWN,bthwani-project-main/bthwani-web/src/api/auth.ts,axiosInstance,POST,/auth/reset,/AUTH/RESET
+UNKNOWN,bthwani-project-main/bthwani-web/src/api/auth.ts,axiosInstance,POST,/auth/verify-otp,/AUTH/VERIFY-OTP
+UNKNOWN,bthwani-project-main/bthwani-web/src/api/cart.ts,axiosInstance,DELETE,/delivery/cart,/DELIVERY/CART
+UNKNOWN,bthwani-project-main/bthwani-web/src/api/cart.ts,axiosInstance,POST,/coupons/validate,/COUPONS/VALIDATE
+UNKNOWN,bthwani-project-main/bthwani-web/src/api/delivery.ts,axiosInstance,POST,/errands/order,/ERRANDS/ORDER
+UNKNOWN,bthwani-project-main/bthwani-web/src/api/delivery.ts,axiosInstance,GET,/errands/categories,/ERRANDS/CATEGORIES
+UNKNOWN,bthwani-project-main/bthwani-web/src/api/delivery.ts,axiosInstance,GET,/errands/drivers/available,/ERRANDS/DRIVERS/AVAILABLE
+UNKNOWN,bthwani-project-main/bthwani-web/src/api/notifications.ts,axios,POST,/notifications/register,/NOTIFICATIONS/REGISTER
+UNKNOWN,bthwani-project-main/bthwani-web/src/api/notifications.ts,axiosInstance,POST,/notifications/read-all,/NOTIFICATIONS/READ-ALL
+UNKNOWN,bthwani-project-main/bthwani-web/src/api/payments.ts,axios,POST,/payments/create-session,/PAYMENTS/CREATE-SESSION
+UNKNOWN,bthwani-project-main/bthwani-web/src/api/payments.ts,axios,POST,/payments/confirm,/PAYMENTS/CONFIRM
+UNKNOWN,bthwani-project-main/bthwani-web/src/api/support.ts,api,POST,/support/tickets,/SUPPORT/TICKETS
+UNKNOWN,bthwani-project-main/bthwani-web/src/api/support.ts,api,GET,/support/tickets,/SUPPORT/TICKETS
+UNKNOWN,bthwani-project-main/bthwani-web/src/features/amani/api.ts,axiosInstance,POST,/amani,/AMANI
+UNKNOWN,bthwani-project-main/bthwani-web/src/features/amani/api.ts,axiosInstance,GET,/amani,/AMANI
+UNKNOWN,bthwani-project-main/bthwani-web/src/features/arabon/api.ts,axiosInstance,POST,/arabon,/ARABON
+UNKNOWN,bthwani-project-main/bthwani-web/src/features/arabon/api.ts,axiosInstance,GET,/arabon,/ARABON
+UNKNOWN,bthwani-project-main/bthwani-web/src/features/es3afni/api.ts,axiosInstance,POST,/es3afni,/ES3AFNI
+UNKNOWN,bthwani-project-main/bthwani-web/src/features/es3afni/api.ts,axiosInstance,GET,/es3afni,/ES3AFNI
+UNKNOWN,bthwani-project-main/bthwani-web/src/features/kawader/api.ts,axiosInstance,POST,/kawader,/KAWADER
+UNKNOWN,bthwani-project-main/bthwani-web/src/features/kawader/api.ts,axiosInstance,GET,/kawader,/KAWADER
+UNKNOWN,bthwani-project-main/bthwani-web/src/features/kenz/api.ts,axiosInstance,POST,/kenz,/KENZ
+UNKNOWN,bthwani-project-main/bthwani-web/src/features/kenz/api.ts,axiosInstance,GET,/kenz,/KENZ
+UNKNOWN,bthwani-project-main/bthwani-web/src/features/maarouf/api.ts,axiosInstance,POST,/maarouf,/MAAROUF
+UNKNOWN,bthwani-project-main/bthwani-web/src/features/maarouf/api.ts,axiosInstance,GET,/maarouf,/MAAROUF
+UNKNOWN,bthwani-project-main/bthwani-web/src/features/utilityGas/api.ts,axiosInstance,GET,/user/profile,/USER/PROFILE
+UNKNOWN,bthwani-project-main/bthwani-web/src/features/utilityGas/api.ts,axiosInstance,POST,/utility/order,/UTILITY/ORDER
+UNKNOWN,bthwani-project-main/bthwani-web/src/features/utilityWater/api.ts,axiosInstance,GET,/user/profile,/USER/PROFILE
+UNKNOWN,bthwani-project-main/bthwani-web/src/features/utilityWater/api.ts,axiosInstance,POST,/utility/order,/UTILITY/ORDER
+UNKNOWN,bthwani-project-main/bthwani-web/src/pages/akhdimni/Akhdimni.tsx,searchParams,GET,step,/STEP
+UNKNOWN,bthwani-project-main/bthwani-web/src/pages/delivery/GroceryScreen.tsx,axiosInstance,GET,/delivery/promotions/by-stores,/DELIVERY/PROMOTIONS/BY-STORES
+UNKNOWN,bthwani-project-main/bthwani-web/src/pages/map/SelectLocation.tsx,searchParams,GET,storageKey,/STORAGEKEY
+UNKNOWN,bthwani-project-main/bthwani-web/src/pages/map/SelectLocation.tsx,searchParams,GET,step,/STEP
+UNKNOWN,bthwani-project-main/bthwani-web/src/pages/payment/Callback.tsx,search,GET,session_id,/SESSION_ID
+UNKNOWN,bthwani-project-main/bthwani-web/src/pages/payment/Callback.tsx,search,GET,order_id,/ORDER_ID
+UNKNOWN,bthwani-project-main/bthwani-web/src/pages/payment/Callback.tsx,search,GET,status,/STATUS
+UNKNOWN,bthwani-project-main/bthwani-web/src/pages/search/Search.tsx,searchParams,GET,q,/Q
+UNKNOWN,bthwani-project-main/bthwani-web/src/pages/search/Search.tsx,searchParams,GET,type,/TYPE
+UNKNOWN,bthwani-project-main/bthwani-web/src/pages/search/Search.tsx,searchParams,GET,categoryId,/CATEGORYID
+UNKNOWN,bthwani-project-main/bthwani-web/src/pages/search/Search.tsx,searchParams,GET,sort,/SORT
+UNKNOWN,bthwani-project-main/bthwani-web/src/pages/search/Search.tsx,searchParams,GET,page,/PAGE
+UNKNOWN,bthwani-project-main/field-marketers/src/context/AuthContext.tsx,api,GET,/auth/me,/AUTH/ME
+UNKNOWN,bthwani-project-main/field-marketers/src/screens/account/ProfileScreen.tsx,api,POST,/auth/delete-account/request,/AUTH/DELETE-ACCOUNT/REQUEST
+UNKNOWN,bthwani-project-main/field-marketers/src/screens/account/ProfileScreen.tsx,api,DELETE,/auth/delete-account,/AUTH/DELETE-ACCOUNT
+UNKNOWN,bthwani-project-main/field-marketers/src/screens/account/ReferralScreen.tsx,api,POST,/marketer/referrals/generate-code,/MARKETER/REFERRALS/GENERATE-CODE
+UNKNOWN,bthwani-project-main/field-marketers/src/screens/account/ReferralScreen.tsx,api,GET,/marketer/referrals/statistics,/MARKETER/REFERRALS/STATISTICS
+UNKNOWN,bthwani-project-main/field-marketers/src/screens/onboarding/OnboardingWizardScreen.tsx,api,POST,/field/quick-onboard,/FIELD/QUICK-ONBOARD
+RIDER-APP,bthwani-project-main/rider-app/app/(auth)/login.tsx,Dimensions,GET,window,/WINDOW
+RIDER-APP,bthwani-project-main/rider-app/app/(driver)/locations.tsx,axios,GET,/drivers/me,/DRIVERS/ME
+RIDER-APP,bthwani-project-main/rider-app/app/(driver)/locations.tsx,axios,POST,/drivers/locations,/DRIVERS/LOCATIONS
+RIDER-APP,bthwani-project-main/rider-app/app/(driver)/triggerSOS.ts,fetch,GET,https://your-backend.com/api/v1/driver/sos,/API/V1/DRIVER/SOS
+RIDER-APP,bthwani-project-main/rider-app/src/api/akhdimni.ts,axios,GET,/akhdimni/driver/my-errands,/AKHDIMNI/DRIVER/MY-ERRANDS
+RIDER-APP,bthwani-project-main/rider-app/src/api/auth.ts,axios,POST,/driver/login,/DRIVER/LOGIN
+RIDER-APP,bthwani-project-main/rider-app/src/api/driver.ts,axios,GET,/drivers/orders/available,/DRIVERS/ORDERS/AVAILABLE
+RIDER-APP,bthwani-project-main/rider-app/src/api/driver.ts,axios,PATCH,/drivers/availability,/DRIVERS/AVAILABILITY
+RIDER-APP,bthwani-project-main/rider-app/src/api/driver.ts,axios,GET,/drivers/earnings,/DRIVERS/EARNINGS
+RIDER-APP,bthwani-project-main/rider-app/src/api/driver.ts,axios,GET,/drivers/withdrawals/my,/DRIVERS/WITHDRAWALS/MY
+RIDER-APP,bthwani-project-main/rider-app/src/api/driver.ts,axios,POST,/drivers/withdrawals/request,/DRIVERS/WITHDRAWALS/REQUEST
+RIDER-APP,bthwani-project-main/rider-app/src/api/driver.ts,axios,POST,/drivers/vacations/request,/DRIVERS/VACATIONS/REQUEST
+RIDER-APP,bthwani-project-main/rider-app/src/api/driver.ts,axios,GET,/drivers/profile,/DRIVERS/PROFILE
+RIDER-APP,bthwani-project-main/rider-app/src/api/driver.ts,axios,PATCH,/drivers/profile,/DRIVERS/PROFILE
+RIDER-APP,bthwani-project-main/rider-app/src/api/driver.ts,axios,PATCH,/drivers/location,/DRIVERS/LOCATION
+RIDER-APP,bthwani-project-main/rider-app/src/api/driver.ts,axios,GET,/drivers/statistics,/DRIVERS/STATISTICS
+RIDER-APP,bthwani-project-main/rider-app/src/api/driver.ts,axios,POST,/drivers/documents/upload,/DRIVERS/DOCUMENTS/UPLOAD
+RIDER-APP,bthwani-project-main/rider-app/src/api/driver.ts,axios,GET,/drivers/documents,/DRIVERS/DOCUMENTS
+RIDER-APP,bthwani-project-main/rider-app/src/api/driver.ts,axios,GET,/drivers/vacations/balance,/DRIVERS/VACATIONS/BALANCE
+RIDER-APP,bthwani-project-main/rider-app/src/api/driver.ts,axios,POST,/drivers/issues/report,/DRIVERS/ISSUES/REPORT
+RIDER-APP,bthwani-project-main/rider-app/src/api/orders.ts,axios,GET,/drivers/orders/available,/DRIVERS/ORDERS/AVAILABLE
+RIDER-APP,bthwani-project-main/rider-app/src/api/profile.ts,axios,GET,/drivers/profile,/DRIVERS/PROFILE
+RIDER-APP,bthwani-project-main/rider-app/src/api/profile.ts,axios,PATCH,/drivers/profile,/DRIVERS/PROFILE
+RIDER-APP,bthwani-project-main/rider-app/src/api/profile.ts,axios,POST,/drivers/change-password,/DRIVERS/CHANGE-PASSWORD
+RIDER-APP,bthwani-project-main/rider-app/src/api/support.ts,axiosInstance,POST,/support/tickets,/SUPPORT/TICKETS
+RIDER-APP,bthwani-project-main/rider-app/src/api/support.ts,axiosInstance,GET,/support/tickets,/SUPPORT/TICKETS
+RIDER-APP,bthwani-project-main/rider-app/src/componant/triggerSOS.tsx,axios,POST,/rides/sos,/RIDES/SOS
+UNKNOWN,bthwani-project-main/scripts/block_raw_fetch.js,fetch,GET,) && !line.includes(,/) && !LINE.INCLUDES(
+UNKNOWN,bthwani-project-main/scripts/block_raw_fetch.js,fetch,GET,")) {
+      continue;
+    }
+
+    // Skip external API calls (Google Maps, Firebase, etc.)
+    if (/identitytoolkit\.googleapis\.com|securetoken\.googleapis\.com|maps\.googleapis\.com|googleapis\.com|cloudinary\.com/.test(line)) {
+      continue;
+    }
+
+    // Skip React Native NetInfo.fetch()
+    if (/NetInfo\.fetch\(\)/.test(line)) {
+      continue;
+    }
+
+    // Check for fetch( or axios.
+    if (/\bfetch\(|\baxios\./.test(line)) {
+      // If it doesn","/)) {
+      CONTINUE;
+    }
+
+    / SKIP EXTERNAL API CALLS (GOOGLE MAPS, FIREBASE, ETC.)
+    IF (/IDENTITYTOOLKIT\.GOOGLEAPIS\.COM|SECURETOKEN\.GOOGLEAPIS\.COM|MAPS\.GOOGLEAPIS\.COM|GOOGLEAPIS\.COM|CLOUDINARY\.COM/.TEST(LINE)) {
+      CONTINUE;
+    }
+
+    / SKIP REACT NATIVE NETINFO.FETCH()
+    IF (/NETINFO\.FETCH\(\)/.TEST(LINE)) {
+      CONTINUE;
+    }
+
+    / CHECK FOR FETCH( OR AXIOS.
+    IF (/\BFETCH\(|\BAXIOS\./.TEST(LINE)) {
+      / IF IT DOESN"
+UNKNOWN,bthwani-project-main/scripts/extract-fe-calls.ts,fetch,GET,/api/users,/API/USERS
+UNKNOWN,bthwani-project-main/scripts/extract-fe-calls.ts,fetch,GET,path,/PATH
+UNKNOWN,bthwani-project-main/scripts/extract-fe-calls.ts,axiosInstance,GET,/api/users,/API/USERS
+UNKNOWN,bthwani-project-main/scripts/extract-fe-calls.ts,httpClient,DELETE,/api/users/123,/API/USERS/123
+UNKNOWN,bthwani-project-main/scripts/generate-typed-clients-report.js,fetch,GET,) && !line.includes(,/) && !LINE.INCLUDES(
+UNKNOWN,bthwani-project-main/scripts/generate-typed-clients-report.js,fetch,GET,")) {
+      continue;
+    }
+
+    // Skip external APIs
+    if (/identitytoolkit\.googleapis\.com|securetoken\.googleapis\.com|maps\.googleapis\.com|googleapis\.com|cloudinary\.com/.test(line)) {
+      continue;
+    }
+
+    // Skip React Native NetInfo
+    if (/NetInfo\.fetch\(\)/.test(line)) {
+      continue;
+    }
+    
+    // Check for typed client usages
+    for (const wrapper of allowedWrappers) {
+      if (line.includes(wrapper)) {
+        stats.typedClientUsages++;
+        stats.wrapperTypes.add(wrapper);
+      }
+    }
+
+    // Check for raw fetch (not in wrapper)
+    if (/\bfetch\(/.test(line)) {
+      const hasWrapper = allowedWrappers.some(w => line.includes(w));
+      if (!hasWrapper && !hasWrapperImport) {
+        stats.rawFetchCount++;
+      }
+    }
+
+    // Check for raw axios (not in wrapper)
+    if (/\baxios\./.test(line)) {
+      const hasWrapper = allowedWrappers.some(w => line.includes(w));
+      if (!hasWrapper && !hasWrapperImport) {
+        stats.rawAxiosCount++;
+      }
+    }
+  }
+
+  return stats;
+}
+
+function generateReport() {
+  const report = {
+    timestamp: new Date().toISOString(),
+    summary: {
+      totalFilesScanned: 0,
+      totalTypedClientUsages: 0,
+      totalRawFetchUsages: 0,
+      totalRawAxiosUsages: 0,
+      compliance: ","/)) {
+      CONTINUE;
+    }
+
+    / SKIP EXTERNAL APIS
+    IF (/IDENTITYTOOLKIT\.GOOGLEAPIS\.COM|SECURETOKEN\.GOOGLEAPIS\.COM|MAPS\.GOOGLEAPIS\.COM|GOOGLEAPIS\.COM|CLOUDINARY\.COM/.TEST(LINE)) {
+      CONTINUE;
+    }
+
+    / SKIP REACT NATIVE NETINFO
+    IF (/NETINFO\.FETCH\(\)/.TEST(LINE)) {
+      CONTINUE;
+    }
+    
+    / CHECK FOR TYPED CLIENT USAGES
+    FOR (CONST WRAPPER OF ALLOWEDWRAPPERS) {
+      IF (LINE.INCLUDES(WRAPPER)) {
+        STATS.TYPEDCLIENTUSAGES++;
+        STATS.WRAPPERTYPES.ADD(WRAPPER);
+      }
+    }
+
+    / CHECK FOR RAW FETCH (NOT IN WRAPPER)
+    IF (/\BFETCH\(/.TEST(LINE)) {
+      CONST HASWRAPPER = ALLOWEDWRAPPERS.SOME(W => LINE.INCLUDES(W));
+      IF (!HASWRAPPER && !HASWRAPPERIMPORT) {
+        STATS.RAWFETCHCOUNT++;
+      }
+    }
+
+    / CHECK FOR RAW AXIOS (NOT IN WRAPPER)
+    IF (/\BAXIOS\./.TEST(LINE)) {
+      CONST HASWRAPPER = ALLOWEDWRAPPERS.SOME(W => LINE.INCLUDES(W));
+      IF (!HASWRAPPER && !HASWRAPPERIMPORT) {
+        STATS.RAWAXIOSCOUNT++;
+      }
+    }
+  }
+
+  RETURN STATS;
+}
+
+FUNCTION GENERATEREPORT() {
+  CONST REPORT = {
+    TIMESTAMP: NEW DATE().TOISOSTRING(),
+    SUMMARY: {
+      TOTALFILESSCANNED: 0,
+      TOTALTYPEDCLIENTUSAGES: 0,
+      TOTALRAWFETCHUSAGES: 0,
+      TOTALRAWAXIOSUSAGES: 0,
+      COMPLIANCE: "
+VENDOR-APP,bthwani-project-main/vendor-app/src/api/merchant.ts,axiosInstance,GET,/merchant/catalog/products,/MERCHANT/CATALOG/PRODUCTS
+VENDOR-APP,bthwani-project-main/vendor-app/src/api/notifications.ts,axiosInstance,POST,/notifications/read-all,/NOTIFICATIONS/READ-ALL
+VENDOR-APP,bthwani-project-main/vendor-app/src/api/notifications.ts,axiosInstance,GET,/notifications/suppression/channels,/NOTIFICATIONS/SUPPRESSION/CHANNELS
+VENDOR-APP,bthwani-project-main/vendor-app/src/api/notifications.ts,axiosInstance,POST,/notifications/suppression,/NOTIFICATIONS/SUPPRESSION
+VENDOR-APP,bthwani-project-main/vendor-app/src/api/support.ts,axiosInstance,POST,/support/tickets,/SUPPORT/TICKETS
+VENDOR-APP,bthwani-project-main/vendor-app/src/api/support.ts,axiosInstance,GET,/support/tickets,/SUPPORT/TICKETS
+VENDOR-APP,bthwani-project-main/vendor-app/src/api/vendor.ts,axiosInstance,PATCH,/vendors/me,/VENDORS/ME
+VENDOR-APP,bthwani-project-main/vendor-app/src/screens/CatalogProductPickerScreen.tsx,axiosInstance,GET,/groceries/catalog,/GROCERIES/CATALOG
+VENDOR-APP,bthwani-project-main/vendor-app/src/screens/LoginScreen.tsx,axios,POST,/vendor/auth/vendor-login,/VENDOR/AUTH/VENDOR-LOGIN
+VENDOR-APP,bthwani-project-main/vendor-app/src/screens/LoginScreen.tsx,axios,PATCH,/vendors/me,/VENDORS/ME
+VENDOR-APP,bthwani-project-main/vendor-app/src/screens/LoginScreen.tsx,Dimensions,GET,window,/WINDOW
+VENDOR-APP,bthwani-project-main/vendor-app/src/screens/OrderDetailsScreen.tsx,Dimensions,GET,window,/WINDOW
+VENDOR-APP,bthwani-project-main/vendor-app/src/screens/OrdersScreen.tsx,Dimensions,GET,window,/WINDOW
+VENDOR-APP,bthwani-project-main/vendor-app/src/screens/OrdersScreen.tsx,axiosInstance,GET,/delivery/order/vendor/orders,/DELIVERY/ORDER/VENDOR/ORDERS
+VENDOR-APP,bthwani-project-main/vendor-app/src/screens/SettingsScreen.tsx,axiosInstance,GET,/vendors/me,/VENDORS/ME
+VENDOR-APP,bthwani-project-main/vendor-app/src/screens/SettingsScreen.tsx,axiosInstance,PATCH,/vendors/me,/VENDORS/ME
+VENDOR-APP,bthwani-project-main/vendor-app/src/screens/SettingsScreen.tsx,axiosInstance,POST,/vendors/account/delete-request,/VENDORS/ACCOUNT/DELETE-REQUEST
+VENDOR-APP,bthwani-project-main/vendor-app/src/screens/StatisticsScreen.tsx,Dimensions,GET,window,/WINDOW
+VENDOR-APP,bthwani-project-main/vendor-app/src/screens/StatisticsScreen.tsx,axiosInstance,GET,/vendors/dashboard/overview,/VENDORS/DASHBOARD/OVERVIEW
+VENDOR-APP,bthwani-project-main/vendor-app/src/screens/StatisticsScreen.tsx,axiosInstance,GET,/delivery/order/vendor/orders,/DELIVERY/ORDER/VENDOR/ORDERS
+VENDOR-APP,bthwani-project-main/vendor-app/src/screens/VendorAccountStatementScreen.tsx,axiosInstance,GET,/vendors/account/statement,/VENDORS/ACCOUNT/STATEMENT
+VENDOR-APP,bthwani-project-main/vendor-app/src/screens/VendorAccountStatementScreen.tsx,axiosInstance,GET,/vendors/settlements,/VENDORS/SETTLEMENTS
+VENDOR-APP,bthwani-project-main/vendor-app/src/screens/VendorAccountStatementScreen.tsx,axiosInstance,GET,/vendors/sales?limit=100,/VENDORS/SALES
+VENDOR-APP,bthwani-project-main/vendor-app/src/screens/VendorAccountStatementScreen.tsx,axiosInstance,POST,/vendors/settlements,/VENDORS/SETTLEMENTS
+VENDOR-APP,bthwani-project-main/vendor-app/src/utils/notifications.ts,axiosInstance,PATCH,/vendors/me,/VENDORS/ME

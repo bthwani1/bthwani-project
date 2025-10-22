@@ -5,11 +5,12 @@ import { PaymentsController } from './payments.controller';
 import { PaymentsService } from './payments.service';
 import { WalletModule } from '../wallet/wallet.module';
 import { FinanceModule } from '../finance/finance.module';
+import { CommonModule } from '../../common/common.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Payments.name, schema: PaymentsSchema }]),
-    WalletModule, FinanceModule
+    WalletModule, FinanceModule, CommonModule
   ],
   controllers: [PaymentsController],
   providers: [PaymentsService],

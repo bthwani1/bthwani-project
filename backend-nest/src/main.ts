@@ -5,6 +5,8 @@ import { AppModule } from './app.module';
 import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { TimeoutInterceptor } from './common/interceptors/timeout.interceptor';
+import { PerformanceInterceptor } from './common/interceptors/performance.interceptor';
+import { IdempotencyHeaderMiddleware } from './common/middleware/idempotency-header.middleware';
 import { logger } from './config/logger.config';
 import * as admin from 'firebase-admin';
 import helmet from 'helmet';
@@ -75,6 +77,9 @@ async function bootstrap() {
     }),
   );
 
+  // Idempotency Header Middleware - لاستخراج Idempotency-Key من headers
+  app.use(new IdempotencyHeaderMiddleware().use);
+
   // Security & CORS
   app.enableCors({
     origin: process.env.CORS_ORIGIN?.split(',') || '*',
@@ -110,6 +115,7 @@ async function bootstrap() {
   app.useGlobalInterceptors(
     new TransformInterceptor(),
     new TimeoutInterceptor(30000), // 30 seconds timeout
+    new PerformanceInterceptor(null), // Performance tracking
   );
 
   // API Versioning Strategy

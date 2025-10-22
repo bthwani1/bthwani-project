@@ -78,53 +78,8 @@ export class LegalController {
   }
 
   // ========== User Consent Endpoints ==========
-
-  @Post('consent')
-  @UseGuards(UnifiedAuthGuard)
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'تسجيل موافقة المستخدم' })
-  @ApiResponse({ status: 201, description: 'تم تسجيل الموافقة بنجاح' })
-  @ApiResponse({ status: 400, description: 'بيانات غير صحيحة' })
-  @ApiResponse({ status: 401, description: 'غير مصرح' })
-  async recordConsent(@Req() req: AuthRequest, @Body() dto: RecordConsentDto) {
-    const userId = (req.user.userId || req.user.id) as string;
-    // يمكن استخراج IP و User Agent من الطلب
-    const ipAddress = (dto.ipAddress ||
-      req.ip ||
-      req.connection?.remoteAddress) as string;
-    const userAgent = (dto.userAgent || req.headers['user-agent']) as string;
-
-    return this.legalService.recordConsent(userId, {
-      ...dto,
-      ipAddress,
-      userAgent,
-    });
-  }
-
-  @Get('consent/my')
-  @UseGuards(UnifiedAuthGuard)
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'الحصول على موافقات المستخدم الحالي' })
-  @ApiResponse({ status: 200, description: 'تم الحصول على الموافقات بنجاح' })
-  @ApiResponse({ status: 401, description: 'غير مصرح' })
-  async getMyConsents(@Req() req: AuthRequest) {
-    const userId = (req.user.userId || req.user.id) as string;
-    return this.legalService.getUserConsents(userId);
-  }
-
-  @Get('consent/check/:type')
-  @UseGuards(UnifiedAuthGuard)
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'التحقق من موافقة المستخدم على الإصدار الحالي' })
-  @ApiResponse({ status: 200, description: 'تم التحقق بنجاح' })
-  @ApiResponse({ status: 401, description: 'غير مصرح' })
-  async checkConsent(
-    @Req() req: AuthRequest,
-    @Param('type') type: 'privacy_policy' | 'terms_of_service',
-  ) {
-    const userId = (req.user.userId || req.user.id) as string;
-    return this.legalService.checkUserConsent(userId, type);
-  }
+  // ✅ تم نقل Consent Endpoints إلى AuthController - استخدم /auth/consent/*
+  // السبب: Consent جزء من Authentication/Authorization flow
 
   // ========== Admin Endpoints ==========
 

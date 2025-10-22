@@ -154,19 +154,8 @@ export class MarketerController {
   }
 
   // ==================== Commissions ====================
-
-  @Auth(AuthType.MARKETER_JWT)
-  @ApiBearerAuth()
-  @Get('commissions/my')
-  @ApiResponse({ status: 200, description: 'Success' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @ApiOperation({ summary: 'عمولاتي' })
-  async getMyCommissions(
-    @CurrentUser('id') marketerId: string,
-    @Query('status') status?: string,
-  ) {
-    return this.marketerService.getMyCommissions(marketerId, status);
-  }
+  // ✅ تم نقل Commissions إلى FinanceController - استخدم /finance/commissions/my
+  // السبب: Finance هو المكان المناسب لجميع العمليات المالية
 
   @Auth(AuthType.MARKETER_JWT)
   @ApiBearerAuth()

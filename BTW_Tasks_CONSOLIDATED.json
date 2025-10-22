@@ -1,0 +1,123 @@
+[
+  {
+    "id": "BTW-AUD-001",
+    "title": "OpenAPI SSoT + Typed Clients + Contract Tests",
+    "owners": [
+      "@BE",
+      "@FE"
+    ],
+    "due": "+7d",
+    "acceptance": [
+      "ParityGap<=5%",
+      "ContractTests=green",
+      "ClientsWired=true"
+    ],
+    "files": [
+      "openapi/*.yaml",
+      "*/src/api/generated/*"
+    ],
+    "evidence": [
+      "PHASE_2_COMPLETION_REPORT.md"
+    ]
+  },
+  {
+    "id": "BTW-AUD-002",
+    "title": "Eliminate Remaining Backend Duplicates",
+    "owners": [
+      "@BE"
+    ],
+    "due": "+3d",
+    "acceptance": [
+      "duplicates_backend=0"
+    ],
+    "files": [
+      "backend-nest/**"
+    ],
+    "evidence": [
+      "current_duplicates.csv"
+    ]
+  },
+  {
+    "id": "BTW-OBS-004",
+    "title": "OTel + Dashboards + Burn-rate Alerts",
+    "owners": [
+      "@Ops"
+    ],
+    "due": "+7d",
+    "acceptance": [
+      "MTTR<=30m",
+      "DashboardsPresent=true",
+      "AlertsLinkedRunbooks=true"
+    ],
+    "files": [
+      "ops/grafana-dashboards/*",
+      "ops/alerts/rules.yml",
+      "ops/runbooks/*"
+    ],
+    "evidence": [
+      "PHASE_3_COMPLETION_REPORT.md"
+    ]
+  },
+  {
+    "id": "BTW-PAY-005",
+    "title": "Payments Idempotency + Daily Reconciliation",
+    "owners": [
+      "@Pay",
+      "@Fin"
+    ],
+    "due": "+7d",
+    "acceptance": [
+      "Success>=97%",
+      "Variance<=0.1%"
+    ],
+    "files": [
+      "src/common/services/idempotency.service.ts",
+      "src/common/services/daily-settlement.service.ts"
+    ],
+    "evidence": [
+      "PHASE_3_COMPLETION_REPORT.md"
+    ]
+  },
+  {
+    "id": "BTW-NOT-006",
+    "title": "Webhook Signatures + DLQ + Suppression",
+    "owners": [
+      "@Comms",
+      "@BE"
+    ],
+    "due": "+7d",
+    "acceptance": [
+      "Delivery>=95%",
+      "UnsubscribeWorks=true",
+      "SignatureVerified=true"
+    ],
+    "files": [
+      "src/modules/notification/**"
+    ],
+    "evidence": [
+      "PHASE_4_COMPLETION_REPORT.md"
+    ]
+  },
+  {
+    "id": "BTW-PERF-007",
+    "title": "Performance Budgets + DB Indexes + Cache",
+    "owners": [
+      "@Perf",
+      "@BE"
+    ],
+    "due": "+14d",
+    "acceptance": [
+      "LCP_p75<=2.5s",
+      "INP<=200ms",
+      "CacheHitRate>=85%"
+    ],
+    "files": [
+      "src/common/services/performance.service.ts",
+      "src/common/services/database-index.service.ts",
+      "src/common/services/cache.service.ts"
+    ],
+    "evidence": [
+      "PHASE_4_COMPLETION_REPORT.md"
+    ]
+  }
+]

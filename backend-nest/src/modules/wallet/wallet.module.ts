@@ -9,6 +9,7 @@ import {
   WalletTransaction,
   WalletTransactionSchema,
 } from './entities/wallet-transaction.entity';
+import { WithdrawalModule } from '../withdrawal/withdrawal.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import {
       { name: WalletTransaction.name, schema: WalletTransactionSchema },
     ]),
     JwtModule.register({}),
+    WithdrawalModule,
   ],
   controllers: [WalletController, V2WalletController],
   providers: [WalletService],

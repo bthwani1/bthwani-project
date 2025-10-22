@@ -172,56 +172,13 @@ export class AdminController {
 
   // ==================== Withdrawals Management ====================
 
-  @Get('withdrawals')
-  @ApiOperation({ summary: 'جلب طلبات السحب' })
-  getWithdrawals(
-    @Query('status') status?: string,
-    @Query('userModel') userModel?: string,
-    @Query('page') page: number = 1,
-    @Query('limit') limit: number = 20,
-  ) {
-    return this.adminService.getWithdrawals({
-      status,
-      userModel,
-      page,
-      limit,
-    });
-  }
+  // ✅ تم نقل إلى /wallet/admin/withdrawals
 
-  @Get('withdrawals/pending')
-  @ApiOperation({ summary: 'طلبات السحب المعلقة' })
-  getPendingWithdrawals() {
-    return this.adminService.getPendingWithdrawals();
-  }
+  // ✅ تم نقل إلى /wallet/admin/withdrawals/pending
 
-  @Patch('withdrawals/:id/approve')
-  @ApiOperation({ summary: 'الموافقة على طلب سحب' })
-  async approveWithdrawal(
-    @Param('id') withdrawalId: string,
-    @Body() body: { transactionRef?: string; notes?: string },
-    @CurrentUser('id') adminId: string,
-  ) {
-    return await this.adminService.approveWithdrawal({
-      withdrawalId,
-      adminId,
-      transactionRef: body.transactionRef,
-      notes: body.notes,
-    });
-  }
+  // ✅ تم نقل إلى /wallet/admin/withdrawals/:id/approve
 
-  @Patch('withdrawals/:id/reject')
-  @ApiOperation({ summary: 'رفض طلب سحب' })
-  async rejectWithdrawal(
-    @Param('id') withdrawalId: string,
-    @Body() body: { reason: string },
-    @CurrentUser('id') adminId: string,
-  ) {
-    return await this.adminService.rejectWithdrawal({
-      withdrawalId,
-      reason: body.reason,
-      adminId,
-    });
-  }
+  // ✅ تم نقل إلى /wallet/admin/withdrawals/:id/reject
 
   // ==================== Store Moderation ====================
 

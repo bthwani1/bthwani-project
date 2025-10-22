@@ -3,12 +3,12 @@ import { getAuth } from 'firebase/auth';
 import { getMessaging, getToken, onMessage, isSupported, type Messaging } from 'firebase/messaging';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDcj9GF6Jsi7aIWHoOmH9OKwdOs2pRswS0",
-  authDomain: "bthwani-app.firebaseapp.com",
-  projectId: "bthwani-app",
-  storageBucket: "bthwani-app.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "1:123456789:web:abcdef123456"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "FIREBASE_API_KEY_NOT_SET",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "FIREBASE_AUTH_DOMAIN_NOT_SET",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "FIREBASE_PROJECT_ID_NOT_SET",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "FIREBASE_STORAGE_BUCKET_NOT_SET",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "FIREBASE_MESSAGING_SENDER_ID_NOT_SET",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "FIREBASE_APP_ID_NOT_SET"
 };
 
 const app = initializeApp(firebaseConfig);

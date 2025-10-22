@@ -2,11 +2,11 @@ import mongoose from "mongoose";
 import { admin } from "./src/config/firebaseAdmin.js";
 import { User } from "./models/user.js"; // نموذج المستخدم من مشروعك
 
-const MONGO_URI =
-  "mongodb+srv://bthwani1_db_user:WTmCFUDVVGOTeMHc@cluster0.vip178l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+// ⚠️ SECURITY: Never commit real credentials to version control
+const MONGO_URI = process.env.MONGODB_URI || "MONGODB_URI_NOT_SET";
 
-const email = "admin@bthwani.com";
-const password = "admin1234";
+const email = process.env.ADMIN_EMAIL || "admin@bthwani.com";
+const password = process.env.ADMIN_PASSWORD || "ADMIN_PASSWORD_NOT_SET";
 const fullName = "مدير النظام";
 const role = "superadmin"; // 👈 غيّره إن أردت
 

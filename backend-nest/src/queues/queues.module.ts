@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { NotificationProcessor } from './processors/notification.processor';
 import { EmailProcessor } from './processors/email.processor';
 import { OrderProcessor } from './processors/order.processor';
+import { WebhookProcessor, WebhookDLQProcessor } from './processors/webhook.processor';
 
 @Module({
   imports: [
@@ -34,10 +35,12 @@ import { OrderProcessor } from './processors/order.processor';
       { name: 'emails-dlq' }, // ✅ Dead Letter Queue للبريد الفاشل
       { name: 'orders' },
       { name: 'orders-dlq' }, // ✅ Dead Letter Queue للطلبات الفاشلة
+      { name: 'webhooks' }, // ✅ Queue للـ webhooks
+      { name: 'webhooks-dlq' }, // ✅ Dead Letter Queue للـ webhooks الفاشلة
       { name: 'reports' },
     ),
   ],
-  providers: [NotificationProcessor, EmailProcessor, OrderProcessor],
+  providers: [NotificationProcessor, EmailProcessor, OrderProcessor, WebhookProcessor, WebhookDLQProcessor],
   exports: [BullModule],
 })
 export class QueuesModule {}

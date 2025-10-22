@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { FinanceController } from './finance.controller';
+import { SettlementController } from './settlement.controller';
+import { CommonModule } from '../../common/common.module';
 import { CommissionService } from './services/commission.service';
 import { PayoutService } from './services/payout.service';
 import { SettlementService } from './services/settlement.service';
@@ -29,6 +31,7 @@ import {
 
 @Module({
   imports: [
+    CommonModule,
     MongooseModule.forFeature([
       { name: Commission.name, schema: CommissionSchema },
       { name: PayoutBatch.name, schema: PayoutBatchSchema },
@@ -42,7 +45,7 @@ import {
     ]),
     JwtModule.register({}),
   ],
-  controllers: [FinanceController],
+  controllers: [FinanceController, SettlementController],
   providers: [
     CommissionService,
     PayoutService,

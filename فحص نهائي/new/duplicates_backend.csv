@@ -1,0 +1,8 @@
+method,normalized_path,file,count
+DELETE,/DELIVERY/CART/{PARAM},"['bthwani-project-main/backend-nest/src/modules/cart/cart.controller.ts', 'bthwani-project-main/backend-nest/src/modules/cart/cart.controller.ts']",2
+GET,/,"['bthwani-project-main/backend-nest/scripts/extract-routes.ts', 'bthwani-project-main/backend-nest/src/app.controller.ts']",2
+GET,/CATEGORIES,"['bthwani-project-main/backend-nest/stub-endpoints/delivery-stubs.ts', 'bthwani-project-main/backend-nest/stub-endpoints/errands-stubs.ts']",2
+GET,/DRIVERS/AVAILABLE,"['bthwani-project-main/backend-nest/src/modules/driver/driver.controller.ts', 'bthwani-project-main/backend-nest/stub-endpoints/errands-stubs.ts']",2
+GET,/LEGAL/PRIVACY-POLICY,"['bthwani-project-main/backend-nest/src/modules/legal/legal.controller.ts', 'bthwani-project-main/backend-nest/tools/audit/store_backend_map.ts']",2
+POST,/ADMIN/REPORTS/EXPORT/{PARAM}/{PARAM},"['bthwani-project-main/backend-nest/src/modules/admin/admin-cms.controller.ts', 'bthwani-project-main/backend-nest/src/modules/admin/admin.controller.ts']",2
+POST,/EVENTS,"['bthwani-project-main/backend-nest/src/modules/utility/events.controller.ts', 'bthwani-project-main/backend-nest/stub-endpoints/misc-stubs.ts']",2

@@ -1,0 +1,16 @@
+suite: api-contract-core
+blocks:
+  - name: payments-idempotency
+    given: "Valid idempotency key"
+    when: "POST /api/v1/payments"
+    then:
+      - status: [201, 200]
+      - idempotent: true
+      - headers: ["Idempotency-Key"]
+  - name: notifications-webhook-signature
+    given: "Signed provider request"
+    when: "POST /webhooks/notifications"
+    then:
+      - status: [200]
+      - signature_valid: true
+      - replay_protection: true

@@ -3,16 +3,55 @@ import { InjectModel } from '@nestjs/mongoose';
 import type { Model } from 'mongoose';
 import Payments, { PaymentType, PaymentStatus, PaymentMethod } from './entities/payments.entity';
 import { WalletService } from '../wallet/wallet.service';
+import { IdempotencyService } from '../../common/services/idempotency.service';
 
 @Injectable()
 export class PaymentsService {
   constructor(
     @InjectModel(Payments.name) private readonly model: Model<Payments>,
-    private readonly wallet: WalletService
+    private readonly wallet: WalletService,
+    private readonly idempotency: IdempotencyService
   ) {}
 
-  async createHold(dto: { userId: string; amount: number; reference: string }) {
-    return this.wallet.holdFunds(dto.userId, dto.amount, dto.reference);
+  async createHold(dto: { userId: string; amount: number; reference: string; idempotencyKey?: string }) {
+    const { idempotencyKey, ...holdDto } = dto;
+
+    if (idempotencyKey) {
+      // Check idempotency
+      const lockResult = await this.idempotency.acquireLock(
+        idempotencyKey,
+        'POST /api/v2/payments/holds',
+        'POST',
+        dto.userId
+      );
+
+      if (!lockResult.isNew && lockResult.result) {
+        return lockResult.result;
+      }
+
+      try {
+        const result = await this.wallet.holdFunds(holdDto.userId, holdDto.amount, holdDto.reference);
+        await this.idempotency.completeOperation(
+          idempotencyKey,
+          'POST /api/v2/payments/holds',
+          'POST',
+          dto.userId,
+          result
+        );
+        return result;
+      } catch (error) {
+        await this.idempotency.failOperation(
+          idempotencyKey,
+          'POST /api/v2/payments/holds',
+          'POST',
+          dto.userId,
+          error
+        );
+        throw error;
+      }
+    }
+
+    return this.wallet.holdFunds(holdDto.userId, holdDto.amount, holdDto.reference);
   }
 
   async release(holdId: string) {

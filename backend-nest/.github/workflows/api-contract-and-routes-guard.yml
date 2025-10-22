@@ -19,9 +19,9 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Check route uniqueness
-        working-directory: backend-nest
-        run: node scripts/check-route-uniqueness.js
+      - name: Check API duplicates
+        working-directory: ../..
+        run: node scripts/check-api-duplicates.js
 
       - name: Upload route report
         if: always()
@@ -115,10 +115,52 @@ jobs:
           name: parity-report
           path: backend-nest/reports/parity_report.*
 
+  client-generation:
+    name: BTW-AUD-001 - Typed Client Generation
+    runs-on: ubuntu-latest
+    needs: [openapi-validation]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate typed clients
+        run: node scripts/simple-client-generator.js
+
+      - name: Validate generated clients
+        run: |
+          # Check if clients were generated
+          if [ ! -d "admin-dashboard/src/api/generated" ]; then
+            echo "❌ Admin dashboard client not generated"
+            exit 1
+          fi
+          if [ ! -d "bthwani-web/src/api/generated" ]; then
+            echo "❌ Web app client not generated"
+            exit 1
+          fi
+          echo "✅ All clients generated successfully"
+
+      - name: Upload generated clients
+        uses: actions/upload-artifact@v4
+        with:
+          name: typed-clients
+          path: |
+            */src/api/generated/
+          retention-days: 7
+
   summary:
     name: Generate Summary
     runs-on: ubuntu-latest
-    needs: [route-uniqueness, openapi-validation, contract-tests]
+    needs: [route-uniqueness, openapi-validation, contract-tests, client-generation]
     if: always()
     steps:
       - name: Download all artifacts
@@ -133,6 +175,7 @@ jobs:
           echo "| Route Uniqueness | ${{ needs.route-uniqueness.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
           echo "| OpenAPI Validation | ${{ needs.openapi-validation.result == 'success' && '✅ Passed' || '⚠️ Warnings' }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Contract Tests | ${{ needs.contract-tests.result == 'success' && '✅ Passed' || '⚠️ Review needed' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Typed Client Generation | ${{ needs.client-generation.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Workflow:** BTW-AUD-002, BTW-AUD-001" >> $GITHUB_STEP_SUMMARY
           echo "**Generated:** $(date)" >> $GITHUB_STEP_SUMMARY

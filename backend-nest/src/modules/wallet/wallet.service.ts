@@ -15,6 +15,7 @@ import {
   WalletHelper,
   PaginationHelper,
 } from '../../common/utils';
+import { WithdrawalService } from '../withdrawal/withdrawal.service';
 
 @Injectable()
 export class WalletService {
@@ -23,6 +24,7 @@ export class WalletService {
     @InjectModel(WalletTransaction.name)
     private walletTransactionModel: Model<WalletTransaction>,
     @InjectConnection() private readonly connection: Connection,
+    private withdrawalService: WithdrawalService,
   ) {}
 
   // جلب رصيد المحفظة
@@ -780,5 +782,23 @@ export class WalletService {
     void _reason; // TODO: Implement refund request logic
     await Promise.resolve();
     return { success: true, message: 'تم تقديم طلب الاسترجاع' };
+  }
+
+  // ==================== Admin Withdrawal Management ====================
+
+  async getAllWithdrawals(query?: any) {
+    return this.withdrawalService.getWithdrawals(query);
+  }
+
+  async getPendingWithdrawals() {
+    return this.withdrawalService.getPendingWithdrawals();
+  }
+
+  async approveWithdrawal(data: any): Promise<any> {
+    return this.withdrawalService.approveWithdrawal(data);
+  }
+
+  async rejectWithdrawal(data: any): Promise<any> {
+    return this.withdrawalService.rejectWithdrawal(data);
   }
 }

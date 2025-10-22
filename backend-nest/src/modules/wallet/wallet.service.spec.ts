@@ -4,12 +4,14 @@ import { WalletService } from './wallet.service';
 import { User } from '../auth/entities/user.entity';
 import { WalletTransaction } from './entities/wallet-transaction.entity';
 import { NotFoundException } from '@nestjs/common';
+import { WithdrawalService } from '../withdrawal/withdrawal.service';
 
 describe('WalletService', () => {
   let service: WalletService;
   let mockUserModel: any;
   let mockTransactionModel: any;
   let mockConnection: any;
+  let mockWithdrawalService: any;
 
   beforeEach(async () => {
     // Mock models
@@ -35,6 +37,14 @@ describe('WalletService', () => {
       }),
     };
 
+    mockWithdrawalService = {
+      createWithdrawal: jest.fn(),
+      approveWithdrawal: jest.fn(),
+      rejectWithdrawal: jest.fn(),
+      getWithdrawals: jest.fn(),
+      getPendingWithdrawals: jest.fn(),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         WalletService,
@@ -49,6 +59,10 @@ describe('WalletService', () => {
         {
           provide: getConnectionToken(),
           useValue: mockConnection,
+        },
+        {
+          provide: WithdrawalService,
+          useValue: mockWithdrawalService,
         },
       ],
     }).compile();

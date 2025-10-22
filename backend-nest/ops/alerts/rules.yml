@@ -73,34 +73,160 @@ groups:
   - name: burn-rate
     interval: 1m
     rules:
-      # Multi-window burn rate for SLO alerting
+      # Fast burn: Budget exhausted in < 1 hour
+      - alert: ErrorBudgetBurn_Critical
+        expr: |
+          (
+            rate(http_requests_total{status=~\"5..\"}[5m]) / rate(http_requests_total[5m]) > 0.1
+            and
+            rate(http_requests_total{status=~\"5..\"}[10m]) / rate(http_requests_total[10m]) > 0.1
+          )
+        for: 5m
+        labels:
+          severity: critical
+          burn_rate: critical
+        annotations:
+          summary: "CRITICAL: Error budget will be exhausted in < 1 hour"
+          description: "Error rate > 10% sustained. Immediate action required."
+          impact: "Service reliability severely compromised"
+          action: "Page on-call immediately, consider emergency rollback"
+          runbook: "https://docs.bthwani.com/runbooks/error-budget-burn-critical"
+
+      # Fast burn: Budget exhausted in 1-6 hours
       - alert: ErrorBudgetBurn_Fast
         expr: |
           (
-            rate(http_requests_total{status=~"5.."}[1m]) / rate(http_requests_total[1m]) > (14.4 * 0.001)
+            rate(http_requests_total{status=~\"5..\"}[10m]) / rate(http_requests_total[10m]) > 0.05
             and
-            rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) > (14.4 * 0.001)
+            rate(http_requests_total{status=~\"5..\"}[30m]) / rate(http_requests_total[30m]) > 0.05
           )
+        for: 10m
         labels:
           severity: critical
+          burn_rate: fast
         annotations:
-          summary: "Fast error budget burn detected"
-          description: "Error budget will be exhausted in < 2 days"
-          runbook: "https://docs.bthwani.com/runbooks/error-budget-burn"
+          summary: "FAST: Error budget will be exhausted in 1-6 hours"
+          description: "Error rate > 5% sustained over 30 minutes"
+          impact: "Service reliability at risk"
+          action: "Escalate to engineering lead, prepare incident response"
+          runbook: "https://docs.bthwani.com/runbooks/error-budget-burn-fast"
 
+      # Medium burn: Budget exhausted in 6-24 hours
+      - alert: ErrorBudgetBurn_Medium
+        expr: |
+          (
+            rate(http_requests_total{status=~\"5..\"}[1h]) / rate(http_requests_total[1h]) > 0.02
+            and
+            rate(http_requests_total{status=~\"5..\"}[3h]) / rate(http_requests_total[3h]) > 0.02
+          )
+        for: 30m
+        labels:
+          severity: high
+          burn_rate: medium
+        annotations:
+          summary: "MEDIUM: Error budget will be exhausted in 6-24 hours"
+          description: "Error rate > 2% sustained over 3 hours"
+          impact: "Monitor closely, prepare mitigation plan"
+          action: "Notify engineering team, create action plan"
+          runbook: "https://docs.bthwani.com/runbooks/error-budget-burn-medium"
+
+      # Slow burn: Budget exhausted in 1-7 days
       - alert: ErrorBudgetBurn_Slow
         expr: |
           (
-            rate(http_requests_total{status=~"5.."}[1h]) / rate(http_requests_total[1h]) > (6 * 0.001)
+            rate(http_requests_total{status=~\"5..\"}[6h]) / rate(http_requests_total[6h]) > 0.005
             and
-            rate(http_requests_total{status=~"5.."}[6h]) / rate(http_requests_total[6h]) > (6 * 0.001)
+            rate(http_requests_total{status=~\"5..\"}[24h]) / rate(http_requests_total[24h]) > 0.005
           )
+        for: 2h
+        labels:
+          severity: medium
+          burn_rate: slow
+        annotations:
+          summary: "SLOW: Error budget consumption elevated"
+          description: "Error rate > 0.5% sustained over 24 hours"
+          impact: "Track trend, plan improvements"
+          action: "Add to weekly engineering review, create improvement tickets"
+          runbook: "https://docs.bthwani.com/runbooks/error-budget-burn-slow"
+
+  - name: latency-burn-rate
+    interval: 1m
+    rules:
+      # Latency burn rate alerts
+      - alert: LatencyBudgetBurn_Fast
+        expr: |
+          histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 5
+          and
+          histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[15m])) > 5
+        for: 5m
+        labels:
+          severity: critical
+          burn_type: latency
+        annotations:
+          summary: "CRITICAL: Latency budget burn - P95 > 5s"
+          description: "95th percentile latency > 5 seconds sustained"
+          impact: "User experience severely degraded"
+          action: "Immediate investigation, consider emergency fixes"
+          runbook: "https://docs.bthwani.com/runbooks/latency-budget-burn"
+
+      - alert: LatencyBudgetBurn_Medium
+        expr: |
+          histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[15m])) > 3
+          and
+          histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[1h])) > 3
+        for: 15m
         labels:
           severity: high
+          burn_type: latency
         annotations:
-          summary: "Slow error budget burn detected"
-          description: "Error budget consumption is elevated"
-          runbook: "https://docs.bthwani.com/runbooks/error-budget-burn"
+          summary: "HIGH: Latency budget burn - P95 > 3s"
+          description: "95th percentile latency > 3 seconds sustained"
+          impact: "User experience impacted"
+          action: "Investigate performance bottlenecks"
+          runbook: "https://docs.bthwani.com/runbooks/latency-budget-burn"
+
+  - name: saturation-burn-rate
+    interval: 30s
+    rules:
+      # Resource saturation alerts
+      - alert: SaturationBurn_CPU
+        expr: rate(process_cpu_seconds_total[5m]) > 0.9
+        for: 5m
+        labels:
+          severity: critical
+          resource: cpu
+        annotations:
+          summary: "CRITICAL: CPU saturation > 90%"
+          description: "CPU utilization critically high"
+          impact: "Service responsiveness degraded"
+          action: "Scale up resources immediately, investigate CPU intensive operations"
+          runbook: "https://docs.bthwani.com/runbooks/cpu-saturation"
+
+      - alert: SaturationBurn_Memory
+        expr: process_resident_memory_bytes / node_memory_MemTotal_bytes > 0.95
+        for: 5m
+        labels:
+          severity: critical
+          resource: memory
+        annotations:
+          summary: "CRITICAL: Memory saturation > 95%"
+          description: "Memory utilization critically high"
+          impact: "Risk of OOM kills and service crashes"
+          action: "Scale up memory, investigate memory leaks, restart if necessary"
+          runbook: "https://docs.bthwani.com/runbooks/memory-saturation"
+
+      - alert: SaturationBurn_Disk
+        expr: (1 - (node_filesystem_avail_bytes{mountpoint=\"/\"} / node_filesystem_size_bytes{mountpoint=\"/\"})) > 0.9
+        for: 10m
+        labels:
+          severity: high
+          resource: disk
+        annotations:
+          summary: "HIGH: Disk saturation > 90%"
+          description: "Disk space critically low"
+          impact: "Risk of service failures, logging issues"
+          action: "Clean up disk space, add more storage, archive old logs"
+          runbook: "https://docs.bthwani.com/runbooks/disk-saturation"
 
   - name: business
     interval: 1m
