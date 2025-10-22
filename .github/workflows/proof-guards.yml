@@ -49,6 +49,9 @@ jobs:
       - name: Create artifacts directory
         run: mkdir -p artifacts
 
+      - name: Install ts-node globally
+        run: npm install -g ts-node typescript
+
       - name: Generate Backend Route Inventory
         run: |
           if [ -d backend-nest/src ]; then
