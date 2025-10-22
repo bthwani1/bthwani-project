@@ -77,58 +77,38 @@ jobs:
       - name: Extract Frontend API Calls - Admin
         run: |
           mkdir -p artifacts
-          node --loader ts-node/esm --no-warnings \
-            --project scripts/tsconfig.json \
+          TS_NODE_PROJECT=scripts/tsconfig.json TS_NODE_TRANSPILE_ONLY=true \
+            node --loader ts-node/esm --no-warnings \
             scripts/extract-fe-calls.ts admin-dashboard/src > artifacts/fe_calls_admin.csv
           test -s artifacts/fe_calls_admin.csv
 
       - name: Extract Frontend API Calls - Web
         run: |
-          if [ -d bthwani-web/src ]; then
-            ts-node --project scripts/tsconfig.json scripts/extract-fe-calls.ts bthwani-web/src > artifacts/fe_calls_web.csv
-            if [ ! -s artifacts/fe_calls_web.csv ]; then
-              echo "❌ Web calls extraction failed - empty file generated"
-              exit 1
-            fi
-          else
-            echo "Web app not found, skipping"
-          fi
+          TS_NODE_PROJECT=scripts/tsconfig.json TS_NODE_TRANSPILE_ONLY=true \
+            node --loader ts-node/esm --no-warnings \
+            scripts/extract-fe-calls.ts bthwani-web/src > artifacts/fe_calls_web.csv
+          test -s artifacts/fe_calls_web.csv
 
       - name: Extract Frontend API Calls - App
         run: |
-          if [ -d app-user/src ]; then
-            ts-node --project scripts/tsconfig.json scripts/extract-fe-calls.ts app-user/src > artifacts/fe_calls_app.csv
-            if [ ! -s artifacts/fe_calls_app.csv ]; then
-              echo "❌ App calls extraction failed - empty file generated"
-              exit 1
-            fi
-          else
-            echo "User app not found, skipping"
-          fi
+          TS_NODE_PROJECT=scripts/tsconfig.json TS_NODE_TRANSPILE_ONLY=true \
+            node --loader ts-node/esm --no-warnings \
+            scripts/extract-fe-calls.ts app-user/src > artifacts/fe_calls_app.csv
+          test -s artifacts/fe_calls_app.csv
 
       - name: Extract Frontend API Calls - Vendor
         run: |
-          if [ -d vendor-app/src ]; then
-            ts-node --project scripts/tsconfig.json scripts/extract-fe-calls.ts vendor-app/src > artifacts/fe_calls_vendor.csv
-            if [ ! -s artifacts/fe_calls_vendor.csv ]; then
-              echo "❌ Vendor calls extraction failed - empty file generated"
-              exit 1
-            fi
-          else
-            echo "Vendor app not found, skipping"
-          fi
+          TS_NODE_PROJECT=scripts/tsconfig.json TS_NODE_TRANSPILE_ONLY=true \
+            node --loader ts-node/esm --no-warnings \
+            scripts/extract-fe-calls.ts vendor-app/src > artifacts/fe_calls_vendor.csv
+          test -s artifacts/fe_calls_vendor.csv
 
       - name: Extract Frontend API Calls - Rider
         run: |
-          if [ -d rider-app/src ]; then
-            ts-node --project scripts/tsconfig.json scripts/extract-fe-calls.ts rider-app/src > artifacts/fe_calls_rider.csv
-            if [ ! -s artifacts/fe_calls_rider.csv ]; then
-              echo "❌ Rider calls extraction failed - empty file generated"
-              exit 1
-            fi
-          else
-            echo "Rider app not found, skipping"
-          fi
+          TS_NODE_PROJECT=scripts/tsconfig.json TS_NODE_TRANSPILE_ONLY=true \
+            node --loader ts-node/esm --no-warnings \
+            scripts/extract-fe-calls.ts rider-app/src > artifacts/fe_calls_rider.csv
+          test -s artifacts/fe_calls_rider.csv
 
       - name: Check for FE Orphans
         run: |
