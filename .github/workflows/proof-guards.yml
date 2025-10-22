@@ -56,8 +56,7 @@ jobs:
         run: |
           if [ -d backend-nest/src ]; then
             cd backend-nest
-            node --loader ts-node/esm --no-warnings \
-              --require ts-node/register \
+            npx ts-node --esm --project ../scripts/tsconfig.json --transpile-only \
               scripts/extract-routes.ts || echo "Warning: Could not extract routes"
           else
             echo "Backend not found, skipping"
@@ -67,8 +66,7 @@ jobs:
         run: |
           if [ -d backend-nest/src ]; then
             cd backend-nest
-            node --loader ts-node/esm --no-warnings \
-              --require ts-node/register \
+            npx ts-node --esm --project ../scripts/tsconfig.json --transpile-only \
               scripts/extract-openapi.ts || echo "Warning: Could not extract OpenAPI"
           else
             echo "Backend not found, skipping"
@@ -77,36 +75,31 @@ jobs:
       - name: Extract Frontend API Calls - Admin
         run: |
           mkdir -p artifacts
-          TS_NODE_PROJECT=scripts/tsconfig.json TS_NODE_TRANSPILE_ONLY=true \
-            node --loader ts-node/esm --no-warnings \
+          npx ts-node --esm --project scripts/tsconfig.json --transpile-only \
             scripts/extract-fe-calls.ts admin-dashboard/src > artifacts/fe_calls_admin.csv
           test -s artifacts/fe_calls_admin.csv
 
       - name: Extract Frontend API Calls - Web
         run: |
-          TS_NODE_PROJECT=scripts/tsconfig.json TS_NODE_TRANSPILE_ONLY=true \
-            node --loader ts-node/esm --no-warnings \
+          npx ts-node --esm --project scripts/tsconfig.json --transpile-only \
             scripts/extract-fe-calls.ts bthwani-web/src > artifacts/fe_calls_web.csv
           test -s artifacts/fe_calls_web.csv
 
       - name: Extract Frontend API Calls - App
         run: |
-          TS_NODE_PROJECT=scripts/tsconfig.json TS_NODE_TRANSPILE_ONLY=true \
-            node --loader ts-node/esm --no-warnings \
+          npx ts-node --esm --project scripts/tsconfig.json --transpile-only \
             scripts/extract-fe-calls.ts app-user/src > artifacts/fe_calls_app.csv
           test -s artifacts/fe_calls_app.csv
 
       - name: Extract Frontend API Calls - Vendor
         run: |
-          TS_NODE_PROJECT=scripts/tsconfig.json TS_NODE_TRANSPILE_ONLY=true \
-            node --loader ts-node/esm --no-warnings \
+          npx ts-node --esm --project scripts/tsconfig.json --transpile-only \
             scripts/extract-fe-calls.ts vendor-app/src > artifacts/fe_calls_vendor.csv
           test -s artifacts/fe_calls_vendor.csv
 
       - name: Extract Frontend API Calls - Rider
         run: |
-          TS_NODE_PROJECT=scripts/tsconfig.json TS_NODE_TRANSPILE_ONLY=true \
-            node --loader ts-node/esm --no-warnings \
+          npx ts-node --esm --project scripts/tsconfig.json --transpile-only \
             scripts/extract-fe-calls.ts rider-app/src > artifacts/fe_calls_rider.csv
           test -s artifacts/fe_calls_rider.csv
 
