@@ -1,7 +1,11 @@
 {
   "devDependencies": {
     "@axe-core/react": "^4.10.2",
-    "eslint-plugin-jsx-a11y": "^6.10.2"
+    "@types/node": "^24.9.1",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "fast-glob": "^3.3.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "posthog-js": "^1.275.1"

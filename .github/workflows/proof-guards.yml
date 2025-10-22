@@ -49,14 +49,16 @@ jobs:
       - name: Create artifacts directory
         run: mkdir -p artifacts
 
-      - name: Install ts-node globally
-        run: npm install -g ts-node typescript
+      - name: Install root TS tooling
+        run: npm i -D ts-node typescript @types/node fast-glob
 
       - name: Generate Backend Route Inventory
         run: |
           if [ -d backend-nest/src ]; then
             cd backend-nest
-            ts-node scripts/extract-routes.ts || echo "Warning: Could not extract routes"
+            node --loader ts-node/esm --no-warnings \
+              --require ts-node/register \
+              scripts/extract-routes.ts || echo "Warning: Could not extract routes"
           else
             echo "Backend not found, skipping"
           fi
@@ -65,27 +67,25 @@ jobs:
         run: |
           if [ -d backend-nest/src ]; then
             cd backend-nest
-            ts-node scripts/extract-openapi.ts || echo "Warning: Could not extract OpenAPI"
+            node --loader ts-node/esm --no-warnings \
+              --require ts-node/register \
+              scripts/extract-openapi.ts || echo "Warning: Could not extract OpenAPI"
           else
             echo "Backend not found, skipping"
           fi
 
-      - name: Extract Frontend API Calls - Admin Dashboard
+      - name: Extract Frontend API Calls - Admin
         run: |
-          if [ -d admin-dashboard/src ]; then
-            ts-node scripts/extract-fe-calls.ts admin-dashboard/src > artifacts/fe_calls_admin.csv
-            if [ ! -s artifacts/fe_calls_admin.csv ]; then
-              echo "❌ Admin calls extraction failed - empty file generated"
-              exit 1
-            fi
-          else
-            echo "Admin dashboard not found, skipping"
-          fi
+          mkdir -p artifacts
+          node --loader ts-node/esm --no-warnings \
+            --project scripts/tsconfig.json \
+            scripts/extract-fe-calls.ts admin-dashboard/src > artifacts/fe_calls_admin.csv
+          test -s artifacts/fe_calls_admin.csv
 
       - name: Extract Frontend API Calls - Web
         run: |
           if [ -d bthwani-web/src ]; then
-            ts-node scripts/extract-fe-calls.ts bthwani-web/src > artifacts/fe_calls_web.csv
+            ts-node --project scripts/tsconfig.json scripts/extract-fe-calls.ts bthwani-web/src > artifacts/fe_calls_web.csv
             if [ ! -s artifacts/fe_calls_web.csv ]; then
               echo "❌ Web calls extraction failed - empty file generated"
               exit 1
@@ -97,7 +97,7 @@ jobs:
       - name: Extract Frontend API Calls - App
         run: |
           if [ -d app-user/src ]; then
-            ts-node scripts/extract-fe-calls.ts app-user/src > artifacts/fe_calls_app.csv
+            ts-node --project scripts/tsconfig.json scripts/extract-fe-calls.ts app-user/src > artifacts/fe_calls_app.csv
             if [ ! -s artifacts/fe_calls_app.csv ]; then
               echo "❌ App calls extraction failed - empty file generated"
               exit 1
@@ -109,7 +109,7 @@ jobs:
       - name: Extract Frontend API Calls - Vendor
         run: |
           if [ -d vendor-app/src ]; then
-            ts-node scripts/extract-fe-calls.ts vendor-app/src > artifacts/fe_calls_vendor.csv
+            ts-node --project scripts/tsconfig.json scripts/extract-fe-calls.ts vendor-app/src > artifacts/fe_calls_vendor.csv
             if [ ! -s artifacts/fe_calls_vendor.csv ]; then
               echo "❌ Vendor calls extraction failed - empty file generated"
               exit 1
@@ -121,7 +121,7 @@ jobs:
       - name: Extract Frontend API Calls - Rider
         run: |
           if [ -d rider-app/src ]; then
-            ts-node scripts/extract-fe-calls.ts rider-app/src > artifacts/fe_calls_rider.csv
+            ts-node --project scripts/tsconfig.json scripts/extract-fe-calls.ts rider-app/src > artifacts/fe_calls_rider.csv
             if [ ! -s artifacts/fe_calls_rider.csv ]; then
               echo "❌ Rider calls extraction failed - empty file generated"
               exit 1
