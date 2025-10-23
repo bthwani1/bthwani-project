@@ -1,0 +1,219 @@
+name: Audit Artifacts Publisher
+
+on:
+  push:
+    branches: [ audit-artifacts ]
+    paths:
+      - 'backend-nest/reports/**'
+      - 'reports/**'
+  pull_request:
+    branches: [ audit-artifacts ]
+  workflow_dispatch:
+
+jobs:
+  validate-and-publish-artifacts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: audit-artifacts
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install backend dependencies
+        run: cd backend-nest && npm ci
+
+      - name: Validate reports directory
+        run: |
+          if [ ! -d "backend-nest/reports" ]; then
+            echo "❌ backend-nest/reports directory not found"
+            exit 1
+          fi
+
+          if [ ! -d "reports" ]; then
+            echo "❌ Root reports directory not found"
+            exit 1
+          fi
+
+          echo "✅ Reports directories found"
+
+      - name: Validate audit reports
+        run: |
+          # Check for required audit files
+          required_files=(
+            "backend-nest/reports/openapi.yaml"
+            "backend-nest/reports/parity_report.json"
+            "backend-nest/reports/compliance_index.json"
+            "reports/sdk-generation-report.json"
+            "reports/runtime-tap-24h.json"
+            "reports/runtime-fe-comparison.json"
+          )
+
+          for file in "${required_files[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "❌ Missing required audit file: $file"
+              exit 1
+            fi
+          done
+
+          echo "✅ All required audit files present"
+
+      - name: Generate audit summary
+        run: |
+          echo "# Audit Artifacts Summary" > audit-summary.md
+          echo "" >> audit-summary.md
+          echo "**Generated:** $(date -u)" >> audit-summary.md
+          echo "**Branch:** audit-artifacts" >> audit-summary.md
+          echo "**Commit:** $(git rev-parse HEAD)" >> audit-summary.md
+          echo "" >> audit-summary.md
+          echo "## Reports Overview" >> audit-summary.md
+          echo "" >> audit-summary.md
+
+          # Count files in reports directories
+          backend_reports=$(find backend-nest/reports -name "*.json" -o -name "*.yaml" -o -name "*.md" | wc -l)
+          root_reports=$(find reports -name "*.json" -o -name "*.yaml" -o -name "*.md" | wc -l)
+
+          echo "- Backend reports: $backend_reports files" >> audit-summary.md
+          echo "- Root reports: $root_reports files" >> audit-summary.md
+          echo "- Total: $((backend_reports + root_reports)) audit artifacts" >> audit-summary.md
+          echo "" >> audit-summary.md
+
+          # Add SDK generation status
+          if [ -f "reports/sdk-generation-report.json" ]; then
+            echo "## SDK Generation Status" >> audit-summary.md
+            echo "\`\`\`json" >> audit-summary.md
+            cat reports/sdk-generation-report.json | jq '.summary' >> audit-summary.md 2>/dev/null || echo "SDK report parsing failed" >> audit-summary.md
+            echo "\`\`\`" >> audit-summary.md
+            echo "" >> audit-summary.md
+          fi
+
+          # Add parity status
+          if [ -f "backend-nest/reports/parity_report.json" ]; then
+            echo "## API Parity Status" >> audit-summary.md
+            echo "\`\`\`json" >> audit-summary.md
+            cat backend-nest/reports/parity_report.json | jq '.summary' >> audit-summary.md 2>/dev/null || echo "Parity report parsing failed" >> audit-summary.md
+            echo "\`\`\`" >> audit-summary.md
+            echo "" >> audit-summary.md
+          fi
+
+      - name: Upload audit artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-artifacts-${{ github.run_number }}
+          path: |
+            backend-nest/reports/
+            reports/
+            audit-summary.md
+          retention-days: 90
+
+      - name: Create audit release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: audit-${{ github.run_number }}
+          release_name: Audit Artifacts ${{ github.run_number }}
+          body_path: audit-summary.md
+          draft: false
+          prerelease: false
+
+      - name: Validate audit completeness
+        run: |
+          # Check for critical audit gaps
+          if [ -f "backend-nest/reports/parity_report.json" ]; then
+            parity_gap=$(cat backend-nest/reports/parity_report.json | jq '.summary.parity_gap // 0' 2>/dev/null || echo "0")
+            if (( $(echo "$parity_gap > 5" | bc -l 2>/dev/null || echo "0") )); then
+              echo "⚠️  Warning: High parity gap detected ($parity_gap%)"
+              echo "parity_gap=$parity_gap" >> $GITHUB_OUTPUT
+            else
+              echo "✅ Parity gap within acceptable range ($parity_gap%)"
+            fi
+          fi
+
+          # Check for undocumented endpoints
+          if [ -f "backend-nest/reports/compliance_index.json" ]; then
+            undocumented=$(cat backend-nest/reports/compliance_index.json | jq '.summary.undocumented_count // 0' 2>/dev/null || echo "0")
+            if [ "$undocumented" -gt 0 ]; then
+              echo "⚠️  Warning: Found $undocumented undocumented endpoints"
+              echo "undocumented=$undocumented" >> $GITHUB_OUTPUT
+            else
+              echo "✅ All endpoints documented"
+            fi
+          fi
+
+      - name: Comment on audit status
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            let summary = '## 🔍 Audit Artifacts Validation\n\n';
+
+            // Check parity gap
+            if (process.env.PARITY_GAP) {
+              const gap = parseFloat(process.env.PARITY_GAP);
+              if (gap > 5) {
+                summary += `⚠️ **High Parity Gap:** ${gap}%\n`;
+              } else {
+                summary += `✅ **Parity Gap:** ${gap}%\n`;
+              }
+            }
+
+            // Check undocumented endpoints
+            if (process.env.UNDOCUMENTED) {
+              const undocumented = parseInt(process.env.UNDOCUMENTED);
+              if (undocumented > 0) {
+                summary += `⚠️ **Undocumented Endpoints:** ${undocumented}\n`;
+              } else {
+                summary += `✅ **All Endpoints Documented**\n`;
+              }
+            }
+
+            summary += '\n📦 **Artifacts uploaded successfully**\n';
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: summary
+            });
+
+  cleanup-old-artifacts:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - name: Delete old artifacts
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Keep only last 10 audit artifacts
+            const artifacts = await github.rest.actions.listArtifactsForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 100
+            });
+
+            const auditArtifacts = artifacts.data.artifacts
+              .filter(artifact => artifact.name.startsWith('audit-artifacts-'))
+              .sort((a, b) => b.created_at.localeCompare(a.created_at));
+
+            if (auditArtifacts.length > 10) {
+              const toDelete = auditArtifacts.slice(10);
+              for (const artifact of toDelete) {
+                await github.rest.actions.deleteArtifact({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  artifact_id: artifact.id
+                });
+              }
+            }

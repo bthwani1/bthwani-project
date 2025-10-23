@@ -5457,7 +5457,12 @@ paths:
   /admin/roles/{id}:
     patch:
       operationId: AdminController_updateRole
-      parameters: []
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -6598,6 +6603,8 @@ paths:
               properties:
                 items:
                   type: array
+                  items:
+                    type: object
                 store:
                   type: string
       responses:

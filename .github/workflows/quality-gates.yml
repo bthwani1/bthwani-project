@@ -1,0 +1,299 @@
+name: Quality Gates - Spectral & Parity
+
+on:
+  push:
+    branches: [ main, develop, release/* ]
+    paths:
+      - 'backend-nest/src/**'
+      - 'backend-nest/package.json'
+      - 'openapi.yaml'
+      - 'package.json'
+      - '.spectral.yaml'
+      - 'openapi/spectral*.yaml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'backend-nest/src/**'
+      - 'backend-nest/package.json'
+      - 'openapi.yaml'
+      - 'package.json'
+      - '.spectral.yaml'
+      - 'openapi/spectral*.yaml'
+
+jobs:
+  spectral-validation:
+    runs-on: ubuntu-latest
+    name: Spectral API Quality Gates
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install backend dependencies
+        run: cd backend-nest && npm ci
+
+      - name: Generate OpenAPI spec
+        run: npm run generate:openapi
+
+      - name: Validate OpenAPI with Spectral (Strict)
+        id: spectral-check
+        run: |
+          echo "🔍 Running Spectral validation..."
+          npm run lint:openapi:strict
+
+          # Count errors and warnings
+          output=$(npm run lint:openapi 2>&1 || true)
+          errors=$(echo "$output" | grep -c "error" || echo "0")
+          warnings=$(echo "$output" | grep -c "warning" || echo "0")
+
+          echo "spectral_errors=$errors" >> $GITHUB_OUTPUT
+          echo "spectral_warnings=$warnings" >> $GITHUB_OUTPUT
+
+          echo "📊 Spectral Results:"
+          echo "  Errors: $errors"
+          echo "  Warnings: $warnings"
+
+          if [ "$errors" -gt 0 ]; then
+            echo "❌ Spectral validation failed with $errors errors"
+            exit 1
+          else
+            echo "✅ Spectral validation passed"
+          fi
+
+      - name: Upload Spectral results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: spectral-results-${{ github.run_number }}
+          path: |
+            openapi.yaml
+            .spectral.yaml
+            openapi/spectral*.yaml
+
+  parity-validation:
+    runs-on: ubuntu-latest
+    name: API Parity Quality Gates
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install backend dependencies
+        run: cd backend-nest && npm ci
+
+      - name: Generate OpenAPI spec
+        run: npm run generate:openapi
+
+      - name: Run API Parity Check
+        id: parity-check
+        run: |
+          echo "🔍 Running API Parity validation..."
+          npm run audit:parity
+
+          # Check parity results
+          if [ -f "backend-nest/reports/parity_report.json" ]; then
+            parity_gap=$(cat backend-nest/reports/parity_report.json | jq '.summary.parity_gap // 0' 2>/dev/null || echo "0")
+            undocumented=$(cat backend-nest/reports/parity_report.json | jq '.summary.undocumented_count // 0' 2>/dev/null || echo "0")
+
+            echo "parity_gap=$parity_gap" >> $GITHUB_OUTPUT
+            echo "undocumented=$undocumented" >> $GITHUB_OUTPUT
+
+            echo "📊 Parity Results:"
+            echo "  Parity Gap: $parity_gap%"
+            echo "  Undocumented: $undocumented endpoints"
+
+            # Critical failures
+            if [ "$undocumented" -gt 0 ]; then
+              echo "❌ CRITICAL: Found $undocumented undocumented endpoints"
+              echo "📋 This violates the quality gate: undocumented > 0"
+              exit 1
+            fi
+
+            # Warning threshold (but allow to pass)
+            gap_threshold=5.0
+            if (( $(echo "$parity_gap > $gap_threshold" | bc -l 2>/dev/null || echo "0") )); then
+              echo "⚠️  WARNING: Parity gap ($parity_gap%) exceeds threshold ($gap_threshold%)"
+              echo "📋 This violates the quality gate: parity_gap > 5%"
+              exit 1
+            else
+              echo "✅ Parity gap within acceptable range"
+            fi
+          else
+            echo "❌ Parity report not found"
+            exit 1
+          fi
+
+      - name: Upload Parity results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: parity-results-${{ github.run_number }}
+          path: backend-nest/reports/parity_report.json
+
+  compliance-validation:
+    runs-on: ubuntu-latest
+    name: Security Compliance Gates
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install backend dependencies
+        run: cd backend-nest && npm ci
+
+      - name: Run Security Compliance Audit
+        id: compliance-check
+        run: |
+          echo "🔒 Running Security Compliance validation..."
+          cd backend-nest && npm run audit:security
+
+          # Check compliance results
+          if [ -f "reports/compliance_index.json" ]; then
+            total_endpoints=$(cat reports/compliance_index.json | jq '.summary.total_endpoints // 0' 2>/dev/null || echo "0")
+            compliant_endpoints=$(cat reports/compliance_index.json | jq '.summary.compliant_endpoints // 0' 2>/dev/null || echo "0")
+            compliance_rate=$(cat reports/compliance_index.json | jq '.summary.compliance_rate // 0' 2>/dev/null || echo "0")
+
+            echo "total_endpoints=$total_endpoints" >> $GITHUB_OUTPUT
+            echo "compliant_endpoints=$compliant_endpoints" >> $GITHUB_OUTPUT
+            echo "compliance_rate=$compliance_rate" >> $GITHUB_OUTPUT
+
+            echo "📊 Compliance Results:"
+            echo "  Total Endpoints: $total_endpoints"
+            echo "  Compliant: $compliant_endpoints"
+            echo "  Rate: $compliance_rate%"
+
+            # Compliance gate: must be > 95%
+            rate_threshold=95.0
+            if (( $(echo "$compliance_rate < $rate_threshold" | bc -l 2>/dev/null || echo "0") )); then
+              echo "❌ CRITICAL: Compliance rate ($compliance_rate%) below threshold ($rate_threshold%)"
+              exit 1
+            else
+              echo "✅ Compliance rate meets requirements"
+            fi
+          else
+            echo "❌ Compliance report not found"
+            exit 1
+          fi
+
+      - name: Upload Compliance results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: compliance-results-${{ github.run_number }}
+          path: backend-nest/reports/compliance_index.json
+
+  quality-gate-summary:
+    runs-on: ubuntu-latest
+    name: Quality Gates Summary
+    needs: [spectral-validation, parity-validation, compliance-validation]
+    if: always()
+
+    steps:
+      - name: Quality Gates Status Report
+        run: |
+          echo "# 🛡️ Quality Gates Status Report" >> quality-report.md
+          echo "" >> quality-report.md
+          echo "**Date:** $(date)" >> quality-report.md
+          echo "**Commit:** ${{ github.sha }}" >> quality-report.md
+          echo "**Branch:** ${{ github.ref_name }}" >> quality-report.md
+          echo "" >> quality-report.md
+
+          # Spectral status
+          if [ "${{ needs.spectral-validation.result }}" == "success" ]; then
+            echo "## ✅ Spectral Validation" >> quality-report.md
+            echo "All OpenAPI specifications pass Spectral quality checks" >> quality-report.md
+          else
+            echo "## ❌ Spectral Validation FAILED" >> quality-report.md
+            echo "OpenAPI specifications contain critical issues" >> quality-report.md
+          fi
+          echo "" >> quality-report.md
+
+          # Parity status
+          if [ "${{ needs.parity-validation.result }}" == "success" ]; then
+            echo "## ✅ API Parity Check" >> quality-report.md
+            echo "Backend-Frontend API parity within acceptable limits" >> quality-report.md
+          else
+            echo "## ❌ API Parity Check FAILED" >> quality-report.md
+            echo "Critical parity issues detected (undocumented > 0 or gap > 5%)" >> quality-report.md
+          fi
+          echo "" >> quality-report.md
+
+          # Compliance status
+          if [ "${{ needs.compliance-validation.result }}" == "success" ]; then
+            echo "## ✅ Security Compliance" >> quality-report.md
+            echo "Security compliance requirements met (>95%)" >> quality-report.md
+          else
+            echo "## ❌ Security Compliance FAILED" >> quality-report.md
+            echo "Security compliance below required threshold" >> quality-report.md
+          fi
+          echo "" >> quality-report.md
+
+          # Overall status
+          if [ "${{ needs.spectral-validation.result }}" == "success" ] && \
+             [ "${{ needs.parity-validation.result }}" == "success" ] && \
+             [ "${{ needs.compliance-validation.result }}" == "success" ]; then
+            echo "## 🎉 ALL QUALITY GATES PASSED" >> quality-report.md
+            echo "✅ Code ready for deployment" >> quality-report.md
+            exit 0
+          else
+            echo "## 🚨 QUALITY GATES FAILED" >> quality-report.md
+            echo "❌ Code requires fixes before deployment" >> quality-report.md
+            exit 1
+          fi
+
+      - name: Upload Quality Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: quality-gates-report-${{ github.run_number }}
+          path: quality-report.md
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            let report = fs.readFileSync('quality-report.md', 'utf8');
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: report
+            });
+
+      - name: Fail if any gate failed
+        run: |
+          if [ "${{ needs.spectral-validation.result }}" != "success" ] || \
+             [ "${{ needs.parity-validation.result }}" != "success" ] || \
+             [ "${{ needs.compliance-validation.result }}" != "success" ]; then
+            echo "❌ One or more quality gates failed"
+            exit 1
+          else
+            echo "✅ All quality gates passed"
+          fi

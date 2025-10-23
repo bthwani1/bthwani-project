@@ -34,28 +34,60 @@ projects.forEach(project => {
     return;
   }
 
-  // Check required files
-  const requiredFiles = ['index.ts', 'apis.ts', 'models.ts'];
-  requiredFiles.forEach(file => {
+  let hasRequiredStructure = false;
+
+  // Check for axios structure (single files)
+  const axiosFiles = ['index.ts', 'api.ts', 'models.ts'];
+  const hasAxiosStructure = axiosFiles.every(file => {
     const filePath = path.join(outputDir, file);
-    if (!fs.existsSync(filePath)) {
-      errors.push(`${project.name}: Missing required file: ${file}`);
-    } else {
-      // Check file size (basic validation)
-      const stats = fs.statSync(filePath);
-      if (stats.size < 100) {
-        warnings.push(`${project.name}: ${file} seems too small (${stats.size} bytes)`);
-      }
-    }
+    return fs.existsSync(filePath) && fs.statSync(filePath).size > 100;
   });
 
-  // Check if there are API files
-  const files = fs.readdirSync(outputDir);
-  const apiFiles = files.filter(file => file.endsWith('Api.ts') && file !== 'apis.ts');
-  if (apiFiles.length === 0) {
-    warnings.push(`${project.name}: No individual API files found`);
+  // Check for fetch structure (directories)
+  const fetchFiles = ['index.ts', 'runtime.ts'];
+  const apisDir = path.join(outputDir, 'apis');
+  const modelsDir = path.join(outputDir, 'models');
+  const hasFetchStructure = fetchFiles.every(file => {
+    const filePath = path.join(outputDir, file);
+    return fs.existsSync(filePath) && fs.statSync(filePath).size > 100;
+  }) && fs.existsSync(apisDir) && fs.existsSync(modelsDir);
+
+  if (hasAxiosStructure) {
+    hasRequiredStructure = true;
+    console.log(`  ✅ Axios structure found`);
+  } else if (hasFetchStructure) {
+    hasRequiredStructure = true;
+    console.log(`  ✅ Fetch structure found`);
   } else {
-    console.log(`  ✅ Found ${apiFiles.length} API files`);
+    errors.push(`${project.name}: Invalid SDK structure`);
+    return;
+  }
+
+  // Check if there are API files
+  if (hasAxiosStructure) {
+    const files = fs.readdirSync(outputDir);
+    const apiFiles = files.filter(file => file.endsWith('Api.ts') && file !== 'api.ts');
+    if (apiFiles.length === 0) {
+      warnings.push(`${project.name}: No individual API files found`);
+    } else {
+      console.log(`  ✅ Found ${apiFiles.length} API files`);
+    }
+  } else if (hasFetchStructure) {
+    const apisFiles = fs.readdirSync(apisDir);
+    const apiFiles = apisFiles.filter(file => file.endsWith('Api.ts'));
+    if (apiFiles.length === 0) {
+      warnings.push(`${project.name}: No API files in apis/ directory`);
+    } else {
+      console.log(`  ✅ Found ${apiFiles.length} API files in apis/ directory`);
+    }
+
+    const modelsFiles = fs.readdirSync(modelsDir);
+    const modelFiles = modelsFiles.filter(file => file.endsWith('.ts'));
+    if (modelFiles.length === 0) {
+      warnings.push(`${project.name}: No model files in models/ directory`);
+    } else {
+      console.log(`  ✅ Found ${modelFiles.length} model files in models/ directory`);
+    }
   }
 });
 
