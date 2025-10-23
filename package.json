@@ -1,6 +1,23 @@
 {
+  "name": "bthwani-monorepo",
+  "version": "1.0.0",
+  "description": "Bthwani API Platform - Unified SDK Generation",
+  "scripts": {
+    "generate:openapi": "cd backend-nest && npm run audit:openapi",
+    "generate:sdks": "node scripts/generate-sdks.js",
+    "generate:all": "npm run generate:openapi && npm run generate:sdks",
+    "generate:sdk:admin": "npx openapi-generator-cli generate -g typescript-axios -i openapi.yaml -o admin-dashboard/src/api/generated",
+    "generate:sdk:web": "npx openapi-generator-cli generate -g typescript-fetch -i openapi.yaml -o bthwani-web/src/api/generated",
+    "generate:sdk:user": "npx openapi-generator-cli generate -g typescript-axios -i openapi.yaml -o app-user/src/api/generated",
+    "generate:sdk:vendor": "npx openapi-generator-cli generate -g typescript-axios -i openapi.yaml -o vendor-app/src/api/generated",
+    "generate:sdk:rider": "npx openapi-generator-cli generate -g typescript-axios -i openapi.yaml -o rider-app/src/api/generated",
+    "generate:sdk:marketer": "npx openapi-generator-cli generate -g typescript-axios -i openapi.yaml -o field-marketers/src/api/generated",
+    "validate:sdks": "node scripts/validate-sdks.js",
+    "clean:sdks": "node scripts/clean-sdks.js"
+  },
   "devDependencies": {
     "@axe-core/react": "^4.10.2",
+    "@openapitools/openapi-generator-cli": "^2.13.4",
     "@types/node": "^24.9.1",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "fast-glob": "^3.3.3",

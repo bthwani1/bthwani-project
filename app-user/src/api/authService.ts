@@ -1,17 +1,19 @@
 // src/api/authService.ts
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios, { AxiosInstance } from "axios";
+import { AuthApi } from "./generated/AuthApi";
 
 /**
- * ⚠️ ملاحظة مهمة:
- * هذا الملف مسؤول فقط عن إدارة توكنات Firebase (idToken/refreshToken)
- * ولا يتعامل مع API السيرفر الخاص بك مباشرةً سوى عبر إرجاع/تجديد التوكن.
- * يمكنك استخدام الدوال المساعدة في الأسفل لضبط هيدر Authorization على axiosInstance لديك.
+ * ✅ تم التحديث: الآن نستخدم API الخاص بنا بدلاً من Firebase المباشر
+ * هذا الملف مسؤول عن إدارة توكنات Firebase وإرسالها للسيرفر للحصول على JWT
  */
 
 const API_KEY = "AIzaSyDcj9GF6Jsi7aIWHoOmH9OKwdOs2pRswS0";
 const BASE_URL = "https://identitytoolkit.googleapis.com/v1";
 const SECURE_TOKEN_URL = "https://securetoken.googleapis.com/v1/token";
+
+// إنشاء instance من AuthApi
+const authApi = new AuthApi();
 
 // مفاتيح التخزين المحلي
 const ID_KEY = "firebase-idToken";
@@ -50,36 +52,59 @@ export const registerWithEmail = async (email: string, password: string) => {
 };
 
 export const loginWithEmail = async (email: string, password: string) => {
-  const { data } = await axios.post(
+  // 1. الحصول على Firebase token
+  const { data: firebaseData } = await axios.post(
     `${BASE_URL}/accounts:signInWithPassword?key=${API_KEY}`,
     { email, password, returnSecureToken: true }
   );
 
-  const expiresInMs = parseInt(data.expiresIn, 10) * 1000;
+  const expiresInMs = parseInt(firebaseData.expiresIn, 10) * 1000;
   const expiryTime = Date.now() + expiresInMs;
 
+  // 2. حفظ Firebase tokens محلياً
   await AsyncStorage.multiSet([
-    [ID_KEY, data.idToken],
-    [REFRESH_KEY, data.refreshToken],
+    [ID_KEY, firebaseData.idToken],
+    [REFRESH_KEY, firebaseData.refreshToken],
     [EXPIRY_KEY, String(expiryTime)],
   ]);
 
-  // استدعاءات خارجية قد تسبب require-cycle -> استوردها ديناميكيًا
+  // 3. إرسال idToken إلى API الخاص بنا للحصول على JWT
   try {
-    const { track } = await import("@/utils/lib/track");
-    await track({ type: "login" });
-  } catch (e) {
-    console.warn("track failed", e);
-  }
-  try {
-    const { registerPushToken } = await import("@/notify");
-    await registerPushToken("user");
-  } catch (e) {
-    console.warn("push reg failed", e);
-  }
+    const serverResponse = await authApi.auth_controller_login_with_firebase({
+      firebaseToken: firebaseData.idToken,
+      userType: "user"
+    });
 
-  await debugPrintClientToken("afterLogin");
-  return data; // { idToken, refreshToken, localId, email, ... }
+    // 4. حفظ JWT token من السيرفر
+    await AsyncStorage.setItem("jwt-token", serverResponse.data.token);
+    await AsyncStorage.setItem("user-data", JSON.stringify(serverResponse.data.user));
+
+    // استدعاءات خارجية قد تسبب require-cycle -> استوردها ديناميكيًا
+    try {
+      const { track } = await import("../utils/lib/track");
+      await track({ type: "login" });
+    } catch (e) {
+      console.warn("track failed", e);
+    }
+    try {
+      const { registerPushToken } = await import("../notify");
+      await registerPushToken("user");
+    } catch (e) {
+      console.warn("push reg failed", e);
+    }
+
+    await debugPrintClientToken("afterLogin");
+    return {
+      ...firebaseData,
+      jwtToken: serverResponse.data.token,
+      user: serverResponse.data.user
+    };
+
+  } catch (serverError) {
+    console.warn("Server auth failed, using Firebase only:", serverError);
+    // في حال فشل السيرفر، نستمر مع Firebase فقط
+    return firebaseData;
+  }
 };
 
 /* =========================
@@ -157,34 +182,34 @@ export async function refreshIdToken(): Promise<string | null> {
   }
 }
 
-/** يبني هيدر Authorization من التوكن */
+/** يبني هيدر Authorization من JWT token */
 export async function getAuthHeader(): Promise<Record<string, string>> {
-  const token = await refreshIdToken();
-  return token ? { Authorization: `Bearer ${token}` } : {};
+  const jwtToken = await AsyncStorage.getItem("jwt-token");
+  return jwtToken ? { Authorization: `Bearer ${jwtToken}` } : {};
 }
 
 /** يحدّث هيدر Authorization على أي AxiosInstance يُمرّر */
 async function setAxiosAuthHeader(
   instance: AxiosInstance
 ): Promise<string | null> {
-  const token = await refreshIdToken();
-  if (token) {
-    instance.defaults.headers.common.Authorization = `Bearer ${token}`;
+  const jwtToken = await AsyncStorage.getItem("jwt-token");
+  if (jwtToken) {
+    instance.defaults.headers.common.Authorization = `Bearer ${jwtToken}`;
   } else {
     delete instance.defaults.headers.common.Authorization;
   }
-  return token;
+  return jwtToken;
 }
 
-/** دالة fetch مع إضافة Authorization تلقائيًا */
+/** دالة fetch مع إضافة JWT Authorization تلقائيًا */
 export async function fetchWithAuth(
   url: string,
   options: RequestInit = {}
 ): Promise<Response> {
-  const token = await refreshIdToken();
+  const jwtToken = await AsyncStorage.getItem("jwt-token");
   const headers = {
     ...(options.headers || {}),
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    ...(jwtToken ? { Authorization: `Bearer ${jwtToken}` } : {}),
   } as Record<string, string>;
   return fetch(url, { ...options, headers });
 }
@@ -203,9 +228,15 @@ export const storeFirebaseTokens = async (
   ]);
 };
 
-/** مسح جميع توكنات Firebase المخزّنة (مفيد في logout) */
-const clearFirebaseTokens = async () => {
-  await AsyncStorage.multiRemove([ID_KEY, REFRESH_KEY, EXPIRY_KEY]);
+/** مسح جميع التوكنات (Firebase + JWT) المخزّنة (مفيد في logout) */
+const clearAllTokens = async () => {
+  await AsyncStorage.multiRemove([
+    ID_KEY,
+    REFRESH_KEY,
+    EXPIRY_KEY,
+    "jwt-token",
+    "user-data"
+  ]);
 };
 
 export default {
@@ -215,7 +246,7 @@ export default {
   getStoredIdToken,
   fetchWithAuth,
   storeFirebaseTokens,
-  clearFirebaseTokens,
+  clearAllTokens,
   getAuthHeader,
   setAxiosAuthHeader,
 };

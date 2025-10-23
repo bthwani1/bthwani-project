@@ -3,5 +3,79 @@
   "spaces": 2,
   "generator-cli": {
     "version": "7.16.0"
+  },
+  "generators": {
+    "admin-dashboard": {
+      "generatorName": "typescript-axios",
+      "inputSpec": "openapi.yaml",
+      "output": "admin-dashboard/src/api/generated",
+      "additionalProperties": {
+        "typescriptThreePlus": true,
+        "useSingleRequestParameter": true,
+        "withInterfaces": true,
+        "npmName": "@bthwani/admin-api",
+        "npmVersion": "1.0.0"
+      }
+    },
+    "bthwani-web": {
+      "generatorName": "typescript-fetch",
+      "inputSpec": "openapi.yaml",
+      "output": "bthwani-web/src/api/generated",
+      "additionalProperties": {
+        "typescriptThreePlus": true,
+        "useSingleRequestParameter": true,
+        "withInterfaces": true,
+        "npmName": "@bthwani/web-api",
+        "npmVersion": "1.0.0"
+      }
+    },
+    "app-user": {
+      "generatorName": "typescript-axios",
+      "inputSpec": "openapi.yaml",
+      "output": "app-user/src/api/generated",
+      "additionalProperties": {
+        "typescriptThreePlus": true,
+        "useSingleRequestParameter": true,
+        "withInterfaces": true,
+        "npmName": "@bthwani/user-api",
+        "npmVersion": "1.0.0"
+      }
+    },
+    "vendor-app": {
+      "generatorName": "typescript-axios",
+      "inputSpec": "openapi.yaml",
+      "output": "vendor-app/src/api/generated",
+      "additionalProperties": {
+        "typescriptThreePlus": true,
+        "useSingleRequestParameter": true,
+        "withInterfaces": true,
+        "npmName": "@bthwani/vendor-api",
+        "npmVersion": "1.0.0"
+      }
+    },
+    "rider-app": {
+      "generatorName": "typescript-axios",
+      "inputSpec": "openapi.yaml",
+      "output": "rider-app/src/api/generated",
+      "additionalProperties": {
+        "typescriptThreePlus": true,
+        "useSingleRequestParameter": true,
+        "withInterfaces": true,
+        "npmName": "@bthwani/rider-api",
+        "npmVersion": "1.0.0"
+      }
+    },
+    "field-marketers": {
+      "generatorName": "typescript-axios",
+      "inputSpec": "openapi.yaml",
+      "output": "field-marketers/src/api/generated",
+      "additionalProperties": {
+        "typescriptThreePlus": true,
+        "useSingleRequestParameter": true,
+        "withInterfaces": true,
+        "npmName": "@bthwani/marketer-api",
+        "npmVersion": "1.0.0"
+      }
+    }
   }
 }

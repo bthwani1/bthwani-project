@@ -388,7 +388,7 @@ export class WalletController {
   @ApiResponse({ status: 200, description: 'Success' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async getWithdrawalMethods() {
-    return this.walletService.getWithdrawalMethods();
+    return this.walletService.getWithdrawMethods();
   }
 
   // ==================== Admin Withdrawal Management ====================

@@ -87,6 +87,46 @@ export class AdminController {
     return this.adminService.getLiveMetrics();
   }
 
+  @Get('dashboard/summary')
+  @ApiOperation({ summary: 'ملخص لوحة التحكم - إحصائيات أساسية' })
+  async getDashboardSummary(
+    @Query('from') from?: string,
+    @Query('to') to?: string,
+    @Query('tz') tz: string = 'Asia/Aden'
+  ) {
+    return this.adminService.getDashboardSummary({ from, to, tz });
+  }
+
+  @Get('dashboard/timeseries')
+  @ApiOperation({ summary: 'البيانات الزمنية للتحليلات' })
+  async getDashboardTimeseries(
+    @Query('metric') metric: 'orders' | 'gmv' | 'revenue',
+    @Query('interval') interval: 'day' | 'hour' = 'day',
+    @Query('from') from?: string,
+    @Query('to') to?: string,
+    @Query('tz') tz: string = 'Asia/Aden'
+  ) {
+    return this.adminService.getDashboardTimeseries({ metric, interval, from, to, tz });
+  }
+
+  @Get('dashboard/top')
+  @ApiOperation({ summary: 'أعلى الأداء حسب المعايير' })
+  async getDashboardTop(
+    @Query('by') by: 'stores' | 'cities' | 'categories',
+    @Query('limit') limit: number = 10,
+    @Query('from') from?: string,
+    @Query('to') to?: string,
+    @Query('tz') tz: string = 'Asia/Aden'
+  ) {
+    return this.adminService.getDashboardTop({ by, limit, from, to, tz });
+  }
+
+  @Get('dashboard/alerts')
+  @ApiOperation({ summary: 'التنبيهات والإشعارات المهمة' })
+  async getDashboardAlerts() {
+    return this.adminService.getDashboardAlerts();
+  }
+
   // ==================== Drivers Management ====================
 
   @Get('drivers')

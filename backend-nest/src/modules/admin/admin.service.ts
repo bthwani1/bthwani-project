@@ -223,6 +223,202 @@ export class AdminService {
     return { activeOrders, activeDrivers, recentOrders };
   }
 
+  async getDashboardSummary(query: {
+    from?: string;
+    to?: string;
+    tz?: string;
+  }): Promise<DTO.DashboardSummaryDto> {
+    const { from, to, tz } = query;
+    const startDate = from ? new Date(from) : new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+    const endDate = to ? new Date(to) : new Date();
+
+    const [
+      totalOrders,
+      totalGMV,
+      totalRevenue,
+      totalCancelRate,
+      deliveryTimeAvg,
+      deliveryTimeP90,
+      ordersByStatus
+    ] = await Promise.all([
+      this.orderModel.countDocuments({ createdAt: { $gte: startDate, $lte: endDate } }),
+      this.orderModel.aggregate([
+        { $match: { createdAt: { $gte: startDate, $lte: endDate } } },
+        { $group: { _id: null, total: { $sum: '$totalAmount' } } }
+      ]),
+      this.orderModel.aggregate([
+        { $match: { createdAt: { $gte: startDate, $lte: endDate } } },
+        { $group: { _id: null, total: { $sum: '$platformFee' } } }
+      ]),
+      this.orderModel.aggregate([
+        { $match: { createdAt: { $gte: startDate, $lte: endDate } } },
+        {
+          $group: {
+            _id: null,
+            cancelled: { $sum: { $cond: [{ $eq: ['$status', 'cancelled'] }, 1, 0] } },
+            total: { $sum: 1 }
+          }
+        }
+      ]),
+      this.orderModel.aggregate([
+        { $match: { createdAt: { $gte: startDate, $lte: endDate }, status: 'delivered' } },
+        { $group: { _id: null, avg: { $avg: '$deliveryTimeMinutes' } } }
+      ]),
+      this.orderModel.aggregate([
+        { $match: { createdAt: { $gte: startDate, $lte: endDate }, status: 'delivered' } },
+        { $sort: { deliveryTimeMinutes: -1 } },
+        { $limit: Math.ceil(await this.orderModel.countDocuments({ createdAt: { $gte: startDate, $lte: endDate }, status: 'delivered' }) * 0.9) },
+        { $group: { _id: null, p90: { $max: '$deliveryTimeMinutes' } } }
+      ]),
+      this.orderModel.aggregate([
+        { $match: { createdAt: { $gte: startDate, $lte: endDate } } },
+        { $group: { _id: '$status', count: { $sum: 1 } } }
+      ])
+    ]);
+
+    const gmv = totalGMV[0]?.total || 0;
+    const revenue = totalRevenue[0]?.total || 0;
+    const cancelRate = totalCancelRate[0] ? (totalCancelRate[0].cancelled / totalCancelRate[0].total) : 0;
+
+    return {
+      orders: totalOrders,
+      gmv,
+      revenue,
+      cancelRate,
+      deliveryTime: {
+        avgMin: deliveryTimeAvg[0]?.avg || 0,
+        p90Min: deliveryTimeP90[0]?.p90 || 0
+      },
+      byStatus: ordersByStatus.map(item => ({
+        status: item._id,
+        count: item.count
+      }))
+    };
+  }
+
+  async getDashboardTimeseries(query: {
+    metric: 'orders' | 'gmv' | 'revenue';
+    interval: 'day' | 'hour';
+    from?: string;
+    to?: string;
+    tz?: string;
+  }): Promise<DTO.DashboardTimeseriesDto> {
+    const { metric, interval, from, to } = query;
+    const startDate = from ? new Date(from) : new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+    const endDate = to ? new Date(to) : new Date();
+
+    const groupBy = interval === 'hour' ? {
+      year: { $year: { date: '$createdAt', timezone: 'Asia/Aden' } },
+      month: { $month: { date: '$createdAt', timezone: 'Asia/Aden' } },
+      day: { $dayOfMonth: { date: '$createdAt', timezone: 'Asia/Aden' } },
+      hour: { $hour: { date: '$createdAt', timezone: 'Asia/Aden' } }
+    } : {
+      year: { $year: { date: '$createdAt', timezone: 'Asia/Aden' } },
+      month: { $month: { date: '$createdAt', timezone: 'Asia/Aden' } },
+      day: { $dayOfMonth: { date: '$createdAt', timezone: 'Asia/Aden' } }
+    };
+
+    const fieldMap = {
+      orders: { $sum: 1 },
+      gmv: { $sum: '$totalAmount' },
+      revenue: { $sum: '$platformFee' }
+    };
+
+    const data = await this.orderModel.aggregate([
+      { $match: { createdAt: { $gte: startDate, $lte: endDate } } },
+      {
+        $group: {
+          _id: groupBy,
+          value: fieldMap[metric],
+          date: { $first: '$createdAt' }
+        }
+      },
+      { $sort: { '_id': 1 } },
+      {
+        $project: {
+          date: '$date',
+          value: 1
+        }
+      }
+    ]);
+
+    return { data };
+  }
+
+  async getDashboardTop(query: {
+    by: 'stores' | 'cities' | 'categories';
+    limit?: number;
+    from?: string;
+    to?: string;
+    tz?: string;
+  }): Promise<DTO.DashboardTopDto> {
+    const { by, limit = 10, from, to } = query;
+    const startDate = from ? new Date(from) : new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+    const endDate = to ? new Date(to) : new Date();
+
+    const fieldMap = {
+      stores: '$storeId',
+      cities: '$deliveryAddress.city',
+      categories: '$items.category'
+    };
+
+    const data = await this.orderModel.aggregate([
+      { $match: { createdAt: { $gte: startDate, $lte: endDate } } },
+      { $unwind: '$items' },
+      {
+        $group: {
+          _id: fieldMap[by],
+          orders: { $sum: 1 },
+          gmv: { $sum: '$totalAmount' },
+          revenue: { $sum: '$platformFee' }
+        }
+      },
+      { $sort: { gmv: -1 } },
+      { $limit: limit },
+      {
+        $project: {
+          _id: 0,
+          id: '$_id',
+          orders: 1,
+          gmv: 1,
+          revenue: 1
+        }
+      }
+    ]);
+
+    return { rows: data };
+  }
+
+  async getDashboardAlerts(): Promise<DTO.DashboardAlertsDto> {
+    const now = new Date();
+    const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
+
+    const [
+      awaitingProcurement,
+      awaitingAssign,
+      overdueDeliveries
+    ] = await Promise.all([
+      this.orderModel.countDocuments({
+        status: 'confirmed',
+        createdAt: { $lt: new Date(now.getTime() - 30 * 60 * 1000) } // أكثر من 30 دقيقة
+      }),
+      this.orderModel.countDocuments({
+        status: 'confirmed',
+        assignedDriverId: { $exists: false }
+      }),
+      this.orderModel.countDocuments({
+        status: 'in_delivery',
+        deliveryStartTime: { $lt: new Date(now.getTime() - 90 * 60 * 1000) } // أكثر من 90 دقيقة
+      })
+    ]);
+
+    return {
+      awaitingProcurement,
+      awaitingAssign,
+      overdueDeliveries
+    };
+  }
+
   // ==================== Drivers Management ====================
 
   async getAllDrivers(

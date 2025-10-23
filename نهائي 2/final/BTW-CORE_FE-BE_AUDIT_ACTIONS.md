@@ -1,0 +1,1056 @@
+# BTW-CORE — Deep FE/BE Audit & Action Plan
+
+**Date:** 2025-10-23
+
+## Snapshot
+{
+  "backend_dirs": [
+    "backend-nest"
+  ],
+  "frontend_dirs": [
+    "admin-dashboard",
+    "app-user",
+    "bthwani-web",
+    "field-marketers",
+    "rider-app",
+    "vendor-app"
+  ],
+  "backend_routes_count": 631,
+  "frontend_calls_count": 361,
+  "fe_gaps_count": 257,
+  "be_orphans_count": 566,
+  "oas_files": [
+    "openapitools.json",
+    "backend-nest/reports/openapi.json",
+    "backend-nest/reports/openapi.normalized.json",
+    "backend-nest/reports/openapi.yaml"
+  ]
+}
+
+## Findings — Backend Routes
+- GET /  _(file: backend-nest/scripts/extract-routes.ts)_
+- GET /content/pages  _(file: backend-nest/src/modules/admin/admin-cms.controller.ts)_
+- GET /content/pages/{id}  _(file: backend-nest/src/modules/admin/admin-cms.controller.ts)_
+- POST /content/pages  _(file: backend-nest/src/modules/admin/admin-cms.controller.ts)_
+- PUT /content/pages/{id}  _(file: backend-nest/src/modules/admin/admin-cms.controller.ts)_
+- DELETE /content/pages/{id}  _(file: backend-nest/src/modules/admin/admin-cms.controller.ts)_
+- POST /content/strings  _(file: backend-nest/src/modules/admin/admin-cms.controller.ts)_
+- PUT /content/strings/{id}  _(file: backend-nest/src/modules/admin/admin-cms.controller.ts)_
+- DELETE /content/strings/{id}  _(file: backend-nest/src/modules/admin/admin-cms.controller.ts)_
+- POST /content/home-layouts  _(file: backend-nest/src/modules/admin/admin-cms.controller.ts)_
+- PUT /content/home-layouts/{id}  _(file: backend-nest/src/modules/admin/admin-cms.controller.ts)_
+- DELETE /content/home-layouts/{id}  _(file: backend-nest/src/modules/admin/admin-cms.controller.ts)_
+- DELETE /wallet/coupons/{id}  _(file: backend-nest/src/modules/admin/admin-cms.controller.ts)_
+- DELETE /wallet/subscriptions/{id}  _(file: backend-nest/src/modules/admin/admin-cms.controller.ts)_
+- POST /reports/generate  _(file: backend-nest/src/modules/admin/admin-cms.controller.ts)_
+- POST /reports/export/{id}/{format}  _(file: backend-nest/src/modules/admin/admin-cms.controller.ts)_
+- GET /reports/realtime  _(file: backend-nest/src/modules/admin/admin-cms.controller.ts)_
+- GET /wallet/settlements/export  _(file: backend-nest/src/modules/admin/admin-cms.controller.ts)_
+- GET /admin/dashboard  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/stats/today  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/stats/financial  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/dashboard/orders-by-status  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/dashboard/revenue  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/dashboard/live-metrics  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/drivers  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/drivers/{id}  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/drivers/{id}/performance  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- DELETE /admin/drivers/{id}  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/drivers/{id}/financials  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- POST /admin/drivers/{id}/ban  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- POST /admin/drivers/{id}/unban  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- PATCH /admin/drivers/{id}/adjust-balance  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/vendors/pending  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- POST /admin/vendors/{id}/approve  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- POST /admin/vendors/{id}/reject  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- POST /admin/vendors/{id}/suspend  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/users  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/users/{id}  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- POST /admin/users/{id}/ban  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- POST /admin/users/{id}/unban  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/reports/daily  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- POST /admin/reports/export/{type}/{format}  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/drivers/{id}/attendance  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/drivers/attendance/summary  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- POST /admin/drivers/{id}/attendance/adjust  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- DELETE /admin/drivers/shifts/{id}  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- DELETE /admin/drivers/assets/{id}  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/drivers/leave-requests  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- PATCH /admin/drivers/leave-requests/{id}/approve  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- PATCH /admin/drivers/leave-requests/{id}/reject  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- DELETE /admin/drivers/leave-requests/{id}  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/drivers/{id}/leave-balance  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- PATCH /admin/drivers/{id}/leave-balance/adjust  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/quality/metrics  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/settings  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- PATCH /admin/settings  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/settings/feature-flags  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- PATCH /admin/settings/feature-flags/{flag}  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- POST /admin/backup/create  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/backup/list  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- POST /admin/backup/{id}/restore  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/backup/{id}/download  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/data-deletion/requests  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- PATCH /admin/data-deletion/{id}/approve  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- PATCH /admin/data-deletion/{id}/reject  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/security/password-attempts  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- POST /admin/security/reset-password/{userId}  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- POST /admin/security/unlock-account/{userId}  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/marketers  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/marketers/{id}  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- POST /admin/marketers  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- PATCH /admin/marketers/{id}  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/marketers/{id}/performance  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/marketers/{id}/stores  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- POST /admin/marketers/{id}/activate  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- POST /admin/marketers/{id}/deactivate  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/marketers/statistics  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/marketers/export  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/audit-logs  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/audit-logs/{id}  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/system/health  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/system/metrics  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/database/stats  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/orders/stats/by-city  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/orders/stats/by-payment-method  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/drivers/stats/by-status  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/users/{id}/orders-history  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- POST /admin/cache/clear  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/cache/stats  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/roles  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- POST /admin/roles  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- PATCH /admin/roles/{id}  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- GET /admin/roles/{id}  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- DELETE /admin/roles/{id}  _(file: backend-nest/src/modules/admin/admin.controller.ts)_
+- PATCH /{id}/status  _(file: backend-nest/src/modules/admin/amani.admin.controller.ts)_
+- DELETE /{id}  _(file: backend-nest/src/modules/admin/amani.admin.controller.ts)_
+- GET /{id}  _(file: backend-nest/src/modules/admin/arabon.admin.controller.ts)_
+- GET /stats/overview  _(file: backend-nest/src/modules/admin/kawader.admin.controller.ts)_
+- POST /errands/calculate-fee  _(file: backend-nest/src/modules/akhdimni/akhdimni.controller.ts)_
+- POST /errands  _(file: backend-nest/src/modules/akhdimni/akhdimni.controller.ts)_
+- GET /my-errands  _(file: backend-nest/src/modules/akhdimni/akhdimni.controller.ts)_
+- GET /errands/{id}  _(file: backend-nest/src/modules/akhdimni/akhdimni.controller.ts)_
+- PATCH /errands/{id}/cancel  _(file: backend-nest/src/modules/akhdimni/akhdimni.controller.ts)_
+- POST /errands/{id}/rate  _(file: backend-nest/src/modules/akhdimni/akhdimni.controller.ts)_
+- GET /driver/my-errands  _(file: backend-nest/src/modules/akhdimni/akhdimni.controller.ts)_
+- PATCH /errands/{id}/status  _(file: backend-nest/src/modules/akhdimni/akhdimni.controller.ts)_
+- GET /admin/errands  _(file: backend-nest/src/modules/akhdimni/akhdimni.controller.ts)_
+- POST /admin/errands/{id}/assign-driver  _(file: backend-nest/src/modules/akhdimni/akhdimni.controller.ts)_
+- POST /amani  _(file: backend-nest/src/modules/amani/amani.controller.ts)_
+- GET /amani  _(file: backend-nest/src/modules/amani/amani.controller.ts)_
+- GET /amani/{id}  _(file: backend-nest/src/modules/amani/amani.controller.ts)_
+- PATCH /amani/{id}  _(file: backend-nest/src/modules/amani/amani.controller.ts)_
+- DELETE /amani/{id}  _(file: backend-nest/src/modules/amani/amani.controller.ts)_
+- GET /analytics/roas/daily  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/roas/summary  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/roas/by-platform  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- POST /analytics/roas/calculate  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- POST /analytics/adspend  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/adspend  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/adspend/summary  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/kpis  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/kpis/real-time  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/kpis/trends  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- POST /analytics/events/track  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/events  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/events/summary  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/funnel/conversion  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/funnel/drop-off  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/users/growth  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/users/retention  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/users/cohort  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/revenue/forecast  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/revenue/breakdown  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/advanced/dashboard-overview  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/advanced/cohort-analysis-advanced  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/advanced/funnel-analysis  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/advanced/retention  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/advanced/ltv  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/advanced/churn-rate  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/advanced/geographic-distribution  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/advanced/peak-hours  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/advanced/product-performance  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- GET /analytics/advanced/driver-performance  _(file: backend-nest/src/modules/analytics/analytics.controller.ts)_
+- POST /arabon  _(file: backend-nest/src/modules/arabon/arabon.controller.ts)_
+- GET /arabon  _(file: backend-nest/src/modules/arabon/arabon.controller.ts)_
+- GET /arabon/{id}  _(file: backend-nest/src/modules/arabon/arabon.controller.ts)_
+- PATCH /arabon/{id}  _(file: backend-nest/src/modules/arabon/arabon.controller.ts)_
+- DELETE /arabon/{id}  _(file: backend-nest/src/modules/arabon/arabon.controller.ts)_
+- GET /arabon/my  _(file: backend-nest/src/modules/arabon/arabon.controller.ts)_
+- GET /arabon/search  _(file: backend-nest/src/modules/arabon/arabon.controller.ts)_
+- POST /firebase/login  _(file: backend-nest/src/modules/auth/auth.controller.ts)_
+- POST /consent  _(file: backend-nest/src/modules/auth/auth.controller.ts)_
+- POST /consent/bulk  _(file: backend-nest/src/modules/auth/auth.controller.ts)_
+- DELETE /consent/{type}  _(file: backend-nest/src/modules/auth/auth.controller.ts)_
+- GET /consent/history  _(file: backend-nest/src/modules/auth/auth.controller.ts)_
+- GET /consent/summary  _(file: backend-nest/src/modules/auth/auth.controller.ts)_
+- GET /consent/check/{type}  _(file: backend-nest/src/modules/auth/auth.controller.ts)_
+- POST /forgot  _(file: backend-nest/src/modules/auth/auth.controller.ts)_
+- POST /reset/verify  _(file: backend-nest/src/modules/auth/auth.controller.ts)_
+- POST /reset  _(file: backend-nest/src/modules/auth/auth.controller.ts)_
+- POST /verify-otp  _(file: backend-nest/src/modules/auth/auth.controller.ts)_
+- GET /user/{userId}  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- GET /{cartId}  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- POST /items  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- POST /add  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- PATCH /items/{productId}  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- PATCH /{productId}  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- DELETE /items/{productId}  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- DELETE /{productId}  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- DELETE /  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- PATCH /note  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- PATCH /delivery-address  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- GET /count  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- GET /fee  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- POST /merge  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- GET /shein  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- POST /shein/items  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- PATCH /shein/items/{sheinProductId}  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- DELETE /shein/items/{sheinProductId}  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- DELETE /shein  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- PATCH /shein/shipping  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- PATCH /shein/note  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- GET /combined  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- DELETE /combined/clear-all  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- GET /abandoned  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- DELETE /{cartId}/items/{productId}  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- POST /{cartId}/retarget/push  _(file: backend-nest/src/modules/cart/cart.controller.ts)_
+- GET /content/stores/{storeId}/sections  _(file: backend-nest/src/modules/content/content.controller.ts)_
+- POST /content/sections  _(file: backend-nest/src/modules/content/content.controller.ts)_
+- PATCH /content/sections/{id}  _(file: backend-nest/src/modules/content/content.controller.ts)_
+- DELETE /content/sections/{id}  _(file: backend-nest/src/modules/content/content.controller.ts)_
+- GET /content/subscription-plans  _(file: backend-nest/src/modules/content/content.controller.ts)_
+- POST /content/subscription-plans  _(file: backend-nest/src/modules/content/content.controller.ts)_
+- POST /content/subscribe  _(file: backend-nest/src/modules/content/content.controller.ts)_
+- GET /content/my-subscription  _(file: backend-nest/src/modules/content/content.controller.ts)_
+- PATCH /content/my-subscription/cancel  _(file: backend-nest/src/modules/content/content.controller.ts)_
+- GET /content/pages/{slug}  _(file: backend-nest/src/modules/content/content.controller.ts)_
+- GET /content/app-settings  _(file: backend-nest/src/modules/content/content.controller.ts)_
+- PATCH /content/admin/app-settings  _(file: backend-nest/src/modules/content/content.controller.ts)_
+- GET /content/faqs  _(file: backend-nest/src/modules/content/content.controller.ts)_
+- POST /content/admin/faqs  _(file: backend-nest/src/modules/content/content.controller.ts)_
+- PATCH /content/admin/faqs/{id}  _(file: backend-nest/src/modules/content/content.controller.ts)_
+- DELETE /content/admin/faqs/{id}  _(file: backend-nest/src/modules/content/content.controller.ts)_
+- POST /drivers  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- GET /drivers/available  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- GET /drivers/{id}  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- PATCH /drivers/location  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- PATCH /drivers/availability  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- GET /drivers/profile  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- PATCH /drivers/profile  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- GET /drivers/earnings  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- GET /drivers/earnings/daily  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- GET /drivers/earnings/weekly  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- GET /drivers/statistics  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- POST /drivers/documents/upload  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- GET /drivers/documents  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- GET /drivers/{driverId}/documents  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- POST /drivers/{driverId}/documents/{docId}/verify  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- POST /drivers/vacations/request  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- GET /drivers/vacations/my  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- PATCH /drivers/vacations/{id}/cancel  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- GET /drivers/vacations/balance  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- GET /drivers/vacations/policy  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- GET /drivers/orders/available  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- POST /drivers/orders/{id}/accept  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- POST /drivers/orders/{id}/reject  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- POST /drivers/orders/{id}/start-delivery  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- POST /drivers/orders/{id}/complete  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- GET /drivers/orders/history  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- POST /drivers/issues/report  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- POST /drivers/change-password  _(file: backend-nest/src/modules/driver/driver.controller.ts)_
+- POST /employees  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- GET /employees  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- GET /employees/{id}  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- PATCH /employees/{id}  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- DELETE /employees/{id}  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- POST /attendance/check-in  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- POST /attendance/check-out  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- GET /attendance/{employeeId}  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- POST /leave-requests  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- PATCH /leave-requests/{id}/approve  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- PATCH /leave-requests/{id}/reject  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- POST /payroll/generate  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- PATCH /payroll/{id}/approve  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- PATCH /payroll/{id}/mark-paid  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- POST /accounts  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- GET /accounts  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- GET /accounts/{id}  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- POST /journal-entries  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- GET /journal-entries  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- PATCH /journal-entries/{id}/post  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- GET /reports/trial-balance  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- DELETE /assets/{id}  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- DELETE /accounts/chart/{id}  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- DELETE /documents/{id}  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- GET /documents/{id}/download  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- DELETE /documents/bulk  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- GET /documents/export  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- DELETE /payroll/{id}  _(file: backend-nest/src/modules/er/er.controller.ts)_
+- POST /es3afni  _(file: backend-nest/src/modules/es3afni/es3afni.controller.ts)_
+- GET /es3afni  _(file: backend-nest/src/modules/es3afni/es3afni.controller.ts)_
+- GET /es3afni/{id}  _(file: backend-nest/src/modules/es3afni/es3afni.controller.ts)_
+- PATCH /es3afni/{id}  _(file: backend-nest/src/modules/es3afni/es3afni.controller.ts)_
+- DELETE /es3afni/{id}  _(file: backend-nest/src/modules/es3afni/es3afni.controller.ts)_
+- GET /es3afni/my  _(file: backend-nest/src/modules/es3afni/es3afni.controller.ts)_
+- GET /es3afni/search  _(file: backend-nest/src/modules/es3afni/es3afni.controller.ts)_
+- POST /finance/commissions  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- GET /finance/commissions/my  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- GET /finance/commissions/stats/my  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- PATCH /finance/commissions/{id}/approve  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- PATCH /finance/commissions/{id}/cancel  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- POST /finance/payouts/batches  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- GET /finance/payouts/batches  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- GET /finance/payouts/batches/{id}  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- GET /finance/payouts/batches/{id}/items  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- PATCH /finance/payouts/batches/{id}/approve  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- PATCH /finance/payouts/batches/{id}/complete  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- POST /finance/settlements  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- GET /finance/settlements/entity/{entityId}  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- GET /finance/settlements/{id}  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- PATCH /finance/settlements/{id}/approve  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- POST /finance/coupons  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- POST /finance/coupons/validate  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- GET /finance/coupons  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- PATCH /finance/coupons/{id}  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- POST /finance/reconciliations  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- GET /finance/reconciliations  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- GET /finance/reconciliations/{id}  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- PATCH /finance/reconciliations/{id}/actual-totals  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- POST /finance/reconciliations/{id}/issues  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- PATCH /finance/reconciliations/{id}/issues/{issueIndex}/resolve  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- POST /finance/reports/daily  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- GET /finance/reports/daily/{date}  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- GET /finance/reports  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- PATCH /finance/reports/{id}/finalize  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- GET /finance/commission-plans  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- POST /finance/commission-plans  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- PATCH /finance/commission-plans/{id}  _(file: backend-nest/src/modules/finance/finance.controller.ts)_
+- POST /api/v2/finance/settlement/trigger/{date}?  _(file: backend-nest/src/modules/finance/settlement.controller.ts)_
+- POST /api/v2/finance/settlement/retry/{date}  _(file: backend-nest/src/modules/finance/settlement.controller.ts)_
+- … +331 more
+
+## Findings — Frontend API Calls
+- ANY /api/content/latest  _(file: admin-dashboard/public/sw.js, fetch)_
+- PUT /api/content/latest  _(file: admin-dashboard/public/sw.js, client)_
+- GET /admin/notifications/campaigns  _(file: admin-dashboard/src/api/adminNotifications.ts, client)_
+- POST /admin/notifications/campaigns  _(file: admin-dashboard/src/api/adminNotifications.ts, client)_
+- GET /admin/notifications/templates  _(file: admin-dashboard/src/api/adminNotifications.ts, client)_
+- POST /admin/notifications/templates  _(file: admin-dashboard/src/api/adminNotifications.ts, client)_
+- GET /admin/dashboard/summary  _(file: admin-dashboard/src/api/adminOverview.ts, axios)_
+- GET /admin/dashboard/timeseries  _(file: admin-dashboard/src/api/adminOverview.ts, axios)_
+- GET /admin/dashboard/top  _(file: admin-dashboard/src/api/adminOverview.ts, axios)_
+- GET /admin/dashboard/alerts  _(file: admin-dashboard/src/api/adminOverview.ts, axios)_
+- GET /admin/dashboard/summary  _(file: admin-dashboard/src/api/adminOverview.ts, client)_
+- GET /admin/dashboard/timeseries  _(file: admin-dashboard/src/api/adminOverview.ts, client)_
+- GET /admin/dashboard/top  _(file: admin-dashboard/src/api/adminOverview.ts, client)_
+- GET /admin/dashboard/alerts  _(file: admin-dashboard/src/api/adminOverview.ts, client)_
+- GET /admin/users  _(file: admin-dashboard/src/api/adminUsers.ts, client)_
+- POST /admin/users  _(file: admin-dashboard/src/api/adminUsers.ts, client)_
+- GET /admin/modules  _(file: admin-dashboard/src/api/adminUsers.ts, client)_
+- GET /akhdimni/admin/errands  _(file: admin-dashboard/src/api/akhdimni.ts, client)_
+- GET /admin/amani  _(file: admin-dashboard/src/api/amani.ts, client)_
+- GET /admin/arabon  _(file: admin-dashboard/src/api/arabon.ts, client)_
+- POST /auth/login  _(file: admin-dashboard/src/api/client-example.ts, axios)_
+- POST /auth/login  _(file: admin-dashboard/src/api/client-example.ts, client)_
+- POST /admin/onboarding-slides  _(file: admin-dashboard/src/api/cmsApi.ts, client)_
+- POST /admin/pages  _(file: admin-dashboard/src/api/cmsApi.ts, client)_
+- DELETE /er/documents/bulk  _(file: admin-dashboard/src/api/documents.ts, client)_
+- GET /er/documents/export  _(file: admin-dashboard/src/api/documents.ts, client)_
+- GET /admin/drivers/finance  _(file: admin-dashboard/src/api/driverFinance.ts, client)_
+- POST /admin/drivers/finance/run  _(file: admin-dashboard/src/api/driverFinance.ts, client)_
+- GET /admin/es3afni  _(file: admin-dashboard/src/api/es3afni.ts, client)_
+- GET /admin/kawader  _(file: admin-dashboard/src/api/kawader.ts, client)_
+- GET /admin/kawader/stats/overview  _(file: admin-dashboard/src/api/kawader.ts, client)_
+- GET /admin/kenz  _(file: admin-dashboard/src/api/kenz.ts, client)_
+- GET /admin/kenz/stats/overview  _(file: admin-dashboard/src/api/kenz.ts, client)_
+- GET /admin/maarouf  _(file: admin-dashboard/src/api/maarouf.ts, client)_
+- GET /admin/maarouf/stats/overview  _(file: admin-dashboard/src/api/maarouf.ts, client)_
+- GET /merchant/catalog/products  _(file: admin-dashboard/src/api/merchant.ts, client)_
+- POST /merchant/catalog/products  _(file: admin-dashboard/src/api/merchant.ts, client)_
+- GET /merchant/categories  _(file: admin-dashboard/src/api/merchant.ts, client)_
+- POST /merchant/categories  _(file: admin-dashboard/src/api/merchant.ts, client)_
+- GET /merchant/attributes  _(file: admin-dashboard/src/api/merchant.ts, client)_
+- POST /merchant/attributes  _(file: admin-dashboard/src/api/merchant.ts, client)_
+- GET /merchant/products  _(file: admin-dashboard/src/api/merchant.ts, client)_
+- POST /merchant/products  _(file: admin-dashboard/src/api/merchant.ts, client)_
+- GET /merchant  _(file: admin-dashboard/src/api/merchant.ts, client)_
+- POST /merchant  _(file: admin-dashboard/src/api/merchant.ts, client)_
+- GET /delivery/order  _(file: admin-dashboard/src/api/orders.ts, client)_
+- GET /delivery/order/export  _(file: admin-dashboard/src/api/orders.ts, client)_
+- GET /admin/payments  _(file: admin-dashboard/src/api/payments.ts, client)_
+- GET /admin/payments/stats/overview  _(file: admin-dashboard/src/api/payments.ts, client)_
+- GET /promotions/stats/overview  _(file: admin-dashboard/src/api/promotions.ts, client)_
+- POST /admin/reports/generate  _(file: admin-dashboard/src/api/reports.ts, client)_
+- GET /admin/reports/realtime  _(file: admin-dashboard/src/api/reports.ts, client)_
+- GET /admin/sanad  _(file: admin-dashboard/src/api/sanad.ts, client)_
+- GET /admin/sanad/stats/overview  _(file: admin-dashboard/src/api/sanad.ts, client)_
+- GET /admin/wallet/settlements/export  _(file: admin-dashboard/src/api/settlements.ts, client)_
+- GET /vendors  _(file: admin-dashboard/src/api/vendors.ts, client)_
+- POST /v2/wallet/hold  _(file: admin-dashboard/src/api/wallet.ts, client)_
+- POST /v2/wallet/release  _(file: admin-dashboard/src/api/wallet.ts, client)_
+- POST /v2/wallet/refund  _(file: admin-dashboard/src/api/wallet.ts, client)_
+- GET /admin/me  _(file: admin-dashboard/src/hook/useAdminUser.ts, axios)_
+- GET /admin/me  _(file: admin-dashboard/src/hook/useAdminUser.ts, client)_
+- GET /features  _(file: admin-dashboard/src/hook/useFeatures.ts, axios)_
+- GET /features  _(file: admin-dashboard/src/hook/useFeatures.ts, client)_
+- POST /api/leads/captain  _(file: admin-dashboard/src/landing/pages/BecomeCaptainPage.tsx, axios)_
+- POST /api/leads/captain  _(file: admin-dashboard/src/landing/pages/BecomeCaptainPage.tsx, client)_
+- POST /api/support/contact  _(file: admin-dashboard/src/landing/pages/ContactPage.tsx, axios)_
+- POST /api/support/contact  _(file: admin-dashboard/src/landing/pages/ContactPage.tsx, client)_
+- POST /api/leads/merchant  _(file: admin-dashboard/src/landing/pages/ForMerchantsPage.tsx, axios)_
+- POST /api/leads/merchant  _(file: admin-dashboard/src/landing/pages/ForMerchantsPage.tsx, client)_
+- GET /admin/drivers  _(file: admin-dashboard/src/pages/admin/AdminDriversPage.tsx, axios)_
+- POST /admin/drivers  _(file: admin-dashboard/src/pages/admin/AdminDriversPage.tsx, axios)_
+- GET /admin/drivers  _(file: admin-dashboard/src/pages/admin/AdminDriversPage.tsx, client)_
+- POST /admin/drivers  _(file: admin-dashboard/src/pages/admin/AdminDriversPage.tsx, client)_
+- GET /admin/vendors  _(file: admin-dashboard/src/pages/admin/AdminVendorCreatePage.tsx, axios)_
+- GET /delivery/stores  _(file: admin-dashboard/src/pages/admin/AdminVendorCreatePage.tsx, axios)_
+- POST /vendor  _(file: admin-dashboard/src/pages/admin/AdminVendorCreatePage.tsx, axios)_
+- GET /admin/vendors  _(file: admin-dashboard/src/pages/admin/AdminVendorCreatePage.tsx, client)_
+- GET /delivery/stores  _(file: admin-dashboard/src/pages/admin/AdminVendorCreatePage.tsx, client)_
+- POST /vendor  _(file: admin-dashboard/src/pages/admin/AdminVendorCreatePage.tsx, client)_
+- GET /admin/settings/appearance  _(file: admin-dashboard/src/pages/admin/AppearanceSettingsPage.tsx, axios)_
+- PUT /admin/settings/appearance  _(file: admin-dashboard/src/pages/admin/AppearanceSettingsPage.tsx, axios)_
+- GET /admin/settings/appearance  _(file: admin-dashboard/src/pages/admin/AppearanceSettingsPage.tsx, client)_
+- PUT /admin/settings/appearance  _(file: admin-dashboard/src/pages/admin/AppearanceSettingsPage.tsx, client)_
+- GET /admin/users/list  _(file: admin-dashboard/src/pages/admin/UserManagement.tsx, axios)_
+- POST /admin/users  _(file: admin-dashboard/src/pages/admin/UserManagement.tsx, axios)_
+- GET /admin/users/list  _(file: admin-dashboard/src/pages/admin/UserManagement.tsx, client)_
+- GET /admin/modules  _(file: admin-dashboard/src/pages/admin/admins/api.ts, axios)_
+- GET /admin/list  _(file: admin-dashboard/src/pages/admin/admins/api.ts, axios)_
+- POST /admin/create  _(file: admin-dashboard/src/pages/admin/admins/api.ts, axios)_
+- GET /admin/list  _(file: admin-dashboard/src/pages/admin/admins/api.ts, client)_
+- POST /admin/create  _(file: admin-dashboard/src/pages/admin/admins/api.ts, client)_
+- POST /admin/commission-plans  _(file: admin-dashboard/src/pages/admin/commission/useCommissionPlans.ts, client)_
+- GET /finance/commissions/settings  _(file: admin-dashboard/src/pages/admin/finance/CommissionSettingsPage.tsx, axios)_
+- GET /finance/commissions/audit-log  _(file: admin-dashboard/src/pages/admin/finance/CommissionSettingsPage.tsx, axios)_
+- POST /finance/commissions/settings  _(file: admin-dashboard/src/pages/admin/finance/CommissionSettingsPage.tsx, axios)_
+- GET /finance/commissions/settings  _(file: admin-dashboard/src/pages/admin/finance/CommissionSettingsPage.tsx, client)_
+- GET /finance/commissions/audit-log  _(file: admin-dashboard/src/pages/admin/finance/CommissionSettingsPage.tsx, client)_
+- POST /finance/commissions/settings  _(file: admin-dashboard/src/pages/admin/finance/CommissionSettingsPage.tsx, client)_
+- POST /wallet/coupons  _(file: admin-dashboard/src/pages/admin/marketing/AdminCouponsPage.tsx, client)_
+- GET /admin/pending-activations  _(file: admin-dashboard/src/pages/admin/onboarding/usePendingActivations.ts, client)_
+- GET /admin/ops/drivers/realtime  _(file: admin-dashboard/src/pages/admin/ops/OpsDriversDashboard.tsx, axios)_
+- GET /admin/ops/heatmap  _(file: admin-dashboard/src/pages/admin/ops/OpsDriversDashboard.tsx, axios)_
+- GET /admin/ops/drivers/realtime  _(file: admin-dashboard/src/pages/admin/ops/OpsDriversDashboard.tsx, client)_
+- GET /admin/ops/heatmap  _(file: admin-dashboard/src/pages/admin/ops/OpsDriversDashboard.tsx, client)_
+- GET /pricing-strategies  _(file: admin-dashboard/src/pages/admin/pricing/PricingStrategiesPage.tsx, axios)_
+- POST /pricing-strategies  _(file: admin-dashboard/src/pages/admin/pricing/PricingStrategiesPage.tsx, axios)_
+- GET /pricing-strategies  _(file: admin-dashboard/src/pages/admin/pricing/PricingStrategiesPage.tsx, client)_
+- POST /pricing-strategies  _(file: admin-dashboard/src/pages/admin/pricing/PricingStrategiesPage.tsx, client)_
+- GET /reports/marketers/overview  _(file: admin-dashboard/src/pages/admin/reports/useMarketerReports.ts, client)_
+- GET /admin/support/stats  _(file: admin-dashboard/src/pages/admin/support/SupportTicketsPage.tsx, axios)_
+- POST /admin/support/tickets  _(file: admin-dashboard/src/pages/admin/support/SupportTicketsPage.tsx, axios)_
+- GET /admin/support/stats  _(file: admin-dashboard/src/pages/admin/support/SupportTicketsPage.tsx, client)_
+- POST /admin/support/tickets  _(file: admin-dashboard/src/pages/admin/support/SupportTicketsPage.tsx, client)_
+- GET /admin/audit-logs/stats  _(file: admin-dashboard/src/pages/admin/system/AuditLogPage.tsx, axios)_
+- GET /admin/audit-logs/my-actions?limit=3  _(file: admin-dashboard/src/pages/admin/system/AuditLogPage.tsx, axios)_
+- GET /admin/audit-logs/stats  _(file: admin-dashboard/src/pages/admin/system/AuditLogPage.tsx, client)_
+- GET /admin/audit-logs/my-actions?limit=3  _(file: admin-dashboard/src/pages/admin/system/AuditLogPage.tsx, client)_
+- POST /admin/vendors  _(file: admin-dashboard/src/pages/admin/vendors/VendorsManagement.tsx, axios)_
+- POST /admin/vendors  _(file: admin-dashboard/src/pages/admin/vendors/VendorsManagement.tsx, client)_
+- GET /delivery/banners/admin  _(file: admin-dashboard/src/pages/delivery/DeliveryBannersPage.tsx, axios)_
+- GET /delivery/categories  _(file: admin-dashboard/src/pages/delivery/DeliveryBannersPage.tsx, axios)_
+- GET /delivery/banners/admin  _(file: admin-dashboard/src/pages/delivery/DeliveryBannersPage.tsx, client)_
+- GET /delivery/categories  _(file: admin-dashboard/src/pages/delivery/DeliveryBannersPage.tsx, client)_
+- POST /delivery/categories/bulk-reorder  _(file: admin-dashboard/src/pages/delivery/DeliveryCategoriesPage.tsx, axios)_
+- POST /delivery/categories/bulk-reorder  _(file: admin-dashboard/src/pages/delivery/DeliveryCategoriesPage.tsx, client)_
+- POST /promotions  _(file: admin-dashboard/src/pages/delivery/DeliveryPromotionsPage.tsx, axios)_
+- POST /promotions  _(file: admin-dashboard/src/pages/delivery/DeliveryPromotionsPage.tsx, client)_
+- PATCH /utility/options/gas  _(file: admin-dashboard/src/pages/delivery/orders/services/utilityApi.ts, client)_
+- PATCH /utility/options/water  _(file: admin-dashboard/src/pages/delivery/orders/services/utilityApi.ts, client)_
+- GET /drivers/health  _(file: admin-dashboard/src/pages/drivers/Dashboard.tsx, client)_
+- GET /admin/drivers/docs/expiring  _(file: admin-dashboard/src/pages/drivers/Dashboard.tsx, client)_
+- GET /admin/drivers/attendance  _(file: admin-dashboard/src/pages/drivers/DriversList.tsx, axios)_
+- GET /admin/drivers/attendance  _(file: admin-dashboard/src/pages/drivers/DriversList.tsx, client)_
+- GET /admin/driver-assets  _(file: admin-dashboard/src/pages/drivers/tabs/Assets.tsx, axios)_
+- GET /admin/driver-assets  _(file: admin-dashboard/src/pages/drivers/tabs/Assets.tsx, client)_
+- GET /admin/drivers/docs  _(file: admin-dashboard/src/pages/drivers/tabs/Documents.tsx, axios)_
+- GET /admin/drivers/docs  _(file: admin-dashboard/src/pages/drivers/tabs/Documents.tsx, client)_
+- GET /admin/driver-payouts  _(file: admin-dashboard/src/pages/drivers/tabs/Finance.tsx, axios)_
+- GET /admin/driver-payouts  _(file: admin-dashboard/src/pages/drivers/tabs/Finance.tsx, client)_
+- GET /admin/driver-shifts  _(file: admin-dashboard/src/pages/drivers/tabs/Shifts.tsx, axios)_
+- GET /admin/driver-shifts  _(file: admin-dashboard/src/pages/drivers/tabs/Shifts.tsx, client)_
+- GET /admin/drivers/vacations/stats  _(file: admin-dashboard/src/pages/drivers/tabs/Vacations.tsx, client)_
+- POST /marketing/adspend/upload  _(file: admin-dashboard/src/pages/marketing/AdSpendUpload.tsx, axios)_
+- POST /marketing/adspend/upload  _(file: admin-dashboard/src/pages/marketing/AdSpendUpload.tsx, client)_
+- POST /segments/preview  _(file: admin-dashboard/src/pages/marketing/Segments.tsx, axios)_
+- POST /segments/sync  _(file: admin-dashboard/src/pages/marketing/Segments.tsx, axios)_
+- POST /segments/preview  _(file: admin-dashboard/src/pages/marketing/Segments.tsx, client)_
+- POST /segments/sync  _(file: admin-dashboard/src/pages/marketing/Segments.tsx, client)_
+- GET /accounts  _(file: admin-dashboard/src/pages/money/GeneralLedger.tsx, client)_
+- GET /opening-balance  _(file: admin-dashboard/src/pages/money/GeneralLedger.tsx, client)_
+- GET /journals  _(file: admin-dashboard/src/pages/money/GeneralLedger.tsx, client)_
+- GET /journal-entries  _(file: admin-dashboard/src/pages/money/JournalEntries.tsx, axios)_
+- GET /accounts/chart?onlyLeaf=1  _(file: admin-dashboard/src/pages/money/JournalEntries.tsx, axios)_
+- POST /journal-entries  _(file: admin-dashboard/src/pages/money/JournalEntries.tsx, axios)_
+- GET /journal-entries  _(file: admin-dashboard/src/pages/money/JournalEntries.tsx, client)_
+- GET /accounts/chart?onlyLeaf=1  _(file: admin-dashboard/src/pages/money/JournalEntries.tsx, client)_
+- POST /journal-entries  _(file: admin-dashboard/src/pages/money/JournalEntries.tsx, client)_
+- POST /opening-balance  _(file: admin-dashboard/src/pages/money/OpeningBalanceModal.tsx, client)_
+- GET /reports/trial-balance  _(file: admin-dashboard/src/pages/money/ReportsPage.tsx, client)_
+- GET /reports/summary  _(file: admin-dashboard/src/pages/money/ReportsPage.tsx, client)_
+- GET /partners/contracts/expiring  _(file: admin-dashboard/src/pages/parteners/ContractsWidget.tsx, client)_
+- GET /partners  _(file: admin-dashboard/src/pages/parteners/PartnerDetails.tsx, axios)_
+- POST /partners/upsert  _(file: admin-dashboard/src/pages/parteners/PartnerDetails.tsx, axios)_
+- GET /partners  _(file: admin-dashboard/src/pages/parteners/PartnerDetails.tsx, client)_
+- POST /partners/upsert  _(file: admin-dashboard/src/pages/parteners/PartnerDetails.tsx, client)_
+- GET /admin/dashboard/support-tickets  _(file: admin-dashboard/src/pages/support/Inbox.tsx, axios)_
+- GET /admin/dashboard/support-tickets  _(file: admin-dashboard/src/pages/support/Inbox.tsx, client)_
+- GET /support/reports/summary  _(file: admin-dashboard/src/pages/support/Reports.tsx, axios)_
+- GET /support/reports/summary  _(file: admin-dashboard/src/pages/support/Reports.tsx, client)_
+- GET /accounts/chart  _(file: admin-dashboard/src/services/chartAccount.api.ts, axios)_
+- GET /accounts/chart/tree  _(file: admin-dashboard/src/services/chartAccount.api.ts, axios)_
+- POST /accounts/chart  _(file: admin-dashboard/src/services/chartAccount.api.ts, axios)_
+- GET /accounts/chart  _(file: admin-dashboard/src/services/chartAccount.api.ts, client)_
+- GET /accounts/chart/tree  _(file: admin-dashboard/src/services/chartAccount.api.ts, client)_
+- POST /accounts/chart  _(file: admin-dashboard/src/services/chartAccount.api.ts, client)_
+- POST /media/sign-upload  _(file: admin-dashboard/src/services/uploadService.ts, axios)_
+- POST /media/sign-upload  _(file: admin-dashboard/src/services/uploadService.ts, client)_
+- POST /akhdimni/errands/calculate-fee  _(file: app-user/src/api/akhdimniApi.ts, client)_
+- POST /akhdimni/errands  _(file: app-user/src/api/akhdimniApi.ts, client)_
+- GET /akhdimni/my-errands  _(file: app-user/src/api/akhdimniApi.ts, client)_
+- POST /amani  _(file: app-user/src/api/amaniApi.ts, client)_
+- GET /amani  _(file: app-user/src/api/amaniApi.ts, client)_
+- GET /amani/my  _(file: app-user/src/api/amaniApi.ts, client)_
+- GET /amani/search  _(file: app-user/src/api/amaniApi.ts, client)_
+- POST /arabon  _(file: app-user/src/api/arabonApi.ts, client)_
+- GET /arabon  _(file: app-user/src/api/arabonApi.ts, client)_
+- GET /arabon/my  _(file: app-user/src/api/arabonApi.ts, client)_
+- GET /arabon/search  _(file: app-user/src/api/arabonApi.ts, client)_
+- POST /es3afni  _(file: app-user/src/api/es3afniApi.ts, client)_
+- GET /es3afni  _(file: app-user/src/api/es3afniApi.ts, client)_
+- GET /es3afni/my  _(file: app-user/src/api/es3afniApi.ts, client)_
+- GET /es3afni/search  _(file: app-user/src/api/es3afniApi.ts, client)_
+- GET /es3afni/stats  _(file: app-user/src/api/es3afniApi.ts, client)_
+- POST /kawader  _(file: app-user/src/api/kawaderApi.ts, client)_
+- GET /kawader  _(file: app-user/src/api/kawaderApi.ts, client)_
+- GET /kawader/my  _(file: app-user/src/api/kawaderApi.ts, client)_
+- GET /kawader/search  _(file: app-user/src/api/kawaderApi.ts, client)_
+- POST /kenz  _(file: app-user/src/api/kenzApi.ts, client)_
+- GET /kenz  _(file: app-user/src/api/kenzApi.ts, client)_
+- GET /kenz/my  _(file: app-user/src/api/kenzApi.ts, client)_
+- GET /kenz/search  _(file: app-user/src/api/kenzApi.ts, client)_
+- GET /kenz/stats  _(file: app-user/src/api/kenzApi.ts, client)_
+- GET /kenz/category  _(file: app-user/src/api/kenzApi.ts, client)_
+- POST /maarouf  _(file: app-user/src/api/maaroufApi.ts, client)_
+- GET /maarouf  _(file: app-user/src/api/maaroufApi.ts, client)_
+- GET /maarouf/my  _(file: app-user/src/api/maaroufApi.ts, client)_
+- GET /maarouf/search  _(file: app-user/src/api/maaroufApi.ts, client)_
+- GET /delivery/order/my-orders  _(file: app-user/src/api/orders.ts, client)_
+- POST /api/v2/payments/holds  _(file: app-user/src/api/paymentsApi.ts, client)_
+- GET /api/v2/payments/holds/my  _(file: app-user/src/api/paymentsApi.ts, client)_
+- POST /api/v2/sanad  _(file: app-user/src/api/sanadApi.ts, client)_
+- GET /api/v2/sanad  _(file: app-user/src/api/sanadApi.ts, client)_
+- GET /api/v2/sanad/my  _(file: app-user/src/api/sanadApi.ts, client)_
+- GET /api/v2/sanad/search  _(file: app-user/src/api/sanadApi.ts, client)_
+- POST /support/tickets  _(file: app-user/src/api/support.ts, client)_
+- GET /support/tickets  _(file: app-user/src/api/support.ts, client)_
+- GET /support/stats  _(file: app-user/src/api/support.ts, client)_
+- GET /v2/wallet/balance  _(file: app-user/src/api/walletApi.ts, client)_
+- GET /v2/wallet/transactions  _(file: app-user/src/api/walletApi.ts, client)_
+- GET /v2/wallet/topup/methods  _(file: app-user/src/api/walletApi.ts, client)_
+- POST /v2/wallet/topup/kuraimi  _(file: app-user/src/api/walletApi.ts, client)_
+- POST /v2/wallet/topup/verify  _(file: app-user/src/api/walletApi.ts, client)_
+- GET /v2/wallet/topup/history  _(file: app-user/src/api/walletApi.ts, client)_
+- GET /v2/wallet/withdraw/methods  _(file: app-user/src/api/walletApi.ts, client)_
+- POST /v2/wallet/withdraw/request  _(file: app-user/src/api/walletApi.ts, client)_
+- GET /v2/wallet/withdraw/my  _(file: app-user/src/api/walletApi.ts, client)_
+- POST /v2/wallet/coupons/apply  _(file: app-user/src/api/walletApi.ts, client)_
+- POST /v2/wallet/coupons/validate  _(file: app-user/src/api/walletApi.ts, client)_
+- GET /v2/wallet/coupons/my  _(file: app-user/src/api/walletApi.ts, client)_
+- GET /v2/wallet/coupons/history  _(file: app-user/src/api/walletApi.ts, client)_
+- POST /v2/wallet/subscriptions/subscribe  _(file: app-user/src/api/walletApi.ts, client)_
+- GET /v2/wallet/subscriptions/my  _(file: app-user/src/api/walletApi.ts, client)_
+- POST /v2/wallet/pay-bill  _(file: app-user/src/api/walletApi.ts, client)_
+- GET /v2/wallet/bills  _(file: app-user/src/api/walletApi.ts, client)_
+- POST /v2/wallet/transfer  _(file: app-user/src/api/walletApi.ts, client)_
+- GET /v2/wallet/transfers  _(file: app-user/src/api/walletApi.ts, client)_
+- POST /v2/wallet/refund/request  _(file: app-user/src/api/walletApi.ts, client)_
+- GET /users/me  _(file: app-user/src/auth/AuthContext.tsx, client)_
+- GET /delivery/categories  _(file: app-user/src/components/CategoriesChips.tsx, client)_
+- POST /delivery/cart/add  _(file: app-user/src/context/CartContext.tsx, client)_
+- POST /delivery/cart/merge  _(file: app-user/src/context/CartContext.tsx, client)_
+- GET /notifications/my  _(file: app-user/src/hooks/useNotifications.ts, client)_
+- GET /notifications/unread/count  _(file: app-user/src/hooks/useNotifications.ts, client)_
+- POST /notifications/read-all  _(file: app-user/src/hooks/useNotifications.ts, client)_
+- GET /delivery/stores/search  _(file: app-user/src/screens/delivery/DeliverySearch.tsx, client)_
+- GET /delivery/promotions/by-stores  _(file: app-user/src/screens/delivery/GroceryScreen.tsx, client)_
+- GET /delivery/cart/fee  _(file: app-user/src/screens/delivery/InvoiceScreen.tsx, client)_
+- GET /users/address  _(file: app-user/src/screens/delivery/InvoiceScreen.tsx, client)_
+- POST /coupons/validate  _(file: app-user/src/screens/delivery/InvoiceScreen.tsx, client)_
+- POST /delivery/order  _(file: app-user/src/screens/delivery/InvoiceScreen.tsx, client)_
+- POST /utility/order  _(file: app-user/src/screens/delivery/UtilityGasScreen.tsx, client)_
+- DELETE /users/me  _(file: app-user/src/screens/profile/UserProfileScreen.tsx, client)_
+- POST /events  _(file: app-user/src/utils/lib/track.ts, client)_
+- POST /akhdimni/errands/calculate-fee  _(file: bthwani-web/src/api/akhdimni.ts, client)_
+- POST /akhdimni/errands  _(file: bthwani-web/src/api/akhdimni.ts, client)_
+- GET /akhdimni/my-errands  _(file: bthwani-web/src/api/akhdimni.ts, client)_
+- POST /auth/forgot  _(file: bthwani-web/src/api/auth.ts, client)_
+- POST /auth/reset/verify  _(file: bthwani-web/src/api/auth.ts, client)_
+- POST /auth/reset  _(file: bthwani-web/src/api/auth.ts, client)_
+- POST /auth/verify-otp  _(file: bthwani-web/src/api/auth.ts, client)_
+- DELETE /delivery/cart  _(file: bthwani-web/src/api/cart.ts, client)_
+- POST /coupons/validate  _(file: bthwani-web/src/api/cart.ts, client)_
+- POST /errands/order  _(file: bthwani-web/src/api/delivery.ts, client)_
+- GET /errands/categories  _(file: bthwani-web/src/api/delivery.ts, client)_
+- GET /errands/drivers/available  _(file: bthwani-web/src/api/delivery.ts, client)_
+- POST /notifications/register  _(file: bthwani-web/src/api/notifications.ts, axios)_
+- POST /notifications/register  _(file: bthwani-web/src/api/notifications.ts, client)_
+- POST /notifications/read-all  _(file: bthwani-web/src/api/notifications.ts, client)_
+- POST /payments/create-session  _(file: bthwani-web/src/api/payments.ts, axios)_
+- POST /payments/confirm  _(file: bthwani-web/src/api/payments.ts, axios)_
+- POST /payments/create-session  _(file: bthwani-web/src/api/payments.ts, client)_
+- POST /payments/confirm  _(file: bthwani-web/src/api/payments.ts, client)_
+- POST /support/tickets  _(file: bthwani-web/src/api/support.ts, client)_
+- GET /support/tickets  _(file: bthwani-web/src/api/support.ts, client)_
+- POST /amani  _(file: bthwani-web/src/features/amani/api.ts, client)_
+- GET /amani  _(file: bthwani-web/src/features/amani/api.ts, client)_
+- POST /arabon  _(file: bthwani-web/src/features/arabon/api.ts, client)_
+- GET /arabon  _(file: bthwani-web/src/features/arabon/api.ts, client)_
+- POST /es3afni  _(file: bthwani-web/src/features/es3afni/api.ts, client)_
+- GET /es3afni  _(file: bthwani-web/src/features/es3afni/api.ts, client)_
+- POST /kawader  _(file: bthwani-web/src/features/kawader/api.ts, client)_
+- GET /kawader  _(file: bthwani-web/src/features/kawader/api.ts, client)_
+- POST /kenz  _(file: bthwani-web/src/features/kenz/api.ts, client)_
+- GET /kenz  _(file: bthwani-web/src/features/kenz/api.ts, client)_
+- POST /maarouf  _(file: bthwani-web/src/features/maarouf/api.ts, client)_
+- GET /maarouf  _(file: bthwani-web/src/features/maarouf/api.ts, client)_
+- GET /user/profile  _(file: bthwani-web/src/features/utilityGas/api.ts, client)_
+- POST /utility/order  _(file: bthwani-web/src/features/utilityGas/api.ts, client)_
+- GET /delivery/promotions/by-stores  _(file: bthwani-web/src/pages/delivery/GroceryScreen.tsx, client)_
+- GET /delivery/promotions  _(file: bthwani-web/src/pages/delivery/Home.tsx, client)_
+- GET /delivery/categories  _(file: bthwani-web/src/pages/delivery/Home.tsx, client)_
+- GET /delivery/stores  _(file: bthwani-web/src/pages/delivery/Home.tsx, client)_
+- GET /delivery/deals  _(file: bthwani-web/src/pages/delivery/Home.tsx, client)_
+- GET /auth/me  _(file: field-marketers/src/context/AuthContext.tsx, client)_
+- POST /auth/delete-account/request  _(file: field-marketers/src/screens/account/ProfileScreen.tsx, client)_
+- DELETE /auth/delete-account  _(file: field-marketers/src/screens/account/ProfileScreen.tsx, client)_
+- POST /marketer/referrals/generate-code  _(file: field-marketers/src/screens/account/ReferralScreen.tsx, client)_
+- GET /marketer/referrals/statistics  _(file: field-marketers/src/screens/account/ReferralScreen.tsx, client)_
+- POST /field/quick-onboard  _(file: field-marketers/src/screens/onboarding/OnboardingWizardScreen.tsx, client)_
+- GET /drivers/me  _(file: rider-app/app/(driver)/locations.tsx, axios)_
+- … +61 more
+
+## Parity — FE calls without BE
+- [GAP] ANY /api/content/latest  ← admin-dashboard/public/sw.js
+- [GAP] PUT /api/content/latest  ← admin-dashboard/public/sw.js
+- [GAP] GET /admin/notifications/campaigns  ← admin-dashboard/src/api/adminNotifications.ts
+- [GAP] POST /admin/notifications/campaigns  ← admin-dashboard/src/api/adminNotifications.ts
+- [GAP] GET /admin/notifications/templates  ← admin-dashboard/src/api/adminNotifications.ts
+- [GAP] POST /admin/notifications/templates  ← admin-dashboard/src/api/adminNotifications.ts
+- [GAP] GET /admin/dashboard/summary  ← admin-dashboard/src/api/adminOverview.ts
+- [GAP] GET /admin/dashboard/timeseries  ← admin-dashboard/src/api/adminOverview.ts
+- [GAP] GET /admin/dashboard/top  ← admin-dashboard/src/api/adminOverview.ts
+- [GAP] GET /admin/dashboard/alerts  ← admin-dashboard/src/api/adminOverview.ts
+- [GAP] GET /admin/dashboard/summary  ← admin-dashboard/src/api/adminOverview.ts
+- [GAP] GET /admin/dashboard/timeseries  ← admin-dashboard/src/api/adminOverview.ts
+- [GAP] GET /admin/dashboard/top  ← admin-dashboard/src/api/adminOverview.ts
+- [GAP] GET /admin/dashboard/alerts  ← admin-dashboard/src/api/adminOverview.ts
+- [GAP] POST /admin/users  ← admin-dashboard/src/api/adminUsers.ts
+- [GAP] GET /admin/modules  ← admin-dashboard/src/api/adminUsers.ts
+- [GAP] GET /akhdimni/admin/errands  ← admin-dashboard/src/api/akhdimni.ts
+- [GAP] GET /admin/amani  ← admin-dashboard/src/api/amani.ts
+- [GAP] GET /admin/arabon  ← admin-dashboard/src/api/arabon.ts
+- [GAP] POST /auth/login  ← admin-dashboard/src/api/client-example.ts
+- [GAP] POST /auth/login  ← admin-dashboard/src/api/client-example.ts
+- [GAP] POST /admin/onboarding-slides  ← admin-dashboard/src/api/cmsApi.ts
+- [GAP] POST /admin/pages  ← admin-dashboard/src/api/cmsApi.ts
+- [GAP] DELETE /er/documents/bulk  ← admin-dashboard/src/api/documents.ts
+- [GAP] GET /er/documents/export  ← admin-dashboard/src/api/documents.ts
+- [GAP] GET /admin/drivers/finance  ← admin-dashboard/src/api/driverFinance.ts
+- [GAP] POST /admin/drivers/finance/run  ← admin-dashboard/src/api/driverFinance.ts
+- [GAP] GET /admin/es3afni  ← admin-dashboard/src/api/es3afni.ts
+- [GAP] GET /admin/kawader  ← admin-dashboard/src/api/kawader.ts
+- [GAP] GET /admin/kawader/stats/overview  ← admin-dashboard/src/api/kawader.ts
+- [GAP] GET /admin/kenz  ← admin-dashboard/src/api/kenz.ts
+- [GAP] GET /admin/kenz/stats/overview  ← admin-dashboard/src/api/kenz.ts
+- [GAP] GET /admin/maarouf  ← admin-dashboard/src/api/maarouf.ts
+- [GAP] GET /admin/maarouf/stats/overview  ← admin-dashboard/src/api/maarouf.ts
+- [GAP] GET /merchant/catalog/products  ← admin-dashboard/src/api/merchant.ts
+- [GAP] POST /merchant/catalog/products  ← admin-dashboard/src/api/merchant.ts
+- [GAP] GET /merchant/categories  ← admin-dashboard/src/api/merchant.ts
+- [GAP] POST /merchant/categories  ← admin-dashboard/src/api/merchant.ts
+- [GAP] GET /merchant/attributes  ← admin-dashboard/src/api/merchant.ts
+- [GAP] POST /merchant/attributes  ← admin-dashboard/src/api/merchant.ts
+- [GAP] GET /merchant/products  ← admin-dashboard/src/api/merchant.ts
+- [GAP] POST /merchant/products  ← admin-dashboard/src/api/merchant.ts
+- [GAP] GET /merchant  ← admin-dashboard/src/api/merchant.ts
+- [GAP] POST /merchant  ← admin-dashboard/src/api/merchant.ts
+- [GAP] GET /delivery/order  ← admin-dashboard/src/api/orders.ts
+- [GAP] GET /delivery/order/export  ← admin-dashboard/src/api/orders.ts
+- [GAP] GET /admin/payments  ← admin-dashboard/src/api/payments.ts
+- [GAP] GET /admin/payments/stats/overview  ← admin-dashboard/src/api/payments.ts
+- [GAP] POST /admin/reports/generate  ← admin-dashboard/src/api/reports.ts
+- [GAP] GET /admin/reports/realtime  ← admin-dashboard/src/api/reports.ts
+- [GAP] GET /admin/sanad  ← admin-dashboard/src/api/sanad.ts
+- [GAP] GET /admin/sanad/stats/overview  ← admin-dashboard/src/api/sanad.ts
+- [GAP] GET /admin/wallet/settlements/export  ← admin-dashboard/src/api/settlements.ts
+- [GAP] POST /v2/wallet/hold  ← admin-dashboard/src/api/wallet.ts
+- [GAP] POST /v2/wallet/release  ← admin-dashboard/src/api/wallet.ts
+- [GAP] POST /v2/wallet/refund  ← admin-dashboard/src/api/wallet.ts
+- [GAP] GET /admin/me  ← admin-dashboard/src/hook/useAdminUser.ts
+- [GAP] GET /admin/me  ← admin-dashboard/src/hook/useAdminUser.ts
+- [GAP] GET /features  ← admin-dashboard/src/hook/useFeatures.ts
+- [GAP] GET /features  ← admin-dashboard/src/hook/useFeatures.ts
+- [GAP] POST /api/leads/captain  ← admin-dashboard/src/landing/pages/BecomeCaptainPage.tsx
+- [GAP] POST /api/leads/captain  ← admin-dashboard/src/landing/pages/BecomeCaptainPage.tsx
+- [GAP] POST /api/support/contact  ← admin-dashboard/src/landing/pages/ContactPage.tsx
+- [GAP] POST /api/support/contact  ← admin-dashboard/src/landing/pages/ContactPage.tsx
+- [GAP] POST /api/leads/merchant  ← admin-dashboard/src/landing/pages/ForMerchantsPage.tsx
+- [GAP] POST /api/leads/merchant  ← admin-dashboard/src/landing/pages/ForMerchantsPage.tsx
+- [GAP] POST /admin/drivers  ← admin-dashboard/src/pages/admin/AdminDriversPage.tsx
+- [GAP] POST /admin/drivers  ← admin-dashboard/src/pages/admin/AdminDriversPage.tsx
+- [GAP] GET /admin/vendors  ← admin-dashboard/src/pages/admin/AdminVendorCreatePage.tsx
+- [GAP] GET /delivery/stores  ← admin-dashboard/src/pages/admin/AdminVendorCreatePage.tsx
+- [GAP] POST /vendor  ← admin-dashboard/src/pages/admin/AdminVendorCreatePage.tsx
+- [GAP] GET /admin/vendors  ← admin-dashboard/src/pages/admin/AdminVendorCreatePage.tsx
+- [GAP] GET /delivery/stores  ← admin-dashboard/src/pages/admin/AdminVendorCreatePage.tsx
+- [GAP] POST /vendor  ← admin-dashboard/src/pages/admin/AdminVendorCreatePage.tsx
+- [GAP] GET /admin/settings/appearance  ← admin-dashboard/src/pages/admin/AppearanceSettingsPage.tsx
+- [GAP] PUT /admin/settings/appearance  ← admin-dashboard/src/pages/admin/AppearanceSettingsPage.tsx
+- [GAP] GET /admin/settings/appearance  ← admin-dashboard/src/pages/admin/AppearanceSettingsPage.tsx
+- [GAP] PUT /admin/settings/appearance  ← admin-dashboard/src/pages/admin/AppearanceSettingsPage.tsx
+- [GAP] GET /admin/users/list  ← admin-dashboard/src/pages/admin/UserManagement.tsx
+- [GAP] POST /admin/users  ← admin-dashboard/src/pages/admin/UserManagement.tsx
+- [GAP] GET /admin/users/list  ← admin-dashboard/src/pages/admin/UserManagement.tsx
+- [GAP] GET /admin/modules  ← admin-dashboard/src/pages/admin/admins/api.ts
+- [GAP] GET /admin/list  ← admin-dashboard/src/pages/admin/admins/api.ts
+- [GAP] POST /admin/create  ← admin-dashboard/src/pages/admin/admins/api.ts
+- [GAP] GET /admin/list  ← admin-dashboard/src/pages/admin/admins/api.ts
+- [GAP] POST /admin/create  ← admin-dashboard/src/pages/admin/admins/api.ts
+- [GAP] POST /admin/commission-plans  ← admin-dashboard/src/pages/admin/commission/useCommissionPlans.ts
+- [GAP] GET /finance/commissions/settings  ← admin-dashboard/src/pages/admin/finance/CommissionSettingsPage.tsx
+- [GAP] GET /finance/commissions/audit-log  ← admin-dashboard/src/pages/admin/finance/CommissionSettingsPage.tsx
+- [GAP] POST /finance/commissions/settings  ← admin-dashboard/src/pages/admin/finance/CommissionSettingsPage.tsx
+- [GAP] GET /finance/commissions/settings  ← admin-dashboard/src/pages/admin/finance/CommissionSettingsPage.tsx
+- [GAP] GET /finance/commissions/audit-log  ← admin-dashboard/src/pages/admin/finance/CommissionSettingsPage.tsx
+- [GAP] POST /finance/commissions/settings  ← admin-dashboard/src/pages/admin/finance/CommissionSettingsPage.tsx
+- [GAP] POST /wallet/coupons  ← admin-dashboard/src/pages/admin/marketing/AdminCouponsPage.tsx
+- [GAP] GET /admin/pending-activations  ← admin-dashboard/src/pages/admin/onboarding/usePendingActivations.ts
+- [GAP] GET /admin/ops/drivers/realtime  ← admin-dashboard/src/pages/admin/ops/OpsDriversDashboard.tsx
+- [GAP] GET /admin/ops/heatmap  ← admin-dashboard/src/pages/admin/ops/OpsDriversDashboard.tsx
+- [GAP] GET /admin/ops/drivers/realtime  ← admin-dashboard/src/pages/admin/ops/OpsDriversDashboard.tsx
+- [GAP] GET /admin/ops/heatmap  ← admin-dashboard/src/pages/admin/ops/OpsDriversDashboard.tsx
+- [GAP] GET /pricing-strategies  ← admin-dashboard/src/pages/admin/pricing/PricingStrategiesPage.tsx
+- [GAP] POST /pricing-strategies  ← admin-dashboard/src/pages/admin/pricing/PricingStrategiesPage.tsx
+- [GAP] GET /pricing-strategies  ← admin-dashboard/src/pages/admin/pricing/PricingStrategiesPage.tsx
+- [GAP] POST /pricing-strategies  ← admin-dashboard/src/pages/admin/pricing/PricingStrategiesPage.tsx
+- [GAP] GET /reports/marketers/overview  ← admin-dashboard/src/pages/admin/reports/useMarketerReports.ts
+- [GAP] GET /admin/support/stats  ← admin-dashboard/src/pages/admin/support/SupportTicketsPage.tsx
+- [GAP] POST /admin/support/tickets  ← admin-dashboard/src/pages/admin/support/SupportTicketsPage.tsx
+- [GAP] GET /admin/support/stats  ← admin-dashboard/src/pages/admin/support/SupportTicketsPage.tsx
+- [GAP] POST /admin/support/tickets  ← admin-dashboard/src/pages/admin/support/SupportTicketsPage.tsx
+- [GAP] GET /admin/audit-logs/stats  ← admin-dashboard/src/pages/admin/system/AuditLogPage.tsx
+- [GAP] GET /admin/audit-logs/my-actions?limit=3  ← admin-dashboard/src/pages/admin/system/AuditLogPage.tsx
+- [GAP] GET /admin/audit-logs/stats  ← admin-dashboard/src/pages/admin/system/AuditLogPage.tsx
+- [GAP] GET /admin/audit-logs/my-actions?limit=3  ← admin-dashboard/src/pages/admin/system/AuditLogPage.tsx
+- [GAP] POST /admin/vendors  ← admin-dashboard/src/pages/admin/vendors/VendorsManagement.tsx
+- [GAP] POST /admin/vendors  ← admin-dashboard/src/pages/admin/vendors/VendorsManagement.tsx
+- [GAP] GET /delivery/banners/admin  ← admin-dashboard/src/pages/delivery/DeliveryBannersPage.tsx
+- [GAP] GET /delivery/categories  ← admin-dashboard/src/pages/delivery/DeliveryBannersPage.tsx
+- [GAP] GET /delivery/banners/admin  ← admin-dashboard/src/pages/delivery/DeliveryBannersPage.tsx
+- [GAP] GET /delivery/categories  ← admin-dashboard/src/pages/delivery/DeliveryBannersPage.tsx
+- [GAP] POST /delivery/categories/bulk-reorder  ← admin-dashboard/src/pages/delivery/DeliveryCategoriesPage.tsx
+- [GAP] POST /delivery/categories/bulk-reorder  ← admin-dashboard/src/pages/delivery/DeliveryCategoriesPage.tsx
+- [GAP] GET /drivers/health  ← admin-dashboard/src/pages/drivers/Dashboard.tsx
+- [GAP] GET /admin/drivers/docs/expiring  ← admin-dashboard/src/pages/drivers/Dashboard.tsx
+- [GAP] GET /admin/drivers/attendance  ← admin-dashboard/src/pages/drivers/DriversList.tsx
+- [GAP] GET /admin/drivers/attendance  ← admin-dashboard/src/pages/drivers/DriversList.tsx
+- [GAP] GET /admin/driver-assets  ← admin-dashboard/src/pages/drivers/tabs/Assets.tsx
+- [GAP] GET /admin/driver-assets  ← admin-dashboard/src/pages/drivers/tabs/Assets.tsx
+- [GAP] GET /admin/drivers/docs  ← admin-dashboard/src/pages/drivers/tabs/Documents.tsx
+- [GAP] GET /admin/drivers/docs  ← admin-dashboard/src/pages/drivers/tabs/Documents.tsx
+- [GAP] GET /admin/driver-payouts  ← admin-dashboard/src/pages/drivers/tabs/Finance.tsx
+- [GAP] GET /admin/driver-payouts  ← admin-dashboard/src/pages/drivers/tabs/Finance.tsx
+- [GAP] GET /admin/driver-shifts  ← admin-dashboard/src/pages/drivers/tabs/Shifts.tsx
+- [GAP] GET /admin/driver-shifts  ← admin-dashboard/src/pages/drivers/tabs/Shifts.tsx
+- [GAP] GET /admin/drivers/vacations/stats  ← admin-dashboard/src/pages/drivers/tabs/Vacations.tsx
+- [GAP] POST /marketing/adspend/upload  ← admin-dashboard/src/pages/marketing/AdSpendUpload.tsx
+- [GAP] POST /marketing/adspend/upload  ← admin-dashboard/src/pages/marketing/AdSpendUpload.tsx
+- [GAP] POST /segments/preview  ← admin-dashboard/src/pages/marketing/Segments.tsx
+- [GAP] POST /segments/sync  ← admin-dashboard/src/pages/marketing/Segments.tsx
+- [GAP] POST /segments/preview  ← admin-dashboard/src/pages/marketing/Segments.tsx
+- [GAP] POST /segments/sync  ← admin-dashboard/src/pages/marketing/Segments.tsx
+- [GAP] GET /opening-balance  ← admin-dashboard/src/pages/money/GeneralLedger.tsx
+- [GAP] GET /journals  ← admin-dashboard/src/pages/money/GeneralLedger.tsx
+- [GAP] GET /accounts/chart?onlyLeaf=1  ← admin-dashboard/src/pages/money/JournalEntries.tsx
+- [GAP] GET /accounts/chart?onlyLeaf=1  ← admin-dashboard/src/pages/money/JournalEntries.tsx
+- [GAP] POST /opening-balance  ← admin-dashboard/src/pages/money/OpeningBalanceModal.tsx
+- [GAP] GET /reports/summary  ← admin-dashboard/src/pages/money/ReportsPage.tsx
+- [GAP] GET /partners/contracts/expiring  ← admin-dashboard/src/pages/parteners/ContractsWidget.tsx
+- [GAP] GET /partners  ← admin-dashboard/src/pages/parteners/PartnerDetails.tsx
+- [GAP] POST /partners/upsert  ← admin-dashboard/src/pages/parteners/PartnerDetails.tsx
+- [GAP] GET /partners  ← admin-dashboard/src/pages/parteners/PartnerDetails.tsx
+- [GAP] POST /partners/upsert  ← admin-dashboard/src/pages/parteners/PartnerDetails.tsx
+- [GAP] GET /admin/dashboard/support-tickets  ← admin-dashboard/src/pages/support/Inbox.tsx
+- [GAP] GET /admin/dashboard/support-tickets  ← admin-dashboard/src/pages/support/Inbox.tsx
+- [GAP] GET /support/reports/summary  ← admin-dashboard/src/pages/support/Reports.tsx
+- [GAP] GET /support/reports/summary  ← admin-dashboard/src/pages/support/Reports.tsx
+- [GAP] GET /accounts/chart  ← admin-dashboard/src/services/chartAccount.api.ts
+- [GAP] GET /accounts/chart/tree  ← admin-dashboard/src/services/chartAccount.api.ts
+- [GAP] POST /accounts/chart  ← admin-dashboard/src/services/chartAccount.api.ts
+- [GAP] GET /accounts/chart  ← admin-dashboard/src/services/chartAccount.api.ts
+- [GAP] GET /accounts/chart/tree  ← admin-dashboard/src/services/chartAccount.api.ts
+- [GAP] POST /accounts/chart  ← admin-dashboard/src/services/chartAccount.api.ts
+- [GAP] POST /media/sign-upload  ← admin-dashboard/src/services/uploadService.ts
+- [GAP] POST /media/sign-upload  ← admin-dashboard/src/services/uploadService.ts
+- [GAP] POST /akhdimni/errands/calculate-fee  ← app-user/src/api/akhdimniApi.ts
+- [GAP] POST /akhdimni/errands  ← app-user/src/api/akhdimniApi.ts
+- [GAP] GET /akhdimni/my-errands  ← app-user/src/api/akhdimniApi.ts
+- [GAP] GET /amani/my  ← app-user/src/api/amaniApi.ts
+- [GAP] GET /amani/search  ← app-user/src/api/amaniApi.ts
+- [GAP] GET /es3afni/stats  ← app-user/src/api/es3afniApi.ts
+- [GAP] GET /kawader/my  ← app-user/src/api/kawaderApi.ts
+- [GAP] GET /kawader/search  ← app-user/src/api/kawaderApi.ts
+- [GAP] GET /kenz/my  ← app-user/src/api/kenzApi.ts
+- [GAP] GET /kenz/search  ← app-user/src/api/kenzApi.ts
+- [GAP] GET /kenz/stats  ← app-user/src/api/kenzApi.ts
+- [GAP] GET /kenz/category  ← app-user/src/api/kenzApi.ts
+- [GAP] GET /maarouf/my  ← app-user/src/api/maaroufApi.ts
+- [GAP] GET /maarouf/search  ← app-user/src/api/maaroufApi.ts
+- [GAP] GET /delivery/order/my-orders  ← app-user/src/api/orders.ts
+- [GAP] GET /v2/wallet/balance  ← app-user/src/api/walletApi.ts
+- [GAP] GET /v2/wallet/transactions  ← app-user/src/api/walletApi.ts
+- [GAP] GET /v2/wallet/topup/methods  ← app-user/src/api/walletApi.ts
+- [GAP] POST /v2/wallet/topup/kuraimi  ← app-user/src/api/walletApi.ts
+- [GAP] POST /v2/wallet/topup/verify  ← app-user/src/api/walletApi.ts
+- [GAP] GET /v2/wallet/topup/history  ← app-user/src/api/walletApi.ts
+- [GAP] GET /v2/wallet/withdraw/methods  ← app-user/src/api/walletApi.ts
+- [GAP] POST /v2/wallet/withdraw/request  ← app-user/src/api/walletApi.ts
+- [GAP] GET /v2/wallet/withdraw/my  ← app-user/src/api/walletApi.ts
+- [GAP] POST /v2/wallet/coupons/apply  ← app-user/src/api/walletApi.ts
+- [GAP] POST /v2/wallet/coupons/validate  ← app-user/src/api/walletApi.ts
+- [GAP] GET /v2/wallet/coupons/my  ← app-user/src/api/walletApi.ts
+- [GAP] GET /v2/wallet/coupons/history  ← app-user/src/api/walletApi.ts
+- [GAP] POST /v2/wallet/subscriptions/subscribe  ← app-user/src/api/walletApi.ts
+- [GAP] GET /v2/wallet/subscriptions/my  ← app-user/src/api/walletApi.ts
+- [GAP] POST /v2/wallet/pay-bill  ← app-user/src/api/walletApi.ts
+- [GAP] GET /v2/wallet/bills  ← app-user/src/api/walletApi.ts
+- [GAP] POST /v2/wallet/transfer  ← app-user/src/api/walletApi.ts
+- [GAP] GET /v2/wallet/transfers  ← app-user/src/api/walletApi.ts
+- [GAP] POST /v2/wallet/refund/request  ← app-user/src/api/walletApi.ts
+- [GAP] GET /users/me  ← app-user/src/auth/AuthContext.tsx
+- [GAP] GET /delivery/categories  ← app-user/src/components/CategoriesChips.tsx
+- [GAP] POST /delivery/cart/add  ← app-user/src/context/CartContext.tsx
+- … +57 more
+
+## Orphans — BE routes unused by FE
+- [ORPHAN] GET /  ← backend-nest/scripts/extract-routes.ts
+- [ORPHAN] GET /content/pages  ← backend-nest/src/modules/admin/admin-cms.controller.ts
+- [ORPHAN] GET /content/pages/{id}  ← backend-nest/src/modules/admin/admin-cms.controller.ts
+- [ORPHAN] POST /content/pages  ← backend-nest/src/modules/admin/admin-cms.controller.ts
+- [ORPHAN] PUT /content/pages/{id}  ← backend-nest/src/modules/admin/admin-cms.controller.ts
+- [ORPHAN] DELETE /content/pages/{id}  ← backend-nest/src/modules/admin/admin-cms.controller.ts
+- [ORPHAN] POST /content/strings  ← backend-nest/src/modules/admin/admin-cms.controller.ts
+- [ORPHAN] PUT /content/strings/{id}  ← backend-nest/src/modules/admin/admin-cms.controller.ts
+- [ORPHAN] DELETE /content/strings/{id}  ← backend-nest/src/modules/admin/admin-cms.controller.ts
+- [ORPHAN] POST /content/home-layouts  ← backend-nest/src/modules/admin/admin-cms.controller.ts
+- [ORPHAN] PUT /content/home-layouts/{id}  ← backend-nest/src/modules/admin/admin-cms.controller.ts
+- [ORPHAN] DELETE /content/home-layouts/{id}  ← backend-nest/src/modules/admin/admin-cms.controller.ts
+- [ORPHAN] DELETE /wallet/coupons/{id}  ← backend-nest/src/modules/admin/admin-cms.controller.ts
+- [ORPHAN] DELETE /wallet/subscriptions/{id}  ← backend-nest/src/modules/admin/admin-cms.controller.ts
+- [ORPHAN] POST /reports/generate  ← backend-nest/src/modules/admin/admin-cms.controller.ts
+- [ORPHAN] POST /reports/export/{id}/{format}  ← backend-nest/src/modules/admin/admin-cms.controller.ts
+- [ORPHAN] GET /reports/realtime  ← backend-nest/src/modules/admin/admin-cms.controller.ts
+- [ORPHAN] GET /wallet/settlements/export  ← backend-nest/src/modules/admin/admin-cms.controller.ts
+- [ORPHAN] GET /admin/dashboard  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/stats/today  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/stats/financial  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/dashboard/orders-by-status  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/dashboard/revenue  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/dashboard/live-metrics  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/drivers/{id}  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/drivers/{id}/performance  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] DELETE /admin/drivers/{id}  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/drivers/{id}/financials  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] POST /admin/drivers/{id}/ban  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] POST /admin/drivers/{id}/unban  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] PATCH /admin/drivers/{id}/adjust-balance  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/vendors/pending  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] POST /admin/vendors/{id}/approve  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] POST /admin/vendors/{id}/reject  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] POST /admin/vendors/{id}/suspend  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/users/{id}  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] POST /admin/users/{id}/ban  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] POST /admin/users/{id}/unban  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/reports/daily  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] POST /admin/reports/export/{type}/{format}  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/drivers/{id}/attendance  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/drivers/attendance/summary  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] POST /admin/drivers/{id}/attendance/adjust  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] DELETE /admin/drivers/shifts/{id}  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] DELETE /admin/drivers/assets/{id}  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/drivers/leave-requests  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] PATCH /admin/drivers/leave-requests/{id}/approve  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] PATCH /admin/drivers/leave-requests/{id}/reject  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] DELETE /admin/drivers/leave-requests/{id}  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/drivers/{id}/leave-balance  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] PATCH /admin/drivers/{id}/leave-balance/adjust  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/quality/metrics  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/settings  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] PATCH /admin/settings  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/settings/feature-flags  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] PATCH /admin/settings/feature-flags/{flag}  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] POST /admin/backup/create  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/backup/list  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] POST /admin/backup/{id}/restore  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/backup/{id}/download  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/data-deletion/requests  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] PATCH /admin/data-deletion/{id}/approve  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] PATCH /admin/data-deletion/{id}/reject  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/security/password-attempts  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] POST /admin/security/reset-password/{userId}  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] POST /admin/security/unlock-account/{userId}  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/marketers  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/marketers/{id}  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] POST /admin/marketers  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] PATCH /admin/marketers/{id}  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/marketers/{id}/performance  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/marketers/{id}/stores  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] POST /admin/marketers/{id}/activate  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] POST /admin/marketers/{id}/deactivate  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/marketers/statistics  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/marketers/export  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/audit-logs  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/audit-logs/{id}  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/system/health  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/system/metrics  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/database/stats  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/orders/stats/by-city  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/orders/stats/by-payment-method  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/drivers/stats/by-status  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/users/{id}/orders-history  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] POST /admin/cache/clear  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/cache/stats  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/roles  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] POST /admin/roles  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] PATCH /admin/roles/{id}  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] GET /admin/roles/{id}  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] DELETE /admin/roles/{id}  ← backend-nest/src/modules/admin/admin.controller.ts
+- [ORPHAN] PATCH /{id}/status  ← backend-nest/src/modules/admin/amani.admin.controller.ts
+- [ORPHAN] DELETE /{id}  ← backend-nest/src/modules/admin/amani.admin.controller.ts
+- [ORPHAN] GET /{id}  ← backend-nest/src/modules/admin/arabon.admin.controller.ts
+- [ORPHAN] GET /stats/overview  ← backend-nest/src/modules/admin/kawader.admin.controller.ts
+- [ORPHAN] POST /errands/calculate-fee  ← backend-nest/src/modules/akhdimni/akhdimni.controller.ts
+- [ORPHAN] POST /errands  ← backend-nest/src/modules/akhdimni/akhdimni.controller.ts
+- [ORPHAN] GET /my-errands  ← backend-nest/src/modules/akhdimni/akhdimni.controller.ts
+- [ORPHAN] GET /errands/{id}  ← backend-nest/src/modules/akhdimni/akhdimni.controller.ts
+- [ORPHAN] PATCH /errands/{id}/cancel  ← backend-nest/src/modules/akhdimni/akhdimni.controller.ts
+- [ORPHAN] POST /errands/{id}/rate  ← backend-nest/src/modules/akhdimni/akhdimni.controller.ts
+- [ORPHAN] GET /driver/my-errands  ← backend-nest/src/modules/akhdimni/akhdimni.controller.ts
+- [ORPHAN] PATCH /errands/{id}/status  ← backend-nest/src/modules/akhdimni/akhdimni.controller.ts
+- [ORPHAN] GET /admin/errands  ← backend-nest/src/modules/akhdimni/akhdimni.controller.ts
+- [ORPHAN] POST /admin/errands/{id}/assign-driver  ← backend-nest/src/modules/akhdimni/akhdimni.controller.ts
+- [ORPHAN] GET /amani/{id}  ← backend-nest/src/modules/amani/amani.controller.ts
+- [ORPHAN] PATCH /amani/{id}  ← backend-nest/src/modules/amani/amani.controller.ts
+- [ORPHAN] DELETE /amani/{id}  ← backend-nest/src/modules/amani/amani.controller.ts
+- [ORPHAN] GET /analytics/roas/daily  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/roas/summary  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/roas/by-platform  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] POST /analytics/roas/calculate  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] POST /analytics/adspend  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/adspend  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/adspend/summary  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/kpis  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/kpis/real-time  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/kpis/trends  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] POST /analytics/events/track  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/events  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/events/summary  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/funnel/conversion  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/funnel/drop-off  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/users/growth  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/users/retention  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/users/cohort  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/revenue/forecast  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/revenue/breakdown  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/advanced/dashboard-overview  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/advanced/cohort-analysis-advanced  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/advanced/funnel-analysis  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/advanced/retention  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/advanced/ltv  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/advanced/churn-rate  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/advanced/geographic-distribution  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/advanced/peak-hours  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/advanced/product-performance  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /analytics/advanced/driver-performance  ← backend-nest/src/modules/analytics/analytics.controller.ts
+- [ORPHAN] GET /arabon/{id}  ← backend-nest/src/modules/arabon/arabon.controller.ts
+- [ORPHAN] PATCH /arabon/{id}  ← backend-nest/src/modules/arabon/arabon.controller.ts
+- [ORPHAN] DELETE /arabon/{id}  ← backend-nest/src/modules/arabon/arabon.controller.ts
+- [ORPHAN] POST /firebase/login  ← backend-nest/src/modules/auth/auth.controller.ts
+- [ORPHAN] POST /consent  ← backend-nest/src/modules/auth/auth.controller.ts
+- [ORPHAN] POST /consent/bulk  ← backend-nest/src/modules/auth/auth.controller.ts
+- [ORPHAN] DELETE /consent/{type}  ← backend-nest/src/modules/auth/auth.controller.ts
+- [ORPHAN] GET /consent/history  ← backend-nest/src/modules/auth/auth.controller.ts
+- [ORPHAN] GET /consent/summary  ← backend-nest/src/modules/auth/auth.controller.ts
+- [ORPHAN] GET /consent/check/{type}  ← backend-nest/src/modules/auth/auth.controller.ts
+- [ORPHAN] POST /forgot  ← backend-nest/src/modules/auth/auth.controller.ts
+- [ORPHAN] POST /reset/verify  ← backend-nest/src/modules/auth/auth.controller.ts
+- [ORPHAN] POST /reset  ← backend-nest/src/modules/auth/auth.controller.ts
+- [ORPHAN] POST /verify-otp  ← backend-nest/src/modules/auth/auth.controller.ts
+- [ORPHAN] GET /user/{userId}  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] GET /{cartId}  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] POST /items  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] POST /add  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] PATCH /items/{productId}  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] PATCH /{productId}  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] DELETE /items/{productId}  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] DELETE /{productId}  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] DELETE /  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] PATCH /note  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] PATCH /delivery-address  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] GET /count  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] GET /fee  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] POST /merge  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] GET /shein  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] POST /shein/items  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] PATCH /shein/items/{sheinProductId}  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] DELETE /shein/items/{sheinProductId}  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] DELETE /shein  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] PATCH /shein/shipping  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] PATCH /shein/note  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] GET /combined  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] DELETE /combined/clear-all  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] GET /abandoned  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] DELETE /{cartId}/items/{productId}  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] POST /{cartId}/retarget/push  ← backend-nest/src/modules/cart/cart.controller.ts
+- [ORPHAN] GET /content/stores/{storeId}/sections  ← backend-nest/src/modules/content/content.controller.ts
+- [ORPHAN] POST /content/sections  ← backend-nest/src/modules/content/content.controller.ts
+- [ORPHAN] PATCH /content/sections/{id}  ← backend-nest/src/modules/content/content.controller.ts
+- [ORPHAN] DELETE /content/sections/{id}  ← backend-nest/src/modules/content/content.controller.ts
+- [ORPHAN] GET /content/subscription-plans  ← backend-nest/src/modules/content/content.controller.ts
+- [ORPHAN] POST /content/subscription-plans  ← backend-nest/src/modules/content/content.controller.ts
+- [ORPHAN] POST /content/subscribe  ← backend-nest/src/modules/content/content.controller.ts
+- [ORPHAN] GET /content/my-subscription  ← backend-nest/src/modules/content/content.controller.ts
+- [ORPHAN] PATCH /content/my-subscription/cancel  ← backend-nest/src/modules/content/content.controller.ts
+- [ORPHAN] GET /content/pages/{slug}  ← backend-nest/src/modules/content/content.controller.ts
+- [ORPHAN] GET /content/app-settings  ← backend-nest/src/modules/content/content.controller.ts
+- [ORPHAN] PATCH /content/admin/app-settings  ← backend-nest/src/modules/content/content.controller.ts
+- [ORPHAN] GET /content/faqs  ← backend-nest/src/modules/content/content.controller.ts
+- [ORPHAN] POST /content/admin/faqs  ← backend-nest/src/modules/content/content.controller.ts
+- [ORPHAN] PATCH /content/admin/faqs/{id}  ← backend-nest/src/modules/content/content.controller.ts
+- [ORPHAN] DELETE /content/admin/faqs/{id}  ← backend-nest/src/modules/content/content.controller.ts
+- [ORPHAN] POST /drivers  ← backend-nest/src/modules/driver/driver.controller.ts
+- [ORPHAN] GET /drivers/available  ← backend-nest/src/modules/driver/driver.controller.ts
+- [ORPHAN] GET /drivers/{id}  ← backend-nest/src/modules/driver/driver.controller.ts
+- [ORPHAN] GET /drivers/earnings/daily  ← backend-nest/src/modules/driver/driver.controller.ts
+- [ORPHAN] GET /drivers/earnings/weekly  ← backend-nest/src/modules/driver/driver.controller.ts
+- … +366 more
+
+## Risks
+- لا حزم عالية الخطورة معروفة ضمن الأنماط المفحوصة.
+
+## Action Points (prioritized)
+| Area | Task | Owner | Due |
+|---|---|---|---|
+| API Contracts | أضف أو حدّث openapi.yaml كمصدر وحيد. غطّ كل المسارات المكتشفة. اربط DTOs والردود. | @BE | +5d |
+| Parity: FE→BE | سد 257 فجوة نداءات FE بلا نظير BE. إمّا إنشاء مسارات أو تصحيح المسارات على FE. | @BE/@FE | +5d |
+| Parity: BE orphans | راجع 566 مسار BE غير مستخدم. احذف/أخفِ أو اربط بواجهات FE. | @BE/@FE | +7d |
+| Security Headers | التقط رؤوس stage وشغّل فاحص CSP/CORS/HSTS وCookie flags. أصلح أي unsafe-inline أو CORS *.  | @Sec/@FE | +4d |
+| Secrets/SAST | فعّل gitleaks وsemgrep على CI. SecretsFound=0 وERROR=0. | @Sec | +2d |
+| Perf/A11y | أدرج LHCI وPa11y. LCP p75≤2.5s، INP≤200ms، WCAG2.2 AA. | @FE/@Perf | +7d |
+| i18n Coverage | شغّل فاحص مفاتيح i18n وضَمّن RTL. missing_keys=0. | @FE | +5d |
+| Idempotency/Webhooks | أضف Idempotency-Key لطلبات POST الحرجة ووقّع Webhooks مع نافذة 300s. | @BE | +5d |
+| Release/DR | اختبار Rollback ≤5m وتقرير DR (RPO≤15m,RTO≤30m). | @SRE | +10d |

@@ -68,3 +68,40 @@ export class LiveMetricsDto {
   activeDrivers: number;
   recentOrders: number;
 }
+
+export class DashboardSummaryDto {
+  orders: number;
+  gmv: number;
+  revenue: number;
+  cancelRate: number;
+  deliveryTime: {
+    avgMin: number;
+    p90Min: number;
+  };
+  byStatus: {
+    status: string;
+    count: number;
+  }[];
+}
+
+export class DashboardTimeseriesDto {
+  data: {
+    date: string;
+    value: number;
+  }[];
+}
+
+export class DashboardTopDto {
+  rows: {
+    id: string;
+    orders: number;
+    gmv: number;
+    revenue: number;
+  }[];
+}
+
+export class DashboardAlertsDto {
+  awaitingProcurement: number;
+  awaitingAssign: number;
+  overdueDeliveries: number;
+}
