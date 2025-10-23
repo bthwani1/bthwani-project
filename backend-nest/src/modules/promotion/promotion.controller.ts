@@ -29,7 +29,7 @@ export class PromotionController {
   // ==================== Public Endpoints ====================
 
   @Get('by-placement')
-  @ApiQuery({ name: 'placement', required: true, type: String, enum: ['home_hero', 'home_strip', 'category_header', 'category_feed', 'store_header', 'search_banner', 'cart', 'checkout'] })
+  @ApiQuery({ name: 'placement', required: true, type: String, enum: ['home_hero', 'home_strip', 'category_header', 'category_feed', 'store_header', 'search_banner', 'cart', 'checkout', 'onboarding'] })
   @ApiQuery({ name: 'city', required: false, type: String })
   @ApiQuery({ name: 'channel', required: false, type: String, enum: ['app', 'web'] })
   @ApiResponse({ status: 200, description: 'Success' })

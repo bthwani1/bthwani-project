@@ -1,0 +1,12 @@
+surface,owner,slack,notes
+WEB-APP,TBD,@team-web-app,
+ADMIN-DASH,TBD,@team-admin-dash,
+USER-APP,TBD,@team-user-app,
+VENDOR-APP,TBD,@team-vendor-app,
+RIDER-APP,TBD,@team-rider-app,
+PUBLIC-API,TBD,@team-public-api,
+DATA/BI,TBD,@team-data-bi,
+INTERNAL-TOOLS,TBD,@team-internal-tools,
+INFRA/IaC,TBD,@team-infra-iac,
+SUPPORT-CRM,TBD,@team-support-crm,
+PARTNER-PORTAL,TBD,@team-partner-portal,

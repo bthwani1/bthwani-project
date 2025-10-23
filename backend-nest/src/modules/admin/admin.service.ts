@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, Inject } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
@@ -8,6 +8,7 @@ import { Order } from '../order/entities/order.entity';
 import { Driver } from '../driver/entities/driver.entity';
 import { Vendor } from '../vendor/entities/vendor.entity';
 import { Store } from '../store/entities/store.entity';
+import { Role } from './entities/role.entity';
 import { ModerationHelper, CacheHelper } from '../../common/utils';
 import * as DTO from './dto';
 
@@ -54,6 +55,7 @@ export class AdminService {
     @InjectModel(Driver.name) private driverModel: Model<Driver>,
     @InjectModel(Vendor.name) private vendorModel: Model<Vendor>,
     @InjectModel(Store.name) private storeModel: Model<Store>,
+    @InjectModel(Role.name) private roleModel: Model<Role>,
     // Cache manager
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     // Specialized services
@@ -1177,21 +1179,279 @@ export class AdminService {
 
   // ==================== Roles & Permissions ====================
 
-  getRoles() {
+  async getRoles() {
+    const roles = await this.roleModel.find({ isActive: true }).sort({ createdAt: -1 });
     return {
-      data: [
-        { id: 'admin', name: 'مسؤول', permissions: [] },
-        { id: 'superadmin', name: 'مسؤول رئيسي', permissions: [] },
-      ],
+      success: true,
+      data: roles.map(role => ({
+        _id: role._id.toString(),
+        name: role.name,
+        displayName: role.displayName,
+        description: role.description,
+        permissions: role.permissions,
+        isActive: role.isActive,
+        users: role.users,
+        createdAt: role.createdAt,
+        updatedAt: role.updatedAt,
+      })) as any,
+      count: roles.length,
     };
   }
 
-  createRole(roleData: Record<string, any>) {
-    return { success: true, role: roleData };
+  async createRole(roleData: {
+    name: string;
+    displayName: string;
+    description?: string;
+    permissions?: Record<string, boolean>;
+  }, adminId: string) {
+    // التحقق من عدم وجود دور بنفس الاسم
+    const existingRole = await this.roleModel.findOne({ name: roleData.name });
+    if (existingRole) {
+      throw new BadRequestException('دور بنفس الاسم موجود بالفعل');
+    }
+
+    const role = new this.roleModel({
+      ...roleData,
+      createdBy: adminId,
+      isActive: true,
+    });
+
+    const savedRole = await role.save();
+
+    // تسجيل في سجل المراجعة
+    await this.auditService.logAction({
+      action: 'CREATE_ROLE',
+      entityType: 'Role',
+      entityId: savedRole._id.toString(),
+      userId: adminId,
+      details: { roleName: roleData.name },
+    });
+
+    return {
+      success: true,
+      message: 'تم إنشاء الدور بنجاح',
+      data: {
+        _id: savedRole._id.toString(),
+        name: savedRole.name,
+        displayName: savedRole.displayName,
+        description: savedRole.description,
+        permissions: savedRole.permissions,
+        isActive: savedRole.isActive,
+        users: savedRole.users,
+        createdAt: savedRole.createdAt,
+        updatedAt: savedRole.updatedAt,
+      } as any,
+    };
   }
 
-  updateRole() {
-    return { success: true, message: 'تم تحديث الدور' };
+  async updateRole(roleId: string, updates: {
+    displayName?: string;
+    description?: string;
+    permissions?: Record<string, boolean>;
+    isActive?: boolean;
+  }, adminId: string) {
+    const role = await this.roleModel.findById(roleId);
+    if (!role) {
+      throw new NotFoundException('الدور غير موجود');
+    }
+
+    // منع تعديل الأدوار النظامية الأساسية
+    const systemRoles = ['admin', 'superadmin'];
+    if (systemRoles.includes(role.name) && updates.name) {
+      throw new BadRequestException('لا يمكن تعديل اسم الأدوار النظامية');
+    }
+
+    const updatedRole = await this.roleModel.findByIdAndUpdate(
+      roleId,
+      {
+        ...updates,
+        updatedBy: adminId,
+        updatedAt: new Date(),
+      },
+      { new: true }
+    );
+
+    // تسجيل في سجل المراجعة
+    await this.auditService.logAction({
+      action: 'UPDATE_ROLE',
+      entityType: 'Role',
+      entityId: roleId,
+      userId: adminId,
+      details: { updates },
+    });
+
+    return {
+      success: true,
+      message: 'تم تحديث الدور بنجاح',
+      data: updatedRole ? {
+        _id: updatedRole._id.toString(),
+        name: updatedRole.name,
+        displayName: updatedRole.displayName,
+        description: updatedRole.description,
+        permissions: updatedRole.permissions,
+        isActive: updatedRole.isActive,
+        users: updatedRole.users,
+        createdAt: updatedRole.createdAt,
+        updatedAt: updatedRole.updatedAt,
+      } as any : undefined,
+    };
+  }
+
+  async deleteRole(roleId: string, adminId: string) {
+    const role = await this.roleModel.findById(roleId);
+    if (!role) {
+      throw new NotFoundException('الدور غير موجود');
+    }
+
+    // منع حذف الأدوار النظامية الأساسية
+    const systemRoles = ['admin', 'superadmin'];
+    if (systemRoles.includes(role.name)) {
+      throw new BadRequestException('لا يمكن حذف الأدوار النظامية');
+    }
+
+    // التحقق من عدم وجود مستخدمين مرتبطين بالدور
+    if (role.users && role.users.length > 0) {
+      throw new BadRequestException('لا يمكن حذف دور مرتبط بمستخدمين');
+    }
+
+    await this.roleModel.findByIdAndDelete(roleId);
+
+    // تسجيل في سجل المراجعة
+    await this.auditService.logAction({
+      action: 'DELETE_ROLE',
+      entityType: 'Role',
+      entityId: roleId,
+      userId: adminId,
+      details: { roleName: role.name },
+    });
+
+    return {
+      success: true,
+      message: 'تم حذف الدور بنجاح',
+    };
+  }
+
+  async getRoleById(roleId: string) {
+    const role = await this.roleModel.findById(roleId);
+    if (!role) {
+      throw new NotFoundException('الدور غير موجود');
+    }
+
+    return {
+      success: true,
+      data: {
+        _id: role._id.toString(),
+        name: role.name,
+        displayName: role.displayName,
+        description: role.description,
+        permissions: role.permissions,
+        isActive: role.isActive,
+        users: role.users,
+        createdAt: role.createdAt,
+        updatedAt: role.updatedAt,
+      } as any,
+    };
+  }
+
+  // ==================== Reports Export ====================
+
+  async exportReport(type: string, format: string, filters?: any) {
+    try {
+      let data: any[] = [];
+      let filename = `report_${type}_${new Date().toISOString().split('T')[0]}`;
+
+      // بناء البيانات حسب نوع التقرير
+      switch (type) {
+        case 'users':
+          data = await this.userModel.find(filters || {}).select('fullName email phone isActive createdAt');
+          break;
+
+        case 'drivers':
+          data = await this.driverModel.find(filters || {}).select('fullName email phone isAvailable isBanned createdAt');
+          break;
+
+        case 'orders':
+          data = await this.orderModel.find(filters || {}).populate('user', 'fullName').populate('driver', 'fullName');
+          break;
+
+        case 'vendors':
+          data = await this.vendorModel.find(filters || {}).select('name email phone isActive createdAt');
+          break;
+
+        case 'financial':
+          // تقرير مالي - يحتاج تنفيذ أكثر تفصيلاً
+          data = await this.getFinancialStats();
+          break;
+
+        default:
+          throw new BadRequestException(`نوع التقرير غير مدعوم: ${type}`);
+      }
+
+      // إنشاء محتوى الملف حسب التنسيق
+      if (format === 'csv') {
+        const csvContent = this.convertToCSV(data);
+        return {
+          success: true,
+          filename: `${filename}.csv`,
+          content: csvContent,
+          contentType: 'text/csv',
+        };
+      } else if (format === 'excel') {
+        const excelContent = this.convertToExcel(data);
+        return {
+          success: true,
+          filename: `${filename}.xlsx`,
+          content: excelContent,
+          contentType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        };
+      } else if (format === 'pdf') {
+        const pdfContent = await this.convertToPDF(data, type);
+        return {
+          success: true,
+          filename: `${filename}.pdf`,
+          content: pdfContent,
+          contentType: 'application/pdf',
+        };
+      } else {
+        throw new BadRequestException(`تنسيق الملف غير مدعوم: ${format}`);
+      }
+
+    } catch (error) {
+      throw new BadRequestException(`فشل في إنشاء التقرير: ${error.message}`);
+    }
+  }
+
+  private convertToCSV(data: any[]): string {
+    if (!data || data.length === 0) return '';
+
+    const headers = Object.keys(data[0]).join(',');
+    const rows = data.map(item =>
+      Object.values(item).map(value =>
+        typeof value === 'object' ? JSON.stringify(value) : String(value || '')
+      ).join(',')
+    );
+
+    return [headers, ...rows].join('\n');
+  }
+
+  private convertToExcel(data: any[]): Buffer {
+    // تنفيذ بسيط للـ Excel - يمكن استخدام مكتبة مثل exceljs لاحقاً
+    const csv = this.convertToCSV(data);
+    return Buffer.from(csv, 'utf-8');
+  }
+
+  private async convertToPDF(data: any[], type: string): Promise<Buffer> {
+    // تنفيذ بسيط للـ PDF - يمكن استخدام مكتبة مثل pdfkit لاحقاً
+    const content = `
+      تقرير ${type}
+      تاريخ الإنشاء: ${new Date().toLocaleDateString('ar-SA')}
+      عدد السجلات: ${data.length}
+
+      البيانات:
+      ${JSON.stringify(data, null, 2)}
+    `;
+
+    return Buffer.from(content, 'utf-8');
   }
 
   // ==================== Cache Management ====================

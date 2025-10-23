@@ -22,6 +22,12 @@ export class AdminArabonController {
     return this.service.list({}, q.cursor, q.limit);
   }
 
+  @Get(':id')
+  @ApiOperation({ summary: 'تفاصيل العنصر' })
+  getOne(@Param('id') id: string) {
+    return this.service.findOne(id);
+  }
+
   @Patch(':id/status')
   @ApiOperation({ summary: 'تغيير الحالة' })
   setStatus(@Param('id') id: string, @Body() body: { status: string }) {

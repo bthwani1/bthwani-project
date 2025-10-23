@@ -1,0 +1,22 @@
+# INDEX — Cursor Pack v2 (15 أقسام)
+
+> Generated: 2025-10-22 18:33:08Z UTC
+
+
+| # | الملف | المجال |
+|---|---|---|
+| 1 | S01-Executive-Plan.md | EXECUTIVE |
+| 2 | S02-Parity-Matrix.md | PARITY |
+| 3 | S03-WEB-APP.md | WEB-APP |
+| 4 | S04-USER-APP.md | USER-APP |
+| 5 | S05-VENDOR-APP.md | VENDOR-APP |
+| 6 | S06-RIDER-APP.md | RIDER-APP |
+| 7 | S07-ADMIN-DASH.md | ADMIN-DASH |
+| 8 | S08-PARTNER-PORTAL.md | PARTNER-PORTAL |
+| 9 | S09-SUPPORT-CRM.md | SUPPORT-CRM |
+| 10 | S10-PUBLIC-API.md | PUBLIC-API |
+| 11 | S11-INTERNAL-TOOLS.md | INTERNAL-TOOLS |
+| 12 | S12-DATA-BI.md | DATA/BI |
+| 13 | S13-MOBILE-APPS.md | MOBILE (Android/iOS) |
+| 14 | S14-PAYMENTS-NOTIFICATIONS.md | PAY+NOTIF |
+| 15 | S15-SECURITY-INFRA-RELEASE-DR.md | SEC+INFRA+REL+DR |

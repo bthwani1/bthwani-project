@@ -94,7 +94,6 @@ export { FinanceApi } from './FinanceApi';
 export { CartApi } from './CartApi';
 export { UtilityApi } from './UtilityApi';
 export { AkhdimniApi } from './AkhdimniApi';
-export { ErrandsApi } from './ErrandsApi';
 export { PromotionApi } from './PromotionApi';
 export { MerchantApi } from './MerchantApi';
 export { ContentApi } from './ContentApi';

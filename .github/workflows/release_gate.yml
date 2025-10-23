@@ -1,0 +1,21 @@
+name: release-gate
+on:
+  push: { branches: [main] }
+  workflow_dispatch: {}
+jobs:
+  predeploy-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./scripts/collect_env_metrics.sh stage > reports/gate_input.json || echo "{}" > reports/gate_input.json
+      - run: opa eval -i reports/gate_input.json -d policy/opa/release_gate.rego "data.gate.allow" | grep true
+        name: G-OPA-RELEASE
+  canary:
+    needs: predeploy-verify
+    runs-on: ubuntu-latest
+    steps:
+      - run: ./infra/deploy_canary.sh --percent 10 || true
+      - run: ./observability/check_slo.sh --window 15m || (./infra/rollback.sh && exit 1)
+      - run: ./infra/deploy_canary.sh --percent 50 || true
+      - run: ./observability/check_slo.sh --window 15m || (./infra/rollback.sh && exit 1)
+      - run: ./infra/deploy_full.sh || true

@@ -6,6 +6,7 @@ import {
   Delete,
   Body,
   Param,
+  Query,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { Auth } from '../../common/decorators/auth.decorator';
@@ -19,49 +20,52 @@ import { AuthType } from '../../common/guards/unified-auth.guard';
 @Controller({ path: 'admin', version: ['1', '2'] })
 @ApiBearerAuth()
 export class AdminCMSController {
-  // ==================== Onboarding Slides ====================
+  // ==================== Pages ====================
 
   @Auth(AuthType.JWT)
-  @Post('onboarding-slides')
-  @ApiResponse({ status: 201, description: 'Created' })
-  @ApiOperation({ summary: 'إضافة شريحة أونبوردينج' })
-  async createOnboardingSlide(@Body() body: any) {
-    // TODO: Implement create onboarding slide logic
+  @Get('content/pages')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiOperation({ summary: 'جلب كل الصفحات (admin)' })
+  async getAllPages(@Query('type') type?: string) {
+    // TODO: Implement get all pages logic
     return {
       success: true,
-      message: 'تم إضافة الشريحة بنجاح',
+      data: [],
+      message: 'قائمة الصفحات'
+    };
+  }
+
+  @Auth(AuthType.JWT)
+  @Get('content/pages/:id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 404, description: 'Not found' })
+  @ApiOperation({ summary: 'جلب صفحة محددة (admin)' })
+  async getPage(@Param('id') id: string) {
+    // TODO: Implement get page by id logic
+    return {
+      success: true,
+      data: { id, title: 'Sample Page', content: 'Sample content' },
+      message: 'تم العثور على الصفحة'
+    };
+  }
+
+  @Auth(AuthType.JWT)
+  @Post('content/pages')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiOperation({ summary: 'إنشاء صفحة جديدة' })
+  async createPage(@Body() body: any) {
+    // TODO: Implement create page logic
+    return {
+      success: true,
+      message: 'تم إنشاء الصفحة بنجاح',
       data: { id: 'temp-id', ...body },
     };
   }
 
   @Auth(AuthType.JWT)
-  @Put('onboarding-slides/:id')
-  @ApiParam({ name: 'id', type: String })
-  @ApiResponse({ status: 200, description: 'Updated' })
-  @ApiOperation({ summary: 'تحديث شريحة أونبوردينج' })
-  async updateOnboardingSlide(@Param('id') id: string, @Body() body: any) {
-    // TODO: Implement update onboarding slide logic
-    return {
-      success: true,
-      message: 'تم تحديث الشريحة بنجاح',
-      data: { id, ...body },
-    };
-  }
-
-  @Auth(AuthType.JWT)
-  @Delete('onboarding-slides/:id')
-  @ApiParam({ name: 'id', type: String })
-  @ApiResponse({ status: 200, description: 'Deleted' })
-  @ApiOperation({ summary: 'حذف شريحة أونبوردينج' })
-  async deleteOnboardingSlide(@Param('id') id: string) {
-    // TODO: Implement delete onboarding slide logic
-    return { success: true, message: 'تم الحذف بنجاح' };
-  }
-
-  // ==================== Pages ====================
-
-  @Auth(AuthType.JWT)
-  @Put('pages/:id')
+  @Put('content/pages/:id')
   @ApiParam({ name: 'id', type: String })
   @ApiResponse({ status: 200, description: 'Updated' })
   @ApiOperation({ summary: 'تحديث صفحة' })
@@ -75,7 +79,7 @@ export class AdminCMSController {
   }
 
   @Auth(AuthType.JWT)
-  @Delete('pages/:id')
+  @Delete('content/pages/:id')
   @ApiParam({ name: 'id', type: String })
   @ApiResponse({ status: 200, description: 'Deleted' })
   @ApiOperation({ summary: 'حذف صفحة' })
@@ -87,7 +91,7 @@ export class AdminCMSController {
   // ==================== Strings/Translations ====================
 
   @Auth(AuthType.JWT)
-  @Post('strings')
+  @Post('content/strings')
   @ApiResponse({ status: 201, description: 'Created' })
   @ApiOperation({ summary: 'إضافة نص/ترجمة' })
   async createString(@Body() body: any) {
@@ -100,7 +104,7 @@ export class AdminCMSController {
   }
 
   @Auth(AuthType.JWT)
-  @Put('strings/:id')
+  @Put('content/strings/:id')
   @ApiParam({ name: 'id', type: String })
   @ApiResponse({ status: 200, description: 'Updated' })
   @ApiOperation({ summary: 'تحديث نص/ترجمة' })
@@ -114,7 +118,7 @@ export class AdminCMSController {
   }
 
   @Auth(AuthType.JWT)
-  @Delete('strings/:id')
+  @Delete('content/strings/:id')
   @ApiParam({ name: 'id', type: String })
   @ApiResponse({ status: 200, description: 'Deleted' })
   @ApiOperation({ summary: 'حذف نص/ترجمة' })
@@ -126,7 +130,7 @@ export class AdminCMSController {
   // ==================== Home Layouts ====================
 
   @Auth(AuthType.JWT)
-  @Post('home-layouts')
+  @Post('content/home-layouts')
   @ApiResponse({ status: 201, description: 'Created' })
   @ApiOperation({ summary: 'إضافة تخطيط للصفحة الرئيسية' })
   async createHomeLayout(@Body() body: any) {
@@ -139,7 +143,7 @@ export class AdminCMSController {
   }
 
   @Auth(AuthType.JWT)
-  @Put('home-layouts/:id')
+  @Put('content/home-layouts/:id')
   @ApiParam({ name: 'id', type: String })
   @ApiResponse({ status: 200, description: 'Updated' })
   @ApiOperation({ summary: 'تحديث تخطيط الصفحة الرئيسية' })
@@ -153,7 +157,7 @@ export class AdminCMSController {
   }
 
   @Auth(AuthType.JWT)
-  @Delete('home-layouts/:id')
+  @Delete('content/home-layouts/:id')
   @ApiParam({ name: 'id', type: String })
   @ApiResponse({ status: 200, description: 'Deleted' })
   @ApiOperation({ summary: 'حذف تخطيط الصفحة الرئيسية' })

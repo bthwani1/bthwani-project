@@ -11,7 +11,6 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags, ApiOperation, ApiResponse, ApiParam, ApiQuery, ApiBody } from '@nestjs/swagger';
 import { ContentService } from './services/content.service';
-import { CreateBannerDto, UpdateBannerDto } from './dto/create-banner.dto';
 import {
   CreateStoreSectionDto,
   UpdateStoreSectionDto,
@@ -29,81 +28,6 @@ const Roles = (...roles: string[]) => SetMetadata('roles', roles);
 @Controller('content')
 export class ContentController {
   constructor(private readonly contentService: ContentService) {}
-
-  // ==================== Banner Endpoints ====================
-
-  @Get('banners')
-  @ApiResponse({ status: 200, description: 'Success' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @ApiOperation({ summary: 'الحصول على البانرات النشطة (public)' })
-  async getActiveBanners(@Query('placement') placement?: string) {
-    return this.contentService.findActiveBanners(placement);
-  }
-
-  @Post('banners/:id/click')
-  @ApiParam({ name: 'id', type: String })
-  @ApiResponse({ status: 201, description: 'Created' })
-  @ApiResponse({ status: 400, description: 'Bad request' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @ApiOperation({ summary: 'تسجيل نقرة على بانر' })
-  async recordBannerClick(@Param('id') id: string) {
-    await this.contentService.recordBannerClick(id);
-    return { message: 'تم تسجيل النقرة' };
-  }
-
-  @Post('banners')
-  @ApiResponse({ status: 201, description: 'Created' })
-  @ApiResponse({ status: 400, description: 'Bad request' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @Auth(AuthType.JWT)
-  @Roles('admin', 'superadmin')
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'إنشاء بانر جديد' })
-  async createBanner(
-    @Body() dto: CreateBannerDto,
-    @CurrentUser('id') userId: string,
-  ) {
-    return this.contentService.createBanner(dto, userId);
-  }
-
-  @Get('admin/banners')
-  @ApiResponse({ status: 200, description: 'Success' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @Auth(AuthType.JWT)
-  @Roles('admin', 'superadmin')
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'كل البانرات (admin)' })
-  async getAllBanners() {
-    return this.contentService.findAllBanners();
-  }
-
-  @Patch('banners/:id')
-  @ApiParam({ name: 'id', type: String })
-  @ApiResponse({ status: 200, description: 'Updated' })
-  @ApiResponse({ status: 404, description: 'Not found' })
-  @ApiResponse({ status: 400, description: 'Bad request' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @Auth(AuthType.JWT)
-  @Roles('admin', 'superadmin')
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'تحديث بانر' })
-  async updateBanner(@Param('id') id: string, @Body() dto: UpdateBannerDto) {
-    return this.contentService.updateBanner(id, dto);
-  }
-
-  @Delete('banners/:id')
-  @ApiParam({ name: 'id', type: String })
-  @ApiResponse({ status: 200, description: 'Deleted' })
-  @ApiResponse({ status: 404, description: 'Not found' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @Auth(AuthType.JWT)
-  @Roles('admin', 'superadmin')
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'حذف بانر' })
-  async deleteBanner(@Param('id') id: string) {
-    await this.contentService.deleteBanner(id);
-    return { message: 'تم حذف البانر بنجاح' };
-  }
 
   // ==================== Store Section Endpoints ====================
 
@@ -239,32 +163,6 @@ export class ContentController {
     return this.contentService.getCMSPageBySlug(slug);
   }
 
-  @Post('admin/pages')
-  @ApiBody({ schema: { type: 'object', properties: { title: { type: 'string' }, slug: { type: 'string' }, content: { type: 'string' } } } })
-  @ApiResponse({ status: 201, description: 'Created' })
-  @ApiResponse({ status: 400, description: 'Bad request' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @Auth(AuthType.JWT)
-  @Roles('admin', 'superadmin')
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'إنشاء صفحة CMS' })
-  async createCMSPage(@Body() body: any, @CurrentUser('id') adminId: string) {
-    return this.contentService.createCMSPage(body, adminId);
-  }
-
-  @Patch('admin/pages/:id')
-  @ApiParam({ name: 'id', type: String })
-  @ApiResponse({ status: 200, description: 'Updated' })
-  @ApiResponse({ status: 404, description: 'Not found' })
-  @ApiResponse({ status: 400, description: 'Bad request' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @Auth(AuthType.JWT)
-  @Roles('admin', 'superadmin')
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'تحديث صفحة CMS' })
-  async updateCMSPage(@Param('id') id: string, @Body() body: any) {
-    return this.contentService.updateCMSPage(id, body);
-  }
 
   // ==================== App Settings ====================
 

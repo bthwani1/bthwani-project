@@ -1,0 +1,36 @@
+{
+  "generated_at": "2025-10-22 18:22:24Z",
+  "metrics": {
+    "fe_calls": 301,
+    "be_endpoints": 788,
+    "fe_only": 171,
+    "be_only": 614,
+    "duplicates": 63
+  },
+  "counts": {
+    "fe_only_listed": 0,
+    "be_only_listed": 0,
+    "duplicates_listed": 0,
+    "all_listed": 851
+  },
+  "files": [
+    "S01-Executive-Plan.md",
+    "S02-Inventory-Traceability.md",
+    "S03-FE-Orphans.md",
+    "S04-BE-Orphans.md",
+    "S05-API-Duplicates.md",
+    "S06-API-Contracts.md",
+    "S07-Auth-Identity.md",
+    "S08-Headers-Cookies-Egress.md",
+    "S09-Perf-WeakNet.md",
+    "S10-A11y-i18n.md",
+    "S11-Payments-Recon.md",
+    "S12-Notifications.md",
+    "S13-Data-Privacy.md",
+    "S14-Infra-Supply.md",
+    "S15-QA-Release-DR-Obs-FinOps.md",
+    "RUNLIST.md",
+    "owners_matrix.csv",
+    "summary_of_findings.csv"
+  ]
+}

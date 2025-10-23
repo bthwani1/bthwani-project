@@ -1057,6 +1057,18 @@ export const ADMIN_ENDPOINTS_BY_MODULE: Record<string, AdminEndpointModule> = {
         icon: 'edit',
       },
       {
+        id: 'arabon-admin-get-one',
+        method: 'GET',
+        path: 'arabon/:id',
+        fullPath: '/admin/arabon/:id',
+        summary: 'جلب تفاصيل طلب عربون',
+        module: 'arabon',
+        handler: 'getOne',
+        roles: ['admin', 'superadmin'],
+        category: 'Arabon',
+        icon: 'view',
+      },
+      {
         id: 'arabon-admin-delete',
         method: 'DELETE',
         path: 'arabon/:id',

@@ -60,6 +60,7 @@ import {
   BackupRecord,
   BackupRecordSchema,
 } from './entities/backup-record.entity';
+import { Role, RoleSchema } from './entities/role.entity';
 import {
   DriverShift,
   DriverShiftSchema,
@@ -103,6 +104,7 @@ import { PaymentsModule } from '../payments/payments.module';
       { name: FeatureFlag.name, schema: FeatureFlagSchema },
       { name: LoginAttempt.name, schema: LoginAttemptSchema },
       { name: BackupRecord.name, schema: BackupRecordSchema },
+      { name: Role.name, schema: RoleSchema },
       { name: DriverShift.name, schema: DriverShiftSchema },
       { name: Attendance.name, schema: AttendanceSchema },
       { name: LeaveRequest.name, schema: LeaveRequestSchema },

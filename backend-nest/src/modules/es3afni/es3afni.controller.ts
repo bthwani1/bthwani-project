@@ -1,5 +1,5 @@
-import { Controller, Get, Post, Body, Param, Query, Patch, Delete, HttpStatus } from '@nestjs/common';
-import { 
+import { Controller, Get, Post, Body, Param, Query, Patch, Delete, HttpStatus, UseGuards } from '@nestjs/common';
+import {
   ApiTags,
   ApiOperation,
   ApiResponse,
@@ -10,6 +10,7 @@ import {
   ApiConsumes,
   ApiProduces
 } from '@nestjs/swagger';
+import { UnifiedAuthGuard } from '../../common/guards/unified-auth.guard';
 import { Es3afniService } from './es3afni.service';
 import CreateEs3afniDto from './dto/create-es3afni.dto';
 import UpdateEs3afniDto from './dto/update-es3afni.dto';
@@ -18,6 +19,7 @@ import UpdateEs3afniDto from './dto/update-es3afni.dto';
 @ApiBearerAuth()
 @ApiConsumes('application/json')
 @ApiProduces('application/json')
+@UseGuards(UnifiedAuthGuard)
 @Controller('es3afni')
 export class Es3afniController {
   constructor(private readonly service: Es3afniService) {}
@@ -99,5 +101,40 @@ export class Es3afniController {
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'غير مخول' })
   remove(@Param('id') id: string) {
     return this.service.remove(id);
+  }
+
+  @Get('my')
+  @ApiOperation({
+    summary: 'بلاغاتي الخاصة',
+    description: 'استرجاع بلاغات تبرع بالدم التي أنشأتها'
+  })
+  @ApiQuery({ name: 'cursor', required: false, description: 'مؤشر الصفحة التالية', example: '507f1f77bcf86cd799439012' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'تم الاسترجاع بنجاح' })
+  @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'غير مخول' })
+  getMy(@Query('cursor') cursor?: string) {
+    // TODO: تنفيذ منطق استرجاع البلاغات الخاصة بالمستخدم الحالي
+    return this.service.findAll({ cursor });
+  }
+
+  @Get('search')
+  @ApiOperation({
+    summary: 'البحث في البلاغات',
+    description: 'البحث في بلاغات تبرع بالدم بناءً على استعلام النص'
+  })
+  @ApiQuery({ name: 'q', description: 'استعلام البحث', example: 'فصيلة O+' })
+  @ApiQuery({ name: 'bloodType', required: false, description: 'فلترة حسب فصيلة الدم', example: 'O+' })
+  @ApiQuery({ name: 'status', required: false, description: 'فلترة حسب الحالة', enum: ['draft','pending','confirmed','completed','cancelled'] })
+  @ApiQuery({ name: 'cursor', required: false, description: 'مؤشر الصفحة التالية', example: '507f1f77bcf86cd799439012' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'تم البحث بنجاح' })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'استعلام البحث مطلوب' })
+  @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'غير مخول' })
+  search(
+    @Query('q') q: string,
+    @Query('bloodType') bloodType?: string,
+    @Query('status') status?: string,
+    @Query('cursor') cursor?: string
+  ) {
+    // TODO: تنفيذ منطق البحث في البلاغات
+    return this.service.findAll({ cursor });
   }
 }

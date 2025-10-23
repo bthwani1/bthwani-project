@@ -1,0 +1,23 @@
+rules:
+  - id: no-hardcoded-secrets
+    message: "Hardcoded secret"
+    severity: ERROR
+    languages: [javascript,typescript,python,go,java]
+    patterns:
+      - pattern: $X = "<SECRET>"
+      - pattern-not: $X = process.env.$ENV
+  - id: jwt-no-alg-none
+    message: "JWT must disallow alg=none"
+    severity: ERROR
+    languages: [javascript,typescript]
+    pattern: jwt.verify($T, $K, { algorithms: [] })
+  - id: ssrf-user-url
+    message: "Potential SSRF — validate egress"
+    severity: ERROR
+    languages: [javascript,typescript,python,go]
+    patterns:
+      - pattern: |
+          fetch($URL, ...)
+      - metavariable-pattern:
+          metavariable: $URL
+          pattern: $X

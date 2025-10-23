@@ -1,5 +1,5 @@
-import { Controller, Get, Post, Body, Param, Query, Patch, Delete, HttpStatus } from '@nestjs/common';
-import { 
+import { Controller, Get, Post, Body, Param, Query, Patch, Delete, HttpStatus, UseGuards } from '@nestjs/common';
+import {
   ApiTags,
   ApiOperation,
   ApiResponse,
@@ -10,6 +10,7 @@ import {
   ApiConsumes,
   ApiProduces
 } from '@nestjs/swagger';
+import { UnifiedAuthGuard } from '../../common/guards/unified-auth.guard';
 import { ArabonService } from './arabon.service';
 import CreateArabonDto from './dto/create-arabon.dto';
 import UpdateArabonDto from './dto/update-arabon.dto';
@@ -18,6 +19,7 @@ import UpdateArabonDto from './dto/update-arabon.dto';
 @ApiBearerAuth()
 @ApiConsumes('application/json')
 @ApiProduces('application/json')
+@UseGuards(UnifiedAuthGuard)
 @Controller('arabon')
 export class ArabonController {
   constructor(private readonly service: ArabonService) {}
@@ -105,5 +107,38 @@ export class ArabonController {
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'غير مخول' })
   remove(@Param('id') id: string) {
     return this.service.remove(id);
+  }
+
+  @Get('my')
+  @ApiOperation({
+    summary: 'العربونات الخاصة بي',
+    description: 'استرجاع العربونات التي يملكها المستخدم الحالي'
+  })
+  @ApiQuery({ name: 'cursor', required: false, description: 'مؤشر الصفحة التالية', example: '507f1f77bcf86cd799439012' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'تم الاسترجاع بنجاح' })
+  @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'غير مخول' })
+  getMy(@Query('cursor') cursor?: string) {
+    // TODO: تنفيذ منطق استرجاع العربونات الخاصة بالمستخدم الحالي
+    return this.service.findAll({ cursor });
+  }
+
+  @Get('search')
+  @ApiOperation({
+    summary: 'البحث في العربونات',
+    description: 'البحث في العربونات بناءً على استعلام النص'
+  })
+  @ApiQuery({ name: 'q', description: 'استعلام البحث', example: 'عرض سياحي' })
+  @ApiQuery({ name: 'status', required: false, description: 'فلترة حسب الحالة', enum: ['draft','pending','confirmed','completed','cancelled'] })
+  @ApiQuery({ name: 'cursor', required: false, description: 'مؤشر الصفحة التالية', example: '507f1f77bcf86cd799439012' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'تم البحث بنجاح' })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'استعلام البحث مطلوب' })
+  @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'غير مخول' })
+  search(
+    @Query('q') q: string,
+    @Query('status') status?: string,
+    @Query('cursor') cursor?: string
+  ) {
+    // TODO: تنفيذ منطق البحث في العربونات
+    return this.service.findAll({ cursor });
   }
 }

@@ -1,6 +1,0 @@
-method,path,file,line
-POST,/support/tickets,rider-app\src\api\support.ts,31
-GET,/support/tickets,rider-app\src\api\support.ts,36
-GET,/support/tickets/{id},rider-app\src\api\support.ts,41
-PATCH,/support/tickets/{id}/messages,rider-app\src\api\support.ts,46
-PATCH,/support/tickets/{id}/rate,rider-app\src\api\support.ts,51

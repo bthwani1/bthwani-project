@@ -24,6 +24,12 @@ export * from './users-advanced.dto';
 export * from './reports.dto';
 export * from './reports-advanced.dto';
 
+// Export DTOs
+export * from './export.dto';
+
+// Roles DTOs
+export * from './roles.dto';
+
 // Notifications DTOs
 export * from './notifications.dto';
 

@@ -312,9 +312,9 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
     // ==================== CMS SYSTEM ====================
     group(" نظام إدارة المحتوى", <SettingsIcon />, [
       link("/admin/cms/onboarding", "تسجيل المستخدمين الجدد", <SettingsIcon />),
-      // link("/admin/cms/pages", "إدارة الصفحات", <SettingsIcon />),
-      // link("/admin/cms/strings", "نصوص متعددة اللغات", <SettingsIcon />),
-      // link("/admin/cms/home-layout", "تخطيط الصفحة الرئيسية", <SettingsIcon />),
+      link("/admin/cms/pages", "إدارة الصفحات", <SettingsIcon />),
+      link("/admin/cms/strings", "نصوص متعددة اللغات", <SettingsIcon />),
+      link("/admin/cms/home-layout", "تخطيط الصفحة الرئيسية", <SettingsIcon />),
     ]),
 
     // // ==================== ONBOARDING ====================

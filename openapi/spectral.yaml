@@ -1,0 +1,28 @@
+extends:
+  - "spectral:oas"
+rules:
+  path-keys-unique:
+    description: "METHOD+normalized_path must be unique"
+    given: "$.paths"
+    then: { function: falsy }
+    severity: error
+  http-status-taxonomy:
+    description: "Only allowed status codes"
+    given: "$.paths..responses.*~"
+    then:
+      function: pattern
+      functionOptions: { match: "^(200|201|202|204|400|401|403|404|409|410|415|422|429|5\\d\\d)$" }
+    severity: error
+  idempotency-header-required:
+    description: "Transactional POST must accept Idempotency-Key"
+    given: "$.paths[?(@property.match(/payments|checkout|orders/))].post.parameters"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          contains:
+            type: object
+            properties: { name: { const: "Idempotency-Key" }, in: { const: "header" } }
+            required: ["name","in"]
+    severity: error

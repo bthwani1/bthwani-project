@@ -1,0 +1,120 @@
+# جرد المشروع (Inventory)
+وقت التحليل: 2025-10-22 17:03:00Z UTC
+
+إجمالي الملفات النصية: **2312**
+
+## توزيع حسب الامتداد
+- `.ts`: **1043**
+- `.tsx`: **622**
+- `.md`: **389**
+- `.json`: **128**
+- `.js`: **86**
+- `.yml`: **19**
+- `.sh`: **13**
+- `.mjs`: **6**
+- `(none)`: **3**
+- `.yaml`: **2**
+- `.py`: **1**
+
+> أول 100 ملف بالأحجام:
+
+- bthwani-project-main/sbom-vendor-app.json — 2637811 bytes
+- bthwani-project-main/sbom-rider-app.json — 2482827 bytes
+- bthwani-project-main/sbom-app-user.json — 2464568 bytes
+- bthwani-project-main/sbom-field-marketers.json — 2132468 bytes
+- bthwani-project-main/sbom-admin-dashboard.json — 1988808 bytes
+- bthwani-project-main/sbom-backend-nest.json — 1752176 bytes
+- bthwani-project-main/sbom-backend.json — 1752176 bytes
+- bthwani-project-main/security/sbom-backend.json — 1752176 bytes
+- bthwani-project-main/backend-nest/reports/sbom-cyclonedx.json — 1743678 bytes
+- bthwani-project-main/sbom-bthwani-web.json — 1545155 bytes
+- bthwani-project-main/vendor-app/package-lock.json — 664482 bytes
+- bthwani-project-main/rider-app/package-lock.json — 629002 bytes
+- bthwani-project-main/app-user/package-lock.json — 605066 bytes
+- bthwani-project-main/admin-dashboard/package-lock.json — 574224 bytes
+- bthwani-project-main/field-marketers/package-lock.json — 508961 bytes
+- bthwani-project-main/backend-nest/package-lock.json — 504093 bytes
+- bthwani-project-main/backend-nest/reports/openapi.json — 498650 bytes
+- bthwani-project-main/backend-nest/reports/openapi.normalized.json — 497087 bytes
+- bthwani-project-main/bthwani-web/package-lock.json — 481953 bytes
+- bthwani-project-main/backend-nest/reports/be_documentation_fixes.json — 406517 bytes
+- bthwani-project-main/backend-nest/reports/openapi.yaml — 331139 bytes
+- bthwani-project-main/backend-nest/reports/parity_report.json — 303658 bytes
+- bthwani-project-main/backend-nest/reports/be_inventory.json — 302433 bytes
+- bthwani-project-main/backend-nest/reports/be_documentation_fixes.md — 247619 bytes
+- bthwani-project-main/package-lock.json — 128053 bytes
+- bthwani-project-main/backend-nest/reports/asvs_coverage.json — 79699 bytes
+- bthwani-project-main/فحص نهائي/new/btw_cursor_action_pack.json — 72626 bytes
+- bthwani-project-main/admin-dashboard/public/data/admin-endpoints.json — 66226 bytes
+- bthwani-project-main/backend-nest/docs/admin-endpoints.json — 66226 bytes
+- bthwani-project-main/backend-nest/docs/SECURITY_AUDIT_REPORT.md — 60715 bytes
+- bthwani-project-main/backend-nest/reports/fe_orphans_fixes.json — 58182 bytes
+- bthwani-project-main/admin-dashboard/src/config/admin-endpoints.ts — 56869 bytes
+- bthwani-project-main/admin-dashboard/src/landing/pages/PrivacyPage.tsx — 55306 bytes
+- bthwani-project-main/artifacts/orphans_match_analysis.json — 55300 bytes
+- bthwani-project-main/bthwani-web/src/pages/favorites/Favorites.tsx — 52898 bytes
+- bthwani-project-main/bthwani-web/src/pages/orders/OrderDetails.tsx — 47903 bytes
+- bthwani-project-main/app-user/src/screens/delivery/AkhdimniScreen.tsx — 45453 bytes
+- bthwani-project-main/bthwani-web/src/pages/payment/Payment.tsx — 43814 bytes
+- bthwani-project-main/bthwani-web/src/pages/notifications/Notifications.tsx — 43611 bytes
+- bthwani-project-main/backend-nest/reports/fe_orphans_fixes.md — 43559 bytes
+- bthwani-project-main/backend-nest/reports/compliance_index.json — 40879 bytes
+- bthwani-project-main/admin-dashboard/src/pages/admin/vendors/VendorsManagement.tsx — 40010 bytes
+- bthwani-project-main/bthwani-web/src/pages/checkout/Checkout.tsx — 39507 bytes
+- bthwani-project-main/admin-dashboard/src/pages/admin/notifications/NotificationsCenter.tsx — 38547 bytes
+- bthwani-project-main/backend-nest/src/modules/admin/admin.service.ts — 37890 bytes
+- bthwani-project-main/bthwani-web/src/pages/delivery/StoreDetails.tsx — 37333 bytes
+- bthwani-project-main/app-user/src/screens/delivery/MyOrdersScreen.tsx — 35965 bytes
+- bthwani-project-main/bthwani-api-collection.json — 35584 bytes
+- bthwani-project-main/bthwani-web/src/pages/search/Search.tsx — 34018 bytes
+- bthwani-project-main/admin-dashboard/src/pages/money/JournalVoucherPage.tsx — 32925 bytes
+- bthwani-project-main/admin-dashboard/src/pages/admin/DocumentsManagementPage.tsx — 32648 bytes
+- bthwani-project-main/backend-nest/src/modules/marketer/marketer.service.ts — 31826 bytes
+- bthwani-project-main/فحص نهائي/new/btw_audit_gap_report.md — 31786 bytes
+- bthwani-project-main/admin-dashboard/src/pages/admin/er/PayrollPage.tsx — 31309 bytes
+- bthwani-project-main/backend-nest/docs/admin-endpoints.md — 31308 bytes
+- bthwani-project-main/docs/flows/cart-addition-workflows.md — 30510 bytes
+- bthwani-project-main/docs/flows/order-lifecycle-complete.md — 30415 bytes
+- bthwani-project-main/docs/database-specification/01-data-dictionary.md — 30210 bytes
+- bthwani-project-main/app-user/src/screens/Auth/RegisterScreen.tsx — 29763 bytes
+- bthwani-project-main/docs/monitoring/02-error-catalog-taxonomy.md — 29167 bytes
+- bthwani-project-main/bthwani-web/src/pages/delivery/ProductDetails.tsx — 29129 bytes
+- bthwani-project-main/docs/flows/reports-analytics-system.md — 28781 bytes
+- bthwani-project-main/bthwani-go-living/Go Living/DASHBOARD_SYSTEM_DOCUMENTATION.md — 28570 bytes
+- bthwani-project-main/app-user/src/screens/delivery/OrderDetailsScreen.tsx — 28555 bytes
+- bthwani-project-main/bthwani-web/src/pages/delivery/CategoryDetailsScreen.tsx — 28535 bytes
+- bthwani-project-main/backend-nest/src/modules/order/order.service.ts — 28354 bytes
+- bthwani-project-main/admin-dashboard/src/pages/admin/FinanceSettlementsPage.tsx — 28119 bytes
+- bthwani-project-main/admin-dashboard/src/pages/admin/VendorPerformanceTrackingPage.tsx — 27989 bytes
+- bthwani-project-main/bthwani-web/src/pages/auth/Register.tsx — 27616 bytes
+- bthwani-project-main/backend-nest/src/modules/admin/admin.controller.ts — 27552 bytes
+- bthwani-project-main/admin-dashboard/src/pages/admin/CouponsManagementPage.tsx — 27315 bytes
+- bthwani-project-main/docs/dependencies-sbom/01-dependencies-sbom-licensing-compliance.md — 27315 bytes
+- bthwani-project-main/app-user/src/screens/delivery/InvoiceScreen.tsx — 27221 bytes
+- bthwani-project-main/vendor-app/src/screens/VendorAccountStatementScreen.tsx — 27155 bytes
+- bthwani-project-main/MARKETER_ENDPOINTS_CLOSURE.md — 27111 bytes
+- bthwani-project-main/admin-dashboard/src/pages/admin/SubscriptionsManagementPage.tsx — 26738 bytes
+- bthwani-project-main/app-user/src/navigation/index.tsx — 26727 bytes
+- bthwani-project-main/docs/README.md — 26475 bytes
+- bthwani-project-main/vendor-app/src/screens/SettingsScreen.tsx — 26404 bytes
+- bthwani-project-main/admin-dashboard/src/App.tsx — 26363 bytes
+- bthwani-project-main/admin-dashboard/src/pages/admin/er/AssetsPage.tsx — 26212 bytes
+- bthwani-project-main/bthwani-web/src/pages/delivery/GroceryScreen.tsx — 26093 bytes
+- bthwani-project-main/docs/database-specification/04-migration-seed-strategy.md — 26084 bytes
+- bthwani-project-main/bthwani-web/src/pages/delivery/Stores.tsx — 26052 bytes
+- bthwani-project-main/docs/privacy-compliance/01-privacy-data-protection-annex.md — 25894 bytes
+- bthwani-project-main/admin-dashboard/src/pages/delivery/DeliveryCategoriesPage.tsx — 25877 bytes
+- bthwani-project-main/admin-dashboard/src/pages/admin/SettlementsManagementPage.tsx — 25861 bytes
+- bthwani-project-main/backend-nest/tools/audit/store_backend_map.ts — 25844 bytes
+- bthwani-project-main/admin-dashboard/src/pages/admin/UnifiedReportsPage.tsx — 25816 bytes
+- bthwani-project-main/admin-dashboard/src/pages/admin/PayoutsManagementPage.tsx — 25579 bytes
+- bthwani-project-main/docs/flows/rating-review-system.md — 25552 bytes
+- bthwani-project-main/docs/database-specification/05-staging-deployment-checklist.md — 25437 bytes
+- bthwani-project-main/backend-nest/tools/audit/dr_probe.ts — 25414 bytes
+- bthwani-project-main/field-marketers/src/screens/onboarding/OnboardingWizardScreen.tsx — 25397 bytes
+- bthwani-project-main/backend-nest/docs/CQRS_PATTERN_IMPLEMENTATION.md — 25255 bytes
+- bthwani-project-main/backend-nest/tools/audit/throttling-check.ts — 25072 bytes
+- bthwani-project-main/backend-nest/docs/CODE_REFACTORING_ANALYSIS.md — 24955 bytes
+- bthwani-project-main/admin-dashboard/src/pages/admin/AdminDriversPage.tsx — 24951 bytes
+- bthwani-project-main/admin-dashboard/src/pages/admin/TransactionTrackingPage.tsx — 24631 bytes
+- bthwani-project-main/docs/development/04-contributing-guide-pr-templates.md — 24614 bytes

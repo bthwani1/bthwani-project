@@ -1,0 +1,1199 @@
+{
+  "generated_at": "2025-10-22 18:33:08Z",
+  "metrics": {
+    "fe_calls": 301,
+    "be_endpoints": 788,
+    "fe_only": 171,
+    "be_only": 614,
+    "duplicates": 63
+  },
+  "segments": [
+    {
+      "segment": "ADMIN",
+      "total": 156,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "DRIVERS",
+      "total": 39,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "FINANCE",
+      "total": 35,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ANALYTICS",
+      "total": 30,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "PARAM",
+      "total": 29,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "CONTENT",
+      "total": 25,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "MERCHANTS",
+      "total": 25,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "V2",
+      "total": 23,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "API",
+      "total": 22,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "MARKETER",
+      "total": 22,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "UTILITY",
+      "total": 21,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "NOTIFICATIONS",
+      "total": 20,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "DELIVERY",
+      "total": 16,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "VENDORS",
+      "total": 14,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "LEGAL",
+      "total": 11,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "SUPPORT",
+      "total": 11,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "MERCHANT",
+      "total": 10,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "PROMOTIONS",
+      "total": 10,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ERRANDS",
+      "total": 9,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "KENZ",
+      "total": 9,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "AUTH",
+      "total": 8,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ES3AFNI",
+      "total": 8,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "HEALTH",
+      "total": 8,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ONBOARDING",
+      "total": 8,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "WALLET",
+      "total": 8,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ACCOUNTS",
+      "total": 7,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "AMANI",
+      "total": 7,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ARABON",
+      "total": 7,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "KAWADER",
+      "total": 7,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "MAAROUF",
+      "total": 7,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "SHEIN",
+      "total": 7,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "CONSENT",
+      "total": 6,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ORDERS-CQRS",
+      "total": 6,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "REPORTS",
+      "total": 6,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "SHIFTS",
+      "total": 6,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ADDRESSES",
+      "total": 5,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "DASHBOARD",
+      "total": 5,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "EMPLOYEES",
+      "total": 5,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "PIN",
+      "total": 5,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "USERS",
+      "total": 5,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ADDRESS",
+      "total": 4,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "AKHDIMNI",
+      "total": 4,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "COUPONS",
+      "total": 4,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "DLQ",
+      "total": 4,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "DOCUMENTS",
+      "total": 4,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "PAYROLL",
+      "total": 4,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "TOPUP",
+      "total": 4,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "VENDOR",
+      "total": 4,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "WEBHOOKS",
+      "total": 4,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "WITHDRAW",
+      "total": 4,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ATTENDANCE",
+      "total": 3,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "CART",
+      "total": 3,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "DRIVER",
+      "total": 3,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "HOME-LAYOUTS",
+      "total": 3,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ITEMS",
+      "total": 3,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "JOURNAL-ENTRIES",
+      "total": 3,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "LEAVE-REQUESTS",
+      "total": 3,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ONBOARDING-SLIDES",
+      "total": 3,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ORDER",
+      "total": 3,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "PARTNERS",
+      "total": 3,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ROOT",
+      "total": 3,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "STRINGS",
+      "total": 3,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "USER",
+      "total": 3,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "AUDIT-LOGS",
+      "total": 2,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "CATEGORIES",
+      "total": 2,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "COMBINED",
+      "total": 2,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ER",
+      "total": 2,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "LEADS",
+      "total": 2,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ME",
+      "total": 2,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "METRICS",
+      "total": 2,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "OPENING-BALANCE",
+      "total": 2,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "OPS",
+      "total": 2,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "PAGES",
+      "total": 2,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "PAYMENTS",
+      "total": 2,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "PRICING-STRATEGIES",
+      "total": 2,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "PROFILE",
+      "total": 2,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "REFUND",
+      "total": 2,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "RESET",
+      "total": 2,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "SEGMENTS",
+      "total": 2,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "SETTINGS",
+      "total": 2,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "STORES",
+      "total": 2,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "TRANSACTION",
+      "total": 2,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "V1",
+      "total": 2,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "WITHDRAWALS",
+      "total": 2,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ABANDONED",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ACCEPT",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ADD",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ASSETS",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ATTRIBUTES",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "BALANCE",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "BILLS",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "BY-STORES",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "CATALOG",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "CATEGORYID",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "COUNT",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "CREATE",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "DEACTIVATE",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "DEFAULT-ADDRESS",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "DELIVERY-ADDRESS",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "DRIVER-ASSETS",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "DRIVER-PAYOUTS",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "DRIVER-SHIFTS",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "EVENTS",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "EXPORT",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "FEATURES",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "FEE",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "FIELD",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "FIREBASE",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "FORGOT",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "HOLD",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "JOURNALS",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "LIST",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "MARKETING",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "MEDIA",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "MERGE",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "MODULES",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "MY-ERRANDS",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "MY-ORDERS",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "NOTE",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "ORDER_ID",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "PAGE",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "PAY-BILL",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "PUBLIC",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "Q",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "QUALITY",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "RELEASE",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "RIDES",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "SEARCH",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "SESSION_ID",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "SORT",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "STATS",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "STATUS",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "STEP",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "STORAGEKEY",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "SUBSCRIPTIONS",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "TRANSACTIONS",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "TRANSFER",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "TRANSFERS",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "TYPE",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "UTM_CAMPAIGN",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "UTM_CONTENT",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "UTM_MEDIUM",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "UTM_SOURCE",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "UTM_TERM",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "VERIFY-OTP",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    },
+    {
+      "segment": "WINDOW",
+      "total": 1,
+      "fe_only": 0,
+      "be_only": 0,
+      "both": 0,
+      "duplicates": 0
+    }
+  ],
+  "files": [
+    "S01-Executive-Plan.md",
+    "S02-Parity-Matrix.md",
+    "S03-WEB-APP.md",
+    "S04-USER-APP.md",
+    "S05-VENDOR-APP.md",
+    "S06-RIDER-APP.md",
+    "S07-ADMIN-DASH.md",
+    "S08-PARTNER-PORTAL.md",
+    "S09-SUPPORT-CRM.md",
+    "S10-PUBLIC-API.md",
+    "S11-INTERNAL-TOOLS.md",
+    "S12-DATA-BI.md",
+    "S13-MOBILE-APPS.md",
+    "S14-PAYMENTS-NOTIFICATIONS.md",
+    "S15-SECURITY-INFRA-RELEASE-DR.md",
+    "INDEX.md",
+    "parity_breakdown_by_segment.csv"
+  ]
+}

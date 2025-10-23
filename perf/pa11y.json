@@ -1,0 +1,4 @@
+{
+  "defaults": { "standard": "WCAG2AA", "timeout": 60000, "hideElements": ".cookie, .ads" },
+  "urls": ["https://staging.example.tld/", "https://staging.example.tld/checkout"]
+}

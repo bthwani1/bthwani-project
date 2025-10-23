@@ -1,0 +1,16 @@
+name: _perf
+on: workflow_call
+jobs:
+  perf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - run: npm ci || true
+      - run: npx lhci autorun --config=perf/lhci.json
+        name: G-WEB-VITALS-BUDGETS
+      - run: npx pa11y-ci --config perf/pa11y.json --json > reports/a11y/pa11y.json
+        name: G-FE-A11Y
+      - uses: actions/upload-artifact@v4
+        with: { name: perf-a11y, path: reports/** }

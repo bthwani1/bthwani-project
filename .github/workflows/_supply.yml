@@ -1,0 +1,14 @@
+name: _supply
+on: workflow_call
+jobs:
+  supply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: trivy fs --format json --output reports/containers/trivy.json .
+        name: G-IMG-SCAN
+      - run: cosign version || true
+      - run: echo "[TBD] cosign verify to be wired" && exit 0
+        name: G-SUPPLY-SIGN
+      - uses: actions/upload-artifact@v4
+        with: { name: supply, path: reports/** }

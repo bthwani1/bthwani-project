@@ -30,9 +30,11 @@ import { PromotionModule } from './modules/promotion/promotion.module';
 import { MerchantModule } from './modules/merchant/merchant.module';
 import { ContentModule } from './modules/content/content.module';
 import { ERModule } from './modules/er/er.module';
+import { Es3afniModule } from './modules/es3afni/es3afni.module';
 import { GatewaysModule } from './gateways/gateways.module';
 import { MarketerModule } from './modules/marketer/marketer.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
+import { ArabonModule } from './modules/arabon/arabon.module';
 import { LegalModule } from './modules/legal/legal.module';
 import { HealthModule } from './modules/health/health.module';
 import { MetricsModule } from './modules/metrics/metrics.module';
@@ -135,9 +137,13 @@ import { envValidationSchema } from './config/env.validation';
 
     ERModule,
 
+    Es3afniModule,
+
     MarketerModule,
 
     AnalyticsModule,
+
+    ArabonModule,
 
     LegalModule,
 

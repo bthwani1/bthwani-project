@@ -1,0 +1,19 @@
+name: gates
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+permissions: { contents: read, id-token: none }
+jobs:
+  contracts: { uses: ./.github/workflows/_contracts.yml }
+  security:  { uses: ./.github/workflows/_security.yml }
+  perf:      { uses: ./.github/workflows/_perf.yml }
+  supply:    { uses: ./.github/workflows/_supply.yml }
+  aggregate:
+    runs-on: ubuntu-latest
+    needs: [contracts, security, perf, supply]
+    steps:
+      - uses: actions/checkout@v4
+      - run: node scripts/ci/aggregate_gates.js > reports/gates/aggregate.json
+      - run: node scripts/ci/fail_on_any_fail.js reports/gates/aggregate.json
+      - uses: actions/upload-artifact@v4
+        with: { name: gates-evidence, path: reports/** }

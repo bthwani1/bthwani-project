@@ -19,6 +19,15 @@ import {
   CurrentUser,
 } from '../../common/decorators/auth.decorator';
 import { AuthType } from '../../common/guards/unified-auth.guard';
+import {
+  ExportReportResponseDto,
+  GetRolesResponseDto,
+  CreateRoleResponseDto,
+  UpdateRoleResponseDto,
+  GetRoleByIdResponseDto,
+  CreateRoleDto,
+  UpdateRoleDto
+} from './dto';
 
 @ApiTags('Admin')
 @ApiBearerAuth()
@@ -288,9 +297,8 @@ export class AdminController {
     @Param('type') type: string,
     @Param('format') format: string,
     @Body() filters?: any,
-  ) {
-    // TODO: Implement report export logic
-    return { success: true, message: 'Export endpoint - not yet implemented', type, format };
+  ): Promise<ExportReportResponseDto> {
+    return this.adminService.exportReport(type, format, filters);
   }
 
   // TODO: Implement getWeeklyReport
@@ -867,7 +875,7 @@ export class AdminController {
 
   @Get('roles')
   @ApiOperation({ summary: 'الأدوار' })
-  getRoles() {
+  async getRoles(): Promise<any> {
     return this.adminService.getRoles();
   }
 
@@ -875,22 +883,48 @@ export class AdminController {
   @ApiBody({
     schema: {
       type: 'object',
-      required: ['name'],
+      required: ['name', 'displayName'],
       properties: {
         name: { type: 'string', example: 'manager' },
-        permissions: { type: 'array', items: { type: 'string' }, example: ['users.read', 'orders.manage'] },
-        description: { type: 'string' },
+        displayName: { type: 'string', example: 'مدير' },
+        description: { type: 'string', example: 'دور المدير' },
+        permissions: {
+          type: 'object',
+          example: { 'users.read': true, 'orders.manage': true }
+        },
       },
     },
   })
   @ApiOperation({ summary: 'إنشاء دور' })
-  createRole(@Body() _body: { name: string; permissions: string[] }) {
-    return this.adminService.createRole(_body);
+  async createRole(
+    @Body() body: CreateRoleDto,
+    @CurrentUser('id') adminId: string,
+  ): Promise<any> {
+    return this.adminService.createRole(body, adminId);
   }
 
   @Patch('roles/:id')
   @ApiOperation({ summary: 'تحديث دور' })
-  updateRole() {
-    return this.adminService.updateRole();
+  async updateRole(
+    @Param('id') roleId: string,
+    @Body() updates: UpdateRoleDto,
+    @CurrentUser('id') adminId: string,
+  ): Promise<any> {
+    return this.adminService.updateRole(roleId, updates, adminId);
+  }
+
+  @Get('roles/:id')
+  @ApiOperation({ summary: 'جلب دور محدد' })
+  async getRoleById(@Param('id') roleId: string): Promise<any> {
+    return this.adminService.getRoleById(roleId);
+  }
+
+  @Delete('roles/:id')
+  @ApiOperation({ summary: 'حذف دور' })
+  async deleteRole(
+    @Param('id') roleId: string,
+    @CurrentUser('id') adminId: string,
+  ) {
+    return this.adminService.deleteRole(roleId, adminId);
   }
 }

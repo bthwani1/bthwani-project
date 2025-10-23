@@ -1,0 +1,16 @@
+name: _security
+on: workflow_call
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install semgrep
+      - run: semgrep --config .semgrep.yml --error --json > reports/sec/semgrep.json
+        name: G-SAST-SEMGR
+      - run: gitleaks detect -c gitleaks.toml --report-path reports/secrets/scan.json --exit-code 1
+        name: G-SEC-SECRETS
+      - uses: actions/upload-artifact@v4
+        with: { name: security, path: reports/** }

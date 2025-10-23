@@ -1,0 +1,16 @@
+extends: ["spectral:oas"]
+rules:
+  error-object-shape:
+    description: "Error objects must follow {code,message,details?}"
+    given: "$.paths..responses[?(@property.match(/^4|5/))].content.application/json.schema"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: [code, message]
+          properties:
+            code: { type: string }
+            message: { type: string }
+            details: { type: object }
+    severity: error

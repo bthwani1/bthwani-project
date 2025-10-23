@@ -25,6 +25,16 @@ export class ArabonService {
     return { items, nextCursor };
   }
 
+  async list(filters: any = {}, cursor?: string, limit: number = 25) {
+    const query = this.model.find(filters).sort({ _id: -1 }).limit(limit);
+    if (cursor) {
+      query.where('_id').lt(cursor);
+    }
+    const items = await query.exec();
+    const nextCursor = items.length === limit ? String(items[items.length - 1]._id) : null;
+    return { items, nextCursor };
+  }
+
   async findOne(id: string) {
     const doc = await this.model.findById(id).exec();
     if (!doc) throw new NotFoundException('Not found');
