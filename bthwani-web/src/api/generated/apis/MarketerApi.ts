@@ -415,14 +415,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/referrals/generate-code`;
 
@@ -451,14 +443,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/commissions/statistics`;
 
@@ -509,14 +493,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/earnings`;
 
@@ -545,14 +521,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/earnings/breakdown`;
 
@@ -581,14 +549,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/files`;
 
@@ -617,14 +577,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/statistics/month`;
 
@@ -664,14 +616,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/commissions/my`;
 
@@ -700,14 +644,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/referrals/my`;
 
@@ -736,14 +672,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/stores/my`;
 
@@ -772,14 +700,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/vendors/my`;
 
@@ -808,14 +728,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/notifications`;
 
@@ -844,14 +756,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/overview`;
 
@@ -880,14 +784,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/commissions/pending`;
 
@@ -916,14 +812,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/profile`;
 
@@ -952,14 +840,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/referrals/statistics`;
 
@@ -995,14 +875,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/stores/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -1061,14 +933,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/stores/{id}/performance`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -1098,14 +962,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/territory/stats`;
 
@@ -1134,14 +990,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/statistics/today`;
 
@@ -1177,14 +1025,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/vendors/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -1221,14 +1061,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/notifications/{id}/read`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -1267,14 +1099,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/profile`;
 
@@ -1313,14 +1137,6 @@ export class MarketerApi extends runtime.BaseAPI implements MarketerApiInterface
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/marketer/files/upload`;
 

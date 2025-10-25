@@ -567,14 +567,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/orders/{id}/accept`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -611,14 +603,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/vacations/{id}/cancel`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -657,14 +641,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/change-password`;
 
@@ -701,14 +677,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/orders/{id}/complete`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -747,14 +715,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers`;
 
@@ -792,14 +752,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/available`;
 
@@ -835,14 +787,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -872,14 +816,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/orders/available`;
 
@@ -908,14 +844,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/earnings/daily`;
 
@@ -944,14 +872,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/documents`;
 
@@ -987,14 +907,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/{driverId}/documents`;
         urlPath = urlPath.replace(`{${"driverId"}}`, encodeURIComponent(String(requestParameters['driverId'])));
@@ -1046,14 +958,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/earnings`;
 
@@ -1082,14 +986,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/vacations/my`;
 
@@ -1126,14 +1022,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/orders/history`;
 
@@ -1162,14 +1050,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/profile`;
 
@@ -1198,14 +1078,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/statistics`;
 
@@ -1234,14 +1106,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/vacations/balance`;
 
@@ -1270,14 +1134,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/vacations/policy`;
 
@@ -1306,14 +1162,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/earnings/weekly`;
 
@@ -1349,14 +1197,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/orders/{id}/reject`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -1395,14 +1235,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/issues/report`;
 
@@ -1441,14 +1273,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/vacations/request`;
 
@@ -1485,14 +1309,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/orders/{id}/start-delivery`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -1531,14 +1347,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/availability`;
 
@@ -1577,14 +1385,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/location`;
 
@@ -1623,14 +1423,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/profile`;
 
@@ -1669,14 +1461,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/documents/upload`;
 
@@ -1720,14 +1504,6 @@ export class DriverApi extends runtime.BaseAPI implements DriverApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/drivers/{driverId}/documents/{docId}/verify`;
         urlPath = urlPath.replace(`{${"driverId"}}`, encodeURIComponent(String(requestParameters['driverId'])));

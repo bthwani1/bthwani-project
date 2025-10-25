@@ -1,6 +1,6 @@
 // Rider Mobile App API Client
 // Generated from OpenAPI spec: openapi.yaml
-// Generation Date: 2025-10-23T16:00:25.705Z
+// Generation Date: 2025-10-25T20:39:17.261Z
 // Do not edit manually - regenerate using: npm run generate:sdks
 
 export * from './apis';

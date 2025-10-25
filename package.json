@@ -19,7 +19,9 @@
     "validate:openapi": "npm run lint:openapi:strict",
     "test:production": "./scripts/run-tests-production.sh",
     "audit:production": "NODE_ENV=production HTTP_PROXY= HTTPS_PROXY= DISABLE_EXTERNAL_APIS=true npm run audit:all",
-    "audit:runtime-fe": "node scripts/compare-runtime-fe.js"
+    "audit:runtime-fe": "node scripts/compare-runtime-fe.js",
+    "parity-gate": "node scripts/parity-gate.js",
+    "parity-gate:ci": "npm run generate:all && npm run parity-gate"
   },
   "devDependencies": {
     "@axe-core/react": "^4.10.2",

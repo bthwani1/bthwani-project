@@ -283,14 +283,6 @@ export class NotificationApi extends runtime.BaseAPI implements NotificationApiI
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/notifications`;
 
@@ -329,14 +321,6 @@ export class NotificationApi extends runtime.BaseAPI implements NotificationApiI
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/notifications/suppression`;
 
@@ -373,14 +357,6 @@ export class NotificationApi extends runtime.BaseAPI implements NotificationApiI
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/notifications/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -418,14 +394,6 @@ export class NotificationApi extends runtime.BaseAPI implements NotificationApiI
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/notifications/my`;
 
@@ -454,14 +422,6 @@ export class NotificationApi extends runtime.BaseAPI implements NotificationApiI
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/notifications/suppression/channels`;
 
@@ -490,14 +450,6 @@ export class NotificationApi extends runtime.BaseAPI implements NotificationApiI
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/notifications/suppression/stats`;
 
@@ -526,14 +478,6 @@ export class NotificationApi extends runtime.BaseAPI implements NotificationApiI
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/notifications/unread/count`;
 
@@ -562,14 +506,6 @@ export class NotificationApi extends runtime.BaseAPI implements NotificationApiI
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/notifications/suppression`;
 
@@ -598,14 +534,6 @@ export class NotificationApi extends runtime.BaseAPI implements NotificationApiI
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/notifications/read-all`;
 
@@ -641,14 +569,6 @@ export class NotificationApi extends runtime.BaseAPI implements NotificationApiI
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/notifications/{id}/read`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -685,14 +605,6 @@ export class NotificationApi extends runtime.BaseAPI implements NotificationApiI
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/notifications/suppression/channel/{channel}`;
         urlPath = urlPath.replace(`{${"channel"}}`, encodeURIComponent(String(requestParameters['channel'])));
@@ -729,14 +641,6 @@ export class NotificationApi extends runtime.BaseAPI implements NotificationApiI
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/notifications/suppression/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -775,14 +679,6 @@ export class NotificationApi extends runtime.BaseAPI implements NotificationApiI
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/notifications/send-bulk`;
 

@@ -265,14 +265,6 @@ export class LegalApi extends runtime.BaseAPI implements LegalApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/legal/admin/privacy-policy/{id}/activate`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -309,14 +301,6 @@ export class LegalApi extends runtime.BaseAPI implements LegalApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/legal/admin/terms-of-service/{id}/activate`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -353,14 +337,6 @@ export class LegalApi extends runtime.BaseAPI implements LegalApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/legal/consent/check/{type}`;
         urlPath = urlPath.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters['type'])));
@@ -399,14 +375,6 @@ export class LegalApi extends runtime.BaseAPI implements LegalApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/legal/admin/privacy-policy`;
 
@@ -445,14 +413,6 @@ export class LegalApi extends runtime.BaseAPI implements LegalApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/legal/admin/terms-of-service`;
 
@@ -482,14 +442,6 @@ export class LegalApi extends runtime.BaseAPI implements LegalApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/legal/admin/privacy-policies`;
 
@@ -518,14 +470,6 @@ export class LegalApi extends runtime.BaseAPI implements LegalApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/legal/admin/terms-of-service`;
 
@@ -554,14 +498,6 @@ export class LegalApi extends runtime.BaseAPI implements LegalApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/legal/admin/consent/statistics`;
 
@@ -590,14 +526,6 @@ export class LegalApi extends runtime.BaseAPI implements LegalApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/legal/consent/my`;
 
@@ -699,14 +627,6 @@ export class LegalApi extends runtime.BaseAPI implements LegalApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/legal/consent`;
 

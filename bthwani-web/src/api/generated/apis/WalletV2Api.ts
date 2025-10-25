@@ -93,14 +93,6 @@ export class WalletV2Api extends runtime.BaseAPI implements WalletV2ApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/v2/wallet/coupons/apply`;
 
@@ -129,14 +121,6 @@ export class WalletV2Api extends runtime.BaseAPI implements WalletV2ApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/v2/wallet/coupons/history`;
 
@@ -165,14 +149,6 @@ export class WalletV2Api extends runtime.BaseAPI implements WalletV2ApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/v2/wallet/coupons/my`;
 
@@ -201,14 +177,6 @@ export class WalletV2Api extends runtime.BaseAPI implements WalletV2ApiInterface
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/v2/wallet/subscriptions/my`;
 

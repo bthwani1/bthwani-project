@@ -24,10 +24,21 @@ import { AuthType } from '../../common/guards/unified-auth.guard';
 
 @ApiTags('Vendor')
 @ApiBearerAuth()
-@Controller('vendors')
+@Controller(['vendors', 'vendor'])
 @UseGuards(UnifiedAuthGuard, RolesGuard)
 export class VendorController {
   constructor(private readonly vendorService: VendorService) {}
+
+  // ==================== Vendor Authentication ====================
+
+  @Post('auth/vendor-login')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiOperation({ summary: 'تسجيل دخول التاجر' })
+  async vendorLogin(@Body() loginDto: { email: string; password: string }) {
+    return this.vendorService.vendorLogin(loginDto.email, loginDto.password);
+  }
 
   @Auth(AuthType.JWT)
   @Roles('admin', 'superadmin', 'marketer')

@@ -50,6 +50,69 @@ export class DriverController {
   }
 
   @Auth(AuthType.JWT)
+  @Roles('driver')
+  @Get('me')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiOperation({ summary: 'بيانات السائق الحالي' })
+  async getCurrentDriver(@CurrentUser('id') driverId: string) {
+    return this.driverService.getCurrentDriver(driverId);
+  }
+
+  @Auth(AuthType.JWT)
+  @Roles('driver')
+  @Post('locations')
+  @ApiBody({ schema: { type: 'object', required: ['lat', 'lng'], properties: { lat: { type: 'number' }, lng: { type: 'number' }, accuracy: { type: 'number' } } } })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiOperation({ summary: 'تحديث موقع السائق' })
+  async updateLocation(
+    @CurrentUser('id') driverId: string,
+    @Body() locationData: { lat: number; lng: number; accuracy?: number },
+  ) {
+    return this.driverService.updateLocation(driverId, locationData);
+  }
+
+  @Auth(AuthType.JWT)
+  @Roles('driver')
+  @Get('withdrawals/my')
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiOperation({ summary: 'سحوباتي' })
+  async getMyWithdrawals(@CurrentUser('id') driverId: string) {
+    return this.driverService.getMyWithdrawals(driverId);
+  }
+
+  @Auth(AuthType.JWT)
+  @Roles('driver')
+  @Post('withdrawals/request')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiOperation({ summary: 'طلب سحب أموال' })
+  async requestWithdrawal(
+    @CurrentUser('id') driverId: string,
+    @Body() body: { amount: number; method: string; details?: any },
+  ) {
+    return this.driverService.requestWithdrawal(driverId, body);
+  }
+
+  @Auth(AuthType.JWT)
+  @Roles('driver')
+  @Post('sos')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiOperation({ summary: 'إرسال إشارة SOS' })
+  async sendSOS(
+    @CurrentUser('id') driverId: string,
+    @Body() body: { message?: string; location?: { lat: number; lng: number } },
+  ) {
+    return this.driverService.sendSOS(driverId, body);
+  }
+
+  @Auth(AuthType.JWT)
   @Get(':id')
   @ApiParam({ name: 'id', type: String })
   @ApiResponse({ status: 200, description: 'Success' })
@@ -60,20 +123,6 @@ export class DriverController {
     return this.driverService.findOne(id);
   }
 
-  @Auth(AuthType.JWT)
-  @Roles('driver')
-  @Patch('location')
-  @ApiResponse({ status: 200, description: 'Updated' })
-  @ApiResponse({ status: 404, description: 'Not found' })
-  @ApiResponse({ status: 400, description: 'Bad request' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @ApiOperation({ summary: 'تحديث موقع السائق' })
-  async updateLocation(
-    @CurrentUser('id') driverId: string,
-    @Body() locationDto: UpdateLocationDto,
-  ) {
-    return this.driverService.updateLocation(driverId, locationDto);
-  }
 
   @Auth(AuthType.JWT)
   @Roles('driver')

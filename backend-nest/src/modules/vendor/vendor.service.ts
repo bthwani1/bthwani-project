@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   ConflictException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
@@ -10,10 +11,43 @@ import { Vendor } from './entities/vendor.entity';
 import { CreateVendorDto } from './dto/create-vendor.dto';
 import { UpdateVendorDto } from './dto/update-vendor.dto';
 import { CursorPaginationDto } from '../../common/dto/pagination.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class VendorService {
-  constructor(@InjectModel(Vendor.name) private vendorModel: Model<Vendor>) {}
+  constructor(
+    @InjectModel(Vendor.name) private vendorModel: Model<Vendor>,
+    private jwtService: JwtService,
+  ) {}
+
+  // تسجيل دخول التاجر
+  async vendorLogin(email: string, password: string) {
+    // البحث عن التاجر
+    const vendor = await this.vendorModel.findOne({ email }).select('+password');
+
+    if (!vendor) {
+      throw new NotFoundException('Invalid credentials');
+    }
+
+    // التحقق من كلمة المرور
+    const isValidPassword = await this.comparePassword(password, vendor.password);
+    if (!isValidPassword) {
+      throw new NotFoundException('Invalid credentials');
+    }
+
+    // التحقق من حالة التاجر (لا يوجد status field في Vendor entity)
+    // TODO: Add status field to Vendor entity if needed
+    // For now, assume all vendors are active
+
+    // توليد token
+    const token = await this.generateVendorToken(vendor);
+
+    return {
+      user: this.sanitizeVendor(vendor),
+      token,
+      type: 'vendor',
+    };
+  }
 
   // إنشاء تاجر جديد
   async create(createVendorDto: CreateVendorDto) {
@@ -247,6 +281,23 @@ export class VendorService {
         Date.now() + 30 * 24 * 60 * 60 * 1000,
       ).toISOString(),
     };
+  }
+
+  // توليد token للتاجر
+  private async generateVendorToken(vendor: any) {
+    const payload = {
+      sub: vendor._id,
+      email: vendor.email,
+      role: 'vendor',
+      type: 'vendor',
+    };
+
+    return this.jwtService.sign(payload);
+  }
+
+  // مقارنة كلمة المرور
+  private async comparePassword(plainPassword: string, hashedPassword: string): Promise<boolean> {
+    return bcrypt.compare(plainPassword, hashedPassword);
   }
 
   // إزالة كلمة المرور من الرد

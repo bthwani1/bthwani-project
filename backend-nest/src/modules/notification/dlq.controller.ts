@@ -62,7 +62,7 @@ export class DLQController {
     @Query('limit') limit?: number,
   ) {
     const limitNum = limit ? parseInt(limit.toString(), 10) : 10;
-    const retryCount = await this.dlqService.retryFromDLQ(queueName, jobId, limitNum);
+    const retryCount = await this.dlqService.retryFailedJobs(queueName);
 
     return {
       message: `Retried ${retryCount} jobs from ${queueName}`,
@@ -89,7 +89,9 @@ export class DLQController {
   @ApiResponse({ status: 403, description: 'Unauthorized' })
   async cleanupDLQ(@Query('daysOld') daysOld?: number) {
     const days = daysOld ? parseInt(daysOld.toString(), 10) : 30;
-    const cleanedCount = await this.dlqService.cleanupOldDLQJobs(days);
+    const cutoffDate = new Date();
+    cutoffDate.setDate(cutoffDate.getDate() - days);
+    const cleanedCount = await this.dlqService.cleanupDLQ(cutoffDate);
 
     return {
       message: `Cleaned up ${cleanedCount} old DLQ jobs`,

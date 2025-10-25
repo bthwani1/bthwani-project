@@ -1,0 +1,161 @@
+{
+  "timestamp": "2025-10-25T20:52:09.267Z",
+  "config": {
+    "openapiPath": "D:\\bthwani-project\\openapi.yaml",
+    "frontends": [
+      {
+        "name": "admin-dashboard",
+        "path": "admin-dashboard/src"
+      },
+      {
+        "name": "app-user",
+        "path": "app-user/src"
+      },
+      {
+        "name": "bthwani-web",
+        "path": "bthwani-web/src"
+      },
+      {
+        "name": "field-marketers",
+        "path": "field-marketers/src"
+      },
+      {
+        "name": "rider-app",
+        "path": "rider-app/src"
+      },
+      {
+        "name": "vendor-app",
+        "path": "vendor-app/src"
+      }
+    ],
+    "allowedGapPercentage": 5,
+    "excludedPatterns": [
+      {},
+      {},
+      {},
+      {}
+    ]
+  },
+  "results": [
+    {
+      "frontend": "admin-dashboard",
+      "parity": {
+        "total": 22,
+        "matched": 3,
+        "unmatched": 19,
+        "coverage": 13.636363636363635,
+        "matchedEndpoints": [
+          "GET /admin/modules",
+          "GET /admin/list",
+          "GET /utility/daily"
+        ],
+        "unmatchedEndpoints": [
+          "GET /auth/login",
+          "GET /admin/create",
+          "GET /admin/$:param",
+          "GET /admin/$:param/status",
+          "GET /delivery/order/$:param/admin-status",
+          "GET /delivery/order/$:param/assign-driver",
+          "GET /delivery/order/$:param/suborders/$:param/assign-driver",
+          "GET /delivery/order/$:param/suborders/$:param/status",
+          "GET /delivery/order/$:param/pod",
+          "GET /delivery/order/$:param/suborders/$:param/pod",
+          "GET /delivery/order/$:param/procurement",
+          "GET /utility/order/$:param/sub/$:param/origin",
+          "GET /delivery/order/export/orders/excel",
+          "GET /utility/daily/$:param",
+          "GET /accounts/chart",
+          "GET /accounts/chart/tree",
+          "GET /accounts/chart/$:param",
+          "GET /media/sign-upload",
+          "GET /media/delete/$:param"
+        ]
+      },
+      "frontendEndpoints": [
+        "GET /auth/login",
+        "GET /admin/modules",
+        "GET /admin/list",
+        "GET /admin/create",
+        "GET /admin/$:param",
+        "GET /admin/$:param/status",
+        "GET /delivery/order/$:param/admin-status",
+        "GET /delivery/order/$:param/assign-driver",
+        "GET /delivery/order/$:param/suborders/$:param/assign-driver",
+        "GET /delivery/order/$:param/suborders/$:param/status",
+        "GET /delivery/order/$:param/pod",
+        "GET /delivery/order/$:param/suborders/$:param/pod",
+        "GET /delivery/order/$:param/procurement",
+        "GET /utility/order/$:param/sub/$:param/origin",
+        "GET /delivery/order/export/orders/excel",
+        "GET /utility/daily/$:param",
+        "GET /utility/daily",
+        "GET /accounts/chart",
+        "GET /accounts/chart/tree",
+        "GET /accounts/chart/$:param",
+        "GET /media/sign-upload",
+        "GET /media/delete/$:param"
+      ]
+    },
+    {
+      "frontend": "app-user",
+      "parity": {
+        "total": 0,
+        "matched": 0,
+        "unmatched": 0,
+        "coverage": 100,
+        "matchedEndpoints": [],
+        "unmatchedEndpoints": []
+      },
+      "frontendEndpoints": []
+    },
+    {
+      "frontend": "bthwani-web",
+      "parity": {
+        "total": 0,
+        "matched": 0,
+        "unmatched": 0,
+        "coverage": 100,
+        "matchedEndpoints": [],
+        "unmatchedEndpoints": []
+      },
+      "frontendEndpoints": []
+    },
+    {
+      "frontend": "field-marketers",
+      "parity": {
+        "total": 0,
+        "matched": 0,
+        "unmatched": 0,
+        "coverage": 100,
+        "matchedEndpoints": [],
+        "unmatchedEndpoints": []
+      },
+      "frontendEndpoints": []
+    },
+    {
+      "frontend": "rider-app",
+      "parity": {
+        "total": 0,
+        "matched": 0,
+        "unmatched": 0,
+        "coverage": 100,
+        "matchedEndpoints": [],
+        "unmatchedEndpoints": []
+      },
+      "frontendEndpoints": []
+    },
+    {
+      "frontend": "vendor-app",
+      "parity": {
+        "total": 0,
+        "matched": 0,
+        "unmatched": 0,
+        "coverage": 100,
+        "matchedEndpoints": [],
+        "unmatchedEndpoints": []
+      },
+      "frontendEndpoints": []
+    }
+  ],
+  "success": false
+}

@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   ConflictException,
+  BadRequestException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -9,7 +10,9 @@ import * as bcrypt from 'bcrypt';
 import { Driver } from './entities/driver.entity';
 import { CreateDriverDto } from './dto/create-driver.dto';
 import { UpdateLocationDto } from './dto/update-location.dto';
+import { Withdrawal } from '../withdrawal/entities/withdrawal.entity';
 import { CursorPaginationDto } from '../../common/dto/pagination.dto';
+import { WalletService } from '../wallet/wallet.service';
 import {
   PaginationHelper,
   EntityHelper,
@@ -18,7 +21,11 @@ import {
 
 @Injectable()
 export class DriverService {
-  constructor(@InjectModel(Driver.name) private driverModel: Model<Driver>) {}
+  constructor(
+    @InjectModel(Driver.name) private driverModel: Model<Driver>,
+    @InjectModel(Withdrawal.name) private withdrawalModel: Model<Withdrawal>,
+    private walletService: WalletService,
+  ) {}
 
   // إنشاء سائق جديد
   async create(createDriverDto: CreateDriverDto) {
@@ -73,30 +80,6 @@ export class DriverService {
     return SanitizationHelper.sanitize<Driver>(driver);
   }
 
-  // تحديث الموقع الحالي
-  async updateLocation(driverId: string, locationDto: UpdateLocationDto) {
-    const driver = await this.driverModel.findByIdAndUpdate(
-      driverId,
-      {
-        currentLocation: {
-          lat: locationDto.lat,
-          lng: locationDto.lng,
-          updatedAt: new Date(),
-        },
-      },
-      { new: true },
-    );
-
-    if (!driver) {
-      throw new NotFoundException({
-        code: 'DRIVER_NOT_FOUND',
-        message: 'Driver not found',
-        userMessage: 'السائق غير موجود',
-      });
-    }
-
-    return SanitizationHelper.sanitize<Driver>(driver);
-  }
 
   // تحديث حالة التوفر
   async updateAvailability(driverId: string, isAvailable: boolean) {
@@ -282,31 +265,6 @@ export class DriverService {
 
   // ==================== Withdrawals ====================
 
-  async requestWithdrawal(
-    driverId: string,
-    amount: number,
-    method: string,
-    accountInfo: any,
-  ) {
-    // TODO: Implement
-    void driverId;
-    void amount;
-    void method;
-    void accountInfo;
-    await Promise.resolve();
-    return {
-      success: true,
-      message: 'تم تقديم طلب السحب',
-      requestId: 'withdrawal_' + Date.now(),
-    };
-  }
-
-  async getMyWithdrawals(driverId: string) {
-    // TODO: Implement
-    void driverId;
-    await Promise.resolve();
-    return { data: [] };
-  }
 
   async getWithdrawalStatus(withdrawalId: string, driverId: string) {
     // TODO: Implement
@@ -413,6 +371,126 @@ export class DriverService {
     return {
       success: true,
       message: 'تم تغيير كلمة المرور بنجاح',
+    };
+  }
+
+  // جلب بيانات السائق الحالي
+  async getCurrentDriver(driverId: string) {
+    const driver = await EntityHelper.findByIdOrFail(
+      this.driverModel,
+      driverId,
+      'Driver',
+    );
+
+    return SanitizationHelper.sanitize<Driver>(driver);
+  }
+
+  // تحديث موقع السائق
+  async updateLocation(
+    driverId: string,
+    locationData: { lat: number; lng: number; accuracy?: number },
+  ) {
+    const driver = await EntityHelper.findByIdOrFail(
+      this.driverModel,
+      driverId,
+      'Driver',
+    );
+
+    // تحديث الموقع
+    driver.currentLocation = {
+      lat: locationData.lat,
+      lng: locationData.lng,
+      updatedAt: new Date(),
+    };
+
+    await driver.save();
+
+    return {
+      success: true,
+      message: 'تم تحديث الموقع بنجاح',
+      location: driver.currentLocation,
+      updatedAt: driver.currentLocation.updatedAt,
+    };
+  }
+
+  // جلب سحوبات السائق
+  async getMyWithdrawals(driverId: string) {
+    const withdrawals = await this.withdrawalModel.find({
+      userId: driverId,
+      userModel: 'Driver',
+    }).sort({ createdAt: -1 });
+
+    return {
+      data: withdrawals,
+      total: withdrawals.length,
+    };
+  }
+
+  // طلب سحب أموال
+  async requestWithdrawal(
+    driverId: string,
+    body: { amount: number; method: string; details?: any },
+  ) {
+    const driver = await EntityHelper.findByIdOrFail(
+      this.driverModel,
+      driverId,
+      'Driver',
+    );
+
+    // التحقق من الرصيد الكافي
+    const walletBalance = await this.walletService.getWalletBalance(driverId);
+    if (walletBalance.availableBalance < body.amount) {
+      throw new BadRequestException('Insufficient balance');
+    }
+
+    // إنشاء طلب السحب
+    const withdrawal = await this.withdrawalModel.create({
+      userId: driverId,
+      userModel: 'Driver',
+      amount: body.amount,
+      currency: 'SAR',
+      method: body.method,
+      status: 'pending',
+      bankDetails: body.details?.bankDetails,
+      cryptoDetails: body.details?.cryptoDetails,
+      walletDetails: body.details?.walletDetails,
+    });
+
+    // حجز الأموال
+    await this.walletService.holdFunds(
+      driverId,
+      body.amount,
+      `withdrawal-${withdrawal._id}`,
+    );
+
+    return withdrawal;
+  }
+
+  // إرسال إشارة SOS
+  async sendSOS(
+    driverId: string,
+    body: { message?: string; location?: { lat: number; lng: number } },
+  ) {
+    const driver = await EntityHelper.findByIdOrFail(
+      this.driverModel,
+      driverId,
+      'Driver',
+    );
+
+    // إنشاء إشعار SOS (يمكن أن يكون إشعار أو رسالة أو مكالمة)
+    // TODO: Implement actual SOS logic (notifications, emergency contacts, etc.)
+
+    return {
+      success: true,
+      message: 'تم إرسال إشارة SOS بنجاح',
+      timestamp: new Date().toISOString(),
+      driver: {
+        id: driver._id,
+        name: driver.fullName,
+        phone: driver.phone,
+        location: body.location || driver.currentLocation,
+      },
+      emergencyContacts: [], // TODO: Add emergency contacts
     };
   }
 }

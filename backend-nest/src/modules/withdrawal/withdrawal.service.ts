@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Withdrawal } from './entities/withdrawal.entity';
 import { CreateWithdrawalDto } from './dto/create-withdrawal.dto';
 import { UpdateWithdrawalDto } from './dto/update-withdrawal.dto';
@@ -30,8 +30,8 @@ export class WithdrawalService {
 
   async createWithdrawal(dto: CreateWithdrawalDto) {
     // Validate user has sufficient balance
-    const balance = await this.walletService.getBalance(dto.userId);
-    if (balance < dto.amount) {
+    const walletBalance = await this.walletService.getWalletBalance(dto.userId);
+    if (walletBalance.availableBalance < dto.amount) {
       throw new BadRequestException('Insufficient balance');
     }
 
@@ -64,7 +64,7 @@ export class WithdrawalService {
 
     // Update withdrawal
     withdrawal.status = WithdrawalStatus.APPROVED;
-    withdrawal.approvedBy = data.adminId;
+    withdrawal.approvedBy = new Types.ObjectId(data.adminId);
     withdrawal.approvedAt = new Date();
     withdrawal.transactionRef = data.transactionRef;
     withdrawal.notes = data.notes;
@@ -93,14 +93,18 @@ export class WithdrawalService {
 
     // Update withdrawal
     withdrawal.status = WithdrawalStatus.REJECTED;
-    withdrawal.rejectedBy = data.adminId;
+    withdrawal.rejectedBy = new Types.ObjectId(data.adminId);
     withdrawal.rejectedAt = new Date();
     withdrawal.rejectionReason = data.reason;
 
     await withdrawal.save();
 
     // Release the held funds
-    await this.walletService.releaseFunds(withdrawal._id.toString());
+    await this.walletService.releaseFunds(
+      withdrawal.userId.toString(),
+      withdrawal.amount,
+      `withdrawal-${withdrawal._id}-refund`
+    );
 
     return withdrawal;
   }

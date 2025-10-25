@@ -16,6 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   AddAddressDto,
+  DeleteUserResponse,
   SetPinDto,
   UpdateUserDto,
   UserControllerChangePinRequest,
@@ -25,6 +26,8 @@ import type {
 import {
     AddAddressDtoFromJSON,
     AddAddressDtoToJSON,
+    DeleteUserResponseFromJSON,
+    DeleteUserResponseToJSON,
     SetPinDtoFromJSON,
     SetPinDtoToJSON,
     UpdateUserDtoFromJSON,
@@ -176,6 +179,20 @@ export interface UserApiInterface {
      * حذف عنوان (alias)
      */
     userControllerDeleteAddressAlias(requestParameters: UserControllerDeleteAddressAliasRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * 
+     * @summary حذف حساب المستخدم
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApiInterface
+     */
+    userControllerDeleteCurrentUserRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeleteUserResponse>>;
+
+    /**
+     * حذف حساب المستخدم
+     */
+    userControllerDeleteCurrentUser(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeleteUserResponse>;
 
     /**
      * الحصول على قائمة عناوين التوصيل المحفوظة
@@ -392,14 +409,6 @@ export class UserApi extends runtime.BaseAPI implements UserApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/users/addresses`;
 
@@ -440,14 +449,6 @@ export class UserApi extends runtime.BaseAPI implements UserApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/users/pin/change`;
 
@@ -479,14 +480,6 @@ export class UserApi extends runtime.BaseAPI implements UserApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/users/deactivate`;
 
@@ -524,14 +517,6 @@ export class UserApi extends runtime.BaseAPI implements UserApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/users/addresses/{addressId}`;
         urlPath = urlPath.replace(`{${"addressId"}}`, encodeURIComponent(String(requestParameters['addressId'])));
@@ -569,14 +554,6 @@ export class UserApi extends runtime.BaseAPI implements UserApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/users/address/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -599,6 +576,35 @@ export class UserApi extends runtime.BaseAPI implements UserApiInterface {
     }
 
     /**
+     * حذف حساب المستخدم
+     */
+    async userControllerDeleteCurrentUserRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeleteUserResponse>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/users/me`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DeleteUserResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * حذف حساب المستخدم
+     */
+    async userControllerDeleteCurrentUser(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeleteUserResponse> {
+        const response = await this.userControllerDeleteCurrentUserRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
      * الحصول على قائمة عناوين التوصيل المحفوظة
      * جلب جميع عناوين المستخدم
      */
@@ -607,14 +613,6 @@ export class UserApi extends runtime.BaseAPI implements UserApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/users/addresses`;
 
@@ -645,14 +643,6 @@ export class UserApi extends runtime.BaseAPI implements UserApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/users/me`;
 
@@ -683,14 +673,6 @@ export class UserApi extends runtime.BaseAPI implements UserApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/users/pin/status`;
 
@@ -728,14 +710,6 @@ export class UserApi extends runtime.BaseAPI implements UserApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/users/pin/reset/{userId}`;
         urlPath = urlPath.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId'])));
@@ -786,14 +760,6 @@ export class UserApi extends runtime.BaseAPI implements UserApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/users/search`;
 
@@ -831,14 +797,6 @@ export class UserApi extends runtime.BaseAPI implements UserApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/users/addresses/{addressId}/set-default`;
         urlPath = urlPath.replace(`{${"addressId"}}`, encodeURIComponent(String(requestParameters['addressId'])));
@@ -878,14 +836,6 @@ export class UserApi extends runtime.BaseAPI implements UserApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/users/default-address`;
 
@@ -925,14 +875,6 @@ export class UserApi extends runtime.BaseAPI implements UserApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/users/pin/set`;
 
@@ -980,14 +922,6 @@ export class UserApi extends runtime.BaseAPI implements UserApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/users/addresses/{addressId}`;
         urlPath = urlPath.replace(`{${"addressId"}}`, encodeURIComponent(String(requestParameters['addressId'])));
@@ -1026,14 +960,6 @@ export class UserApi extends runtime.BaseAPI implements UserApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/users/address/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -1073,14 +999,6 @@ export class UserApi extends runtime.BaseAPI implements UserApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/users/me`;
 
@@ -1121,14 +1039,6 @@ export class UserApi extends runtime.BaseAPI implements UserApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/users/pin/verify`;
 

@@ -15,7 +15,9 @@ All URIs are relative to *http://localhost*
 |[**adminControllerBanDriver**](#admincontrollerbandriver) | **POST** /admin/drivers/{id}/ban | حظر سائق|
 |[**adminControllerBanUser**](#admincontrollerbanuser) | **POST** /admin/users/{id}/ban | حظر مستخدم|
 |[**adminControllerClearCache**](#admincontrollerclearcache) | **POST** /admin/cache/clear | مسح الكاش|
+|[**adminControllerCreateAdmin**](#admincontrollercreateadmin) | **POST** /admin/create | إنشاء مستخدم إداري جديد|
 |[**adminControllerCreateBackup**](#admincontrollercreatebackup) | **POST** /admin/backup/create | إنشاء نسخة احتياطية|
+|[**adminControllerCreateCommissionPlan**](#admincontrollercreatecommissionplan) | **POST** /admin/commission-plans | إنشاء خطة عمولة جديدة|
 |[**adminControllerCreateMarketer**](#admincontrollercreatemarketer) | **POST** /admin/marketers | إضافة مسوق جديد|
 |[**adminControllerCreateRole**](#admincontrollercreaterole) | **POST** /admin/roles | إنشاء دور|
 |[**adminControllerDeactivateMarketer**](#admincontrollerdeactivatemarketer) | **POST** /admin/marketers/{id}/deactivate | تعطيل مسوق|
@@ -26,12 +28,18 @@ All URIs are relative to *http://localhost*
 |[**adminControllerDownloadBackup**](#admincontrollerdownloadbackup) | **GET** /admin/backup/{id}/download | تحميل نسخة احتياطية|
 |[**adminControllerExportMarketers**](#admincontrollerexportmarketers) | **GET** /admin/marketers/export | تصدير المسوقين|
 |[**adminControllerExportReport**](#admincontrollerexportreport) | **POST** /admin/reports/export/{type}/{format} | تصدير تقارير|
+|[**adminControllerGetAdminUsersList**](#admincontrollergetadminuserslist) | **GET** /admin/users/list | قائمة المستخدمين الإداريين|
+|[**adminControllerGetAdminsList**](#admincontrollergetadminslist) | **GET** /admin/list | قائمة المستخدمين الإداريين|
 |[**adminControllerGetAllDrivers**](#admincontrollergetalldrivers) | **GET** /admin/drivers | جلب كل السائقين|
+|[**adminControllerGetAllDriversAttendance**](#admincontrollergetalldriversattendance) | **GET** /admin/drivers/attendance | حضور جميع السائقين|
 |[**adminControllerGetAllMarketers**](#admincontrollergetallmarketers) | **GET** /admin/marketers | جلب المسوقين الميدانيين|
+|[**adminControllerGetAppearanceSettings**](#admincontrollergetappearancesettings) | **GET** /admin/settings/appearance | إعدادات المظهر|
 |[**adminControllerGetAttendanceSummary**](#admincontrollergetattendancesummary) | **GET** /admin/drivers/attendance/summary | ملخص الحضور لكل السائقين|
 |[**adminControllerGetAuditLogDetails**](#admincontrollergetauditlogdetails) | **GET** /admin/audit-logs/{id} | تفاصيل سجل مراجعة|
 |[**adminControllerGetAuditLogs**](#admincontrollergetauditlogs) | **GET** /admin/audit-logs | سجلات المراجعة|
+|[**adminControllerGetAuditLogsStats**](#admincontrollergetauditlogsstats) | **GET** /admin/audit-logs/stats | إحصائيات سجلات المراجعة|
 |[**adminControllerGetCacheStats**](#admincontrollergetcachestats) | **GET** /admin/cache/stats | إحصائيات الكاش|
+|[**adminControllerGetCurrentAdminUser**](#admincontrollergetcurrentadminuser) | **GET** /admin/me | بيانات المستخدم الإداري الحالي|
 |[**adminControllerGetDailyReport**](#admincontrollergetdailyreport) | **GET** /admin/reports/daily | تقرير يومي|
 |[**adminControllerGetDashboard**](#admincontrollergetdashboard) | **GET** /admin/dashboard | لوحة التحكم - الإحصائيات العامة|
 |[**adminControllerGetDataDeletionRequests**](#admincontrollergetdatadeletionrequests) | **GET** /admin/data-deletion/requests | طلبات حذف البيانات|
@@ -42,6 +50,11 @@ All URIs are relative to *http://localhost*
 |[**adminControllerGetDriverLeaveBalance**](#admincontrollergetdriverleavebalance) | **GET** /admin/drivers/{id}/leave-balance | رصيد إجازات السائق|
 |[**adminControllerGetDriverPerformance**](#admincontrollergetdriverperformance) | **GET** /admin/drivers/{id}/performance | أداء السائق|
 |[**adminControllerGetDriversByStatus**](#admincontrollergetdriversbystatus) | **GET** /admin/drivers/stats/by-status | السائقين حسب الحالة|
+|[**adminControllerGetDriversDocuments**](#admincontrollergetdriversdocuments) | **GET** /admin/drivers/docs | وثائق السائقين|
+|[**adminControllerGetDriversFinance**](#admincontrollergetdriversfinance) | **GET** /admin/drivers/finance | إحصائيات مالية السائقين|
+|[**adminControllerGetDriversPayouts**](#admincontrollergetdriverspayouts) | **GET** /admin/drivers/payouts | دفعات السائقين|
+|[**adminControllerGetDriversShifts**](#admincontrollergetdriversshifts) | **GET** /admin/drivers/shifts | ورديات السائقين|
+|[**adminControllerGetDriversVacationsStats**](#admincontrollergetdriversvacationsstats) | **GET** /admin/drivers/vacations/stats | إحصائيات إجازات السائقين|
 |[**adminControllerGetFailedPasswordAttempts**](#admincontrollergetfailedpasswordattempts) | **GET** /admin/security/password-attempts | محاولات كلمات المرور الفاشلة|
 |[**adminControllerGetFeatureFlags**](#admincontrollergetfeatureflags) | **GET** /admin/settings/feature-flags | أعلام الميزات|
 |[**adminControllerGetFinancialStats**](#admincontrollergetfinancialstats) | **GET** /admin/stats/financial | الإحصائيات المالية|
@@ -51,21 +64,29 @@ All URIs are relative to *http://localhost*
 |[**adminControllerGetMarketerPerformance**](#admincontrollergetmarketerperformance) | **GET** /admin/marketers/{id}/performance | أداء المسوق|
 |[**adminControllerGetMarketerStores**](#admincontrollergetmarketerstores) | **GET** /admin/marketers/{id}/stores | متاجر المسوق|
 |[**adminControllerGetMarketersStatistics**](#admincontrollergetmarketersstatistics) | **GET** /admin/marketers/statistics | إحصائيات المسوقين|
+|[**adminControllerGetModules**](#admincontrollergetmodules) | **GET** /admin/modules | الأدوار والصلاحيات|
+|[**adminControllerGetMyAuditActions**](#admincontrollergetmyauditactions) | **GET** /admin/audit-logs/my-actions | إجراءاتي في سجلات المراجعة|
+|[**adminControllerGetOpsDriversRealtime**](#admincontrollergetopsdriversrealtime) | **GET** /admin/ops/drivers/realtime | سائقو العمليات في الوقت الفعلي|
+|[**adminControllerGetOpsHeatmap**](#admincontrollergetopsheatmap) | **GET** /admin/ops/heatmap | خريطة الحرارة للعمليات|
 |[**adminControllerGetOrdersByCity**](#admincontrollergetordersbycity) | **GET** /admin/orders/stats/by-city | الطلبات حسب المدينة|
 |[**adminControllerGetOrdersByPaymentMethod**](#admincontrollergetordersbypaymentmethod) | **GET** /admin/orders/stats/by-payment-method | الطلبات حسب طريقة الدفع|
 |[**adminControllerGetOrdersByStatus**](#admincontrollergetordersbystatus) | **GET** /admin/dashboard/orders-by-status | الطلبات حسب الحالة|
+|[**adminControllerGetPendingActivations**](#admincontrollergetpendingactivations) | **GET** /admin/pending-activations | التفعيلات المعلقة|
 |[**adminControllerGetPendingVendors**](#admincontrollergetpendingvendors) | **GET** /admin/vendors/pending | التجار المعلقين|
 |[**adminControllerGetPendingWithdrawals**](#admincontrollergetpendingwithdrawals) | **GET** /admin/withdrawals/pending | طلبات السحب المعلقة|
 |[**adminControllerGetQualityMetrics**](#admincontrollergetqualitymetrics) | **GET** /admin/quality/metrics | مقاييس الجودة|
 |[**adminControllerGetRevenueAnalytics**](#admincontrollergetrevenueanalytics) | **GET** /admin/dashboard/revenue | تحليلات الإيرادات|
 |[**adminControllerGetRoles**](#admincontrollergetroles) | **GET** /admin/roles | الأدوار|
 |[**adminControllerGetSettings**](#admincontrollergetsettings) | **GET** /admin/settings | إعدادات النظام|
+|[**adminControllerGetSupportStats**](#admincontrollergetsupportstats) | **GET** /admin/support/stats | إحصائيات الدعم الفني|
 |[**adminControllerGetSystemHealth**](#admincontrollergetsystemhealth) | **GET** /admin/system/health | صحة النظام|
 |[**adminControllerGetSystemMetrics**](#admincontrollergetsystemmetrics) | **GET** /admin/system/metrics | مقاييس النظام|
 |[**adminControllerGetTodayStats**](#admincontrollergettodaystats) | **GET** /admin/stats/today | إحصائيات اليوم|
 |[**adminControllerGetUserDetails**](#admincontrollergetuserdetails) | **GET** /admin/users/{id} | تفاصيل مستخدم|
 |[**adminControllerGetUserOrdersHistory**](#admincontrollergetuserordershistory) | **GET** /admin/users/{id}/orders-history | سجل طلبات المستخدم|
 |[**adminControllerGetUsers**](#admincontrollergetusers) | **GET** /admin/users | جلب المستخدمين|
+|[**adminControllerGetVendorsList**](#admincontrollergetvendorslist) | **GET** /admin/vendors | قائمة التجار|
+|[**adminControllerGetWalletCoupons**](#admincontrollergetwalletcoupons) | **GET** /admin/wallet/coupons | كوبونات المحفظة|
 |[**adminControllerGetWithdrawals**](#admincontrollergetwithdrawals) | **GET** /admin/withdrawals | جلب طلبات السحب|
 |[**adminControllerListBackups**](#admincontrollerlistbackups) | **GET** /admin/backup/list | قائمة النسخ الاحتياطية|
 |[**adminControllerRejectDataDeletion**](#admincontrollerrejectdatadeletion) | **PATCH** /admin/data-deletion/{id}/reject | رفض حذف البيانات|
@@ -74,10 +95,12 @@ All URIs are relative to *http://localhost*
 |[**adminControllerRejectWithdrawal**](#admincontrollerrejectwithdrawal) | **PATCH** /admin/withdrawals/{id}/reject | رفض طلب سحب|
 |[**adminControllerResetUserPassword**](#admincontrollerresetuserpassword) | **POST** /admin/security/reset-password/{userId} | إعادة تعيين كلمة مرور مستخدم|
 |[**adminControllerRestoreBackup**](#admincontrollerrestorebackup) | **POST** /admin/backup/{id}/restore | استعادة نسخة احتياطية|
+|[**adminControllerRunFinanceCalculations**](#admincontrollerrunfinancecalculations) | **POST** /admin/drivers/finance/run | تشغيل حسابات المالية|
 |[**adminControllerSuspendVendor**](#admincontrollersuspendvendor) | **POST** /admin/vendors/{id}/suspend | تعليق تاجر|
 |[**adminControllerUnbanDriver**](#admincontrollerunbandriver) | **POST** /admin/drivers/{id}/unban | إلغاء حظر سائق|
 |[**adminControllerUnbanUser**](#admincontrollerunbanuser) | **POST** /admin/users/{id}/unban | إلغاء حظر مستخدم|
 |[**adminControllerUnlockAccount**](#admincontrollerunlockaccount) | **POST** /admin/security/unlock-account/{userId} | فتح حساب مقفل|
+|[**adminControllerUpdateAppearanceSettings**](#admincontrollerupdateappearancesettings) | **PUT** /admin/settings/appearance | تحديث إعدادات المظهر|
 |[**adminControllerUpdateFeatureFlag**](#admincontrollerupdatefeatureflag) | **PATCH** /admin/settings/feature-flags/{flag} | تحديث علم ميزة|
 |[**adminControllerUpdateMarketer**](#admincontrollerupdatemarketer) | **PATCH** /admin/marketers/{id} | تحديث مسوق|
 |[**adminControllerUpdateRole**](#admincontrollerupdaterole) | **PATCH** /admin/roles/{id} | تحديث دور|
@@ -118,7 +141,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -168,7 +191,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -218,7 +241,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -268,7 +291,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -318,7 +341,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -368,7 +391,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -418,7 +441,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -468,7 +491,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -518,7 +541,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -568,7 +591,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -611,7 +634,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -623,6 +646,59 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**201** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerCreateAdmin**
+> AdminCreationResponse adminControllerCreateAdmin(createAdminRequest)
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration,
+    CreateAdminRequest
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+let createAdminRequest: CreateAdminRequest; //
+
+const { status, data } = await apiInstance.adminControllerCreateAdmin(
+    createAdminRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **createAdminRequest** | **CreateAdminRequest**|  | |
+
+
+### Return type
+
+**AdminCreationResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**201** | Created |  -  |
+|**400** | Bad request |  -  |
+|**401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -662,7 +738,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -674,6 +750,59 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**201** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerCreateCommissionPlan**
+> CommissionPlanCreationResponse adminControllerCreateCommissionPlan(createCommissionPlanRequest)
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration,
+    CreateCommissionPlanRequest
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+let createCommissionPlanRequest: CreateCommissionPlanRequest; //
+
+const { status, data } = await apiInstance.adminControllerCreateCommissionPlan(
+    createCommissionPlanRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **createCommissionPlanRequest** | **CreateCommissionPlanRequest**|  | |
+
+
+### Return type
+
+**CommissionPlanCreationResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**201** | Created |  -  |
+|**400** | Bad request |  -  |
+|**401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -713,7 +842,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -764,7 +893,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -814,7 +943,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -864,7 +993,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -916,7 +1045,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -968,7 +1097,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1020,7 +1149,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1072,7 +1201,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1115,7 +1244,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1168,7 +1297,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1180,6 +1309,117 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | تصدير التقارير بصيغة Excel أو PDF |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerGetAdminUsersList**
+> AdminUsersListResponse adminControllerGetAdminUsersList()
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+let page: number; // (optional) (default to 1)
+let limit: number; // (optional) (default to 20)
+let search: string; // (optional) (default to undefined)
+
+const { status, data } = await apiInstance.adminControllerGetAdminUsersList(
+    page,
+    limit,
+    search
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **page** | [**number**] |  | (optional) defaults to 1|
+| **limit** | [**number**] |  | (optional) defaults to 20|
+| **search** | [**string**] |  | (optional) defaults to undefined|
+
+
+### Return type
+
+**AdminUsersListResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**401** | Unauthorized |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerGetAdminsList**
+> AdminUsersListResponse adminControllerGetAdminsList()
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+let page: number; // (optional) (default to 1)
+let limit: number; // (optional) (default to 20)
+
+const { status, data } = await apiInstance.adminControllerGetAdminsList(
+    page,
+    limit
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **page** | [**number**] |  | (optional) defaults to 1|
+| **limit** | [**number**] |  | (optional) defaults to 20|
+
+
+### Return type
+
+**AdminUsersListResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1227,7 +1467,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1239,6 +1479,63 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerGetAllDriversAttendance**
+> DriversAttendanceResponse adminControllerGetAllDriversAttendance()
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+let date: string; // (optional) (default to undefined)
+let page: number; // (optional) (default to 1)
+let limit: number; // (optional) (default to 20)
+
+const { status, data } = await apiInstance.adminControllerGetAllDriversAttendance(
+    date,
+    page,
+    limit
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **date** | [**string**] |  | (optional) defaults to undefined|
+| **page** | [**number**] |  | (optional) defaults to 1|
+| **limit** | [**number**] |  | (optional) defaults to 20|
+
+
+### Return type
+
+**DriversAttendanceResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1283,7 +1580,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1295,6 +1592,50 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerGetAppearanceSettings**
+> AppearanceSettingsResponse adminControllerGetAppearanceSettings()
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+const { status, data } = await apiInstance.adminControllerGetAppearanceSettings();
+```
+
+### Parameters
+This endpoint does not have any parameters.
+
+
+### Return type
+
+**AppearanceSettingsResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1333,7 +1674,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1383,7 +1724,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1442,7 +1783,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1454,6 +1795,60 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerGetAuditLogsStats**
+> AuditLogsStatsResponse adminControllerGetAuditLogsStats()
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+let startDate: string; // (optional) (default to undefined)
+let endDate: string; // (optional) (default to undefined)
+
+const { status, data } = await apiInstance.adminControllerGetAuditLogsStats(
+    startDate,
+    endDate
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **startDate** | [**string**] |  | (optional) defaults to undefined|
+| **endDate** | [**string**] |  | (optional) defaults to undefined|
+
+
+### Return type
+
+**AuditLogsStatsResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1485,7 +1880,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1497,6 +1892,50 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerGetCurrentAdminUser**
+> AdminUserResponse adminControllerGetCurrentAdminUser()
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+const { status, data } = await apiInstance.adminControllerGetCurrentAdminUser();
+```
+
+### Parameters
+This endpoint does not have any parameters.
+
+
+### Return type
+
+**AdminUserResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1535,7 +1974,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1578,7 +2017,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1628,7 +2067,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1671,7 +2110,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1727,7 +2166,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1777,7 +2216,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1827,7 +2266,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1877,7 +2316,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1933,7 +2372,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1976,7 +2415,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1988,6 +2427,291 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerGetDriversDocuments**
+> DriversDocumentsResponse adminControllerGetDriversDocuments()
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+let status: string; // (optional) (default to undefined)
+let page: number; // (optional) (default to 1)
+let limit: number; // (optional) (default to 20)
+
+const { status, data } = await apiInstance.adminControllerGetDriversDocuments(
+    status,
+    page,
+    limit
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **status** | [**string**] |  | (optional) defaults to undefined|
+| **page** | [**number**] |  | (optional) defaults to 1|
+| **limit** | [**number**] |  | (optional) defaults to 20|
+
+
+### Return type
+
+**DriversDocumentsResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**401** | Unauthorized |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerGetDriversFinance**
+> DriversFinanceResponse adminControllerGetDriversFinance()
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+let startDate: string; // (optional) (default to undefined)
+let endDate: string; // (optional) (default to undefined)
+let page: number; // (optional) (default to 1)
+let limit: number; // (optional) (default to 20)
+
+const { status, data } = await apiInstance.adminControllerGetDriversFinance(
+    startDate,
+    endDate,
+    page,
+    limit
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **startDate** | [**string**] |  | (optional) defaults to undefined|
+| **endDate** | [**string**] |  | (optional) defaults to undefined|
+| **page** | [**number**] |  | (optional) defaults to 1|
+| **limit** | [**number**] |  | (optional) defaults to 20|
+
+
+### Return type
+
+**DriversFinanceResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**401** | Unauthorized |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerGetDriversPayouts**
+> DriversPayoutsResponse adminControllerGetDriversPayouts()
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+let status: string; // (optional) (default to undefined)
+let page: number; // (optional) (default to 1)
+let limit: number; // (optional) (default to 20)
+
+const { status, data } = await apiInstance.adminControllerGetDriversPayouts(
+    status,
+    page,
+    limit
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **status** | [**string**] |  | (optional) defaults to undefined|
+| **page** | [**number**] |  | (optional) defaults to 1|
+| **limit** | [**number**] |  | (optional) defaults to 20|
+
+
+### Return type
+
+**DriversPayoutsResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**401** | Unauthorized |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerGetDriversShifts**
+> DriversShiftsResponse adminControllerGetDriversShifts()
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+let status: string; // (optional) (default to undefined)
+let date: string; // (optional) (default to undefined)
+let page: number; // (optional) (default to 1)
+let limit: number; // (optional) (default to 20)
+
+const { status, data } = await apiInstance.adminControllerGetDriversShifts(
+    status,
+    date,
+    page,
+    limit
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **status** | [**string**] |  | (optional) defaults to undefined|
+| **date** | [**string**] |  | (optional) defaults to undefined|
+| **page** | [**number**] |  | (optional) defaults to 1|
+| **limit** | [**number**] |  | (optional) defaults to 20|
+
+
+### Return type
+
+**DriversShiftsResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**401** | Unauthorized |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerGetDriversVacationsStats**
+> DriversVacationsStatsResponse adminControllerGetDriversVacationsStats()
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+let year: number; // (optional) (default to undefined)
+
+const { status, data } = await apiInstance.adminControllerGetDriversVacationsStats(
+    year
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **year** | [**number**] |  | (optional) defaults to undefined|
+
+
+### Return type
+
+**DriversVacationsStatsResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2026,7 +2750,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -2069,7 +2793,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -2112,7 +2836,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -2168,7 +2892,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -2211,7 +2935,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -2261,7 +2985,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -2317,7 +3041,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -2367,7 +3091,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -2420,7 +3144,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -2432,6 +3156,209 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerGetModules**
+> RolesResponse adminControllerGetModules()
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+const { status, data } = await apiInstance.adminControllerGetModules();
+```
+
+### Parameters
+This endpoint does not have any parameters.
+
+
+### Return type
+
+**RolesResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**401** | Unauthorized |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerGetMyAuditActions**
+> MyAuditActionsResponse adminControllerGetMyAuditActions()
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+let limit: number; // (optional) (default to 10)
+
+const { status, data } = await apiInstance.adminControllerGetMyAuditActions(
+    limit
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **limit** | [**number**] |  | (optional) defaults to 10|
+
+
+### Return type
+
+**MyAuditActionsResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**401** | Unauthorized |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerGetOpsDriversRealtime**
+> OpsDriversRealtimeResponse adminControllerGetOpsDriversRealtime()
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+let area: string; // (optional) (default to undefined)
+let status: string; // (optional) (default to undefined)
+
+const { status, data } = await apiInstance.adminControllerGetOpsDriversRealtime(
+    area,
+    status
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **area** | [**string**] |  | (optional) defaults to undefined|
+| **status** | [**string**] |  | (optional) defaults to undefined|
+
+
+### Return type
+
+**OpsDriversRealtimeResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**401** | Unauthorized |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerGetOpsHeatmap**
+> OpsHeatmapResponse adminControllerGetOpsHeatmap()
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+let hours: number; // (optional) (default to 24)
+let resolution: string; // (optional) (default to 'medium')
+
+const { status, data } = await apiInstance.adminControllerGetOpsHeatmap(
+    hours,
+    resolution
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **hours** | [**number**] |  | (optional) defaults to 24|
+| **resolution** | [**string**] |  | (optional) defaults to 'medium'|
+
+
+### Return type
+
+**OpsHeatmapResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2473,7 +3400,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -2516,7 +3443,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -2569,7 +3496,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -2581,6 +3508,63 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerGetPendingActivations**
+> PendingActivationsResponse adminControllerGetPendingActivations()
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+let type: 'stores' | 'vendors'; // (optional) (default to undefined)
+let page: number; // (optional) (default to 1)
+let limit: number; // (optional) (default to 20)
+
+const { status, data } = await apiInstance.adminControllerGetPendingActivations(
+    type,
+    page,
+    limit
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **type** | [**&#39;stores&#39; | &#39;vendors&#39;**]**Array<&#39;stores&#39; &#124; &#39;vendors&#39;>** |  | (optional) defaults to undefined|
+| **page** | [**number**] |  | (optional) defaults to 1|
+| **limit** | [**number**] |  | (optional) defaults to 20|
+
+
+### Return type
+
+**PendingActivationsResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2612,7 +3596,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -2655,7 +3639,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -2708,7 +3692,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -2764,7 +3748,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -2807,7 +3791,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -2850,7 +3834,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -2862,6 +3846,60 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerGetSupportStats**
+> SupportStatsResponse adminControllerGetSupportStats()
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+let startDate: string; // (optional) (default to undefined)
+let endDate: string; // (optional) (default to undefined)
+
+const { status, data } = await apiInstance.adminControllerGetSupportStats(
+    startDate,
+    endDate
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **startDate** | [**string**] |  | (optional) defaults to undefined|
+| **endDate** | [**string**] |  | (optional) defaults to undefined|
+
+
+### Return type
+
+**SupportStatsResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2893,7 +3931,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -2936,7 +3974,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -2979,7 +4017,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -3029,7 +4067,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -3079,7 +4117,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -3138,7 +4176,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -3150,6 +4188,120 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerGetVendorsList**
+> VendorsListResponse adminControllerGetVendorsList()
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+let status: string; // (optional) (default to undefined)
+let page: number; // (optional) (default to 1)
+let limit: number; // (optional) (default to 20)
+
+const { status, data } = await apiInstance.adminControllerGetVendorsList(
+    status,
+    page,
+    limit
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **status** | [**string**] |  | (optional) defaults to undefined|
+| **page** | [**number**] |  | (optional) defaults to 1|
+| **limit** | [**number**] |  | (optional) defaults to 20|
+
+
+### Return type
+
+**VendorsListResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**401** | Unauthorized |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerGetWalletCoupons**
+> WalletCouponsResponse adminControllerGetWalletCoupons()
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+let status: string; // (optional) (default to undefined)
+let page: number; // (optional) (default to 1)
+let limit: number; // (optional) (default to 20)
+
+const { status, data } = await apiInstance.adminControllerGetWalletCoupons(
+    status,
+    page,
+    limit
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **status** | [**string**] |  | (optional) defaults to undefined|
+| **page** | [**number**] |  | (optional) defaults to 1|
+| **limit** | [**number**] |  | (optional) defaults to 20|
+
+
+### Return type
+
+**WalletCouponsResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -3197,7 +4349,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -3250,7 +4402,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -3300,7 +4452,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -3350,7 +4502,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -3400,7 +4552,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -3450,7 +4602,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -3500,7 +4652,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -3550,7 +4702,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -3562,6 +4714,58 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**201** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerRunFinanceCalculations**
+> FinanceCalculationResponse adminControllerRunFinanceCalculations(financeCalculationRequest)
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration,
+    FinanceCalculationRequest
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+let financeCalculationRequest: FinanceCalculationRequest; //
+
+const { status, data } = await apiInstance.adminControllerRunFinanceCalculations(
+    financeCalculationRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **financeCalculationRequest** | **FinanceCalculationRequest**|  | |
+
+
+### Return type
+
+**FinanceCalculationResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -3600,7 +4804,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -3650,7 +4854,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -3700,7 +4904,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -3750,7 +4954,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -3762,6 +4966,58 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**201** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerUpdateAppearanceSettings**
+> SettingsUpdateResponse adminControllerUpdateAppearanceSettings(updateAppearanceSettingsRequest)
+
+
+### Example
+
+```typescript
+import {
+    AdminApi,
+    Configuration,
+    UpdateAppearanceSettingsRequest
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new AdminApi(configuration);
+
+let updateAppearanceSettingsRequest: UpdateAppearanceSettingsRequest; //
+
+const { status, data } = await apiInstance.adminControllerUpdateAppearanceSettings(
+    updateAppearanceSettingsRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **updateAppearanceSettingsRequest** | **UpdateAppearanceSettingsRequest**|  | |
+
+
+### Return type
+
+**SettingsUpdateResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+|**401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -3800,7 +5056,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -3850,7 +5106,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -3900,7 +5156,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -3951,7 +5207,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 

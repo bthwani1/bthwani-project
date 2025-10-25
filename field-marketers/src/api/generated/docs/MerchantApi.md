@@ -65,7 +65,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -117,7 +117,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -169,7 +169,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -221,7 +221,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -273,7 +273,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -325,7 +325,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -377,7 +377,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -429,7 +429,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -481,7 +481,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -539,7 +539,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -590,7 +590,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -787,7 +787,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1059,7 +1059,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1115,7 +1115,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1171,7 +1171,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1227,7 +1227,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1283,7 +1283,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -1336,7 +1336,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 

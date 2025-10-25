@@ -1,6 +1,6 @@
 // Vendor Mobile App API Client
 // Generated from OpenAPI spec: openapi.yaml
-// Generation Date: 2025-10-23T16:00:16.285Z
+// Generation Date: 2025-10-25T20:39:05.809Z
 // Do not edit manually - regenerate using: npm run generate:sdks
 
 export * from './apis';

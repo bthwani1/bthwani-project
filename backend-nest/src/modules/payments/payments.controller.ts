@@ -15,7 +15,7 @@ import { PaymentsService } from './payments.service';
 @ApiBearerAuth()
 @ApiConsumes('application/json')
 @ApiProduces('application/json')
-@Controller('api/v2/payments')
+@Controller(['api/v2/payments', 'payments'])
 export class PaymentsController {
   constructor(private readonly service: PaymentsService) {}
 
@@ -87,5 +87,59 @@ export class PaymentsController {
     // يجب استخراج userId من JWT
     const userId = 'test-user'; // placeholder
     return this.service.getHoldsByUser(userId);
+  }
+
+  @Post('create-session')
+  @ApiOperation({ summary: 'إنشاء جلسة دفع', description: 'إنشاء جلسة دفع لمعالجة الدفع عبر الإنترنت' })
+  @ApiBody({
+    description: 'بيانات جلسة الدفع',
+    schema: {
+      type: 'object',
+      required: ['amount', 'currency', 'description'],
+      properties: {
+        amount: { type: 'number', example: 100.50 },
+        currency: { type: 'string', example: 'SAR', default: 'SAR' },
+        description: { type: 'string', example: 'دفع طلب #123' },
+        metadata: { type: 'object', example: { orderId: '123' } },
+        returnUrl: { type: 'string', example: 'https://example.com/payment/success' },
+        cancelUrl: { type: 'string', example: 'https://example.com/payment/cancel' }
+      }
+    }
+  })
+  @ApiResponse({ status: HttpStatus.OK, description: 'تم إنشاء الجلسة بنجاح' })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'بيانات غير صحيحة' })
+  createSession(@Body() dto: {
+    amount: number;
+    currency?: string;
+    description: string;
+    metadata?: any;
+    returnUrl?: string;
+    cancelUrl?: string;
+  }) {
+    return this.service.createPaymentSession(dto);
+  }
+
+  @Post('confirm')
+  @ApiOperation({ summary: 'تأكيد الدفع', description: 'تأكيد عملية الدفع بعد إكمالها من قبل المستخدم' })
+  @ApiBody({
+    description: 'بيانات تأكيد الدفع',
+    schema: {
+      type: 'object',
+      required: ['sessionId'],
+      properties: {
+        sessionId: { type: 'string', example: 'cs_test_1234567890' },
+        paymentMethodId: { type: 'string', example: 'pm_1234567890' },
+        returnUrl: { type: 'string', example: 'https://example.com/payment/success' }
+      }
+    }
+  })
+  @ApiResponse({ status: HttpStatus.OK, description: 'تم تأكيد الدفع بنجاح' })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'فشل في تأكيد الدفع' })
+  confirmPayment(@Body() dto: {
+    sessionId: string;
+    paymentMethodId?: string;
+    returnUrl?: string;
+  }) {
+    return this.service.confirmPayment(dto);
   }
 }

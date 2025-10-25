@@ -539,4 +539,27 @@ export class UserService {
         : this.MAX_PIN_ATTEMPTS - (user.security?.pinAttempts || 0),
     };
   }
+
+  // حذف حساب المستخدم الحالي
+  async deleteCurrentUser(userId: string) {
+    const user = await EntityHelper.findByIdOrFail(
+      this.userModel,
+      userId,
+      'User',
+    );
+
+    // حذف المستخدم من قاعدة البيانات
+    await this.userModel.findByIdAndDelete(userId);
+
+    // مسح الـ cache
+    await CacheHelper.invalidateMultiple(this.cacheManager, [
+      `user:profile:${userId}`,
+      `user:addresses:${userId}`,
+    ]);
+
+    return {
+      message: 'تم حذف الحساب بنجاح',
+      deletedAt: new Date().toISOString(),
+    };
+  }
 }

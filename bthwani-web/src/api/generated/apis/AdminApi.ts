@@ -19,6 +19,32 @@ import type {
   AdminControllerCreateMarketerRequest,
   AdminControllerCreateRoleRequest,
   AdminControllerUpdateSettingsRequest,
+  AdminCreationResponse,
+  AdminUserResponse,
+  AdminUsersListResponse,
+  AppearanceSettingsResponse,
+  AuditLogsStatsResponse,
+  CommissionPlanCreationResponse,
+  CreateAdminRequest,
+  CreateCommissionPlanRequest,
+  DriversAttendanceResponse,
+  DriversDocumentsResponse,
+  DriversFinanceResponse,
+  DriversPayoutsResponse,
+  DriversShiftsResponse,
+  DriversVacationsStatsResponse,
+  FinanceCalculationRequest,
+  FinanceCalculationResponse,
+  MyAuditActionsResponse,
+  OpsDriversRealtimeResponse,
+  OpsHeatmapResponse,
+  PendingActivationsResponse,
+  RolesResponse,
+  SettingsUpdateResponse,
+  SupportStatsResponse,
+  UpdateAppearanceSettingsRequest,
+  VendorsListResponse,
+  WalletCouponsResponse,
 } from '../models/index';
 import {
     AdminControllerCreateBackupRequestFromJSON,
@@ -29,6 +55,58 @@ import {
     AdminControllerCreateRoleRequestToJSON,
     AdminControllerUpdateSettingsRequestFromJSON,
     AdminControllerUpdateSettingsRequestToJSON,
+    AdminCreationResponseFromJSON,
+    AdminCreationResponseToJSON,
+    AdminUserResponseFromJSON,
+    AdminUserResponseToJSON,
+    AdminUsersListResponseFromJSON,
+    AdminUsersListResponseToJSON,
+    AppearanceSettingsResponseFromJSON,
+    AppearanceSettingsResponseToJSON,
+    AuditLogsStatsResponseFromJSON,
+    AuditLogsStatsResponseToJSON,
+    CommissionPlanCreationResponseFromJSON,
+    CommissionPlanCreationResponseToJSON,
+    CreateAdminRequestFromJSON,
+    CreateAdminRequestToJSON,
+    CreateCommissionPlanRequestFromJSON,
+    CreateCommissionPlanRequestToJSON,
+    DriversAttendanceResponseFromJSON,
+    DriversAttendanceResponseToJSON,
+    DriversDocumentsResponseFromJSON,
+    DriversDocumentsResponseToJSON,
+    DriversFinanceResponseFromJSON,
+    DriversFinanceResponseToJSON,
+    DriversPayoutsResponseFromJSON,
+    DriversPayoutsResponseToJSON,
+    DriversShiftsResponseFromJSON,
+    DriversShiftsResponseToJSON,
+    DriversVacationsStatsResponseFromJSON,
+    DriversVacationsStatsResponseToJSON,
+    FinanceCalculationRequestFromJSON,
+    FinanceCalculationRequestToJSON,
+    FinanceCalculationResponseFromJSON,
+    FinanceCalculationResponseToJSON,
+    MyAuditActionsResponseFromJSON,
+    MyAuditActionsResponseToJSON,
+    OpsDriversRealtimeResponseFromJSON,
+    OpsDriversRealtimeResponseToJSON,
+    OpsHeatmapResponseFromJSON,
+    OpsHeatmapResponseToJSON,
+    PendingActivationsResponseFromJSON,
+    PendingActivationsResponseToJSON,
+    RolesResponseFromJSON,
+    RolesResponseToJSON,
+    SettingsUpdateResponseFromJSON,
+    SettingsUpdateResponseToJSON,
+    SupportStatsResponseFromJSON,
+    SupportStatsResponseToJSON,
+    UpdateAppearanceSettingsRequestFromJSON,
+    UpdateAppearanceSettingsRequestToJSON,
+    VendorsListResponseFromJSON,
+    VendorsListResponseToJSON,
+    WalletCouponsResponseFromJSON,
+    WalletCouponsResponseToJSON,
 } from '../models/index';
 
 export interface AdminControllerActivateMarketerRequest {
@@ -71,8 +149,16 @@ export interface AdminControllerBanUserRequest {
     id: string;
 }
 
+export interface AdminControllerCreateAdminRequest {
+    createAdminRequest: CreateAdminRequest;
+}
+
 export interface AdminControllerCreateBackupOperationRequest {
     adminControllerCreateBackupRequest: AdminControllerCreateBackupRequest;
+}
+
+export interface AdminControllerCreateCommissionPlanRequest {
+    createCommissionPlanRequest: CreateCommissionPlanRequest;
 }
 
 export interface AdminControllerCreateMarketerOperationRequest {
@@ -112,11 +198,28 @@ export interface AdminControllerExportReportRequest {
     format: string;
 }
 
+export interface AdminControllerGetAdminUsersListRequest {
+    page?: number;
+    limit?: number;
+    search?: string;
+}
+
+export interface AdminControllerGetAdminsListRequest {
+    page?: number;
+    limit?: number;
+}
+
 export interface AdminControllerGetAllDriversRequest {
     status: string;
     isAvailable: boolean;
     page: number;
     limit: number;
+}
+
+export interface AdminControllerGetAllDriversAttendanceRequest {
+    date?: Date;
+    page?: number;
+    limit?: number;
 }
 
 export interface AdminControllerGetAllMarketersRequest {
@@ -138,6 +241,11 @@ export interface AdminControllerGetAuditLogsRequest {
     userId: string;
     startDate: string;
     endDate: string;
+}
+
+export interface AdminControllerGetAuditLogsStatsRequest {
+    startDate?: Date;
+    endDate?: Date;
 }
 
 export interface AdminControllerGetDailyReportRequest {
@@ -172,6 +280,36 @@ export interface AdminControllerGetDriverPerformanceRequest {
     endDate: string;
 }
 
+export interface AdminControllerGetDriversDocumentsRequest {
+    status?: string;
+    page?: number;
+    limit?: number;
+}
+
+export interface AdminControllerGetDriversFinanceRequest {
+    startDate?: Date;
+    endDate?: Date;
+    page?: number;
+    limit?: number;
+}
+
+export interface AdminControllerGetDriversPayoutsRequest {
+    status?: string;
+    page?: number;
+    limit?: number;
+}
+
+export interface AdminControllerGetDriversShiftsRequest {
+    status?: string;
+    date?: Date;
+    page?: number;
+    limit?: number;
+}
+
+export interface AdminControllerGetDriversVacationsStatsRequest {
+    year?: number;
+}
+
 export interface AdminControllerGetFailedPasswordAttemptsRequest {
     threshold: number;
 }
@@ -201,6 +339,20 @@ export interface AdminControllerGetMarketersStatisticsRequest {
     endDate: string;
 }
 
+export interface AdminControllerGetMyAuditActionsRequest {
+    limit?: number;
+}
+
+export interface AdminControllerGetOpsDriversRealtimeRequest {
+    area?: string;
+    status?: string;
+}
+
+export interface AdminControllerGetOpsHeatmapRequest {
+    hours?: number;
+    resolution?: string;
+}
+
 export interface AdminControllerGetOrdersByCityRequest {
     startDate: string;
     endDate: string;
@@ -209,6 +361,12 @@ export interface AdminControllerGetOrdersByCityRequest {
 export interface AdminControllerGetOrdersByStatusRequest {
     startDate: string;
     endDate: string;
+}
+
+export interface AdminControllerGetPendingActivationsRequest {
+    type?: AdminControllerGetPendingActivationsTypeEnum;
+    page?: number;
+    limit?: number;
 }
 
 export interface AdminControllerGetQualityMetricsRequest {
@@ -220,6 +378,11 @@ export interface AdminControllerGetRevenueAnalyticsRequest {
     period: string;
     startDate: string;
     endDate: string;
+}
+
+export interface AdminControllerGetSupportStatsRequest {
+    startDate?: Date;
+    endDate?: Date;
 }
 
 export interface AdminControllerGetUserDetailsRequest {
@@ -235,6 +398,18 @@ export interface AdminControllerGetUsersRequest {
     isActive: boolean;
     page: number;
     limit: number;
+}
+
+export interface AdminControllerGetVendorsListRequest {
+    status?: string;
+    page?: number;
+    limit?: number;
+}
+
+export interface AdminControllerGetWalletCouponsRequest {
+    status?: string;
+    page?: number;
+    limit?: number;
 }
 
 export interface AdminControllerGetWithdrawalsRequest {
@@ -273,6 +448,10 @@ export interface AdminControllerRestoreBackupRequest {
     id: string;
 }
 
+export interface AdminControllerRunFinanceCalculationsRequest {
+    financeCalculationRequest: FinanceCalculationRequest;
+}
+
 export interface AdminControllerSuspendVendorRequest {
     id: string;
 }
@@ -287,6 +466,10 @@ export interface AdminControllerUnbanUserRequest {
 
 export interface AdminControllerUnlockAccountRequest {
     userId: string;
+}
+
+export interface AdminControllerUpdateAppearanceSettingsRequest {
+    updateAppearanceSettingsRequest: UpdateAppearanceSettingsRequest;
 }
 
 export interface AdminControllerUpdateFeatureFlagRequest {
@@ -478,6 +661,21 @@ export interface AdminApiInterface {
 
     /**
      * 
+     * @summary إنشاء مستخدم إداري جديد
+     * @param {CreateAdminRequest} createAdminRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerCreateAdminRaw(requestParameters: AdminControllerCreateAdminRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AdminCreationResponse>>;
+
+    /**
+     * إنشاء مستخدم إداري جديد
+     */
+    adminControllerCreateAdmin(requestParameters: AdminControllerCreateAdminRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AdminCreationResponse>;
+
+    /**
+     * 
      * @summary إنشاء نسخة احتياطية
      * @param {AdminControllerCreateBackupRequest} adminControllerCreateBackupRequest 
      * @param {*} [options] Override http request option.
@@ -490,6 +688,21 @@ export interface AdminApiInterface {
      * إنشاء نسخة احتياطية
      */
     adminControllerCreateBackup(requestParameters: AdminControllerCreateBackupOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * 
+     * @summary إنشاء خطة عمولة جديدة
+     * @param {CreateCommissionPlanRequest} createCommissionPlanRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerCreateCommissionPlanRaw(requestParameters: AdminControllerCreateCommissionPlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CommissionPlanCreationResponse>>;
+
+    /**
+     * إنشاء خطة عمولة جديدة
+     */
+    adminControllerCreateCommissionPlan(requestParameters: AdminControllerCreateCommissionPlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CommissionPlanCreationResponse>;
 
     /**
      * 
@@ -643,6 +856,39 @@ export interface AdminApiInterface {
 
     /**
      * 
+     * @summary قائمة المستخدمين الإداريين
+     * @param {number} [page] 
+     * @param {number} [limit] 
+     * @param {string} [search] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerGetAdminUsersListRaw(requestParameters: AdminControllerGetAdminUsersListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AdminUsersListResponse>>;
+
+    /**
+     * قائمة المستخدمين الإداريين
+     */
+    adminControllerGetAdminUsersList(requestParameters: AdminControllerGetAdminUsersListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AdminUsersListResponse>;
+
+    /**
+     * 
+     * @summary قائمة المستخدمين الإداريين
+     * @param {number} [page] 
+     * @param {number} [limit] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerGetAdminsListRaw(requestParameters: AdminControllerGetAdminsListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AdminUsersListResponse>>;
+
+    /**
+     * قائمة المستخدمين الإداريين
+     */
+    adminControllerGetAdminsList(requestParameters: AdminControllerGetAdminsListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AdminUsersListResponse>;
+
+    /**
+     * 
      * @summary جلب كل السائقين
      * @param {string} status 
      * @param {boolean} isAvailable 
@@ -661,6 +907,23 @@ export interface AdminApiInterface {
 
     /**
      * 
+     * @summary حضور جميع السائقين
+     * @param {Date} [date] 
+     * @param {number} [page] 
+     * @param {number} [limit] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerGetAllDriversAttendanceRaw(requestParameters: AdminControllerGetAllDriversAttendanceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DriversAttendanceResponse>>;
+
+    /**
+     * حضور جميع السائقين
+     */
+    adminControllerGetAllDriversAttendance(requestParameters: AdminControllerGetAllDriversAttendanceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriversAttendanceResponse>;
+
+    /**
+     * 
      * @summary جلب المسوقين الميدانيين
      * @param {string} status 
      * @param {number} page 
@@ -675,6 +938,20 @@ export interface AdminApiInterface {
      * جلب المسوقين الميدانيين
      */
     adminControllerGetAllMarketers(requestParameters: AdminControllerGetAllMarketersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * 
+     * @summary إعدادات المظهر
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerGetAppearanceSettingsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AppearanceSettingsResponse>>;
+
+    /**
+     * إعدادات المظهر
+     */
+    adminControllerGetAppearanceSettings(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AppearanceSettingsResponse>;
 
     /**
      * 
@@ -726,6 +1003,22 @@ export interface AdminApiInterface {
 
     /**
      * 
+     * @summary إحصائيات سجلات المراجعة
+     * @param {Date} [startDate] 
+     * @param {Date} [endDate] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerGetAuditLogsStatsRaw(requestParameters: AdminControllerGetAuditLogsStatsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuditLogsStatsResponse>>;
+
+    /**
+     * إحصائيات سجلات المراجعة
+     */
+    adminControllerGetAuditLogsStats(requestParameters: AdminControllerGetAuditLogsStatsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AuditLogsStatsResponse>;
+
+    /**
+     * 
      * @summary إحصائيات الكاش
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -737,6 +1030,20 @@ export interface AdminApiInterface {
      * إحصائيات الكاش
      */
     adminControllerGetCacheStats(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * 
+     * @summary بيانات المستخدم الإداري الحالي
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerGetCurrentAdminUserRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AdminUserResponse>>;
+
+    /**
+     * بيانات المستخدم الإداري الحالي
+     */
+    adminControllerGetCurrentAdminUser(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AdminUserResponse>;
 
     /**
      * 
@@ -891,6 +1198,91 @@ export interface AdminApiInterface {
 
     /**
      * 
+     * @summary وثائق السائقين
+     * @param {string} [status] 
+     * @param {number} [page] 
+     * @param {number} [limit] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerGetDriversDocumentsRaw(requestParameters: AdminControllerGetDriversDocumentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DriversDocumentsResponse>>;
+
+    /**
+     * وثائق السائقين
+     */
+    adminControllerGetDriversDocuments(requestParameters: AdminControllerGetDriversDocumentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriversDocumentsResponse>;
+
+    /**
+     * 
+     * @summary إحصائيات مالية السائقين
+     * @param {Date} [startDate] 
+     * @param {Date} [endDate] 
+     * @param {number} [page] 
+     * @param {number} [limit] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerGetDriversFinanceRaw(requestParameters: AdminControllerGetDriversFinanceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DriversFinanceResponse>>;
+
+    /**
+     * إحصائيات مالية السائقين
+     */
+    adminControllerGetDriversFinance(requestParameters: AdminControllerGetDriversFinanceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriversFinanceResponse>;
+
+    /**
+     * 
+     * @summary دفعات السائقين
+     * @param {string} [status] 
+     * @param {number} [page] 
+     * @param {number} [limit] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerGetDriversPayoutsRaw(requestParameters: AdminControllerGetDriversPayoutsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DriversPayoutsResponse>>;
+
+    /**
+     * دفعات السائقين
+     */
+    adminControllerGetDriversPayouts(requestParameters: AdminControllerGetDriversPayoutsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriversPayoutsResponse>;
+
+    /**
+     * 
+     * @summary ورديات السائقين
+     * @param {string} [status] 
+     * @param {Date} [date] 
+     * @param {number} [page] 
+     * @param {number} [limit] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerGetDriversShiftsRaw(requestParameters: AdminControllerGetDriversShiftsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DriversShiftsResponse>>;
+
+    /**
+     * ورديات السائقين
+     */
+    adminControllerGetDriversShifts(requestParameters: AdminControllerGetDriversShiftsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriversShiftsResponse>;
+
+    /**
+     * 
+     * @summary إحصائيات إجازات السائقين
+     * @param {number} [year] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerGetDriversVacationsStatsRaw(requestParameters: AdminControllerGetDriversVacationsStatsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DriversVacationsStatsResponse>>;
+
+    /**
+     * إحصائيات إجازات السائقين
+     */
+    adminControllerGetDriversVacationsStats(requestParameters: AdminControllerGetDriversVacationsStatsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriversVacationsStatsResponse>;
+
+    /**
+     * 
      * @summary محاولات كلمات المرور الفاشلة
      * @param {number} threshold 
      * @param {*} [options] Override http request option.
@@ -1028,6 +1420,67 @@ export interface AdminApiInterface {
 
     /**
      * 
+     * @summary الأدوار والصلاحيات
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerGetModulesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RolesResponse>>;
+
+    /**
+     * الأدوار والصلاحيات
+     */
+    adminControllerGetModules(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RolesResponse>;
+
+    /**
+     * 
+     * @summary إجراءاتي في سجلات المراجعة
+     * @param {number} [limit] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerGetMyAuditActionsRaw(requestParameters: AdminControllerGetMyAuditActionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MyAuditActionsResponse>>;
+
+    /**
+     * إجراءاتي في سجلات المراجعة
+     */
+    adminControllerGetMyAuditActions(requestParameters: AdminControllerGetMyAuditActionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MyAuditActionsResponse>;
+
+    /**
+     * 
+     * @summary سائقو العمليات في الوقت الفعلي
+     * @param {string} [area] 
+     * @param {string} [status] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerGetOpsDriversRealtimeRaw(requestParameters: AdminControllerGetOpsDriversRealtimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpsDriversRealtimeResponse>>;
+
+    /**
+     * سائقو العمليات في الوقت الفعلي
+     */
+    adminControllerGetOpsDriversRealtime(requestParameters: AdminControllerGetOpsDriversRealtimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpsDriversRealtimeResponse>;
+
+    /**
+     * 
+     * @summary خريطة الحرارة للعمليات
+     * @param {number} [hours] 
+     * @param {string} [resolution] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerGetOpsHeatmapRaw(requestParameters: AdminControllerGetOpsHeatmapRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpsHeatmapResponse>>;
+
+    /**
+     * خريطة الحرارة للعمليات
+     */
+    adminControllerGetOpsHeatmap(requestParameters: AdminControllerGetOpsHeatmapRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpsHeatmapResponse>;
+
+    /**
+     * 
      * @summary الطلبات حسب المدينة
      * @param {string} startDate 
      * @param {string} endDate 
@@ -1071,6 +1524,23 @@ export interface AdminApiInterface {
      * الطلبات حسب الحالة
      */
     adminControllerGetOrdersByStatus(requestParameters: AdminControllerGetOrdersByStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * 
+     * @summary التفعيلات المعلقة
+     * @param {'stores' | 'vendors'} [type] 
+     * @param {number} [page] 
+     * @param {number} [limit] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerGetPendingActivationsRaw(requestParameters: AdminControllerGetPendingActivationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PendingActivationsResponse>>;
+
+    /**
+     * التفعيلات المعلقة
+     */
+    adminControllerGetPendingActivations(requestParameters: AdminControllerGetPendingActivationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PendingActivationsResponse>;
 
     /**
      * 
@@ -1163,6 +1633,22 @@ export interface AdminApiInterface {
 
     /**
      * 
+     * @summary إحصائيات الدعم الفني
+     * @param {Date} [startDate] 
+     * @param {Date} [endDate] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerGetSupportStatsRaw(requestParameters: AdminControllerGetSupportStatsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SupportStatsResponse>>;
+
+    /**
+     * إحصائيات الدعم الفني
+     */
+    adminControllerGetSupportStats(requestParameters: AdminControllerGetSupportStatsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SupportStatsResponse>;
+
+    /**
+     * 
      * @summary صحة النظام
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1250,6 +1736,40 @@ export interface AdminApiInterface {
      * جلب المستخدمين
      */
     adminControllerGetUsers(requestParameters: AdminControllerGetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * 
+     * @summary قائمة التجار
+     * @param {string} [status] 
+     * @param {number} [page] 
+     * @param {number} [limit] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerGetVendorsListRaw(requestParameters: AdminControllerGetVendorsListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VendorsListResponse>>;
+
+    /**
+     * قائمة التجار
+     */
+    adminControllerGetVendorsList(requestParameters: AdminControllerGetVendorsListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VendorsListResponse>;
+
+    /**
+     * 
+     * @summary كوبونات المحفظة
+     * @param {string} [status] 
+     * @param {number} [page] 
+     * @param {number} [limit] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerGetWalletCouponsRaw(requestParameters: AdminControllerGetWalletCouponsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WalletCouponsResponse>>;
+
+    /**
+     * كوبونات المحفظة
+     */
+    adminControllerGetWalletCoupons(requestParameters: AdminControllerGetWalletCouponsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WalletCouponsResponse>;
 
     /**
      * 
@@ -1377,6 +1897,21 @@ export interface AdminApiInterface {
 
     /**
      * 
+     * @summary تشغيل حسابات المالية
+     * @param {FinanceCalculationRequest} financeCalculationRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerRunFinanceCalculationsRaw(requestParameters: AdminControllerRunFinanceCalculationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FinanceCalculationResponse>>;
+
+    /**
+     * تشغيل حسابات المالية
+     */
+    adminControllerRunFinanceCalculations(requestParameters: AdminControllerRunFinanceCalculationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FinanceCalculationResponse>;
+
+    /**
+     * 
      * @summary تعليق تاجر
      * @param {string} id 
      * @param {*} [options] Override http request option.
@@ -1434,6 +1969,21 @@ export interface AdminApiInterface {
      * فتح حساب مقفل
      */
     adminControllerUnlockAccount(requestParameters: AdminControllerUnlockAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+    /**
+     * 
+     * @summary تحديث إعدادات المظهر
+     * @param {UpdateAppearanceSettingsRequest} updateAppearanceSettingsRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApiInterface
+     */
+    adminControllerUpdateAppearanceSettingsRaw(requestParameters: AdminControllerUpdateAppearanceSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SettingsUpdateResponse>>;
+
+    /**
+     * تحديث إعدادات المظهر
+     */
+    adminControllerUpdateAppearanceSettings(requestParameters: AdminControllerUpdateAppearanceSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SettingsUpdateResponse>;
 
     /**
      * 
@@ -1517,14 +2067,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/marketers/{id}/activate`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -1561,14 +2103,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/drivers/{id}/attendance/adjust`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -1605,14 +2139,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/drivers/{id}/adjust-balance`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -1649,14 +2175,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/drivers/{id}/leave-balance/adjust`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -1693,14 +2211,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/data-deletion/{id}/approve`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -1737,14 +2247,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/drivers/leave-requests/{id}/approve`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -1781,14 +2283,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/vendors/{id}/approve`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -1825,14 +2319,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/withdrawals/{id}/approve`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -1869,14 +2355,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/drivers/{id}/ban`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -1913,14 +2391,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/users/{id}/ban`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -1950,14 +2420,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/cache/clear`;
 
@@ -1979,6 +2441,45 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
     }
 
     /**
+     * إنشاء مستخدم إداري جديد
+     */
+    async adminControllerCreateAdminRaw(requestParameters: AdminControllerCreateAdminRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AdminCreationResponse>> {
+        if (requestParameters['createAdminRequest'] == null) {
+            throw new runtime.RequiredError(
+                'createAdminRequest',
+                'Required parameter "createAdminRequest" was null or undefined when calling adminControllerCreateAdmin().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/admin/create`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateAdminRequestToJSON(requestParameters['createAdminRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AdminCreationResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * إنشاء مستخدم إداري جديد
+     */
+    async adminControllerCreateAdmin(requestParameters: AdminControllerCreateAdminRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AdminCreationResponse> {
+        const response = await this.adminControllerCreateAdminRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * إنشاء نسخة احتياطية
      */
     async adminControllerCreateBackupRaw(requestParameters: AdminControllerCreateBackupOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -1995,14 +2496,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/backup/create`;
 
@@ -2025,6 +2518,45 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
     }
 
     /**
+     * إنشاء خطة عمولة جديدة
+     */
+    async adminControllerCreateCommissionPlanRaw(requestParameters: AdminControllerCreateCommissionPlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CommissionPlanCreationResponse>> {
+        if (requestParameters['createCommissionPlanRequest'] == null) {
+            throw new runtime.RequiredError(
+                'createCommissionPlanRequest',
+                'Required parameter "createCommissionPlanRequest" was null or undefined when calling adminControllerCreateCommissionPlan().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/admin/commission-plans`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateCommissionPlanRequestToJSON(requestParameters['createCommissionPlanRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CommissionPlanCreationResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * إنشاء خطة عمولة جديدة
+     */
+    async adminControllerCreateCommissionPlan(requestParameters: AdminControllerCreateCommissionPlanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CommissionPlanCreationResponse> {
+        const response = await this.adminControllerCreateCommissionPlanRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * إضافة مسوق جديد
      */
     async adminControllerCreateMarketerRaw(requestParameters: AdminControllerCreateMarketerOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -2041,14 +2573,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/marketers`;
 
@@ -2087,14 +2611,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/roles`;
 
@@ -2131,14 +2647,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/marketers/{id}/deactivate`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -2175,14 +2683,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/drivers/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -2219,14 +2719,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/drivers/assets/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -2263,14 +2755,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/drivers/leave-requests/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -2307,14 +2791,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/drivers/shifts/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -2351,14 +2827,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/backup/{id}/download`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -2388,14 +2856,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/marketers/export`;
 
@@ -2438,14 +2898,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/reports/export/{type}/{format}`;
         urlPath = urlPath.replace(`{${"type"}}`, encodeURIComponent(String(requestParameters['type'])));
@@ -2466,6 +2918,84 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
      */
     async adminControllerExportReport(requestParameters: AdminControllerExportReportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.adminControllerExportReportRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * قائمة المستخدمين الإداريين
+     */
+    async adminControllerGetAdminUsersListRaw(requestParameters: AdminControllerGetAdminUsersListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AdminUsersListResponse>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        if (requestParameters['search'] != null) {
+            queryParameters['search'] = requestParameters['search'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/admin/users/list`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AdminUsersListResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * قائمة المستخدمين الإداريين
+     */
+    async adminControllerGetAdminUsersList(requestParameters: AdminControllerGetAdminUsersListRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AdminUsersListResponse> {
+        const response = await this.adminControllerGetAdminUsersListRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * قائمة المستخدمين الإداريين
+     */
+    async adminControllerGetAdminsListRaw(requestParameters: AdminControllerGetAdminsListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AdminUsersListResponse>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/admin/list`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AdminUsersListResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * قائمة المستخدمين الإداريين
+     */
+    async adminControllerGetAdminsList(requestParameters: AdminControllerGetAdminsListRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AdminUsersListResponse> {
+        const response = await this.adminControllerGetAdminsListRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
@@ -2520,14 +3050,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/drivers`;
 
@@ -2546,6 +3068,47 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
      */
     async adminControllerGetAllDrivers(requestParameters: AdminControllerGetAllDriversRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.adminControllerGetAllDriversRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * حضور جميع السائقين
+     */
+    async adminControllerGetAllDriversAttendanceRaw(requestParameters: AdminControllerGetAllDriversAttendanceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DriversAttendanceResponse>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['date'] != null) {
+            queryParameters['date'] = (requestParameters['date'] as any).toISOString().substring(0,10);
+        }
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/admin/drivers/attendance`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DriversAttendanceResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * حضور جميع السائقين
+     */
+    async adminControllerGetAllDriversAttendance(requestParameters: AdminControllerGetAllDriversAttendanceRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriversAttendanceResponse> {
+        const response = await this.adminControllerGetAllDriversAttendanceRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
@@ -2589,14 +3152,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/marketers`;
 
@@ -2618,6 +3173,35 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
     }
 
     /**
+     * إعدادات المظهر
+     */
+    async adminControllerGetAppearanceSettingsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AppearanceSettingsResponse>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/admin/settings/appearance`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AppearanceSettingsResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * إعدادات المظهر
+     */
+    async adminControllerGetAppearanceSettings(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AppearanceSettingsResponse> {
+        const response = await this.adminControllerGetAppearanceSettingsRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
      * ملخص الحضور لكل السائقين
      */
     async adminControllerGetAttendanceSummaryRaw(requestParameters: AdminControllerGetAttendanceSummaryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -2636,14 +3220,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/drivers/attendance/summary`;
 
@@ -2679,14 +3255,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/audit-logs/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -2760,14 +3328,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/audit-logs`;
 
@@ -2789,6 +3349,43 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
     }
 
     /**
+     * إحصائيات سجلات المراجعة
+     */
+    async adminControllerGetAuditLogsStatsRaw(requestParameters: AdminControllerGetAuditLogsStatsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuditLogsStatsResponse>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['startDate'] != null) {
+            queryParameters['startDate'] = (requestParameters['startDate'] as any).toISOString();
+        }
+
+        if (requestParameters['endDate'] != null) {
+            queryParameters['endDate'] = (requestParameters['endDate'] as any).toISOString();
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/admin/audit-logs/stats`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AuditLogsStatsResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * إحصائيات سجلات المراجعة
+     */
+    async adminControllerGetAuditLogsStats(requestParameters: AdminControllerGetAuditLogsStatsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AuditLogsStatsResponse> {
+        const response = await this.adminControllerGetAuditLogsStatsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * إحصائيات الكاش
      */
     async adminControllerGetCacheStatsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -2796,14 +3393,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/cache/stats`;
 
@@ -2825,6 +3414,35 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
     }
 
     /**
+     * بيانات المستخدم الإداري الحالي
+     */
+    async adminControllerGetCurrentAdminUserRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AdminUserResponse>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/admin/me`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AdminUserResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * بيانات المستخدم الإداري الحالي
+     */
+    async adminControllerGetCurrentAdminUser(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AdminUserResponse> {
+        const response = await this.adminControllerGetCurrentAdminUserRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
      * تقرير يومي
      */
     async adminControllerGetDailyReportRaw(requestParameters: AdminControllerGetDailyReportRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -2843,14 +3461,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/reports/daily`;
 
@@ -2879,14 +3489,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/dashboard`;
 
@@ -2926,14 +3528,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/data-deletion/requests`;
 
@@ -2962,14 +3556,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/database/stats`;
 
@@ -3027,14 +3613,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/drivers/{id}/attendance`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -3071,14 +3649,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/drivers/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -3115,14 +3685,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/drivers/{id}/financials`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -3159,14 +3721,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/drivers/{id}/leave-balance`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -3225,14 +3779,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/drivers/{id}/performance`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -3262,14 +3808,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/drivers/stats/by-status`;
 
@@ -3291,6 +3829,211 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
     }
 
     /**
+     * وثائق السائقين
+     */
+    async adminControllerGetDriversDocumentsRaw(requestParameters: AdminControllerGetDriversDocumentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DriversDocumentsResponse>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
+        }
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/admin/drivers/docs`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DriversDocumentsResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * وثائق السائقين
+     */
+    async adminControllerGetDriversDocuments(requestParameters: AdminControllerGetDriversDocumentsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriversDocumentsResponse> {
+        const response = await this.adminControllerGetDriversDocumentsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * إحصائيات مالية السائقين
+     */
+    async adminControllerGetDriversFinanceRaw(requestParameters: AdminControllerGetDriversFinanceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DriversFinanceResponse>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['startDate'] != null) {
+            queryParameters['startDate'] = (requestParameters['startDate'] as any).toISOString();
+        }
+
+        if (requestParameters['endDate'] != null) {
+            queryParameters['endDate'] = (requestParameters['endDate'] as any).toISOString();
+        }
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/admin/drivers/finance`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DriversFinanceResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * إحصائيات مالية السائقين
+     */
+    async adminControllerGetDriversFinance(requestParameters: AdminControllerGetDriversFinanceRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriversFinanceResponse> {
+        const response = await this.adminControllerGetDriversFinanceRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * دفعات السائقين
+     */
+    async adminControllerGetDriversPayoutsRaw(requestParameters: AdminControllerGetDriversPayoutsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DriversPayoutsResponse>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
+        }
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/admin/drivers/payouts`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DriversPayoutsResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * دفعات السائقين
+     */
+    async adminControllerGetDriversPayouts(requestParameters: AdminControllerGetDriversPayoutsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriversPayoutsResponse> {
+        const response = await this.adminControllerGetDriversPayoutsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * ورديات السائقين
+     */
+    async adminControllerGetDriversShiftsRaw(requestParameters: AdminControllerGetDriversShiftsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DriversShiftsResponse>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
+        }
+
+        if (requestParameters['date'] != null) {
+            queryParameters['date'] = (requestParameters['date'] as any).toISOString().substring(0,10);
+        }
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/admin/drivers/shifts`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DriversShiftsResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * ورديات السائقين
+     */
+    async adminControllerGetDriversShifts(requestParameters: AdminControllerGetDriversShiftsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriversShiftsResponse> {
+        const response = await this.adminControllerGetDriversShiftsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * إحصائيات إجازات السائقين
+     */
+    async adminControllerGetDriversVacationsStatsRaw(requestParameters: AdminControllerGetDriversVacationsStatsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DriversVacationsStatsResponse>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['year'] != null) {
+            queryParameters['year'] = requestParameters['year'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/admin/drivers/vacations/stats`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DriversVacationsStatsResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * إحصائيات إجازات السائقين
+     */
+    async adminControllerGetDriversVacationsStats(requestParameters: AdminControllerGetDriversVacationsStatsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriversVacationsStatsResponse> {
+        const response = await this.adminControllerGetDriversVacationsStatsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * محاولات كلمات المرور الفاشلة
      */
     async adminControllerGetFailedPasswordAttemptsRaw(requestParameters: AdminControllerGetFailedPasswordAttemptsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -3309,14 +4052,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/security/password-attempts`;
 
@@ -3345,14 +4080,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/settings/feature-flags`;
 
@@ -3381,14 +4108,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/stats/financial`;
 
@@ -3450,14 +4169,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/drivers/leave-requests`;
 
@@ -3486,14 +4197,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/dashboard/live-metrics`;
 
@@ -3529,14 +4232,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/marketers/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -3595,14 +4290,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/marketers/{id}/performance`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -3639,14 +4326,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/marketers/{id}/stores`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -3698,14 +4377,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/marketers/statistics`;
 
@@ -3724,6 +4395,142 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
      */
     async adminControllerGetMarketersStatistics(requestParameters: AdminControllerGetMarketersStatisticsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.adminControllerGetMarketersStatisticsRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * الأدوار والصلاحيات
+     */
+    async adminControllerGetModulesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RolesResponse>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/admin/modules`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => RolesResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * الأدوار والصلاحيات
+     */
+    async adminControllerGetModules(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RolesResponse> {
+        const response = await this.adminControllerGetModulesRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * إجراءاتي في سجلات المراجعة
+     */
+    async adminControllerGetMyAuditActionsRaw(requestParameters: AdminControllerGetMyAuditActionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MyAuditActionsResponse>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/admin/audit-logs/my-actions`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MyAuditActionsResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * إجراءاتي في سجلات المراجعة
+     */
+    async adminControllerGetMyAuditActions(requestParameters: AdminControllerGetMyAuditActionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MyAuditActionsResponse> {
+        const response = await this.adminControllerGetMyAuditActionsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * سائقو العمليات في الوقت الفعلي
+     */
+    async adminControllerGetOpsDriversRealtimeRaw(requestParameters: AdminControllerGetOpsDriversRealtimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpsDriversRealtimeResponse>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['area'] != null) {
+            queryParameters['area'] = requestParameters['area'];
+        }
+
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/admin/ops/drivers/realtime`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => OpsDriversRealtimeResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * سائقو العمليات في الوقت الفعلي
+     */
+    async adminControllerGetOpsDriversRealtime(requestParameters: AdminControllerGetOpsDriversRealtimeRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpsDriversRealtimeResponse> {
+        const response = await this.adminControllerGetOpsDriversRealtimeRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * خريطة الحرارة للعمليات
+     */
+    async adminControllerGetOpsHeatmapRaw(requestParameters: AdminControllerGetOpsHeatmapRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpsHeatmapResponse>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['hours'] != null) {
+            queryParameters['hours'] = requestParameters['hours'];
+        }
+
+        if (requestParameters['resolution'] != null) {
+            queryParameters['resolution'] = requestParameters['resolution'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/admin/ops/heatmap`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => OpsHeatmapResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * خريطة الحرارة للعمليات
+     */
+    async adminControllerGetOpsHeatmap(requestParameters: AdminControllerGetOpsHeatmapRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpsHeatmapResponse> {
+        const response = await this.adminControllerGetOpsHeatmapRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
@@ -3756,14 +4563,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/orders/stats/by-city`;
 
@@ -3792,14 +4591,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/orders/stats/by-payment-method`;
 
@@ -3850,14 +4641,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/dashboard/orders-by-status`;
 
@@ -3879,6 +4662,47 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
     }
 
     /**
+     * التفعيلات المعلقة
+     */
+    async adminControllerGetPendingActivationsRaw(requestParameters: AdminControllerGetPendingActivationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PendingActivationsResponse>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['type'] != null) {
+            queryParameters['type'] = requestParameters['type'];
+        }
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/admin/pending-activations`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PendingActivationsResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * التفعيلات المعلقة
+     */
+    async adminControllerGetPendingActivations(requestParameters: AdminControllerGetPendingActivationsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PendingActivationsResponse> {
+        const response = await this.adminControllerGetPendingActivationsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * التجار المعلقين
      */
     async adminControllerGetPendingVendorsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -3886,14 +4710,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/vendors/pending`;
 
@@ -3922,14 +4738,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/withdrawals/pending`;
 
@@ -3980,14 +4788,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/quality/metrics`;
 
@@ -4049,14 +4849,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/dashboard/revenue`;
 
@@ -4085,14 +4877,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/roles`;
 
@@ -4121,14 +4905,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/settings`;
 
@@ -4150,6 +4926,43 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
     }
 
     /**
+     * إحصائيات الدعم الفني
+     */
+    async adminControllerGetSupportStatsRaw(requestParameters: AdminControllerGetSupportStatsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SupportStatsResponse>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['startDate'] != null) {
+            queryParameters['startDate'] = (requestParameters['startDate'] as any).toISOString();
+        }
+
+        if (requestParameters['endDate'] != null) {
+            queryParameters['endDate'] = (requestParameters['endDate'] as any).toISOString();
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/admin/support/stats`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => SupportStatsResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * إحصائيات الدعم الفني
+     */
+    async adminControllerGetSupportStats(requestParameters: AdminControllerGetSupportStatsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SupportStatsResponse> {
+        const response = await this.adminControllerGetSupportStatsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * صحة النظام
      */
     async adminControllerGetSystemHealthRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -4157,14 +4970,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/system/health`;
 
@@ -4193,14 +4998,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/system/metrics`;
 
@@ -4229,14 +5026,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/stats/today`;
 
@@ -4272,14 +5061,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/users/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -4316,14 +5097,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/users/{id}/orders-history`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -4397,14 +5170,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/users`;
 
@@ -4423,6 +5188,88 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
      */
     async adminControllerGetUsers(requestParameters: AdminControllerGetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.adminControllerGetUsersRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * قائمة التجار
+     */
+    async adminControllerGetVendorsListRaw(requestParameters: AdminControllerGetVendorsListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VendorsListResponse>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
+        }
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/admin/vendors`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => VendorsListResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * قائمة التجار
+     */
+    async adminControllerGetVendorsList(requestParameters: AdminControllerGetVendorsListRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VendorsListResponse> {
+        const response = await this.adminControllerGetVendorsListRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * كوبونات المحفظة
+     */
+    async adminControllerGetWalletCouponsRaw(requestParameters: AdminControllerGetWalletCouponsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WalletCouponsResponse>> {
+        const queryParameters: any = {};
+
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
+        }
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/admin/wallet/coupons`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => WalletCouponsResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * كوبونات المحفظة
+     */
+    async adminControllerGetWalletCoupons(requestParameters: AdminControllerGetWalletCouponsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WalletCouponsResponse> {
+        const response = await this.adminControllerGetWalletCouponsRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
@@ -4477,14 +5324,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/withdrawals`;
 
@@ -4535,14 +5374,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/backup/list`;
 
@@ -4578,14 +5409,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/data-deletion/{id}/reject`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -4622,14 +5445,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/drivers/leave-requests/{id}/reject`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -4666,14 +5481,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/vendors/{id}/reject`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -4710,14 +5517,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/withdrawals/{id}/reject`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -4754,14 +5553,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/security/reset-password/{userId}`;
         urlPath = urlPath.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId'])));
@@ -4798,14 +5589,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/backup/{id}/restore`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -4828,6 +5611,45 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
     }
 
     /**
+     * تشغيل حسابات المالية
+     */
+    async adminControllerRunFinanceCalculationsRaw(requestParameters: AdminControllerRunFinanceCalculationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FinanceCalculationResponse>> {
+        if (requestParameters['financeCalculationRequest'] == null) {
+            throw new runtime.RequiredError(
+                'financeCalculationRequest',
+                'Required parameter "financeCalculationRequest" was null or undefined when calling adminControllerRunFinanceCalculations().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/admin/drivers/finance/run`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: FinanceCalculationRequestToJSON(requestParameters['financeCalculationRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => FinanceCalculationResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * تشغيل حسابات المالية
+     */
+    async adminControllerRunFinanceCalculations(requestParameters: AdminControllerRunFinanceCalculationsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FinanceCalculationResponse> {
+        const response = await this.adminControllerRunFinanceCalculationsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * تعليق تاجر
      */
     async adminControllerSuspendVendorRaw(requestParameters: AdminControllerSuspendVendorRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -4842,14 +5664,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/vendors/{id}/suspend`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -4886,14 +5700,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/drivers/{id}/unban`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -4930,14 +5736,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/users/{id}/unban`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -4974,14 +5772,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/security/unlock-account/{userId}`;
         urlPath = urlPath.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId'])));
@@ -5004,6 +5794,45 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
     }
 
     /**
+     * تحديث إعدادات المظهر
+     */
+    async adminControllerUpdateAppearanceSettingsRaw(requestParameters: AdminControllerUpdateAppearanceSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SettingsUpdateResponse>> {
+        if (requestParameters['updateAppearanceSettingsRequest'] == null) {
+            throw new runtime.RequiredError(
+                'updateAppearanceSettingsRequest',
+                'Required parameter "updateAppearanceSettingsRequest" was null or undefined when calling adminControllerUpdateAppearanceSettings().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/admin/settings/appearance`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateAppearanceSettingsRequestToJSON(requestParameters['updateAppearanceSettingsRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => SettingsUpdateResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * تحديث إعدادات المظهر
+     */
+    async adminControllerUpdateAppearanceSettings(requestParameters: AdminControllerUpdateAppearanceSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SettingsUpdateResponse> {
+        const response = await this.adminControllerUpdateAppearanceSettingsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * تحديث علم ميزة
      */
     async adminControllerUpdateFeatureFlagRaw(requestParameters: AdminControllerUpdateFeatureFlagRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -5018,14 +5847,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/settings/feature-flags/{flag}`;
         urlPath = urlPath.replace(`{${"flag"}}`, encodeURIComponent(String(requestParameters['flag'])));
@@ -5062,14 +5883,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/marketers/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -5106,14 +5919,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/roles/{id}`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -5152,14 +5957,6 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/admin/settings`;
 
@@ -5182,3 +5979,12 @@ export class AdminApi extends runtime.BaseAPI implements AdminApiInterface {
     }
 
 }
+
+/**
+ * @export
+ */
+export const AdminControllerGetPendingActivationsTypeEnum = {
+    Stores: 'stores',
+    Vendors: 'vendors'
+} as const;
+export type AdminControllerGetPendingActivationsTypeEnum = typeof AdminControllerGetPendingActivationsTypeEnum[keyof typeof AdminControllerGetPendingActivationsTypeEnum];

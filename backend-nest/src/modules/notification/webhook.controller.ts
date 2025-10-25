@@ -1,6 +1,7 @@
 import { Controller, Post, Get, Headers, Body, Param, Query, HttpCode, HttpStatus } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiHeader, ApiBody, ApiQuery, ApiParam } from '@nestjs/swagger';
-import { WebhookService, WebhookPayload } from './services/webhook.service';
+import { WebhookService } from './services/webhook.service';
+import type { WebhookPayload } from './services/webhook.service';
 
 @ApiTags('Webhooks')
 @Controller('webhooks')

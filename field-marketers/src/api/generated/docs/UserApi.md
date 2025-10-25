@@ -9,6 +9,7 @@ All URIs are relative to *http://localhost*
 |[**userControllerDeactivateAccount**](#usercontrollerdeactivateaccount) | **DELETE** /users/deactivate | إلغاء تفعيل الحساب|
 |[**userControllerDeleteAddress**](#usercontrollerdeleteaddress) | **DELETE** /users/addresses/{addressId} | حذف عنوان|
 |[**userControllerDeleteAddressAlias**](#usercontrollerdeleteaddressalias) | **DELETE** /users/address/{id} | حذف عنوان (alias)|
+|[**userControllerDeleteCurrentUser**](#usercontrollerdeletecurrentuser) | **DELETE** /users/me | حذف حساب المستخدم|
 |[**userControllerGetAddresses**](#usercontrollergetaddresses) | **GET** /users/addresses | جلب جميع عناوين المستخدم|
 |[**userControllerGetCurrentUser**](#usercontrollergetcurrentuser) | **GET** /users/me | جلب بيانات المستخدم الحالي|
 |[**userControllerGetPinStatus**](#usercontrollergetpinstatus) | **GET** /users/pin/status | حالة رمز PIN|
@@ -59,7 +60,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -113,7 +114,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -160,7 +161,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -213,7 +214,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -265,7 +266,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -277,6 +278,51 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **userControllerDeleteCurrentUser**
+> DeleteUserResponse userControllerDeleteCurrentUser()
+
+
+### Example
+
+```typescript
+import {
+    UserApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new UserApi(configuration);
+
+const { status, data } = await apiInstance.userControllerDeleteCurrentUser();
+```
+
+### Parameters
+This endpoint does not have any parameters.
+
+
+### Return type
+
+**DeleteUserResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | تم حذف الحساب بنجاح |  -  |
+|**401** | Unauthorized |  -  |
+|**404** | المستخدم غير موجود |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -309,7 +355,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -354,7 +400,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -400,7 +446,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -452,7 +498,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -512,7 +558,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -565,7 +611,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -620,7 +666,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -672,7 +718,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -730,7 +776,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -783,7 +829,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -835,7 +881,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 
@@ -890,7 +936,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearer](../README.md#bearer)
+No authorization required
 
 ### HTTP request headers
 

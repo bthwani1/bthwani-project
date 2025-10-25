@@ -633,14 +633,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/roas/calculate`;
 
@@ -703,14 +695,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/adspend`;
 
@@ -761,14 +745,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/adspend/summary`;
 
@@ -808,14 +784,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/advanced/churn-rate`;
 
@@ -855,14 +823,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/users/cohort`;
 
@@ -902,14 +862,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/advanced/cohort-analysis-advanced`;
 
@@ -960,14 +912,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/funnel/conversion`;
 
@@ -996,14 +940,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/advanced/ltv`;
 
@@ -1065,14 +1001,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/roas/daily`;
 
@@ -1123,14 +1051,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/advanced/dashboard-overview`;
 
@@ -1181,14 +1101,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/advanced/driver-performance`;
 
@@ -1217,14 +1129,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/funnel/drop-off`;
 
@@ -1286,14 +1190,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/events`;
 
@@ -1344,14 +1240,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/events/summary`;
 
@@ -1391,14 +1279,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/advanced/funnel-analysis`;
 
@@ -1438,14 +1318,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/advanced/geographic-distribution`;
 
@@ -1496,14 +1368,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/kpis/trends`;
 
@@ -1554,14 +1418,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/kpis`;
 
@@ -1590,14 +1446,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/advanced/peak-hours`;
 
@@ -1648,14 +1496,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/advanced/product-performance`;
 
@@ -1684,14 +1524,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/kpis/real-time`;
 
@@ -1731,14 +1563,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/advanced/retention`;
 
@@ -1789,14 +1613,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/revenue/breakdown`;
 
@@ -1825,14 +1641,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/revenue/forecast`;
 
@@ -1883,14 +1691,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/roas/by-platform`;
 
@@ -1941,14 +1741,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/roas/summary`;
 
@@ -1988,14 +1780,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/users/growth`;
 
@@ -2024,14 +1808,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/users/retention`;
 
@@ -2069,14 +1845,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/adspend`;
 
@@ -2115,14 +1883,6 @@ export class AnalyticsApi extends runtime.BaseAPI implements AnalyticsApiInterfa
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearer", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
 
         let urlPath = `/analytics/events/track`;
 

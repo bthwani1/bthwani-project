@@ -8,6 +8,7 @@ import {
   Param,
   Query,
   UseGuards,
+  Put,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth, ApiResponse, ApiQuery, ApiParam, ApiBody } from '@nestjs/swagger';
 import { AdminService } from './admin.service';
@@ -966,5 +967,249 @@ export class AdminController {
     @CurrentUser('id') adminId: string,
   ) {
     return this.adminService.deleteRole(roleId, adminId);
+  }
+
+  // ==================== Admin User Profile ====================
+
+  @Get('me')
+  @ApiOperation({ summary: 'بيانات المستخدم الإداري الحالي' })
+  async getCurrentAdminUser(@CurrentUser() user: any) {
+    return this.adminService.getCurrentAdminUser(user);
+  }
+
+  // ==================== Admin Users List ====================
+
+  @Get('users/list')
+  @ApiOperation({ summary: 'قائمة المستخدمين الإداريين' })
+  async getAdminUsersList(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 20,
+    @Query('search') search?: string,
+  ) {
+    return this.adminService.getAdminUsersList({ page, limit, search });
+  }
+
+  // ==================== Admin Modules/Roles ====================
+
+  @Get('modules')
+  @ApiOperation({ summary: 'الأدوار والصلاحيات' })
+  async getModules() {
+    return this.adminService.getModules();
+  }
+
+  @Get('list')
+  @ApiOperation({ summary: 'قائمة المستخدمين الإداريين' })
+  async getAdminsList(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 20,
+  ) {
+    return this.adminService.getAdminsList({ page, limit });
+  }
+
+  @Post('create')
+  @ApiOperation({ summary: 'إنشاء مستخدم إداري جديد' })
+  async createAdmin(
+    @Body() body: { email: string; password: string; role: string; fullName: string },
+    @CurrentUser('id') adminId: string,
+  ) {
+    return this.adminService.createAdmin(body, adminId);
+  }
+
+  // ==================== Drivers Finance ====================
+
+  @Get('drivers/finance')
+  @ApiOperation({ summary: 'إحصائيات مالية السائقين' })
+  async getDriversFinance(
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 20,
+  ) {
+    return this.adminService.getDriversFinance({ startDate, endDate, page, limit });
+  }
+
+  @Post('drivers/finance/run')
+  @ApiOperation({ summary: 'تشغيل حسابات المالية' })
+  async runFinanceCalculations(
+    @Body() body: { period: string; force?: boolean },
+    @CurrentUser('id') adminId: string,
+  ) {
+    return this.adminService.runFinanceCalculations(body, adminId);
+  }
+
+  // ==================== Drivers Attendance ====================
+
+  @Get('drivers/attendance')
+  @ApiOperation({ summary: 'حضور جميع السائقين' })
+  async getAllDriversAttendance(
+    @Query('date') date?: string,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 20,
+  ) {
+    return this.adminService.getAllDriversAttendance({ date, page, limit });
+  }
+
+  // ==================== Vendors Management ====================
+
+  @Get('vendors')
+  @ApiOperation({ summary: 'قائمة التجار' })
+  async getVendorsList(
+    @Query('status') status?: string,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 20,
+  ) {
+    return this.adminService.getVendorsList({ status, page, limit });
+  }
+
+  // ==================== Settings Appearance ====================
+
+  @Get('settings/appearance')
+  @ApiOperation({ summary: 'إعدادات المظهر' })
+  async getAppearanceSettings() {
+    return this.adminService.getAppearanceSettings();
+  }
+
+  @Put('settings/appearance')
+  @ApiOperation({ summary: 'تحديث إعدادات المظهر' })
+  async updateAppearanceSettings(
+    @Body() body: any,
+    @CurrentUser('id') adminId: string,
+  ) {
+    return this.adminService.updateAppearanceSettings(body, adminId);
+  }
+
+  // ==================== Support Stats ====================
+
+  @Get('support/stats')
+  @ApiOperation({ summary: 'إحصائيات الدعم الفني' })
+  async getSupportStats(
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+  ) {
+    return this.adminService.getSupportStats({ startDate, endDate });
+  }
+
+  // ==================== Audit Logs Stats ====================
+
+  @Get('audit-logs/stats')
+  @ApiOperation({ summary: 'إحصائيات سجلات المراجعة' })
+  async getAuditLogsStats(
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+  ) {
+    return this.adminService.getAuditLogsStats({ startDate, endDate });
+  }
+
+  @Get('audit-logs/my-actions')
+  @ApiOperation({ summary: 'إجراءاتي في سجلات المراجعة' })
+  async getMyAuditActions(
+    @Query('limit') limit: number = 10,
+    @CurrentUser('id') adminId: string,
+  ) {
+    return this.adminService.getMyAuditActions({ limit, adminId });
+  }
+
+  // ==================== Pending Activations ====================
+
+  @Get('pending-activations')
+  @ApiOperation({ summary: 'التفعيلات المعلقة' })
+  async getPendingActivations(
+    @Query('type') type?: string,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 20,
+  ) {
+    return this.adminService.getPendingActivations({ type, page, limit });
+  }
+
+  // ==================== Drivers Documents ====================
+
+  @Get('drivers/docs')
+  @ApiOperation({ summary: 'وثائق السائقين' })
+  async getDriversDocuments(
+    @Query('status') status?: string,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 20,
+  ) {
+    return this.adminService.getDriversDocuments({ status, page, limit });
+  }
+
+  // ==================== Drivers Payouts ====================
+
+  @Get('drivers/payouts')
+  @ApiOperation({ summary: 'دفعات السائقين' })
+  async getDriversPayouts(
+    @Query('status') status?: string,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 20,
+  ) {
+    return this.adminService.getDriversPayouts({ status, page, limit });
+  }
+
+  // ==================== Drivers Shifts ====================
+
+  @Get('drivers/shifts')
+  @ApiOperation({ summary: 'ورديات السائقين' })
+  async getDriversShifts(
+    @Query('status') status?: string,
+    @Query('date') date?: string,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 20,
+  ) {
+    return this.adminService.getDriversShifts({ status, date, page, limit });
+  }
+
+  // ==================== Drivers Vacations ====================
+
+  @Get('drivers/vacations/stats')
+  @ApiOperation({ summary: 'إحصائيات إجازات السائقين' })
+  async getDriversVacationsStats(
+    @Query('year') year?: number,
+  ) {
+    return this.adminService.getDriversVacationsStats({ year });
+  }
+
+  // ==================== Wallet Coupons ====================
+
+  @Get('wallet/coupons')
+  @ApiOperation({ summary: 'كوبونات المحفظة' })
+  async getWalletCoupons(
+    @Query('status') status?: string,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 20,
+  ) {
+    return this.adminService.getWalletCoupons({ status, page, limit });
+  }
+
+  // ==================== Ops Drivers Realtime ====================
+
+  @Get('ops/drivers/realtime')
+  @ApiOperation({ summary: 'سائقو العمليات في الوقت الفعلي' })
+  async getOpsDriversRealtime(
+    @Query('area') area?: string,
+    @Query('status') status?: string,
+  ) {
+    return this.adminService.getOpsDriversRealtime({ area, status });
+  }
+
+  // ==================== Ops Heatmap ====================
+
+  @Get('ops/heatmap')
+  @ApiOperation({ summary: 'خريطة الحرارة للعمليات' })
+  async getOpsHeatmap(
+    @Query('hours') hours: number = 24,
+    @Query('resolution') resolution: string = 'medium',
+  ) {
+    return this.adminService.getOpsHeatmap({ hours, resolution });
+  }
+
+  // ==================== Commission Plans ====================
+
+  @Post('commission-plans')
+  @ApiOperation({ summary: 'إنشاء خطة عمولة جديدة' })
+  async createCommissionPlan(
+    @Body() body: any,
+    @CurrentUser('id') adminId: string,
+  ) {
+    return this.adminService.createCommissionPlan(body, adminId);
   }
 }

@@ -59,6 +59,17 @@ export class AuthController {
     return this.authService.loginWithFirebase(firebaseAuthDto.idToken);
   }
 
+  @Public()
+  @Throttle({ auth: { ttl: 60000, limit: 5 } })
+  @Post('driver/login')
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiOperation({ summary: 'تسجيل دخول السائق' })
+  async driverLogin(@Body() loginDto: { email: string; password: string }) {
+    return this.authService.driverLogin(loginDto.email, loginDto.password);
+  }
+
   // ==================== Consent Management ====================
 
   @ApiBearerAuth()

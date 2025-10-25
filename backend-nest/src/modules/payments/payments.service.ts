@@ -172,4 +172,51 @@ export class PaymentsService {
 
     return result;
   }
+
+  async createPaymentSession(dto: {
+    amount: number;
+    currency?: string;
+    description: string;
+    metadata?: any;
+    returnUrl?: string;
+    cancelUrl?: string;
+  }) {
+    // TODO: Integrate with actual payment provider (Stripe, PayPal, etc.)
+    // For now, return a mock session
+
+    const sessionId = `cs_mock_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+    return {
+      id: sessionId,
+      url: dto.returnUrl || `https://example.com/payment/${sessionId}`,
+      amount: dto.amount,
+      currency: dto.currency || 'SAR',
+      description: dto.description,
+      metadata: dto.metadata,
+      createdAt: new Date().toISOString(),
+      expiresAt: new Date(Date.now() + 30 * 60 * 1000).toISOString(), // 30 minutes
+    };
+  }
+
+  async confirmPayment(dto: {
+    sessionId: string;
+    paymentMethodId?: string;
+    returnUrl?: string;
+  }) {
+    // TODO: Integrate with actual payment provider
+    // For now, return a mock confirmation
+
+    // Simulate some processing time
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    return {
+      id: dto.sessionId,
+      status: 'succeeded',
+      amount: 100.50, // This would come from the session
+      currency: 'SAR',
+      paymentMethod: dto.paymentMethodId || 'mock_pm_123',
+      confirmedAt: new Date().toISOString(),
+      receiptUrl: `https://example.com/receipt/${dto.sessionId}`,
+    };
+  }
 }

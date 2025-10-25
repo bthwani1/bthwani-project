@@ -1,0 +1,50 @@
+{
+  "generationDate": "2025-10-25T20:39:29.466Z",
+  "openapiVersion": "3.0.0",
+  "totalApplications": 6,
+  "generatedClients": [
+    {
+      "name": "admin-dashboard",
+      "clientType": "axios",
+      "outputPath": "admin-dashboard/src/api/generated",
+      "description": "Admin Dashboard API Client"
+    },
+    {
+      "name": "bthwani-web",
+      "clientType": "fetch",
+      "outputPath": "bthwani-web/src/api/generated",
+      "description": "Main Web App API Client"
+    },
+    {
+      "name": "app-user",
+      "clientType": "axios",
+      "outputPath": "app-user/src/api/generated",
+      "description": "User Mobile App API Client"
+    },
+    {
+      "name": "vendor-app",
+      "clientType": "axios",
+      "outputPath": "vendor-app/src/api/generated",
+      "description": "Vendor Mobile App API Client"
+    },
+    {
+      "name": "rider-app",
+      "clientType": "axios",
+      "outputPath": "rider-app/src/api/generated",
+      "description": "Rider Mobile App API Client"
+    },
+    {
+      "name": "field-marketers",
+      "clientType": "axios",
+      "outputPath": "field-marketers/src/api/generated",
+      "description": "Field Marketers App API Client"
+    }
+  ],
+  "sourceOfTruth": "openapi.yaml (root level)",
+  "nextSteps": [
+    "Review generated types and APIs",
+    "Update existing API calls to use typed clients",
+    "Add error handling and interceptors",
+    "Test API integration in each application"
+  ]
+}

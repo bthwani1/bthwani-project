@@ -1,6 +1,6 @@
 // Admin Dashboard API Client
 // Generated from OpenAPI spec: openapi.yaml
-// Generation Date: 2025-10-23T15:59:47.643Z
+// Generation Date: 2025-10-25T20:38:30.528Z
 // Do not edit manually - regenerate using: npm run generate:sdks
 
 export * from './apis';
