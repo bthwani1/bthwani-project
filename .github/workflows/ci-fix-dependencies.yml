@@ -55,3 +55,59 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-${{ matrix.project }}-
 
+  quality-gates:
+    runs-on: ubuntu-latest
+    needs: install-dependencies
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install backend dependencies
+        run: cd backend-nest && npm ci
+
+      - name: Generate OpenAPI spec
+        run: npm run generate:openapi
+
+      - name: Run Spectral validation
+        run: npm run lint:openapi:strict
+
+      - name: Run API Parity check
+        run: npm run audit:parity
+
+      - name: Check Quality Gates
+        run: |
+          # Check parity results
+          if [ -f "backend-nest/reports/parity_report.json" ]; then
+            parity_gap=$(cat backend-nest/reports/parity_report.json | jq '.summary.parity_gap // 0' 2>/dev/null || echo "0")
+            undocumented=$(cat backend-nest/reports/parity_report.json | jq '.summary.undocumented_count // 0' 2>/dev/null || echo "0")
+
+            echo "📊 Quality Gates Check:"
+            echo "  Parity Gap: $parity_gap%"
+            echo "  Undocumented: $undocumented endpoints"
+
+            if [ "$undocumented" -gt 0 ]; then
+              echo "❌ FAILED: Found $undocumented undocumented endpoints"
+              exit 1
+            fi
+
+            if (( $(echo "$parity_gap > 5.0" | bc -l 2>/dev/null || echo "0") )); then
+              echo "❌ FAILED: Parity gap ($parity_gap%) exceeds 5% threshold"
+              exit 1
+            fi
+
+            echo "✅ PASSED: All quality gates satisfied"
+          else
+            echo "❌ FAILED: Parity report not found"
+            exit 1
+          fi
+

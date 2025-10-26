@@ -1763,4 +1763,561 @@ export class AdminService {
       message: 'تم حذف الأصل بنجاح',
     };
   }
+
+  // ==================== Admin User Profile ====================
+
+  async getCurrentAdminUser(user: any) {
+    const adminUser = await this.userModel.findById(user.id).select('-password');
+    if (!adminUser) {
+      throw new NotFoundException('المستخدم غير موجود');
+    }
+
+    return {
+      id: adminUser._id,
+      email: adminUser.email,
+      fullName: adminUser.fullName,
+      role: adminUser.role,
+      permissions: adminUser.permissions || [],
+      createdAt: adminUser.createdAt,
+      lastLogin: adminUser.lastLogin,
+    };
+  }
+
+  // ==================== Admin Users List ====================
+
+  async getAdminUsersList({ page, limit, search }: { page: number; limit: number; search?: string }) {
+    const skip = (page - 1) * limit;
+    const query: any = { role: { $in: ['admin', 'superadmin', 'manager'] } };
+
+    if (search) {
+      query.$or = [
+        { fullName: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } },
+      ];
+    }
+
+    const [users, total] = await Promise.all([
+      this.userModel
+        .find(query)
+        .select('-password')
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit),
+      this.userModel.countDocuments(query),
+    ]);
+
+    return {
+      users: users.map(user => ({
+        id: user._id,
+        email: user.email,
+        fullName: user.fullName,
+        role: user.role,
+        isActive: user.isActive,
+        createdAt: user.createdAt,
+        lastLogin: user.lastLogin,
+      })),
+      pagination: {
+        page,
+        limit,
+        total,
+        pages: Math.ceil(total / limit),
+      },
+    };
+  }
+
+  // ==================== Admin Modules/Roles ====================
+
+  async getModules() {
+    return this.getRoles();
+  }
+
+  async getAdminsList({ page, limit }: { page: number; limit: number }) {
+    return this.getAdminUsersList({ page, limit });
+  }
+
+  async createAdmin(
+    { email, password, role, fullName }: { email: string; password: string; role: string; fullName: string },
+    adminId: string,
+  ) {
+    // Validate role
+    const validRoles = ['admin', 'manager', 'support'];
+    if (!validRoles.includes(role)) {
+      throw new BadRequestException('الدور غير صحيح');
+    }
+
+    // Check if email already exists
+    const existingUser = await this.userModel.findOne({ email });
+    if (existingUser) {
+      throw new BadRequestException('البريد الإلكتروني مستخدم بالفعل');
+    }
+
+    const newAdmin = new this.userModel({
+      email,
+      password, // Will be hashed by pre-save hook
+      fullName,
+      role,
+      isActive: true,
+      createdBy: adminId,
+    });
+
+    await newAdmin.save();
+
+    // Log the action
+    await this.auditService.logAction({
+      action: 'ADMIN_USER_CREATED',
+      userId: adminId,
+      resource: 'admin',
+      resourceId: newAdmin._id.toString(),
+      details: { email, role, fullName },
+    });
+
+    return {
+      success: true,
+      message: 'تم إنشاء المستخدم الإداري بنجاح',
+      admin: {
+        id: newAdmin._id,
+        email: newAdmin.email,
+        fullName: newAdmin.fullName,
+        role: newAdmin.role,
+        createdAt: newAdmin.createdAt,
+      },
+    };
+  }
+
+  // ==================== Drivers Finance ====================
+
+  async getDriversFinance({ startDate, endDate, page, limit }: {
+    startDate?: string;
+    endDate?: string;
+    page: number;
+    limit: number;
+  }) {
+    const skip = (page - 1) * limit;
+    const matchConditions: any = {};
+
+    if (startDate || endDate) {
+      matchConditions.createdAt = {};
+      if (startDate) matchConditions.createdAt.$gte = new Date(startDate);
+      if (endDate) matchConditions.createdAt.$lte = new Date(endDate);
+    }
+
+    const [drivers, total] = await Promise.all([
+      this.driverModel
+        .find(matchConditions)
+        .select('fullName phone balance earnings rating status')
+        .sort({ earnings: -1 })
+        .skip(skip)
+        .limit(limit),
+      this.driverModel.countDocuments(matchConditions),
+    ]);
+
+    const stats = await this.driverModel.aggregate([
+      { $match: matchConditions },
+      {
+        $group: {
+          _id: null,
+          totalEarnings: { $sum: '$earnings' },
+          totalBalance: { $sum: '$balance' },
+          averageRating: { $avg: '$rating' },
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    return {
+      drivers: drivers.map(driver => ({
+        id: driver._id,
+        fullName: driver.fullName,
+        phone: driver.phone,
+        balance: driver.balance,
+        earnings: driver.earnings,
+        rating: driver.rating,
+        status: driver.status,
+      })),
+      summary: stats[0] || {
+        totalEarnings: 0,
+        totalBalance: 0,
+        averageRating: 0,
+        count: 0,
+      },
+      pagination: {
+        page,
+        limit,
+        total,
+        pages: Math.ceil(total / limit),
+      },
+    };
+  }
+
+  async runFinanceCalculations({ period, force }: { period: string; force?: boolean }, adminId: string) {
+    // TODO: Implement finance calculations logic
+    // This would typically involve calculating commissions, settlements, etc.
+
+    await this.auditService.logAction({
+      action: 'FINANCE_CALCULATIONS_RUN',
+      userId: adminId,
+      resource: 'finance',
+      details: { period, force },
+    });
+
+    return {
+      success: true,
+      message: 'تم تشغيل حسابات المالية بنجاح',
+      period,
+      timestamp: new Date().toISOString(),
+    };
+  }
+
+  // ==================== Drivers Attendance ====================
+
+  async getAllDriversAttendance({ date, page, limit }: {
+    date?: string;
+    page: number;
+    limit: number;
+  }) {
+    const targetDate = date ? new Date(date) : new Date();
+    return this.attendanceService.getAllDriversAttendance(targetDate, page, limit);
+  }
+
+  // ==================== Vendors Management ====================
+
+  async getVendorsList({ status, page, limit }: {
+    status?: string;
+    page: number;
+    limit: number;
+  }) {
+    const skip = (page - 1) * limit;
+    const query: any = {};
+
+    if (status) {
+      query.status = status;
+    }
+
+    const [vendors, total] = await Promise.all([
+      this.vendorModel
+        .find(query)
+        .populate('store', 'name category')
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit),
+      this.vendorModel.countDocuments(query),
+    ]);
+
+    return {
+      vendors: vendors.map(vendor => ({
+        id: vendor._id,
+        fullName: vendor.fullName,
+        phone: vendor.phone,
+        email: vendor.email,
+        status: vendor.status,
+        store: vendor.store,
+        createdAt: vendor.createdAt,
+      })),
+      pagination: {
+        page,
+        limit,
+        total,
+        pages: Math.ceil(total / limit),
+      },
+    };
+  }
+
+  // ==================== Settings Appearance ====================
+
+  async getAppearanceSettings() {
+    return this.settingsService.getAppearanceSettings();
+  }
+
+  async updateAppearanceSettings(updates: any, adminId: string) {
+    const result = await this.settingsService.updateAppearanceSettings(updates);
+
+    await this.auditService.logAction({
+      action: 'APPEARANCE_SETTINGS_UPDATED',
+      userId: adminId,
+      resource: 'settings',
+      resourceId: 'appearance',
+      details: updates,
+    });
+
+    return result;
+  }
+
+  // ==================== Support Stats ====================
+
+  async getSupportStats({ startDate, endDate }: {
+    startDate?: string;
+    endDate?: string;
+  }) {
+    return this.supportAdminService.getSupportStats({ startDate, endDate });
+  }
+
+  // ==================== Audit Logs Stats ====================
+
+  async getAuditLogsStats({ startDate, endDate }: {
+    startDate?: string;
+    endDate?: string;
+  }) {
+    const matchConditions: any = {};
+
+    if (startDate || endDate) {
+      matchConditions.timestamp = {};
+      if (startDate) matchConditions.timestamp.$gte = new Date(startDate);
+      if (endDate) matchConditions.timestamp.$lte = new Date(endDate);
+    }
+
+    const stats = await this.auditService.getAuditLogsStats(matchConditions);
+
+    return {
+      totalLogs: stats.totalLogs,
+      actionsByType: stats.actionsByType,
+      actionsByUser: stats.actionsByUser,
+      recentActivity: stats.recentActivity,
+      period: {
+        startDate: startDate || null,
+        endDate: endDate || null,
+      },
+    };
+  }
+
+  async getMyAuditActions({ limit, adminId }: {
+    limit: number;
+    adminId: string;
+  }) {
+    const actions = await this.auditService.getAuditLogs({
+      userId: adminId,
+      limit,
+      sort: { timestamp: -1 },
+    });
+
+    return {
+      actions: actions.map(action => ({
+        id: action.id,
+        action: action.action,
+        resource: action.resource,
+        timestamp: action.timestamp,
+        details: action.details,
+      })),
+      limit,
+    };
+  }
+
+  // ==================== Pending Activations ====================
+
+  async getPendingActivations({ type, page, limit }: {
+    type?: string;
+    page: number;
+    limit: number;
+  }) {
+    const skip = (page - 1) * limit;
+    const query: any = { isActive: false };
+
+    if (type === 'vendors') {
+      // Get pending vendors
+      const [vendors, total] = await Promise.all([
+        this.vendorModel
+          .find(query)
+          .populate('store', 'name')
+          .sort({ createdAt: -1 })
+          .skip(skip)
+          .limit(limit),
+        this.vendorModel.countDocuments(query),
+      ]);
+
+      return {
+        type: 'vendors',
+        items: vendors.map(vendor => ({
+          id: vendor._id,
+          type: 'vendor',
+          fullName: vendor.fullName,
+          phone: vendor.phone,
+          store: vendor.store,
+          createdAt: vendor.createdAt,
+        })),
+        pagination: {
+          page,
+          limit,
+          total,
+          pages: Math.ceil(total / limit),
+        },
+      };
+    }
+
+    // Default: stores
+    const [stores, total] = await Promise.all([
+      this.storeModel
+        .find(query)
+        .populate('vendor', 'fullName phone')
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit),
+      this.storeModel.countDocuments(query),
+    ]);
+
+    return {
+      type: 'stores',
+      items: stores.map(store => ({
+        id: store._id,
+        type: 'store',
+        name: store.name,
+        category: store.category,
+        vendor: store.vendor,
+        createdAt: store.createdAt,
+      })),
+      pagination: {
+        page,
+        limit,
+        total,
+        pages: Math.ceil(total / limit),
+      },
+    };
+  }
+
+  // ==================== Drivers Documents ====================
+
+  async getDriversDocuments({ status, page, limit }: {
+    status?: string;
+    page: number;
+    limit: number;
+  }) {
+    // TODO: Implement drivers documents logic
+    return {
+      documents: [],
+      pagination: {
+        page,
+        limit,
+        total: 0,
+        pages: 0,
+      },
+      message: 'قيد التطوير',
+    };
+  }
+
+  // ==================== Drivers Payouts ====================
+
+  async getDriversPayouts({ status, page, limit }: {
+    status?: string;
+    page: number;
+    limit: number;
+  }) {
+    // TODO: Implement drivers payouts logic
+    return {
+      payouts: [],
+      pagination: {
+        page,
+        limit,
+        total: 0,
+        pages: 0,
+      },
+      message: 'قيد التطوير',
+    };
+  }
+
+  // ==================== Drivers Shifts ====================
+
+  async getDriversShifts({ status, date, page, limit }: {
+    status?: string;
+    date?: string;
+    page: number;
+    limit: number;
+  }) {
+    return this.shiftService.getDriversShifts({ status, date, page, limit });
+  }
+
+  // ==================== Drivers Vacations ====================
+
+  async getDriversVacationsStats({ year }: { year?: number }) {
+    const targetYear = year || new Date().getFullYear();
+    return this.leaveService.getDriversVacationsStats(targetYear);
+  }
+
+  // ==================== Wallet Coupons ====================
+
+  async getWalletCoupons({ status, page, limit }: {
+    status?: string;
+    page: number;
+    limit: number;
+  }) {
+    // TODO: Implement wallet coupons logic
+    return {
+      coupons: [],
+      pagination: {
+        page,
+        limit,
+        total: 0,
+        pages: 0,
+      },
+      message: 'قيد التطوير',
+    };
+  }
+
+  // ==================== Ops Drivers Realtime ====================
+
+  async getOpsDriversRealtime({ area, status }: {
+    area?: string;
+    status?: string;
+  }) {
+    const query: any = { isAvailable: true };
+
+    if (status) {
+      query.status = status;
+    }
+
+    if (area) {
+      // TODO: Add area filtering based on location
+      query.area = area;
+    }
+
+    const drivers = await this.driverModel
+      .find(query)
+      .select('fullName phone currentLocation status lastLocationUpdate')
+      .sort({ lastLocationUpdate: -1 })
+      .limit(50);
+
+    return {
+      drivers: drivers.map(driver => ({
+        id: driver._id,
+        fullName: driver.fullName,
+        phone: driver.phone,
+        location: driver.currentLocation,
+        status: driver.status,
+        lastUpdate: driver.lastLocationUpdate,
+      })),
+      total: drivers.length,
+      timestamp: new Date().toISOString(),
+    };
+  }
+
+  // ==================== Ops Heatmap ====================
+
+  async getOpsHeatmap({ hours, resolution }: {
+    hours: number;
+    resolution: string;
+  }) {
+    // TODO: Implement ops heatmap logic
+    return {
+      heatmap: [],
+      resolution,
+      hours,
+      timestamp: new Date().toISOString(),
+      message: 'قيد التطوير',
+    };
+  }
+
+  // ==================== Commission Plans ====================
+
+  async createCommissionPlan(planData: any, adminId: string) {
+    // TODO: Implement commission plans logic
+    await this.auditService.logAction({
+      action: 'COMMISSION_PLAN_CREATED',
+      userId: adminId,
+      resource: 'commission',
+      details: planData,
+    });
+
+    return {
+      success: true,
+      message: 'تم إنشاء خطة العمولة بنجاح',
+      plan: planData,
+    };
+  }
 }

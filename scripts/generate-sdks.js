@@ -151,9 +151,12 @@ projects.forEach(project => {
     validationErrors.push(`Missing index.ts for ${project.name}`);
   }
 
-  const apisPath = path.join(process.cwd(), project.output, 'apis.ts');
-  if (!fs.existsSync(apisPath)) {
-    validationErrors.push(`Missing apis.ts for ${project.name}`);
+  const apiPath = path.join(process.cwd(), project.output, 'api.ts');
+  const apisDir = path.join(process.cwd(), project.output, 'apis');
+
+  // Check for either api.ts file or apis directory
+  if (!fs.existsSync(apiPath) && !fs.existsSync(apisDir)) {
+    validationErrors.push(`Missing api.ts or apis/ directory for ${project.name}`);
   }
 
   const modelsPath = path.join(process.cwd(), project.output, 'models.ts');

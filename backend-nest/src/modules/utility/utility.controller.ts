@@ -25,7 +25,7 @@ import { AuthType } from '../../common/guards/unified-auth.guard';
 const Roles = (...roles: string[]) => SetMetadata('roles', roles);
 
 @ApiTags('Utility')
-@Controller('utility')
+@Controller(['utility', 'api'])
 export class UtilityController {
   constructor(
     private readonly utilityService: UtilityService,
@@ -343,5 +343,31 @@ export class UtilityController {
   @ApiOperation({ summary: 'جلب جميع الطلبات (admin)' })
   async getAllOrders(@Query() filters: any) {
     return this.utilityOrderService.findAll(filters);
+  }
+
+  // ==================== Next.js API Routes Compatibility ====================
+
+  @Get('placeholder/:width/:height')
+  @ApiParam({ name: 'width', description: 'عرض الصورة', example: '300' })
+  @ApiParam({ name: 'height', description: 'ارتفاع الصورة', example: '200' })
+  @ApiQuery({ name: 'text', required: false, description: 'النص المعروض على الصورة' })
+  @ApiQuery({ name: 'bg', required: false, description: 'لون الخلفية', example: 'cccccc' })
+  @ApiQuery({ name: 'fg', required: false, description: 'لون النص', example: '000000' })
+  @ApiResponse({ status: 200, description: 'Success', content: { 'image/png': {} } })
+  @ApiOperation({ summary: 'توليد صور placeholder (compatibility with Next.js API routes)' })
+  async getPlaceholder(
+    @Param('width') width: string,
+    @Param('height') height: string,
+    @Query('text') text?: string,
+    @Query('bg') bg?: string,
+    @Query('fg') fg?: string,
+  ) {
+    return this.utilityService.generatePlaceholderImage(
+      parseInt(width),
+      parseInt(height),
+      text,
+      bg,
+      fg,
+    );
   }
 }

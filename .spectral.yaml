@@ -1,0 +1,46 @@
+extends:
+  - "./openapi/spectral.yaml"
+  - "./openapi/spectral.error-taxonomy.yaml"
+  - "spectral:oas"
+
+rules:
+  # Additional rules for Cursor integration
+  operation-summary-required:
+    description: "All operations must have a summary"
+    given: "$.paths[*][*]"
+    then:
+      function: truthy
+      field: summary
+    severity: warn
+
+  operation-description-recommended:
+    description: "Operations should have descriptions"
+    given: "$.paths[*][*]"
+    then:
+      function: truthy
+      field: description
+    severity: info
+
+  parameter-description-required:
+    description: "All parameters must have descriptions"
+    given: "$.paths[*][*].parameters[*]"
+    then:
+      function: truthy
+      field: description
+    severity: error
+
+  response-description-required:
+    description: "All responses must have descriptions"
+    given: "$.paths[*][*].responses[*]"
+    then:
+      function: truthy
+      field: description
+    severity: error
+
+  schema-description-recommended:
+    description: "Schemas should have descriptions"
+    given: "$.components.schemas[*]"
+    then:
+      function: truthy
+      field: description
+    severity: info

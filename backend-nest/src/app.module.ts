@@ -11,6 +11,8 @@ import { CorrelationIdMiddleware } from './common/middleware/correlation-id.midd
 import { AppLoggerService } from './common/services/logger.service';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { MetricsInterceptor } from './common/interceptors/metrics.interceptor';
+import { RuntimeTapInterceptor } from './common/interceptors/runtime-tap.interceptor';
+import { RuntimeTapService } from './common/services/runtime-tap.service';
 
 // Import modules
 import { AuthModule } from './modules/auth/auth.module';
@@ -173,6 +175,7 @@ import { envValidationSchema } from './config/env.validation';
     IdempotencyMiddleware,
     CorrelationIdMiddleware,
     AppLoggerService,
+    RuntimeTapService,
     // Global Interceptors
     {
       provide: APP_INTERCEPTOR,
@@ -181,6 +184,10 @@ import { envValidationSchema } from './config/env.validation';
     {
       provide: APP_INTERCEPTOR,
       useClass: MetricsInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: RuntimeTapInterceptor,
     },
     // ✨ Global Rate Limiting Guard
     {

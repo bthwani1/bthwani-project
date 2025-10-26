@@ -3398,6 +3398,25 @@ paths:
       summary: تحديث الملف الشخصي
       tags:
         - User
+    delete:
+      operationId: UserController_deleteCurrentUser
+      parameters: []
+      responses:
+        '200':
+          description: تم حذف الحساب بنجاح
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteUserResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: المستخدم غير موجود
+      security:
+        - bearer: []
+      summary: حذف حساب المستخدم
+      tags:
+        - User
   /users/addresses:
     get:
       description: الحصول على قائمة عناوين التوصيل المحفوظة
@@ -4109,6 +4128,684 @@ paths:
       security:
         - bearer: []
       summary: المقاييس الحية
+      tags:
+        - Admin
+  /admin/me:
+    get:
+      operationId: AdminController_getCurrentAdminUser
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminUserResponse'
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: بيانات المستخدم الإداري الحالي
+      tags:
+        - Admin
+  /admin/users/list:
+    get:
+      operationId: AdminController_getAdminUsersList
+      parameters:
+        - name: page
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: search
+          required: false
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminUsersListResponse'
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: قائمة المستخدمين الإداريين
+      tags:
+        - Admin
+  /admin/modules:
+    get:
+      operationId: AdminController_getModules
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RolesResponse'
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: الأدوار والصلاحيات
+      tags:
+        - Admin
+  /admin/list:
+    get:
+      operationId: AdminController_getAdminsList
+      parameters:
+        - name: page
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminUsersListResponse'
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: قائمة المستخدمين الإداريين
+      tags:
+        - Admin
+  /admin/create:
+    post:
+      operationId: AdminController_createAdmin
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAdminRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminCreationResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: إنشاء مستخدم إداري جديد
+      tags:
+        - Admin
+  /admin/drivers/finance:
+    get:
+      operationId: AdminController_getDriversFinance
+      parameters:
+        - name: startDate
+          required: false
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          required: false
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: page
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DriversFinanceResponse'
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: إحصائيات مالية السائقين
+      tags:
+        - Admin
+  /admin/drivers/finance/run:
+    post:
+      operationId: AdminController_runFinanceCalculations
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FinanceCalculationRequest'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinanceCalculationResponse'
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: تشغيل حسابات المالية
+      tags:
+        - Admin
+  /admin/drivers/attendance:
+    get:
+      operationId: AdminController_getAllDriversAttendance
+      parameters:
+        - name: date
+          required: false
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: page
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DriversAttendanceResponse'
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: حضور جميع السائقين
+      tags:
+        - Admin
+  /admin/vendors:
+    get:
+      operationId: AdminController_getVendorsList
+      parameters:
+        - name: status
+          required: false
+          in: query
+          schema:
+            type: string
+        - name: page
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VendorsListResponse'
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: قائمة التجار
+      tags:
+        - Admin
+  /admin/settings/appearance:
+    get:
+      operationId: AdminController_getAppearanceSettings
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppearanceSettingsResponse'
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: إعدادات المظهر
+      tags:
+        - Admin
+    put:
+      operationId: AdminController_updateAppearanceSettings
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAppearanceSettingsRequest'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SettingsUpdateResponse'
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: تحديث إعدادات المظهر
+      tags:
+        - Admin
+  /admin/support/stats:
+    get:
+      operationId: AdminController_getSupportStats
+      parameters:
+        - name: startDate
+          required: false
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          required: false
+          in: query
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupportStatsResponse'
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: إحصائيات الدعم الفني
+      tags:
+        - Admin
+  /admin/audit-logs/stats:
+    get:
+      operationId: AdminController_getAuditLogsStats
+      parameters:
+        - name: startDate
+          required: false
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          required: false
+          in: query
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditLogsStatsResponse'
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: إحصائيات سجلات المراجعة
+      tags:
+        - Admin
+  /admin/audit-logs/my-actions:
+    get:
+      operationId: AdminController_getMyAuditActions
+      parameters:
+        - name: limit
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MyAuditActionsResponse'
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: إجراءاتي في سجلات المراجعة
+      tags:
+        - Admin
+  /admin/pending-activations:
+    get:
+      operationId: AdminController_getPendingActivations
+      parameters:
+        - name: type
+          required: false
+          in: query
+          schema:
+            type: string
+            enum: [stores, vendors]
+        - name: page
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PendingActivationsResponse'
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: التفعيلات المعلقة
+      tags:
+        - Admin
+  /admin/drivers/docs:
+    get:
+      operationId: AdminController_getDriversDocuments
+      parameters:
+        - name: status
+          required: false
+          in: query
+          schema:
+            type: string
+        - name: page
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DriversDocumentsResponse'
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: وثائق السائقين
+      tags:
+        - Admin
+  /admin/drivers/payouts:
+    get:
+      operationId: AdminController_getDriversPayouts
+      parameters:
+        - name: status
+          required: false
+          in: query
+          schema:
+            type: string
+        - name: page
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DriversPayoutsResponse'
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: دفعات السائقين
+      tags:
+        - Admin
+  /admin/drivers/shifts:
+    get:
+      operationId: AdminController_getDriversShifts
+      parameters:
+        - name: status
+          required: false
+          in: query
+          schema:
+            type: string
+        - name: date
+          required: false
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: page
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DriversShiftsResponse'
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: ورديات السائقين
+      tags:
+        - Admin
+  /admin/drivers/vacations/stats:
+    get:
+      operationId: AdminController_getDriversVacationsStats
+      parameters:
+        - name: year
+          required: false
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DriversVacationsStatsResponse'
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: إحصائيات إجازات السائقين
+      tags:
+        - Admin
+  /admin/wallet/coupons:
+    get:
+      operationId: AdminController_getWalletCoupons
+      parameters:
+        - name: status
+          required: false
+          in: query
+          schema:
+            type: string
+        - name: page
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletCouponsResponse'
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: كوبونات المحفظة
+      tags:
+        - Admin
+  /admin/ops/drivers/realtime:
+    get:
+      operationId: AdminController_getOpsDriversRealtime
+      parameters:
+        - name: area
+          required: false
+          in: query
+          schema:
+            type: string
+        - name: status
+          required: false
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpsDriversRealtimeResponse'
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: سائقو العمليات في الوقت الفعلي
+      tags:
+        - Admin
+  /admin/ops/heatmap:
+    get:
+      operationId: AdminController_getOpsHeatmap
+      parameters:
+        - name: hours
+          required: false
+          in: query
+          schema:
+            type: integer
+            default: 24
+        - name: resolution
+          required: false
+          in: query
+          schema:
+            type: string
+            default: medium
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpsHeatmapResponse'
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: خريطة الحرارة للعمليات
+      tags:
+        - Admin
+  /admin/commission-plans:
+    post:
+      operationId: AdminController_createCommissionPlan
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCommissionPlanRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommissionPlanCreationResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+      security:
+        - bearer: []
+      summary: إنشاء خطة عمولة جديدة
       tags:
         - Admin
   /admin/drivers:
@@ -5457,7 +6154,12 @@ paths:
   /admin/roles/{id}:
     patch:
       operationId: AdminController_updateRole
-      parameters: []
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -6598,6 +7300,8 @@ paths:
               properties:
                 items:
                   type: array
+                  items:
+                    type: object
                 store:
                   type: string
       responses:
@@ -11619,12 +12323,513 @@ tags:
     description: المحاسبة والتقارير المالية
 servers: []
 components:
-  securitySchemes:
-    bearer:
-      scheme: bearer
-      bearerFormat: JWT
-      type: http
   schemas:
+    AdminUserResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        fullName:
+          type: string
+        role:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        createdAt:
+          type: string
+          format: date-time
+        lastLogin:
+          type: string
+          format: date-time
+    AdminUsersListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminUserResponse'
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+    RolesResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              permissions:
+                type: array
+                items:
+                  type: string
+    CreateAdminRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        fullName:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+    AdminCreationResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        fullName:
+          type: string
+        role:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        createdAt:
+          type: string
+          format: date-time
+    DriversFinanceResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              driverId:
+                type: string
+              totalEarnings:
+                type: number
+              totalDeductions:
+                type: number
+              netAmount:
+                type: number
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+    FinanceCalculationRequest:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        driverIds:
+          type: array
+          items:
+            type: string
+    FinanceCalculationResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        processedCount:
+          type: integer
+    DriversAttendanceResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              driverId:
+                type: string
+              name:
+                type: string
+              attendanceDate:
+                type: string
+                format: date
+              status:
+                type: string
+              checkInTime:
+                type: string
+                format: date-time
+              checkOutTime:
+                type: string
+                format: date-time
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+    VendorsListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              email:
+                type: string
+              status:
+                type: string
+              createdAt:
+                type: string
+                format: date-time
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+    AppearanceSettingsResponse:
+      type: object
+      properties:
+        theme:
+          type: string
+        primaryColor:
+          type: string
+        logoUrl:
+          type: string
+        faviconUrl:
+          type: string
+    UpdateAppearanceSettingsRequest:
+      type: object
+      properties:
+        theme:
+          type: string
+        primaryColor:
+          type: string
+        logoUrl:
+          type: string
+        faviconUrl:
+          type: string
+    SettingsUpdateResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+    SupportStatsResponse:
+      type: object
+      properties:
+        totalTickets:
+          type: integer
+        openTickets:
+          type: integer
+        closedTickets:
+          type: integer
+        avgResolutionTime:
+          type: number
+    AuditLogsStatsResponse:
+      type: object
+      properties:
+        totalActions:
+          type: integer
+        actionsByType:
+          type: object
+          additionalProperties:
+            type: integer
+        actionsByUser:
+          type: object
+          additionalProperties:
+            type: integer
+    MyAuditActionsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              action:
+                type: string
+              resource:
+                type: string
+              timestamp:
+                type: string
+                format: date-time
+              details:
+                type: object
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+    PendingActivationsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              type:
+                type: string
+              name:
+                type: string
+              email:
+                type: string
+              requestedAt:
+                type: string
+                format: date-time
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+    DriversDocumentsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              driverId:
+                type: string
+              name:
+                type: string
+              documentType:
+                type: string
+              status:
+                type: string
+              submittedAt:
+                type: string
+                format: date-time
+              verifiedAt:
+                type: string
+                format: date-time
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+    DriversPayoutsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              driverId:
+                type: string
+              name:
+                type: string
+              amount:
+                type: number
+              status:
+                type: string
+              payoutDate:
+                type: string
+                format: date
+              processedAt:
+                type: string
+                format: date-time
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+    DriversShiftsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              driverId:
+                type: string
+              name:
+                type: string
+              shiftDate:
+                type: string
+                format: date
+              startTime:
+                type: string
+                format: date-time
+              endTime:
+                type: string
+                format: date-time
+              status:
+                type: string
+              hoursWorked:
+                type: number
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+    DriversVacationsStatsResponse:
+      type: object
+      properties:
+        totalDrivers:
+          type: integer
+        onVacation:
+          type: integer
+        vacationDaysUsed:
+          type: integer
+        vacationDaysRemaining:
+          type: integer
+        year:
+          type: integer
+    WalletCouponsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              code:
+                type: string
+              discountType:
+                type: string
+              discountValue:
+                type: number
+              status:
+                type: string
+              expiresAt:
+                type: string
+                format: date-time
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+    OpsDriversRealtimeResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              driverId:
+                type: string
+              name:
+                type: string
+              status:
+                type: string
+              location:
+                type: object
+                properties:
+                  lat:
+                    type: number
+                  lng:
+                    type: number
+              lastUpdate:
+                type: string
+                format: date-time
+        total:
+          type: integer
+        online:
+          type: integer
+        offline:
+          type: integer
+    OpsHeatmapResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              lat:
+                type: number
+              lng:
+                type: number
+              intensity:
+                type: number
+              timestamp:
+                type: string
+                format: date-time
+        period:
+          type: string
+    CreateCommissionPlanRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        rules:
+          type: array
+          items:
+            type: object
+            properties:
+              condition:
+                type: string
+              percentage:
+                type: number
+              minAmount:
+                type: number
+              maxAmount:
+                type: number
+    CommissionPlanCreationResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        rules:
+          type: array
+          items:
+            type: object
+        createdAt:
+          type: string
+          format: date-time
+        active:
+          type: boolean
+    DeleteUserResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        deletedAt:
+          type: string
+          format: date-time
     FirebaseAuthDto:
       type: object
       properties:

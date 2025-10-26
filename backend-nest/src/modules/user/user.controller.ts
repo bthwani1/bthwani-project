@@ -54,6 +54,21 @@ export class UserController {
     return this.userService.getCurrentUser(userId);
   }
 
+  @Auth(AuthType.FIREBASE)
+  @Delete('me')
+  @ApiResponse({ status: 200, description: 'Deleted' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiOperation({
+    summary: 'حذف حساب المستخدم',
+    description: 'حذف حساب المستخدم الحالي نهائياً',
+  })
+  @ApiResponse({ status: 200, description: 'تم حذف الحساب بنجاح' })
+  @ApiResponse({ status: 401, description: 'غير مصرّح' })
+  @ApiResponse({ status: 404, description: 'المستخدم غير موجود' })
+  async deleteCurrentUser(@CurrentUser('id') userId: string) {
+    return this.userService.deleteCurrentUser(userId);
+  }
+
   // Note: /user/profile route is handled by a separate controller if needed
 
   @Auth(AuthType.FIREBASE)

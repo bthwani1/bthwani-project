@@ -1,8 +1,6 @@
-import { Injectable, Logger, BadRequestException, UnauthorizedException, Inject } from '@nestjs/common';
+import { Injectable, Logger, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { InjectQueue } from '@nestjs/bullmq';
-import { Queue } from 'bullmq';
 import { createHmac } from 'crypto';
 import { WebhookDelivery, WebhookDeliverySchema } from '../entities/webhook-delivery.entity';
 import { WebhookEvent } from '../entities/webhook-event.entity';
@@ -28,7 +26,6 @@ export class WebhookService {
   constructor(
     @InjectModel(WebhookDelivery.name) private webhookDeliveryModel: Model<WebhookDelivery>,
     @InjectModel(WebhookEvent.name) private webhookEventModel: Model<WebhookEvent>,
-    @InjectQueue('webhooks') private webhooksQueue: Queue,
   ) {}
 
   /**
@@ -94,36 +91,20 @@ export class WebhookService {
     });
 
     try {
-      // Queue the webhook for processing
-      await this.webhooksQueue.add(
-        `webhook-${webhookId}-${Date.now()}`,
-        {
-          webhookId,
-          payload,
-          signature,
-          secret,
-        },
-        {
-          attempts: 5,
-          backoff: {
-            type: 'exponential',
-            delay: 2000,
-          },
-          removeOnComplete: 100,
-          removeOnFail: false,
-        }
-      );
+      // Process webhook directly
+      await this.processWebhookEventDirectly(payload);
 
-      // Mark as queued
+      // Mark as delivered
       await this.webhookDeliveryModel.updateOne(
         { _id: delivery._id },
         {
-          status: 'processing',
-          responseCode: 202, // Accepted for processing
+          status: 'delivered',
+          processedAt: new Date(),
+          responseCode: 200,
         }
       );
 
-      this.logger.log(`Webhook ${webhookId} queued for processing: ${payload.event}`);
+      this.logger.log(`Webhook ${webhookId} processed: ${payload.event}`);
       return delivery;
     } catch (error) {
       // Mark as failed
@@ -264,7 +245,7 @@ export class WebhookService {
         };
 
         // Retry processing (without signature verification for retries)
-        await this.processWebhookEvent(payload);
+        await this.processWebhookEventDirectly(payload);
 
         // Update delivery status
         await this.webhookDeliveryModel.updateOne(

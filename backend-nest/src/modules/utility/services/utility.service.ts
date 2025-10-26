@@ -307,4 +307,27 @@ export class UtilityService {
       throw new NotFoundException('السعر اليومي غير موجود');
     }
   }
+
+  /**
+   * توليد صور placeholder (compatibility with Next.js API routes)
+   */
+  async generatePlaceholderImage(
+    width: number,
+    height: number,
+    text?: string,
+    bg: string = 'cccccc',
+    fg: string = '000000',
+  ) {
+    // For now, redirect to a placeholder service
+    // In production, you might want to generate images server-side
+    const placeholderUrl = `https://via.placeholder.com/${width}x${height}/${bg}/${fg}`;
+
+    if (text) {
+      // Encode the text for URL
+      const encodedText = encodeURIComponent(text);
+      return `${placeholderUrl}?text=${encodedText}`;
+    }
+
+    return placeholderUrl;
+  }
 }

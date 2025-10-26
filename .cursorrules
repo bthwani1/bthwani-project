@@ -1,0 +1,52 @@
+# Cursor Rules for Bthwani API Platform
+
+## OpenAPI Specification Rules
+
+### Validation Requirements
+- All OpenAPI operations MUST have a summary
+- All parameters MUST have descriptions
+- All responses MUST have descriptions
+- Error objects MUST follow {code, message, details?} structure
+- Only allowed HTTP status codes: 200, 201, 202, 204, 400, 401, 403, 404, 409, 410, 415, 422, 429, 5xx
+- Transactional POST operations (payments, checkout, orders) MUST accept Idempotency-Key header
+
+### Path and Method Uniqueness
+- METHOD + normalized_path must be unique across the entire API
+
+### Schema Requirements
+- All schemas SHOULD have descriptions
+- Arrays MUST specify item types explicitly
+- Path parameters MUST be defined in both path template and parameters section
+
+## Code Generation Rules
+
+### SDK Generation
+- Use TypeScript 3.0+ features when possible
+- Generate interfaces for all models
+- Use single request parameter pattern
+- Maintain consistent naming across all generated SDKs
+
+### Error Handling
+- Use structured error responses with code, message, and optional details
+- Handle HTTP status codes appropriately
+- Provide meaningful error messages
+
+## Development Workflow
+
+### Before Committing
+1. Run `npm run lint:openapi` to check OpenAPI compliance
+2. Run `npm run validate:openapi` for strict validation
+3. Generate SDKs with `npm run generate:sdks` after API changes
+4. Validate SDKs with `npm run validate:sdks`
+
+### API Design Guidelines
+- Use RESTful naming conventions
+- Include comprehensive examples in documentation
+- Maintain backward compatibility
+- Document breaking changes clearly
+
+## File Organization
+- `openapi.yaml` is the single source of truth
+- Generated SDKs are in `*/src/api/generated/`
+- Spectral rules are in `openapi/` directory
+- Reports are in `backend-nest/reports/`

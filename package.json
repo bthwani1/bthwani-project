@@ -13,11 +13,20 @@
     "generate:sdk:rider": "npx openapi-generator-cli generate -g typescript-axios -i openapi.yaml -o rider-app/src/api/generated",
     "generate:sdk:marketer": "npx openapi-generator-cli generate -g typescript-axios -i openapi.yaml -o field-marketers/src/api/generated",
     "validate:sdks": "node scripts/validate-sdks.js",
-    "clean:sdks": "node scripts/clean-sdks.js"
+    "clean:sdks": "node scripts/clean-sdks.js",
+    "lint:openapi": "npx spectral lint openapi.yaml",
+    "lint:openapi:strict": "npx spectral lint openapi.yaml --ruleset .spectral.yaml --fail-severity error",
+    "validate:openapi": "npm run lint:openapi:strict",
+    "test:production": "./scripts/run-tests-production.sh",
+    "audit:production": "NODE_ENV=production HTTP_PROXY= HTTPS_PROXY= DISABLE_EXTERNAL_APIS=true npm run audit:all",
+    "audit:runtime-fe": "node scripts/compare-runtime-fe.js",
+    "parity-gate": "node scripts/parity-gate.js",
+    "parity-gate:ci": "npm run generate:all && npm run parity-gate"
   },
   "devDependencies": {
     "@axe-core/react": "^4.10.2",
     "@openapitools/openapi-generator-cli": "^2.13.4",
+    "@stoplight/spectral-cli": "^6.11.0",
     "@types/node": "^24.9.1",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "fast-glob": "^3.3.3",

@@ -12,11 +12,14 @@ import { Model } from 'mongoose';
 import * as admin from 'firebase-admin';
 import { User } from './entities/user.entity';
 import { RegisterDto } from './dto/register.dto';
+import { Driver } from '../driver/entities/driver.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
+    @InjectModel(Driver.name) private driverModel: Model<Driver>,
     private jwtService: JwtService,
     private configService: ConfigService,
   ) {}
@@ -292,5 +295,58 @@ export class AuthService {
       user: this.sanitizeUser(user),
       token,
     };
+  }
+
+  // مقارنة كلمة المرور المشفرة
+  private async comparePassword(plainPassword: string, hashedPassword: string): Promise<boolean> {
+    return bcrypt.compare(plainPassword, hashedPassword);
+  }
+
+  // تسجيل دخول السائق
+  async driverLogin(email: string, password: string) {
+    // البحث عن السائق في مجموعة الـ drivers
+    const driver = await this.driverModel.findOne({ email }).select('+password');
+
+    if (!driver) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    // التحقق من كلمة المرور
+    const isValidPassword = await this.comparePassword(password, driver.password);
+    if (!isValidPassword) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    // التحقق من حالة السائق
+    if (driver.isBanned) {
+      throw new UnauthorizedException('Account is banned');
+    }
+
+    // توليد token
+    const token = await this.generateDriverToken(driver);
+
+    return {
+      user: this.sanitizeDriver(driver),
+      token,
+      type: 'driver',
+    };
+  }
+
+  // توليد token للسائق
+  private async generateDriverToken(driver: any) {
+    const payload = {
+      sub: driver._id,
+      email: driver.email,
+      role: 'driver',
+      type: 'driver',
+    };
+
+    return this.jwtService.sign(payload);
+  }
+
+  // تنظيف بيانات السائق
+  private sanitizeDriver(driver: any) {
+    const { password, ...sanitized } = driver.toObject();
+    return sanitized;
   }
 }
