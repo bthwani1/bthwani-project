@@ -1,13 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import type { Model } from 'mongoose';
-import Kenz from './entities/kenz.entity';
+import { Types } from 'mongoose';
+import { Kenz } from './entities/kenz.entity';
 import type CreateKenzDto from './dto/create-kenz.dto';
 import type UpdateKenzDto from './dto/update-kenz.dto';
 
 @Injectable()
 export class KenzService {
-  constructor(@InjectModel(Kenz.name) private readonly model: Model<Kenz>) {} 
+  constructor(@InjectModel(Kenz.name) private readonly model: Model<Kenz>) {}
 
   async create(dto: CreateKenzDto) {
     const doc = new this.model(dto);
@@ -18,21 +19,28 @@ export class KenzService {
     const limit = 25;
     const query = this.model.find().sort({ _id: -1 }).limit(limit);
     if (opts?.cursor) {
-      query.where('_id').lt(opts.cursor);
+      query.where('_id').lt(Number(opts.cursor));
     }
     const items = await query.exec();
-    const nextCursor = items.length === limit ? String(items[items.length - 1]._id) : null;
+    const nextCursor =
+      items.length === limit ? String(items[items.length - 1]._id) : null;
     return { items, nextCursor };
   }
 
   async findOne(id: string) {
-    const doc = await this.model.findById(id).populate('ownerId', 'name email phone').exec();
+    const doc = await this.model
+      .findById(id)
+      .populate('ownerId', 'name email phone')
+      .exec();
     if (!doc) throw new NotFoundException('Not found');
     return doc;
   }
 
   async list(filters: any = {}, cursor?: string, limit: number = 25) {
-    const query = this.model.find().populate('ownerId', 'name email phone').sort({ _id: -1 });
+    const query = this.model
+      .find()
+      .populate('ownerId', 'name email phone')
+      .sort({ _id: -1 });
 
     // Apply filters
     if (filters.status) query.where('status').equals(filters.status);
@@ -40,11 +48,13 @@ export class KenzService {
     if (filters.category) query.where('category').equals(filters.category);
     if (filters.priceMin) query.where('price').gte(filters.priceMin);
     if (filters.priceMax) query.where('price').lte(filters.priceMax);
-    if (filters.createdAfter) query.where('createdAt').gte(new Date(filters.createdAfter));
-    if (filters.createdBefore) query.where('createdAt').lte(new Date(filters.createdBefore));
+    if (filters.createdAfter)
+      query.where('createdAt').gte(filters.createdAfter);
+    if (filters.createdBefore)
+      query.where('createdAt').lte(filters.createdBefore);
 
     if (cursor) {
-      query.where('_id').lt(cursor);
+      query.where('_id').lt(Number(cursor));
     }
 
     query.limit(limit + 1); // +1 to check if there are more items
@@ -52,7 +62,9 @@ export class KenzService {
     const items = await query.exec();
     const hasNextPage = items.length > limit;
     const resultItems = hasNextPage ? items.slice(0, -1) : items;
-    const nextCursor = hasNextPage ? String(resultItems[resultItems.length - 1]._id) : null;
+    const nextCursor = hasNextPage
+      ? String(resultItems[resultItems.length - 1]._id)
+      : null;
 
     return { items: resultItems, nextCursor };
   }
@@ -62,9 +74,9 @@ export class KenzService {
       {
         $group: {
           _id: '$status',
-          count: { $sum: 1 }
-        }
-      }
+          count: { $sum: 1 },
+        },
+      },
     ]);
 
     const result = {
@@ -73,10 +85,10 @@ export class KenzService {
       pending: 0,
       confirmed: 0,
       completed: 0,
-      cancelled: 0
+      cancelled: 0,
     };
 
-    stats.forEach(stat => {
+    stats.forEach((stat) => {
       result.total += stat.count;
       result[stat._id] = stat.count;
     });
@@ -85,7 +97,9 @@ export class KenzService {
   }
 
   async update(id: string, dto: UpdateKenzDto) {
-    const doc = await this.model.findByIdAndUpdate(id, dto, { new: true }).exec();
+    const doc = await this.model
+      .findByIdAndUpdate(id, dto, { new: true })
+      .exec();
     if (!doc) throw new NotFoundException('Not found');
     return doc;
   }

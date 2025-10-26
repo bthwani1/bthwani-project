@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsOptional, IsEnum, IsDateString, IsNumber, IsMongoId } from 'class-validator';
 import { Type } from 'class-transformer';
 import { KenzStatus, KenzListResponse, KenzStats, KenzAdminQuery, KenzStatusUpdateDto } from '../interfaces/admin.interfaces';
-
+import { Types } from 'mongoose';
 export class KenzAdminQueryDto implements KenzAdminQuery {
   @ApiProperty({ required: false, enum: KenzStatus })
   @IsOptional()
@@ -12,7 +12,7 @@ export class KenzAdminQueryDto implements KenzAdminQuery {
   @ApiProperty({ required: false, example: '507f1f77bcf86cd799439011' })
   @IsOptional()
   @IsMongoId()
-  ownerId?: string;
+  ownerId?: Types.ObjectId;
 
   @ApiProperty({ required: false, example: 'إلكترونيات' })
   @IsOptional()
@@ -22,12 +22,12 @@ export class KenzAdminQueryDto implements KenzAdminQuery {
   @ApiProperty({ required: false, example: '2024-01-01T00:00:00.000Z' })
   @IsOptional()
   @IsDateString()
-  createdAfter?: string;
+  createdAfter?: Date;
 
   @ApiProperty({ required: false, example: '2024-12-31T23:59:59.999Z' })
   @IsOptional()
   @IsDateString()
-  createdBefore?: string;
+  createdBefore?: Date;
 
   @ApiProperty({ required: false, example: 1000 })
   @IsOptional()
@@ -88,6 +88,6 @@ export class KenzAdminActionResponseDto {
   @ApiProperty({ example: 'تم تحديث حالة الإعلان بنجاح' })
   message: string;
 
-  @ApiProperty({ type: 'object', required: false })
+  @ApiProperty({ required: false })
   data?: any;
 }

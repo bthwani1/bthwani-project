@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Cron, CronExpression } from '@nestjs/schedule';
 
-interface SettlementRecord {
+export interface SettlementRecord {
   date: string; // YYYY-MM-DD
   totalTransactions: number;
   totalVolume: number;
@@ -27,9 +27,9 @@ export class DailySettlementService {
   ) {}
 
   /**
-   * Automated daily settlement - runs at 11:59 PM every day
+   * Automated daily settlement - runs at 11 PM every day
    */
-  @Cron(CronExpression.EVERY_DAY_AT_11_59PM)
+  @Cron(CronExpression.EVERY_DAY_AT_11PM)
   async performDailySettlement() {
     this.logger.log('Starting daily settlement process...');
 

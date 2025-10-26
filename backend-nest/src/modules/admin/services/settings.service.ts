@@ -102,6 +102,58 @@ export class SettingsService {
     }
   }
 
+  async getAppearanceSettings() {
+    const appearanceSettings = await this.settingsModel
+      .find({ category: 'appearance' })
+      .sort({ key: 1 });
+
+    // Convert to key-value object
+    const settings: Record<string, any> = {};
+    for (const setting of appearanceSettings) {
+      settings[setting.key] = setting.value;
+    }
+
+    // Set defaults if no settings exist
+    if (Object.keys(settings).length === 0) {
+      settings.primaryColor = '#007bff';
+      settings.secondaryColor = '#6c757d';
+      settings.logoUrl = '';
+      settings.faviconUrl = '';
+      settings.appName = 'Bthwani';
+      settings.description = 'منصة التوصيل الذكية';
+      settings.enableDarkMode = false;
+      settings.fontFamily = 'Arial';
+    }
+
+    return settings;
+  }
+
+  async updateAppearanceSettings(updates: Record<string, any>) {
+    const results: AppSettings[] = [];
+
+    for (const [key, value] of Object.entries(updates)) {
+      const setting = await this.settingsModel.findOneAndUpdate(
+        { key, category: 'appearance' },
+        {
+          key,
+          value,
+          category: 'appearance',
+          type: typeof value,
+          description: `إعداد المظهر: ${key}`,
+          isPublic: true,
+        },
+        { upsert: true, new: true }
+      );
+      results.push(setting);
+    }
+
+    return {
+      success: true,
+      message: 'تم تحديث إعدادات المظهر',
+      settings: results,
+    };
+  }
+
   async seedDefaultSettings() {
     const defaults = [
       {

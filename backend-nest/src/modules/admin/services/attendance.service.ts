@@ -219,6 +219,39 @@ export class AttendanceService {
     return { data: report, total: report.length };
   }
 
+  async getAllDriversAttendance(targetDate: Date, page: number = 1, limit: number = 20) {
+    const startDate = new Date(targetDate);
+    startDate.setHours(0, 0, 0, 0);
+    const endDate = new Date(targetDate);
+    endDate.setHours(23, 59, 59, 999);
+
+    const skip = (page - 1) * limit;
+
+    const [records, total] = await Promise.all([
+      this.attendanceModel
+        .find({
+          employeeModel: 'Driver',
+          date: { $gte: startDate, $lte: endDate },
+        })
+        .populate('employeeId', 'fullName phone')
+        .skip(skip)
+        .limit(limit)
+        .sort({ date: -1 }),
+      this.attendanceModel.countDocuments({
+        employeeModel: 'Driver',
+        date: { $gte: startDate, $lte: endDate },
+      }),
+    ]);
+
+    return {
+      data: records,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
+  }
+
   private isValidTime(time: string): boolean {
     const timeRegex = /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/;
     return timeRegex.test(time);

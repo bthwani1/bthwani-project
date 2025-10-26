@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsOptional, IsEnum, IsDateString, IsMongoId } from 'class-validator';
 import { Type } from 'class-transformer';
 import { SanadStatus, SanadKind, SanadListResponse, SanadStats, SanadAdminQuery, SanadStatusUpdateDto } from '../interfaces/admin.interfaces';
+import { Types } from 'mongoose';
 
 export class SanadAdminQueryDto implements SanadAdminQuery {
   @ApiProperty({ required: false, enum: SanadStatus })
@@ -17,17 +18,17 @@ export class SanadAdminQueryDto implements SanadAdminQuery {
   @ApiProperty({ required: false, example: '507f1f77bcf86cd799439011' })
   @IsOptional()
   @IsMongoId()
-  ownerId?: string;
+  ownerId?: Types.ObjectId;
 
   @ApiProperty({ required: false, example: '2024-01-01T00:00:00.000Z' })
   @IsOptional()
   @IsDateString()
-  createdAfter?: string;
+  createdAfter?: Date;
 
   @ApiProperty({ required: false, example: '2024-12-31T23:59:59.999Z' })
   @IsOptional()
   @IsDateString()
-  createdBefore?: string;
+  createdBefore?: Date;
 
   @ApiProperty({ required: false, example: 'طلب فزعة' })
   @IsOptional()
@@ -90,6 +91,6 @@ export class SanadAdminActionResponseDto {
   @ApiProperty({ example: 'تم تحديث حالة الطلب بنجاح' })
   message: string;
 
-  @ApiProperty({ type: 'object', required: false })
+  @ApiProperty({ required: false })
   data?: any;
 }

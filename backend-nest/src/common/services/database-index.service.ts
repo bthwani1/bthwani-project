@@ -183,7 +183,13 @@ export class DatabaseIndexService implements OnModuleInit {
 
     for (const index of this.CRITICAL_INDEXES) {
       try {
-        const collection = this.connection.db.collection(index.collection);
+        const db = this.connection.db;
+        if (!db) {
+          this.logger.error(`Database connection not available for index creation`);
+          continue;
+        }
+
+        const collection = db.collection(index.collection);
 
         // Check if index already exists
         const existingIndexes = await collection.indexes();
@@ -223,8 +229,14 @@ export class DatabaseIndexService implements OnModuleInit {
    */
   async analyzeSlowQueries(): Promise<IndexRecommendation[]> {
     try {
+      const db = this.connection.db;
+      if (!db) {
+        this.logger.warn('Database connection not available for slow query analysis');
+        return [];
+      }
+
       // Get MongoDB profiler results (requires profiling to be enabled)
-      const systemProfile = this.connection.db.collection('system.profile');
+      const systemProfile = db.collection('system.profile');
 
       const slowQueries = await systemProfile
         .find({
@@ -304,7 +316,12 @@ export class DatabaseIndexService implements OnModuleInit {
    */
   async getIndexUsageStats(): Promise<any> {
     try {
-      const stats = await this.connection.db.stats();
+      const db = this.connection.db;
+      if (!db) {
+        return { error: 'Database connection not available' };
+      }
+
+      const stats = await db.stats();
 
       // Get collection-specific index stats
       const collections = [
@@ -316,7 +333,13 @@ export class DatabaseIndexService implements OnModuleInit {
 
       for (const collectionName of collections) {
         try {
-          const collection = this.connection.db.collection(collectionName);
+          const db = this.connection.db;
+          if (!db) {
+            indexStats[collectionName] = { error: 'Database connection not available' };
+            continue;
+          }
+
+          const collection = db.collection(collectionName);
           const indexes = await collection.indexes();
           const count = await collection.countDocuments();
 

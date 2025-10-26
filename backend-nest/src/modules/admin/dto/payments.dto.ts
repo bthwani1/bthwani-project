@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsOptional, IsEnum, IsDateString, IsNumber, IsMongoId } from 'class-validator';
 import { Type } from 'class-transformer';
 import { PaymentStatus, PaymentType, PaymentMethod, PaymentsListResponse, PaymentsStats, PaymentsAdminQuery, PaymentsStatusUpdateDto } from '../interfaces/admin.interfaces';
+import { Types } from 'mongoose';
 
 export class PaymentsAdminQueryDto implements PaymentsAdminQuery {
   @ApiProperty({ required: false, enum: PaymentStatus })
@@ -22,7 +23,7 @@ export class PaymentsAdminQueryDto implements PaymentsAdminQuery {
   @ApiProperty({ required: false, example: '507f1f77bcf86cd799439011' })
   @IsOptional()
   @IsMongoId()
-  ownerId?: string;
+  ownerId?: Types.ObjectId;
 
   @ApiProperty({ required: false, example: 100 })
   @IsOptional()
@@ -39,12 +40,12 @@ export class PaymentsAdminQueryDto implements PaymentsAdminQuery {
   @ApiProperty({ required: false, example: '2024-01-01T00:00:00.000Z' })
   @IsOptional()
   @IsDateString()
-  createdAfter?: string;
+  createdAfter?: Date;
 
   @ApiProperty({ required: false, example: '2024-12-31T23:59:59.999Z' })
   @IsOptional()
   @IsDateString()
-  createdBefore?: string;
+  createdBefore?: Date;
 
   @ApiProperty({ required: false, example: 'دفع فاتورة' })
   @IsOptional()
@@ -132,6 +133,6 @@ export class PaymentsAdminActionResponseDto {
   @ApiProperty({ example: 'تم تحديث حالة الدفع بنجاح' })
   message: string;
 
-  @ApiProperty({ type: 'object', required: false })
+  @ApiProperty({ required: false })
   data?: any;
 }

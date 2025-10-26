@@ -218,6 +218,66 @@ export class LeaveService {
     };
   }
 
+  async getDriversVacationsStats(year?: number) {
+    const targetYear = year || new Date().getFullYear();
+    const yearStart = new Date(targetYear, 0, 1);
+    const yearEnd = new Date(targetYear, 11, 31, 23, 59, 59);
+
+    // Get all drivers with leave statistics
+    const drivers = await this.driverModel.find({ isActive: true }).select('fullName leaveBalance');
+
+    const stats: any[] = [];
+
+    for (const driver of drivers) {
+      // Calculate used leave days for this year
+      const approvedLeaves = await this.leaveRequestModel.find({
+        employeeId: driver._id,
+        employeeModel: 'Driver',
+        status: 'approved',
+        startDate: { $gte: yearStart, $lte: yearEnd },
+      });
+
+      let usedDays = 0;
+      for (const leave of approvedLeaves) {
+        const leaveDoc = leave as unknown as LeaveRequestDocument;
+        const days = Math.ceil(
+          (leaveDoc.endDate.getTime() - leaveDoc.startDate.getTime()) /
+            (1000 * 60 * 60 * 24),
+        );
+        usedDays += Math.max(days, 1); // At least 1 day
+      }
+
+      const driverWithBalance = driver as unknown as DriverWithWallet;
+      const annualLeave = driverWithBalance.leaveBalance?.annual || 21;
+
+      stats.push({
+        driverId: driver._id,
+        driverName: driver.fullName,
+        totalLeaveDays: annualLeave,
+        usedLeaveDays: usedDays,
+        remainingLeaveDays: Math.max(annualLeave - usedDays, 0),
+        leaveRequestsCount: approvedLeaves.length,
+      });
+    }
+
+    // Calculate overall statistics
+    const totalDrivers = stats.length;
+    const totalLeaveDays = stats.reduce((sum, stat) => sum + stat.totalLeaveDays, 0);
+    const totalUsedDays = stats.reduce((sum, stat) => sum + stat.usedLeaveDays, 0);
+    const averageUtilization = totalLeaveDays > 0 ? (totalUsedDays / totalLeaveDays) * 100 : 0;
+
+    return {
+      year: targetYear,
+      drivers: stats,
+      summary: {
+        totalDrivers,
+        totalLeaveDays,
+        totalUsedDays,
+        averageUtilization: Math.round(averageUtilization * 100) / 100,
+      },
+    };
+  }
+
   async deleteLeaveRequest(requestId: string) {
     const request = await this.leaveRequestModel.findById(requestId);
     if (!request) {

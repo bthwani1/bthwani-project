@@ -1,8 +1,21 @@
-import { Controller, Get, Patch, Delete, Param, Query, UseGuards, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Patch,
+  Delete,
+  Param,
+  Query,
+  UseGuards,
+  Body,
+} from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { UnifiedAuthGuard } from '../../common/guards/unified-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
-import { Auth, Roles, CurrentUser } from '../../common/decorators/auth.decorator';
+import {
+  Auth,
+  Roles,
+  CurrentUser,
+} from '../../common/decorators/auth.decorator';
 import { AuthType } from '../../common/guards/unified-auth.guard';
 import { CursorPaginationDto } from '../../common/dto/pagination.dto';
 import { AmaniService } from '../amani/amani.service';
@@ -12,14 +25,14 @@ import { AmaniService } from '../amani/amani.service';
 @Controller({ path: 'admin/amani', version: ['2'] })
 @UseGuards(UnifiedAuthGuard, RolesGuard)
 @Auth(AuthType.JWT)
-@Roles('admin','superadmin')
+@Roles('admin', 'superadmin')
 export class AdminAmaniController {
-  constructor(private readonly service: AmaniService) { }
+  constructor(private readonly service: AmaniService) {}
 
   @Get()
   @ApiOperation({ summary: 'إدارة العناصر' })
   list(@Query() q: CursorPaginationDto) {
-    return this.service.list({}, q.cursor, q.limit);
+    return this.service.findAll({ cursor: q.cursor });
   }
 
   @Patch(':id/status')

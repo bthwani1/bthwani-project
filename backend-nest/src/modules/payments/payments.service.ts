@@ -1,7 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import type { Model } from 'mongoose';
-import Payments, { PaymentType, PaymentStatus, PaymentMethod } from './entities/payments.entity';
+import { Types } from 'mongoose';
+import { Payments } from './entities/payments.entity';
 import { WalletService } from '../wallet/wallet.service';
 import { IdempotencyService } from '../../common/services/idempotency.service';
 
@@ -54,20 +55,22 @@ export class PaymentsService {
     return this.wallet.holdFunds(holdDto.userId, holdDto.amount, holdDto.reference);
   }
 
-  async release(holdId: string) {
-    return this.wallet.releaseFunds(holdId);
+  async release(userId: string, amount: number, orderId?: string) {
+    return this.wallet.releaseFunds(userId, amount, orderId);
   }
 
-  async refund(holdId: string, reason: string) {
-    return this.wallet.refundHeldFunds(holdId, reason);
+  async refund(userId: string, amount: number, orderId?: string) {
+    return this.wallet.refundHeldFunds(userId, amount, orderId);
   }
 
   async getHold(holdId: string) {
-    return this.wallet.getHoldById(holdId);
+    // TODO: Implement hold retrieval - holds are currently managed as balance adjustments
+    throw new Error('Hold retrieval not implemented');
   }
 
   async getHoldsByUser(userId: string) {
-    return this.wallet.getHoldsByUser(userId);
+    // TODO: Implement holds by user - holds are currently managed as balance adjustments
+    return { holds: [], total: 0 };
   }
 
   async list(filters: any = {}, cursor?: string, limit: number = 25) {
@@ -81,8 +84,8 @@ export class PaymentsService {
     if (filters.amountMin) query.where('amount').gte(filters.amountMin);
     if (filters.amountMax) query.where('amount').lte(filters.amountMax);
     if (filters.reference) query.where('reference').equals(filters.reference);
-    if (filters.createdAfter) query.where('createdAt').gte(new Date(filters.createdAfter));
-    if (filters.createdBefore) query.where('createdAt').lte(new Date(filters.createdBefore));
+    if (filters.createdAfter) query.where('createdAt').gte(filters.createdAfter);
+    if (filters.createdBefore) query.where('createdAt').lte(filters.createdBefore);
     if (filters.search) {
       query.or([
         { title: { $regex: filters.search, $options: 'i' } },
@@ -91,7 +94,7 @@ export class PaymentsService {
     }
 
     if (cursor) {
-      query.where('_id').lt(cursor);
+      query.where('_id').lt(Number(cursor));
     }
 
     query.limit(limit + 1); // +1 to check if there are more items

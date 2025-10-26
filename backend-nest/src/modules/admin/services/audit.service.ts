@@ -96,4 +96,82 @@ export class AuditService {
     const log = new this.auditLogModel(data);
     return await log.save();
   }
+
+  async logAction(data: {
+    action: string;
+    entityType?: string;
+    entityId?: string;
+    userId: string;
+    resource?: string;
+    resourceId?: string;
+    details?: any;
+  }) {
+    const logData: Partial<AuditLog> = {
+      action: data.action,
+      userId: new Types.ObjectId(data.userId),
+      resource: data.resource || data.entityType,
+      resourceId: data.resourceId ? new Types.ObjectId(data.resourceId) : (data.entityId ? new Types.ObjectId(data.entityId) : undefined),
+      metadata: data.details,
+      status: 'success',
+      severity: 'low',
+    };
+
+    return await this.createAuditLog(logData);
+  }
+
+  async getAuditLogsStats(matchConditions: any = {}) {
+    const matchQuery = { ...matchConditions };
+
+    const [totalLogs, actionsByType, actionsByUser, recentActivity] = await Promise.all([
+      this.auditLogModel.countDocuments(matchQuery),
+      this.auditLogModel.aggregate([
+        { $match: matchQuery },
+        { $group: { _id: '$action', count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $limit: 10 },
+      ]),
+      this.auditLogModel.aggregate([
+        { $match: matchQuery },
+        {
+          $group: {
+            _id: '$userId',
+            count: { $sum: 1 },
+            lastActivity: { $max: '$timestamp' },
+          },
+        },
+        { $sort: { count: -1 } },
+        { $limit: 10 },
+        {
+          $lookup: {
+            from: 'users',
+            localField: '_id',
+            foreignField: '_id',
+            as: 'user',
+          },
+        },
+        { $unwind: '$user' },
+        {
+          $project: {
+            _id: 0,
+            userId: '$_id',
+            userName: '$user.fullName',
+            count: 1,
+            lastActivity: 1,
+          },
+        },
+      ]),
+      this.auditLogModel
+        .find(matchQuery)
+        .populate('userId', 'fullName email')
+        .sort({ timestamp: -1 })
+        .limit(5),
+    ]);
+
+    return {
+      totalLogs,
+      actionsByType,
+      actionsByUser,
+      recentActivity,
+    };
+  }
 }

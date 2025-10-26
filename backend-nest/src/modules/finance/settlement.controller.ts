@@ -8,14 +8,15 @@ import {
   ApiBearerAuth,
 } from '@nestjs/swagger';
 import { DailySettlementService } from '../../common/services/daily-settlement.service';
-import { FirebaseAuthGuard } from '../../common/guards/firebase-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
-import { Roles } from '../../common/decorators/roles.decorator';
+import { UnifiedAuthGuard } from '../../common/guards';
+import { SettlementRecord } from '../../common/services/daily-settlement.service';
+import { Roles } from '../../common/decorators/auth.decorator';
 
 @ApiTags('التسوية والتقارير المالية')
 @ApiBearerAuth()
 @Controller('api/v2/finance/settlement')
-@UseGuards(FirebaseAuthGuard, RolesGuard)
+@UseGuards(UnifiedAuthGuard, RolesGuard)
 export class SettlementController {
   constructor(private readonly settlementService: DailySettlementService) {}
 
@@ -47,7 +48,7 @@ export class SettlementController {
   @ApiQuery({ name: 'limit', description: 'عدد السجلات المطلوبة (الافتراضي: 30)', example: 30 })
   @ApiResponse({ status: 200, description: 'تم استرجاع سجل التسويات بنجاح' })
   @ApiResponse({ status: 403, description: 'غير مصرح لك' })
-  async getSettlementHistory(@Query('limit') limit?: number) {
+  async getSettlementHistory(@Query('limit') limit?: number): Promise<SettlementRecord[]> {
     const limitNum = limit ? parseInt(limit.toString(), 10) : 30;
     return this.settlementService.getSettlementHistory(limitNum);
   }
@@ -59,7 +60,7 @@ export class SettlementController {
   @ApiResponse({ status: 200, description: 'تم استرجاع تفاصيل التسوية بنجاح' })
   @ApiResponse({ status: 404, description: 'لم يتم العثور على تسوية لهذا التاريخ' })
   @ApiResponse({ status: 403, description: 'غير مصرح لك' })
-  async getSettlementByDate(@Param('date') date: string) {
+  async getSettlementByDate(@Param('date') date: string): Promise<SettlementRecord>  {
     const settlement = await this.settlementService.getSettlementByDate(date);
     if (!settlement) {
       throw new Error(`No settlement found for date: ${date}`);

@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsOptional, IsEnum, IsDateString, IsNumber, IsMongoId } from 'class-validator';
 import { Type } from 'class-transformer';
 import { KawaderStatus, KawaderListResponse, KawaderStats, KawaderAdminQuery, KawaderStatusUpdateDto } from '../interfaces/admin.interfaces';
-
+import { Types } from 'mongoose';
 export class KawaderAdminQueryDto implements KawaderAdminQuery {
   @ApiProperty({ required: false, enum: KawaderStatus })
   @IsOptional()
@@ -12,17 +12,17 @@ export class KawaderAdminQueryDto implements KawaderAdminQuery {
   @ApiProperty({ required: false, example: '507f1f77bcf86cd799439011' })
   @IsOptional()
   @IsMongoId()
-  ownerId?: string;
+  ownerId?: Types.ObjectId;
 
   @ApiProperty({ required: false, example: '2024-01-01T00:00:00.000Z' })
   @IsOptional()
   @IsDateString()
-  createdAfter?: string;
+  createdAfter?: Date;
 
   @ApiProperty({ required: false, example: '2024-12-31T23:59:59.999Z' })
   @IsOptional()
   @IsDateString()
-  createdBefore?: string;
+  createdBefore?: Date;
 
   @ApiProperty({ required: false, example: 1000 })
   @IsOptional()
@@ -83,6 +83,6 @@ export class KawaderAdminActionResponseDto {
   @ApiProperty({ example: 'تم تحديث حالة العرض بنجاح' })
   message: string;
 
-  @ApiProperty({ type: 'object', required: false })
+  @ApiProperty({ required: false })
   data?: any;
 }

@@ -41,8 +41,7 @@ export class Amani extends Document {
   @ApiProperty({
     description: 'موقع الانطلاق',
     example: { lat: 24.7136, lng: 46.6753, address: 'الرياض، المملكة العربية السعودية' },
-    required: false,
-    type: 'object'
+    required: false
   })
   @Prop({ type: Object })
   origin?: any;
@@ -50,8 +49,7 @@ export class Amani extends Document {
   @ApiProperty({
     description: 'الوجهة المطلوبة',
     example: { lat: 21.4858, lng: 39.1925, address: 'جدة، المملكة العربية السعودية' },
-    required: false,
-    type: 'object'
+    required: false
   })
   @Prop({ type: Object })
   destination?: any;
@@ -59,8 +57,7 @@ export class Amani extends Document {
   @ApiProperty({
     description: 'بيانات إضافية للطلب',
     example: { passengers: 4, luggage: true, specialRequests: 'كرسي أطفال' },
-    required: false,
-    type: 'object'
+    required: false
   })
   @Prop({ type: Object, default: {} })
   metadata: Record<string, any>;

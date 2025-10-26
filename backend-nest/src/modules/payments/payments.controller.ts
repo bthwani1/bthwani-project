@@ -46,8 +46,8 @@ export class PaymentsController {
   @ApiResponse({ status: HttpStatus.OK, description: 'تم إطلاق الأموال بنجاح' })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'العربون غير موجود' })
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'غير مخول' })
-  release(@Param('holdId') holdId: string) {
-    return this.service.release(holdId);
+  release(@Param('holdId') userId: string, @Body() dto?: { amount: number; orderId?: string }) {
+    return this.service.release(userId, dto?.amount || 0, dto?.orderId);
   }
 
   @Post('holds/:holdId/refund')
@@ -65,8 +65,8 @@ export class PaymentsController {
   @ApiResponse({ status: HttpStatus.OK, description: 'تم الاسترداد بنجاح' })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'العربون غير موجود' })
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'غير مخول' })
-  refund(@Param('holdId') holdId: string, @Body() dto?: { reason?: string }) {
-    return this.service.refund(holdId, dto?.reason || 'unspecified');
+  refund(@Param('holdId') userId: string, @Body() dto?: { amount: number; orderId?: string }) {
+    return this.service.refund(userId, dto?.amount || 0, dto?.orderId);
   }
 
   @Get('holds/:holdId')

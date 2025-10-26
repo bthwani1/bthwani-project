@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsOptional, IsEnum, IsDateString, IsArray, IsMongoId } from 'class-validator';
 import { Type } from 'class-transformer';
 import { MaaroufStatus, MaaroufKind, MaaroufListResponse, MaaroufStats, MaaroufAdminQuery, MaaroufStatusUpdateDto } from '../interfaces/admin.interfaces';
-
+import { Types } from 'mongoose';
 export class MaaroufAdminQueryDto implements MaaroufAdminQuery {
   @ApiProperty({ required: false, enum: MaaroufStatus })
   @IsOptional()
@@ -17,7 +17,7 @@ export class MaaroufAdminQueryDto implements MaaroufAdminQuery {
   @ApiProperty({ required: false, example: '507f1f77bcf86cd799439011' })
   @IsOptional()
   @IsMongoId()
-  ownerId?: string;
+  ownerId?: Types.ObjectId;
 
   @ApiProperty({ required: false, type: [String], example: ['محفظة', 'بطاقات'] })
   @IsOptional()
@@ -28,12 +28,12 @@ export class MaaroufAdminQueryDto implements MaaroufAdminQuery {
   @ApiProperty({ required: false, example: '2024-01-01T00:00:00.000Z' })
   @IsOptional()
   @IsDateString()
-  createdAfter?: string;
+  createdAfter?: Date;
 
   @ApiProperty({ required: false, example: '2024-12-31T23:59:59.999Z' })
   @IsOptional()
   @IsDateString()
-  createdBefore?: string;
+    createdBefore?: Date;
 
   @ApiProperty({ required: false, example: 'محفظة سوداء' })
   @IsOptional()
@@ -93,6 +93,6 @@ export class MaaroufAdminActionResponseDto {
   @ApiProperty({ example: 'تم تحديث حالة الإعلان بنجاح' })
   message: string;
 
-  @ApiProperty({ type: 'object', required: false })
+  @ApiProperty({ required: false })
   data?: any;
 }

@@ -201,6 +201,48 @@ export class DriverShiftService {
     return { data: shifts, total: shifts.length };
   }
 
+  async getDriversShifts({ status, date, page, limit }: {
+    status?: string;
+    date?: string;
+    page: number;
+    limit: number;
+  }) {
+    const query: any = { isActive: true };
+    const skip = (page - 1) * limit;
+
+    if (status) {
+      query.status = status;
+    }
+
+    if (date) {
+      const targetDate = new Date(date);
+      const startOfDay = new Date(targetDate);
+      startOfDay.setHours(0, 0, 0, 0);
+      const endOfDay = new Date(targetDate);
+      endOfDay.setHours(23, 59, 59, 999);
+
+      query.createdAt = { $gte: startOfDay, $lte: endOfDay };
+    }
+
+    const [shifts, total] = await Promise.all([
+      this.shiftModel
+        .find(query)
+        .populate('assignments.driverId', 'fullName phone')
+        .skip(skip)
+        .limit(limit)
+        .sort({ createdAt: -1 }),
+      this.shiftModel.countDocuments(query),
+    ]);
+
+    return {
+      data: shifts,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
+  }
+
   async getShiftDrivers(shiftId: string) {
     const shift = await this.shiftModel
       .findById(shiftId)

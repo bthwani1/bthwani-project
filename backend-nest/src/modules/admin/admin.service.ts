@@ -1380,7 +1380,7 @@ export class AdminService {
     return {
       success: true,
       data: roles.map(role => ({
-        _id: role._id.toString(),
+        _id: (role._id as Types.ObjectId).toString(),
         name: role.name,
         displayName: role.displayName,
         description: role.description,
@@ -1418,7 +1418,7 @@ export class AdminService {
     await this.auditService.logAction({
       action: 'CREATE_ROLE',
       entityType: 'Role',
-      entityId: savedRole._id.toString(),
+      entityId: (savedRole._id as Types.ObjectId).toString(),
       userId: adminId,
       details: { roleName: roleData.name },
     });
@@ -1427,7 +1427,7 @@ export class AdminService {
       success: true,
       message: 'تم إنشاء الدور بنجاح',
       data: {
-        _id: savedRole._id.toString(),
+        _id: (savedRole._id as Types.ObjectId).toString(),
         name: savedRole.name,
         displayName: savedRole.displayName,
         description: savedRole.description,
@@ -1441,6 +1441,7 @@ export class AdminService {
   }
 
   async updateRole(roleId: string, updates: {
+    name?: string;
     displayName?: string;
     description?: string;
     permissions?: Record<string, boolean>;
@@ -1480,7 +1481,7 @@ export class AdminService {
       success: true,
       message: 'تم تحديث الدور بنجاح',
       data: updatedRole ? {
-        _id: updatedRole._id.toString(),
+        _id: (updatedRole._id as Types.ObjectId).toString(),
         name: updatedRole.name,
         displayName: updatedRole.displayName,
         description: updatedRole.description,
@@ -1536,7 +1537,7 @@ export class AdminService {
     return {
       success: true,
       data: {
-        _id: role._id.toString(),
+        _id: (role._id as Types.ObjectId).toString(),
         name: role.name,
         displayName: role.displayName,
         description: role.description,
@@ -1576,7 +1577,7 @@ export class AdminService {
 
         case 'financial':
           // تقرير مالي - يحتاج تنفيذ أكثر تفصيلاً
-          data = await this.getFinancialStats();
+          data = [await this.getFinancialStats()];
           break;
 
         default:
@@ -1773,13 +1774,13 @@ export class AdminService {
     }
 
     return {
-      id: adminUser._id,
+      id: (adminUser._id as Types.ObjectId).toString(),
       email: adminUser.email,
       fullName: adminUser.fullName,
       role: adminUser.role,
-      permissions: adminUser.permissions || [],
-      createdAt: adminUser.createdAt,
-      lastLogin: adminUser.lastLogin,
+      permissions: (adminUser as any).permissions || [],
+      createdAt: (adminUser as any).createdAt,
+      lastLogin: adminUser.lastLoginAt,
     };
   }
 
@@ -1808,13 +1809,13 @@ export class AdminService {
 
     return {
       users: users.map(user => ({
-        id: user._id,
+        id: (user._id as Types.ObjectId).toString(),
         email: user.email,
         fullName: user.fullName,
         role: user.role,
         isActive: user.isActive,
-        createdAt: user.createdAt,
-        lastLogin: user.lastLogin,
+        createdAt: (user as any).createdAt,
+        lastLogin: user.lastLoginAt,
       })),
       pagination: {
         page,
@@ -1867,7 +1868,7 @@ export class AdminService {
       action: 'ADMIN_USER_CREATED',
       userId: adminId,
       resource: 'admin',
-      resourceId: newAdmin._id.toString(),
+      resourceId: (newAdmin._id as Types.ObjectId).toString(),
       details: { email, role, fullName },
     });
 
@@ -1875,11 +1876,11 @@ export class AdminService {
       success: true,
       message: 'تم إنشاء المستخدم الإداري بنجاح',
       admin: {
-        id: newAdmin._id,
+        id: (newAdmin._id as Types.ObjectId).toString(),
         email: newAdmin.email,
         fullName: newAdmin.fullName,
         role: newAdmin.role,
-        createdAt: newAdmin.createdAt,
+        createdAt: (newAdmin as any).createdAt,
       },
     };
   }
@@ -1926,13 +1927,13 @@ export class AdminService {
 
     return {
       drivers: drivers.map(driver => ({
-        id: driver._id,
+        id: (driver._id as Types.ObjectId).toString(),
         fullName: driver.fullName,
         phone: driver.phone,
-        balance: driver.balance,
-        earnings: driver.earnings,
-        rating: driver.rating,
-        status: driver.status,
+        balance: (driver as any).wallet?.balance || 0,
+        earnings: (driver as any).wallet?.earnings || 0,
+        rating: 0, // Driver entity doesn't have rating
+        status: (driver as any).isAvailable ? 'available' : 'unavailable',
       })),
       summary: stats[0] || {
         totalEarnings: 0,
@@ -2005,13 +2006,13 @@ export class AdminService {
 
     return {
       vendors: vendors.map(vendor => ({
-        id: vendor._id,
+        id: (vendor._id as Types.ObjectId).toString(),
         fullName: vendor.fullName,
         phone: vendor.phone,
         email: vendor.email,
-        status: vendor.status,
-        store: vendor.store,
-        createdAt: vendor.createdAt,
+        status: (vendor as any).isActive ? 'active' : 'inactive',
+        store: (vendor as any).store,
+        createdAt: (vendor as any).createdAt,
       })),
       pagination: {
         page,
@@ -2048,7 +2049,7 @@ export class AdminService {
     startDate?: string;
     endDate?: string;
   }) {
-    return this.supportAdminService.getSupportStats({ startDate, endDate });
+    return this.supportService.getSupportStats({ startDate, endDate });
   }
 
   // ==================== Audit Logs Stats ====================
@@ -2083,19 +2084,22 @@ export class AdminService {
     limit: number;
     adminId: string;
   }) {
-    const actions = await this.auditService.getAuditLogs({
-      userId: adminId,
-      limit,
-      sort: { timestamp: -1 },
-    });
+    const actions = await this.auditService.getAuditLogs(
+      undefined, // action
+      adminId,   // userId
+      undefined, // startDate
+      undefined, // endDate
+      1,         // page
+      limit      // limit
+    );
 
     return {
-      actions: actions.map(action => ({
-        id: action.id,
+      actions: actions.data.map(action => ({
+        id: (action._id as Types.ObjectId).toString(),
         action: action.action,
         resource: action.resource,
-        timestamp: action.timestamp,
-        details: action.details,
+        timestamp: action.createdAt,
+        details: action.metadata?.description || '',
       })),
       limit,
     };
@@ -2126,12 +2130,12 @@ export class AdminService {
       return {
         type: 'vendors',
         items: vendors.map(vendor => ({
-          id: vendor._id,
+          id: (vendor._id as Types.ObjectId).toString(),
           type: 'vendor',
           fullName: vendor.fullName,
           phone: vendor.phone,
-          store: vendor.store,
-          createdAt: vendor.createdAt,
+          store: (vendor as any).store,
+          createdAt: (vendor as any).createdAt,
         })),
         pagination: {
           page,
@@ -2156,12 +2160,12 @@ export class AdminService {
     return {
       type: 'stores',
       items: stores.map(store => ({
-        id: store._id,
+        id: (store._id as Types.ObjectId).toString(),
         type: 'store',
         name: store.name,
-        category: store.category,
-        vendor: store.vendor,
-        createdAt: store.createdAt,
+        category: (store as any).category,
+        vendor: null, // Store doesn't have vendor property directly
+        createdAt: (store as any).createdAt,
       })),
       pagination: {
         page,
@@ -2275,12 +2279,12 @@ export class AdminService {
 
     return {
       drivers: drivers.map(driver => ({
-        id: driver._id,
+        id: (driver._id as Types.ObjectId).toString(),
         fullName: driver.fullName,
         phone: driver.phone,
-        location: driver.currentLocation,
-        status: driver.status,
-        lastUpdate: driver.lastLocationUpdate,
+        location: (driver as any).currentLocation,
+        status: (driver as any).isAvailable ? 'available' : 'unavailable',
+        lastUpdate: (driver as any).currentLocation?.updatedAt || new Date(),
       })),
       total: drivers.length,
       timestamp: new Date().toISOString(),
@@ -2304,20 +2308,4 @@ export class AdminService {
   }
 
   // ==================== Commission Plans ====================
-
-  async createCommissionPlan(planData: any, adminId: string) {
-    // TODO: Implement commission plans logic
-    await this.auditService.logAction({
-      action: 'COMMISSION_PLAN_CREATED',
-      userId: adminId,
-      resource: 'commission',
-      details: planData,
-    });
-
-    return {
-      success: true,
-      message: 'تم إنشاء خطة العمولة بنجاح',
-      plan: planData,
-    };
-  }
 }

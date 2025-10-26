@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import type { Model } from 'mongoose';
-import Es3afni from './entities/es3afni.entity';
+import { Es3afni } from './entities/es3afni.entity';
 import type CreateEs3afniDto from './dto/create-es3afni.dto';
 import type UpdateEs3afniDto from './dto/update-es3afni.dto';
 
@@ -18,7 +18,7 @@ export class Es3afniService {
     const limit = 25;
     const query = this.model.find().sort({ _id: -1 }).limit(limit);
     if (opts?.cursor) {
-      query.where('_id').lt(opts.cursor);
+      query.where('_id').lt(Number(opts.cursor));
     }
     const items = await query.exec();
     const nextCursor = items.length === limit ? String(items[items.length - 1]._id) : null;

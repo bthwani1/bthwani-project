@@ -1,7 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import type { Model } from 'mongoose';
-import Maarouf from './entities/maarouf.entity';
+import { Types } from 'mongoose';
+import { Maarouf } from './entities/maarouf.entity';
 import type CreateMaaroufDto from './dto/create-maarouf.dto';
 import type UpdateMaaroufDto from './dto/update-maarouf.dto';
 
@@ -18,7 +19,7 @@ export class MaaroufService {
     const limit = 25;
     const query = this.model.find().sort({ _id: -1 }).limit(limit);
     if (opts?.cursor) {
-      query.where('_id').lt(opts.cursor);
+      query.where('_id').lt(Number(opts.cursor));
     }
     const items = await query.exec();
     const nextCursor = items.length === limit ? String(items[items.length - 1]._id) : null;
@@ -41,8 +42,8 @@ export class MaaroufService {
     if (filters.tags && filters.tags.length > 0) {
       query.where('tags').in(filters.tags);
     }
-    if (filters.createdAfter) query.where('createdAt').gte(new Date(filters.createdAfter));
-    if (filters.createdBefore) query.where('createdAt').lte(new Date(filters.createdBefore));
+    if (filters.createdAfter) query.where('createdAt').gte(filters.createdAfter);
+    if (filters.createdBefore) query.where('createdAt').lte(filters.createdBefore);
     if (filters.search) {
       query.or([
         { title: { $regex: filters.search, $options: 'i' } },
@@ -51,7 +52,7 @@ export class MaaroufService {
     }
 
     if (cursor) {
-      query.where('_id').lt(cursor);
+      query.where('_id').lt(Number(cursor));
     }
 
     query.limit(limit + 1); // +1 to check if there are more items

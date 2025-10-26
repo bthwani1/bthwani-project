@@ -111,6 +111,40 @@ export class SupportAdminService {
     return { success: true, message: 'تم حل التذكرة' };
   }
 
+  async getSupportStats({ startDate, endDate }: {
+    startDate?: string;
+    endDate?: string;
+  }) {
+    const matchQuery: any = {};
+
+    if (startDate || endDate) {
+      matchQuery.createdAt = {};
+      if (startDate) matchQuery.createdAt.$gte = new Date(startDate);
+      if (endDate) matchQuery.createdAt.$lte = new Date(endDate);
+    }
+
+    const stats = await this.supportTicketModel.aggregate([
+      { $match: matchQuery },
+      {
+        $group: {
+          _id: '$status',
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    const totalTickets = stats.reduce((sum, stat) => sum + stat.count, 0);
+
+    return {
+      totalTickets,
+      byStatus: stats,
+      period: {
+        startDate: startDate || null,
+        endDate: endDate || null,
+      },
+    };
+  }
+
   async getSLAMetrics() {
     const now = new Date();
     const last30Days = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);

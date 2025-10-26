@@ -1,7 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import type { Model } from 'mongoose';
-import Kawader from './entities/kawader.entity';
+import { Types } from 'mongoose';
+import { Kawader } from './entities/kawader.entity';
 import type CreateKawaderDto from './dto/create-kawader.dto';
 import type UpdateKawaderDto from './dto/update-kawader.dto';
 
@@ -16,10 +17,7 @@ export class KawaderService {
 
   async findAll(opts: { cursor?: string }) {
     const limit = 25;
-    const query = this.model.find().sort({ _id: -1 }).limit(limit);
-    if (opts?.cursor) {
-      query.where('_id').lt(opts.cursor);
-    }
+    const query = this.model.find(opts?.cursor ? { _id: { $lt: new Types.ObjectId(opts.cursor) } } : {}).sort({ _id: -1 }).limit(limit);
     const items = await query.exec();
     const nextCursor = items.length === limit ? String(items[items.length - 1]._id) : null;
     return { items, nextCursor };
@@ -32,19 +30,27 @@ export class KawaderService {
   }
 
   async list(filters: any = {}, cursor?: string, limit: number = 25) {
-    const query = this.model.find().populate('ownerId', 'name email phone').sort({ _id: -1 });
+    // Build base query with cursor
+    const baseQuery: any = {};
+    if (cursor) {
+      baseQuery._id = { $lt: new Types.ObjectId(cursor) };
+    }
 
     // Apply filters
-    if (filters.status) query.where('status').equals(filters.status);
-    if (filters.ownerId) query.where('ownerId').equals(filters.ownerId);
-    if (filters.budgetMin) query.where('budget').gte(filters.budgetMin);
-    if (filters.budgetMax) query.where('budget').lte(filters.budgetMax);
-    if (filters.createdAfter) query.where('createdAt').gte(new Date(filters.createdAfter));
-    if (filters.createdBefore) query.where('createdAt').lte(new Date(filters.createdBefore));
-
-    if (cursor) {
-      query.where('_id').lt(cursor);
+    if (filters.status) baseQuery.status = filters.status;
+    if (filters.ownerId) baseQuery.ownerId = filters.ownerId;
+    if (filters.budgetMin || filters.budgetMax) {
+      baseQuery.budget = {};
+      if (filters.budgetMin) baseQuery.budget.$gte = filters.budgetMin;
+      if (filters.budgetMax) baseQuery.budget.$lte = filters.budgetMax;
     }
+    if (filters.createdAfter || filters.createdBefore) {
+      baseQuery.createdAt = {};
+      if (filters.createdAfter) baseQuery.createdAt.$gte = new Date(filters.createdAfter);
+      if (filters.createdBefore) baseQuery.createdAt.$lte = new Date(filters.createdBefore);
+    }
+
+    const query = this.model.find(baseQuery).populate('ownerId', 'name email phone').sort({ _id: -1 });
 
     query.limit(limit + 1); // +1 to check if there are more items
 

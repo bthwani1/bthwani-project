@@ -1,7 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import type { Model } from 'mongoose';
-import Sanad, { SanadKind } from './entities/sanad.entity';
+import { Types } from 'mongoose';
+import { Sanad, SanadKind } from './entities/sanad.entity';
 import type CreateSanadDto from './dto/create-sanad.dto';
 import type UpdateSanadDto from './dto/update-sanad.dto';
 
@@ -18,7 +19,7 @@ export class SanadService {
     const limit = 25;
     const query = this.model.find().sort({ _id: -1 }).limit(limit);
     if (opts?.cursor) {
-      query.where('_id').lt(opts.cursor);
+      query.where('_id').lt(Number(opts.cursor));
     }
     const items = await query.exec();
     const nextCursor = items.length === limit ? String(items[items.length - 1]._id) : null;
@@ -38,8 +39,8 @@ export class SanadService {
     if (filters.status) query.where('status').equals(filters.status);
     if (filters.kind) query.where('kind').equals(filters.kind);
     if (filters.ownerId) query.where('ownerId').equals(filters.ownerId);
-    if (filters.createdAfter) query.where('createdAt').gte(new Date(filters.createdAfter));
-    if (filters.createdBefore) query.where('createdAt').lte(new Date(filters.createdBefore));
+    if (filters.createdAfter) query.where('createdAt').gte(filters.createdAfter);
+    if (filters.createdBefore) query.where('createdAt').lte(filters.createdBefore);
     if (filters.search) {
       query.or([
         { title: { $regex: filters.search, $options: 'i' } },
@@ -48,7 +49,7 @@ export class SanadService {
     }
 
     if (cursor) {
-      query.where('_id').lt(cursor);
+      query.where('_id').lt(Number(cursor));
     }
 
     query.limit(limit + 1); // +1 to check if there are more items
@@ -120,7 +121,7 @@ export class SanadService {
     const limit = 25;
     const query = this.model.find({ ownerId }).sort({ _id: -1 }).limit(limit);
     if (opts?.cursor) {
-      query.where('_id').lt(opts.cursor);
+      query.where('_id').lt(Number(opts.cursor));
     }
     const items = await query.exec();
     const nextCursor = items.length === limit ? String(items[items.length - 1]._id) : null;
@@ -143,7 +144,7 @@ export class SanadService {
     const mongoQuery = this.model.find(searchQuery).sort({ _id: -1 }).limit(limit);
 
     if (opts?.cursor) {
-      mongoQuery.where('_id').lt(opts.cursor);
+      mongoQuery.where('_id').lt(Number(opts.cursor));
     }
 
     const items = await mongoQuery.exec();

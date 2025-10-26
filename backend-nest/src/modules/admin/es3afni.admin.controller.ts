@@ -19,7 +19,7 @@ export class AdminEs3afniController {
   @Get()
   @ApiOperation({ summary: 'إدارة العناصر' })
   list(@Query() q: CursorPaginationDto) {
-    return this.service.list({}, q.cursor, q.limit);
+    return this.service.findAll({ cursor: q.cursor });
   }
 
   @Patch(':id/status')

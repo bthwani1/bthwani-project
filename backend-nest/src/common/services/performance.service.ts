@@ -168,10 +168,26 @@ export class PerformanceService {
           },
           count: { $sum: 1 },
           avgResponseTime: { $avg: '$responseTime' },
-          p95ResponseTime: { $percentile: { input: '$responseTime', p: 0.95 } },
-          p99ResponseTime: { $percentile: { input: '$responseTime', p: 0.99 } },
+          responseTimes: { $push: '$responseTime' },
           minResponseTime: { $min: '$responseTime' },
           maxResponseTime: { $max: '$responseTime' },
+        },
+      },
+      {
+        $addFields: {
+          sortedResponseTimes: { $sortArray: { input: '$responseTimes', sortBy: 1 } },
+        },
+      },
+      {
+        $addFields: {
+          p95Index: { $floor: { $multiply: [0.95, { $size: '$sortedResponseTimes' }] } },
+          p99Index: { $floor: { $multiply: [0.99, { $size: '$sortedResponseTimes' }] } },
+        },
+      },
+      {
+        $addFields: {
+          p95ResponseTime: { $arrayElemAt: ['$sortedResponseTimes', '$p95Index'] },
+          p99ResponseTime: { $arrayElemAt: ['$sortedResponseTimes', '$p99Index'] },
         },
       },
       {
@@ -179,8 +195,8 @@ export class PerformanceService {
           _id: { endpoint: '$_id.endpoint', method: '$_id.method' },
           totalRequests: { $sum: '$count' },
           avgResponseTime: { $avg: '$avgResponseTime' },
-          p95ResponseTime: { $avg: '$p95ResponseTime' },
-          p99ResponseTime: { $avg: '$p99ResponseTime' },
+          p95ResponseTime: { $first: '$p95ResponseTime' },
+          p99ResponseTime: { $first: '$p99ResponseTime' },
           minResponseTime: { $min: '$minResponseTime' },
           maxResponseTime: { $max: '$maxResponseTime' },
           statusCodes: {
@@ -309,12 +325,12 @@ export class PerformanceService {
 
         // Check error rate
         if (endpoint.errorRate > budget.errorRateThreshold) {
-          alerts.push(`Error rate ${endpoint.errorRate}% > ${budget.errorRateThreshold}%`);
+          alerts.push(`Error rate ${endpoint.errorRate}% > ${budget.errorRateThreshold}%` as never);
         }
 
         // Check P95 response time
         if (endpoint.p95ResponseTime > budget.responseTimeThreshold) {
-          alerts.push(`P95 ${endpoint.p95ResponseTime}ms > ${budget.responseTimeThreshold}ms`);
+          alerts.push(`P95 ${endpoint.p95ResponseTime}ms > ${budget.responseTimeThreshold}ms` as never);
         }
 
         if (alerts.length > 0) {
